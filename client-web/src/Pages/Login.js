@@ -4,12 +4,15 @@ import { LoginSchemas } from "../Schemas";
 import { Button } from "@material-tailwind/react";
 import { useCookies } from "react-cookie";
 import Swal from "sweetalert2";
+import { Verify } from "../Components/Admin/Verify";
 const initialValues = {
   Email: "",
   Password: "",
 };
 
 const Login = () => {
+  Verify();
+
   const [cookies, setCookies] = useCookies(["token"]);
   const navigate = useNavigate();
 
@@ -17,8 +20,8 @@ const Login = () => {
     var myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/json");
     var raw = JSON.stringify({
-      email: values.Email,
-      password: values.Password,
+      Email: values.Email,
+      Password: values.Password,
     });
     var requestOptions = {
       method: "POST",
@@ -45,9 +48,9 @@ const Login = () => {
           const maxAgeInSeconds = 86400; // 60 seconds
           setCookies("token", result.token, {
             maxAge: maxAgeInSeconds,
-            path: "/admin",
+            path: "/",
           });
-          navigate("/admin/dashboard");
+          navigate("/admin");
         }
       })
       .catch((error) => console.log("error", error));
