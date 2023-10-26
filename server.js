@@ -2,6 +2,7 @@ const express = require('express')
 const cors = require('cors')
 require('./config/dbconfig').getDbConnetion();
 const UserRoute = require('./Routes/UserRoutes')
+const decodedToken = require('./Controller/DecodeToken')
 
 const app = express()
 
@@ -13,6 +14,7 @@ app.use(cors())
 
 //UserRoutes
 app.use('/',UserRoute)
+app.post('/decode',decodedToken.decodedToken)
 
 app.listen(9999)
 console.log("server started at 9999");
