@@ -1,6 +1,67 @@
-import { Link, NavLink } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useFormik } from "formik";
+import { LoginSchemas } from "../Schemas";
+import { Button } from "@material-tailwind/react";
+import { useCookies } from "react-cookie";
+import Swal from "sweetalert2";
+const initialValues = {
+  Email: "",
+  Password: "",
+};
+
 const Login = () => {
-  const OnSumbitHandler = (event) => {};
+  const [cookies, setCookies] = useCookies(["token"]);
+  const navigate = useNavigate();
+
+  const LoginHandler = (values) => {
+    var myHeaders = new Headers();
+    myHeaders.append("Content-Type", "application/json");
+    var raw = JSON.stringify({
+      email: values.Email,
+      password: values.Password,
+    });
+    var requestOptions = {
+      method: "POST",
+      headers: myHeaders,
+      body: raw,
+      redirect: "follow",
+    };
+    fetch("http://localhost:9999/login", requestOptions)
+      .then((response) => response.json())
+      .then((result) => {
+        console.log(result);
+        const errorCode = result.rcode;
+        // console.log(errorCode);
+        if (errorCode === -9) {
+          Swal.fire({
+            icon: "error",
+            title: "Oops...",
+            text: "Invalid Credentials",
+            timer: 1500,
+            // footer: '<a href="">Why do I have this issue?</a>',
+          });
+        }
+        if (errorCode === 200) {
+          const maxAgeInSeconds = 86400; // 60 seconds
+          setCookies("token", result.token, {
+            maxAge: maxAgeInSeconds,
+            path: "/admin",
+          });
+          navigate("/admin/dashboard");
+        }
+      })
+      .catch((error) => console.log("error", error));
+  };
+  const { values, errors, touched, handleBlur, handleChange, handleSubmit } =
+    useFormik({
+      initialValues: initialValues,
+      validationSchema: LoginSchemas,
+      onSubmit: (values, action) => {
+        console.log(values);
+        LoginHandler(values);
+        // action.resetForm();
+      },
+    });
   return (
     <>
       <div className="min-h-screen rounded-sm border border-stroke bg-gray-400 shadow-default dark:border-strokedark dark:bg-boxdark">
@@ -149,16 +210,21 @@ const Login = () => {
                 Sign In to Sports Authority of Gujarat
               </h1>
 
-              <form onSubmit={OnSumbitHandler}>
+              <form onSubmit={handleSubmit}>
                 <div className="mb-4">
                   <label className="mb-2.5 block font-medium text-black dark:text-white">
                     Email
                   </label>
                   <div className="relative">
                     <input
+                      autoComplete="username"
+                      name="Email"
                       type="email"
                       placeholder="Enter your email"
-                      className="w-full rounded-lg border border-stroke bg-transparent py-4 pl-6 pr-10 outline-none focus:border-primary focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
+                      className="w-full rounded-lg  py-4 pl-6 pr-10 border border-black"
+                      value={values.Email}
+                      onChange={handleChange}
+                      onBlur={handleBlur}
                     />
 
                     <span className="absolute right-4 top-4">
@@ -179,6 +245,11 @@ const Login = () => {
                       </svg>
                     </span>
                   </div>
+                  {errors.Email && touched.Email ? (
+                    <small className="text-ligth text-red-600">
+                      {errors.Email}
+                    </small>
+                  ) : null}
                 </div>
 
                 <div className="mb-6">
@@ -187,9 +258,14 @@ const Login = () => {
                   </label>
                   <div className="relative">
                     <input
+                      autoComplete="current-password"
+                      name="Password"
                       type="password"
                       placeholder="6+ Characters, 1 Capital letter"
-                      className="w-full rounded-lg border border-stroke bg-transparent py-4 pl-6 pr-10 outline-none focus:border-primary focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
+                      className="w-full rounded-lg  py-4 pl-6 pr-10 border border-black"
+                      value={values.Password}
+                      onChange={handleChange}
+                      onBlur={handleBlur}
                     />
 
                     <span className="absolute right-4 top-4">
@@ -214,14 +290,21 @@ const Login = () => {
                       </svg>
                     </span>
                   </div>
+                  {errors.Password && touched.Password ? (
+                    <small className="text-ligth text-red-600">
+                      {errors.Password}
+                    </small>
+                  ) : null}
                 </div>
 
-                <div className="mb-5">
-                  <input
+                <div className="mb-5 ">
+                  {/* <NavLink to={"/admin/dashboard"}> */}
+                  <Button
+                    className="w-full py-4 pl-6 pr-10 text-md"
                     type="submit"
-                    value="Sign In"
-                    className="w-full cursor-pointer rounded-lg border border-primary bg-primary p-4 text-white transition hover:bg-opacity-90"
-                  />
+                  >
+                    Submit
+                  </Button>
                 </div>
               </form>
             </div>
