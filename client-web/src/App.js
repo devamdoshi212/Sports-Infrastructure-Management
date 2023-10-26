@@ -22,7 +22,7 @@ const routes = createBrowserRouter([
         element: <AdminDashboard />,
       },
       {
-        path: "addAuthority",
+        path: "addauthority",
         element: <AddAuthority />,
         errorElement: <ErrorPage />,
       },

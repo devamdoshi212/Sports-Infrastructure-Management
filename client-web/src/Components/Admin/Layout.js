@@ -75,19 +75,19 @@ const Layout = () => {
             Sports
           </Link>
           <div className="p-6">
-            <NavLink to={""}>
+            <NavLink to={"addauthority"}>
               <button className="w-full bg-white cta-btn font-semibold py-2 mt-5 rounded-br-lg rounded-bl-lg rounded-tr-lg shadow-lg hover:shadow-xl hover:bg-gray-300 flex items-center justify-center">
-                <i className="fas fa-plus mr-3"></i> New Authority
+                <i className="fas fa-plus mr-3"></i>Add Authority
               </button>
             </NavLink>
             <NavLink to={""}>
               <button className="w-full bg-white cta-btn font-semibold py-2 mt-5 rounded-br-lg rounded-bl-lg rounded-tr-lg shadow-lg hover:shadow-xl hover:bg-gray-300 flex items-center justify-center">
-                <i className="fas fa-plus mr-3"></i> New Sports Complex
+                <i className="fas fa-plus mr-3"></i>Add Sports Complex
               </button>
             </NavLink>
             <NavLink to={""}>
               <button className="w-full bg-white cta-btn font-semibold py-2 mt-5 rounded-br-lg rounded-bl-lg rounded-tr-lg shadow-lg hover:shadow-xl hover:bg-gray-300 flex items-center justify-center">
-                <i className="fas fa-plus mr-3"></i> New Sports/Facilities
+                <i className="fas fa-plus mr-3"></i>Add Sports/Facilities
               </button>
             </NavLink>
           </div>
@@ -104,7 +104,7 @@ const Layout = () => {
             <NavLink to={""}>
               <button
                 onClick={() => setIsOpen(!isOpen)}
-                className="realtive z-10 w-20 rounded-lg h-12 bg-white overflow-hidden border-4 border-gray-400 hover:border-gray-300 focus:border-gray-300 focus:outline-none"
+                className="realtive z-10 w-20 rounded-lg h-12 bg-white overflow-hidden border-4 hover:border-gray-300 focus:border-gray-300 focus:outline-none"
               >
                 Logout
               </button>
