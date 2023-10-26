@@ -4,12 +4,15 @@ import { LoginSchemas } from "../Schemas";
 import { Button } from "@material-tailwind/react";
 import { useCookies } from "react-cookie";
 import Swal from "sweetalert2";
+import { Verify } from "../Components/Admin/Verify";
 const initialValues = {
   Email: "",
   Password: "",
 };
 
 const Login = () => {
+  Verify();
+
   const [cookies, setCookies] = useCookies(["token"]);
   const navigate = useNavigate();
 
@@ -45,7 +48,7 @@ const Login = () => {
           const maxAgeInSeconds = 86400; // 60 seconds
           setCookies("token", result.token, {
             maxAge: maxAgeInSeconds,
-            path: "/admin",
+            path: "/",
           });
           navigate("/admin");
         }
