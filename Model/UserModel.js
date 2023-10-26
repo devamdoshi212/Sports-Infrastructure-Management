@@ -31,7 +31,7 @@ const UserSchema = new mongoose.Schema({
   },
 
   DOB: {
-    type: Date,
+    type: String,
     required: [true, "Please Enter your date of birth"],
     require: true,
   },
