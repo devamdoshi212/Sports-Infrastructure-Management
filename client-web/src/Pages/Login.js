@@ -17,8 +17,8 @@ const Login = () => {
     var myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/json");
     var raw = JSON.stringify({
-      email: values.Email,
-      password: values.Password,
+      Email: values.Email,
+      Password: values.Password,
     });
     var requestOptions = {
       method: "POST",
@@ -47,7 +47,7 @@ const Login = () => {
             maxAge: maxAgeInSeconds,
             path: "/admin",
           });
-          navigate("/admin/dashboard");
+          navigate("/admin");
         }
       })
       .catch((error) => console.log("error", error));
