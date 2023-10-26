@@ -7,3 +7,8 @@ export const userSchemas = Yup.object().shape({
   district: Yup.string().required("Select at least one District"),
   dob: Yup.string().required("Select at Date of Birth"),
 });
+
+export const LoginSchemas = Yup.object().shape({
+  Email: Yup.string().email().required("Enter Email"),
+  Password: Yup.string().required("Enter Password"),
+});
