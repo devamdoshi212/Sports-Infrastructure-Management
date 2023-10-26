@@ -12,7 +12,6 @@ const UserSchema = new mongoose.Schema({
     type: String,
     required: [true, "Please Enter your email"],
     trim: true,
-    unique: true,
     validate: [validator.isEmail, "please enter a valid email"],
   },
 
@@ -26,18 +25,16 @@ const UserSchema = new mongoose.Schema({
   ContactNum: {
     type: String,
     required: [true, "Please Enter your contactnumber"],
-    require: true,
     trim: true,
   },
 
   DOB: {
     type: String,
     required: [true, "Please Enter your date of birth"],
-    require: true,
   },
 
-  Role:{
-    type:Number
+  Role: {
+    type: Number,
   },
 
   IsActive: {
