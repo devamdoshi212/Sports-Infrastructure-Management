@@ -54,8 +54,7 @@ const AddAuthority = () => {
       onSubmit: (values, action) => {
         console.log(values);
         submitHandler(values);
-
-        // action.resetForm();
+        action.resetForm();
       },
     });
   return (

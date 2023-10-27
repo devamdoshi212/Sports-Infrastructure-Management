@@ -31,12 +31,12 @@ const Layout = () => {
             href="index.html"
             className="text-white text-3xl font-semibold uppercase hover:text-gray-300"
           >
-            Authority
+            Manager
           </a>
         </div>
         <nav className=" text-base font-semibold pt-3">
           <Link
-            to={"/authority"}
+            to={"/manager"}
             className="flex items-center active-nav-link text-white py-4 pl-6 nav-item gap-2"
           >
             <svg
@@ -90,21 +90,21 @@ const Layout = () => {
             Sports
           </Link> */}
           <div className="p-6">
-            <NavLink to={"addmanager"}>
+            {/* <NavLink to={"addmanager"}>
               <button className="w-full bg-white cta-btn font-semibold py-2 mt-5 rounded-br-lg rounded-bl-lg rounded-tr-lg shadow-lg hover:shadow-xl hover:bg-gray-300 flex items-center justify-center">
                 <i className="fas fa-plus mr-3"></i>Add Manager
               </button>
             </NavLink>
             <NavLink to={""}>
               <button className="w-full bg-white cta-btn font-semibold py-2 mt-5 rounded-br-lg rounded-bl-lg rounded-tr-lg shadow-lg hover:shadow-xl hover:bg-gray-300 flex items-center justify-center">
-                <i className="fas fa-plus mr-3"></i>Complex Details
+                <i className="fas fa-plus mr-3"></i>Add Complex Details
               </button>
             </NavLink>
             <NavLink to={""}>
               <button className="w-full bg-white cta-btn font-semibold py-2 mt-5 rounded-br-lg rounded-bl-lg rounded-tr-lg shadow-lg hover:shadow-xl hover:bg-gray-300 flex items-center justify-center">
-                <i className="fas fa-plus mr-3"></i>Sports/Facilities
+                <i className="fas fa-plus mr-3"></i>Add Sports/Facilities
               </button>
-            </NavLink>
+            </NavLink> */}
           </div>
         </nav>
       </aside>
