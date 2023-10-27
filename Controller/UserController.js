@@ -11,11 +11,9 @@ module.exports.signup = async function (req, res) {
 
   console.log(User);
 
-  if (User.Role == 4) {
+  if (User.Role == 4 || User.Role == 3 || User.Role == 2 || User.Role == 1) {
     const password = sendMail.passwordGenerate(8);
-    console.log(password);
     User.Password = password;
-    console.log(User.Email);
     sendMail.sendEmail(User.Email, password);
   }
 

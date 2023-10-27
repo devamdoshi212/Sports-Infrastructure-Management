@@ -1,6 +1,6 @@
 import React from "react";
 import { useFormik } from "formik";
-import { userSchemas } from "../../Schemas";
+import { ManagerSchemas } from "../../Schemas";
 import { useSelector } from "react-redux";
 import Swal from "sweetalert2";
 const initialValues = {
@@ -8,11 +8,11 @@ const initialValues = {
   email: "",
   mobileNumber: "",
   dob: "",
-  district: "",
 };
-const AddAuthority = () => {
+const AddManager = () => {
   const District = useSelector((state) => state.district.districts);
-
+  const UserData = useSelector((state) => state.user.user);
+  console.log(UserData);
   const submitHandler = (values) => {
     var myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/json");
@@ -21,9 +21,9 @@ const AddAuthority = () => {
       Email: values.email,
       DOB: values.dob,
       ContactNum: values.mobileNumber,
-      Role: 4,
+      Role: 3,
       Name: values.name,
-      DistrictId: values.district,
+      createdBy: UserData._id,
     });
 
     var requestOptions = {
@@ -50,10 +50,11 @@ const AddAuthority = () => {
   const { values, errors, touched, handleBlur, handleChange, handleSubmit } =
     useFormik({
       initialValues: initialValues,
-      validationSchema: userSchemas,
+      validationSchema: ManagerSchemas,
       onSubmit: (values, action) => {
         console.log(values);
         submitHandler(values);
+
         action.resetForm();
       },
     });
@@ -61,7 +62,7 @@ const AddAuthority = () => {
     <div className="flex items-center justify-center bg-gray-200 min-h-screen">
       <div className="w-full max-w-2xl">
         <h2 className="text-center text-2xl uppercase font-semibold font-serif text-gray-800">
-          Add New Authority
+          Add New Manager
         </h2>
         <form
           onSubmit={handleSubmit}
@@ -149,37 +150,6 @@ const AddAuthority = () => {
               <small className="text-ligth text-red-600">{errors.dob}</small>
             ) : null}
           </div>
-          <div className="mb-4">
-            <label
-              className="block text-gray-700 text-sm font-bold mb-2"
-              htmlFor="distric"
-            >
-              District
-            </label>
-            <select
-              name="district"
-              id="district"
-              value={values.district}
-              className=" border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-              onChange={handleChange}
-              onBlur={handleBlur}
-            >
-              <option value="">Select any One</option>
-              {District.map((item, index) => (
-                <option key={index} value={item._id}>
-                  {item.District}
-                </option>
-              ))}
-              {/* <option value="Jamnagar">Jamnagar</option>
-              <option value="Surat">Surat</option>
-              <option value="Anand">Anand</option> */}
-            </select>
-            {errors.district && touched.district ? (
-              <small className="text-ligth text-red-600">
-                {errors.district}
-              </small>
-            ) : null}
-          </div>
 
           <div className="flex items-center justify-center">
             <button
@@ -196,4 +166,4 @@ const AddAuthority = () => {
   );
 };
 
-export default AddAuthority;
+export default AddManager;
