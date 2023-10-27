@@ -8,6 +8,8 @@ const decodedToken = require("./Controller/DecodeToken");
 const SportDataController = require("./Controller/SportDataController");
 const DistrictController = require("./Controller/DistrictController");
 const SportsComplexController = require("./Controller/SportsComplexController");
+const UserController = require("./Controller/UserController");
+
 const app = express();
 
 //middleware
@@ -19,6 +21,7 @@ app.use(cors());
 //UserRoutes
 app.use("/", UserRoute);
 app.post("/verify", decodedToken.decodedToken);
+app.get("/getuser", UserController.getUser);
 
 //Sport routes
 app.post(

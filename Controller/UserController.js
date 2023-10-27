@@ -36,3 +36,13 @@ module.exports.login = async function (req, res) {
     res.json({ data: req.body, msg: "Invalid credential", rcode: -9 });
   }
 };
+
+module.exports.getUser = function (req, res) {
+  UserModel.find(req.query)
+    .then((data) => {
+      res.json({ data: data, msg: "User Retrived", rcode: 200 });
+    })
+    .catch((err) => {
+      res.json({ data: err.msg, msg: "smw", rcode: -9 });
+    });
+};

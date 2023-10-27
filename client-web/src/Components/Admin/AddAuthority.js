@@ -3,6 +3,7 @@ import { useFormik } from "formik";
 import { userSchemas } from "../../Schemas";
 import { useSelector } from "react-redux";
 import Swal from "sweetalert2";
+import { useNavigate } from "react-router-dom";
 const initialValues = {
   name: "",
   email: "",
@@ -11,8 +12,13 @@ const initialValues = {
   district: "",
 };
 const AddAuthority = () => {
+  const navigate = useNavigate();
   const District = useSelector((state) => state.district.districts);
+  function check(props) {
+    return !props.hasOwnProperty("authorityID");
+  }
 
+  const RemainDistrict = District.filter(check);
   const submitHandler = (values) => {
     var myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/json");
@@ -55,6 +61,7 @@ const AddAuthority = () => {
         console.log(values);
         submitHandler(values);
         action.resetForm();
+        navigate("/admin/allauthority");
       },
     });
   return (
@@ -165,7 +172,7 @@ const AddAuthority = () => {
               onBlur={handleBlur}
             >
               <option value="">Select any One</option>
-              {District.map((item, index) => (
+              {RemainDistrict.map((item, index) => (
                 <option key={index} value={item._id}>
                   {item.District}
                 </option>

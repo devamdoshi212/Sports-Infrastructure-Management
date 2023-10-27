@@ -4,6 +4,7 @@ import {
   RouterProvider,
 } from "react-router-dom";
 import { ThemeProvider } from "@material-tailwind/react";
+import { PrimeReactProvider } from "primereact/api";
 
 //Authenatication
 import LoginVerify from "./Components/Auth/LoginVerify";
@@ -32,6 +33,7 @@ import AddSportsComplex from "./Components/Admin/AddSportsComplex";
 
 //Authority Pages
 import AddManager from "./Components/Authority/AddManager";
+import AllAuthority from "./Components/Admin/AllAuthority";
 
 const routes = createBrowserRouter([
   {
@@ -51,6 +53,11 @@ const routes = createBrowserRouter([
       {
         index: true,
         element: <AdminDashboard />,
+      },
+      {
+        path: "allauthority",
+        element: <AllAuthority />,
+        errorElement: <ErrorPage />,
       },
       {
         path: "addauthority",
@@ -107,7 +114,9 @@ const routes = createBrowserRouter([
 const App = () => {
   return (
     <ThemeProvider>
-      <RouterProvider router={routes}></RouterProvider>
+      <PrimeReactProvider>
+        <RouterProvider router={routes}></RouterProvider>
+      </PrimeReactProvider>
     </ThemeProvider>
   );
 };
