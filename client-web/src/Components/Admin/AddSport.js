@@ -13,14 +13,11 @@ const AddSports = () => {
     setFieldValue("Image", selectedFiles);
   };
   const submitHandler = (values) => {
-    // console.log(values);
-    var fileInput = document.getElementById("fileInput");
     var formdata = new FormData();
-    formdata.append("Title", values.title);
-    formdata.append("Author_Name", values.author_name);
-    formdata.append("About", values.about);
-    formdata.append("Category", values.mainCategory);
-    formdata.append("Image", fileInput.files[0], values.Image[0].name);
+    var fileInput = document.getElementById("fileInput");
+    formdata.append("SportName", values.name);
+    formdata.append("Category", values.Category);
+    formdata.append("picture", fileInput.files[0], values.Image[0].name);
 
     var requestOptions = {
       method: "POST",
@@ -28,7 +25,7 @@ const AddSports = () => {
       redirect: "follow",
     };
 
-    fetch("http://localhost:9999/blog", requestOptions)
+    fetch("http://localhost:9999/sport", requestOptions)
       .then((response) => response.text())
       .then((result) => console.log(result))
       .catch((error) => console.log("error", error));
@@ -47,9 +44,9 @@ const AddSports = () => {
     validationSchema: sportSchema,
     onSubmit: (values, action) => {
       console.log(values);
-      //   submitHandler(values);
+      submitHandler(values);
 
-      // action.resetForm();
+      action.resetForm();
     },
   });
   return (
@@ -117,16 +114,9 @@ const AddSports = () => {
               onChange={handleChange}
               onBlur={handleBlur}
             >
-              <option value="">Select any One</option>
-              <option value="Heelo">Select any Nothing</option>
-              {/* {Category.map((item) => (
-                <option key={item} value={item}>
-                  {item}
-                </option>
-              ))} */}
-              {/* <option value="Jamnagar">Jamnagar</option>
-              <option value="Surat">Surat</option>
-              <option value="Anand">Anand</option> */}
+              <option>Select any One</option>
+              <option value="Indoor">Indoor</option>
+              <option value="Outdoor">Outdoor</option>
             </select>
             {errors.Category && touched.Category ? (
               <small className="text-ligth text-red-600">
