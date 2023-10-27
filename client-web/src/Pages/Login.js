@@ -4,15 +4,12 @@ import { LoginSchemas } from "../Schemas";
 import { Button } from "@material-tailwind/react";
 import { useCookies } from "react-cookie";
 import Swal from "sweetalert2";
-import { Verify } from "../Components/Admin/Verify";
 const initialValues = {
   Email: "",
   Password: "",
 };
 
 const Login = () => {
-  Verify();
-
   const [cookies, setCookies] = useCookies(["token"]);
   const navigate = useNavigate();
 
@@ -50,7 +47,15 @@ const Login = () => {
             maxAge: maxAgeInSeconds,
             path: "/",
           });
-          navigate("/admin");
+          localStorage.setItem("token", result.token);
+          if (result.data.Role === 5) {
+            navigate("/admin");
+          } else if (result.data.Role === 4) {
+          } else if (result.data.Role === 3) {
+          } else if (result.data.Role === 2) {
+          } else if (result.data.Role === 1) {
+          } else if (result.data.Role === 0) {
+          }
         }
       })
       .catch((error) => console.log("error", error));
