@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import { Outlet, NavLink, Link, Navigate } from "react-router-dom";
+import { Outlet, NavLink, Link, Navigate, useNavigate } from "react-router-dom";
 const Layout = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const navigate = Navigate();
+  const navigate = useNavigate();
   const handleLogout = () => {
     localStorage.removeItem("token");
     navigate("/");
@@ -39,10 +39,7 @@ const Layout = () => {
             </svg>
             Dashboard
           </Link>
-          <Link
-            to={""}
-            className="flex items-center active-nav-link text-white py-4 pl-6 nav-item gap-2"
-          >
+          <Link className="flex items-center active-nav-link text-white py-4 pl-6 nav-item gap-2">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
@@ -59,10 +56,7 @@ const Layout = () => {
             </svg>
             Authority
           </Link>
-          <Link
-            to={""}
-            className="flex items-center active-nav-link text-white py-4 pl-6 nav-item gap-2"
-          >
+          <Link className="flex items-center active-nav-link text-white py-4 pl-6 nav-item gap-2">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
@@ -205,12 +199,12 @@ const Layout = () => {
               Logout
             </Link>
             <div>
-              <NavLink to={""}>
+              <NavLink>
                 <button className="w-full bg-white cta-btn font-semibold py-2 mt-5 rounded-br-lg rounded-bl-lg rounded-tr-lg shadow-lg hover:shadow-xl hover:bg-gray-300 flex items-center justify-center">
                   <i className="fas fa-plus mr-3"></i> New Place
                 </button>
               </NavLink>
-              <NavLink to={""}>
+              <NavLink>
                 <button className="w-full bg-white cta-btn font-semibold py-2 mt-5 rounded-br-lg rounded-bl-lg rounded-tr-lg shadow-lg hover:shadow-xl hover:bg-gray-300 flex items-center justify-center">
                   <i className="fas fa-plus mr-3"></i> New Blog
                 </button>
