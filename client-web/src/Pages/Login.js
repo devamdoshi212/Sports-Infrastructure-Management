@@ -4,12 +4,16 @@ import { LoginSchemas } from "../Schemas";
 import { Button } from "@material-tailwind/react";
 import { useCookies } from "react-cookie";
 import Swal from "sweetalert2";
+import { useDispatch } from "react-redux";
+import { UserActions } from "../store/UserData";
 const initialValues = {
   Email: "",
   Password: "",
 };
 
 const Login = () => {
+  const dispatch = useDispatch();
+
   const [cookies, setCookies] = useCookies(["token"]);
   const navigate = useNavigate();
 
@@ -42,6 +46,7 @@ const Login = () => {
           });
         }
         if (errorCode === 200) {
+          dispatch(UserActions.getuserdata(result.data));
           const maxAgeInSeconds = 86400; // 60 seconds
           setCookies("token", result.token, {
             maxAge: maxAgeInSeconds,
