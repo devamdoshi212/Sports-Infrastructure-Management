@@ -14,6 +14,6 @@ module.exports.getDistrict = function (req, res) {
       res.json({ data: data, msg: "District Retrived", rcode: 200 });
     })
     .catch((err) => {
-      res.json({ data: err.msg, msg: "smw", rcode: 200 });
+      res.json({ data: err.msg, msg: "smw", rcode: -9 });
     });
 };

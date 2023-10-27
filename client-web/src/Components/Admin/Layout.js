@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import Swal from "sweetalert2";
 import { Outlet, NavLink, Link, useNavigate } from "react-router-dom";
 import { FetchDistrict } from "../../API/FetchDistrict";
+import { Button } from "primereact/button";
 const Layout = () => {
   FetchDistrict();
   const [isOpen, setIsOpen] = useState(false);
@@ -55,7 +56,7 @@ const Layout = () => {
             Dashboard
           </Link>
           <Link
-            to={""}
+            to={"allauthority"}
             className="flex items-center active-nav-link text-white py-4 pl-6 nav-item gap-2"
           >
             <svg
@@ -95,11 +96,6 @@ const Layout = () => {
             Sports
           </Link>
           <div className="p-6">
-            <NavLink to={"addauthority"}>
-              <button className="w-full bg-white cta-btn font-semibold py-2 mt-5 rounded-br-lg rounded-bl-lg rounded-tr-lg shadow-lg hover:shadow-xl hover:bg-gray-300 flex items-center justify-center">
-                <i className="fas fa-plus mr-3"></i>Add Authority
-              </button>
-            </NavLink>
             <NavLink to={"addsportscomplex"}>
               <button className="w-full bg-white cta-btn font-semibold py-2 mt-5 rounded-br-lg rounded-bl-lg rounded-tr-lg shadow-lg hover:shadow-xl hover:bg-gray-300 flex items-center justify-center">
                 <i className="fas fa-plus mr-3"></i>Add Sports Complex
