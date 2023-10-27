@@ -1,24 +1,11 @@
 import React, { useState } from "react";
-import Swal from "sweetalert2";
-import { Outlet, NavLink, Link, useNavigate } from "react-router-dom";
+import { Outlet, NavLink, Link, Navigate, useNavigate } from "react-router-dom";
 const Layout = () => {
   const [isOpen, setIsOpen] = useState(false);
   const navigate = useNavigate();
-  const LogoutHandler = () => {
-    Swal.fire({
-      title: "Are you sure?",
-      text: "You redirect to Login page...",
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonColor: "#3085d6",
-      cancelButtonColor: "#d33",
-      confirmButtonText: "Logout",
-    }).then((result) => {
-      if (result.isConfirmed) {
-        localStorage.removeItem("token");
-        navigate("/");
-      }
-    });
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    navigate("/");
   };
   return (
     <div className="bg-gray-100 font-family-karla flex">
@@ -28,7 +15,7 @@ const Layout = () => {
             href="index.html"
             className="text-white text-3xl font-semibold uppercase hover:text-gray-300"
           >
-            Admin
+            Authority
           </a>
         </div>
         <nav className=" text-base font-semibold pt-3">
@@ -52,10 +39,7 @@ const Layout = () => {
             </svg>
             Dashboard
           </Link>
-          <Link
-            to={""}
-            className="flex items-center active-nav-link text-white py-4 pl-6 nav-item gap-2"
-          >
+          <Link className="flex items-center active-nav-link text-white py-4 pl-6 nav-item gap-2">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
@@ -72,10 +56,7 @@ const Layout = () => {
             </svg>
             Authority
           </Link>
-          <Link
-            to={""}
-            className="flex items-center active-nav-link text-white py-4 pl-6 nav-item gap-2"
-          >
+          <Link className="flex items-center active-nav-link text-white py-4 pl-6 nav-item gap-2">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
@@ -103,9 +84,9 @@ const Layout = () => {
                 <i className="fas fa-plus mr-3"></i>Add Sports Complex
               </button>
             </NavLink>
-            <NavLink to={"addfacility"}>
+            <NavLink to={""}>
               <button className="w-full bg-white cta-btn font-semibold py-2 mt-5 rounded-br-lg rounded-bl-lg rounded-tr-lg shadow-lg hover:shadow-xl hover:bg-gray-300 flex items-center justify-center">
-                <i className="fas fa-plus mr-3"></i>Add Facility
+                <i className="fas fa-plus mr-3"></i>Add Sports/Facilities
               </button>
             </NavLink>
           </div>
@@ -121,7 +102,7 @@ const Layout = () => {
           >
             <NavLink to={""}>
               <button
-                onClick={LogoutHandler}
+                onClick={handleLogout}
                 className="realtive z-10 w-20 rounded-lg h-12 bg-white overflow-hidden border-4 hover:border-gray-300 focus:border-gray-300 focus:outline-none"
               >
                 Logout
@@ -132,6 +113,29 @@ const Layout = () => {
               onClick={() => setIsOpen(false)}
               className="h-full w-full fixed inset-0 cursor-default"
             ></button>
+            {/* <div
+              style={{ display: isOpen ? "block" : "none" }}
+              className="absolute w-32 bg-white rounded-lg shadow-lg py-2 mt-16"
+            >
+              <a
+                href="#"
+                className="block px-4 py-2 account-link hover:text-white"
+              >
+                Account
+              </a>
+              <a
+                href="#"
+                className="block px-4 py-2 account-link hover:text-white"
+              >
+                Support
+              </a>
+              <a
+                href="#"
+                className="block px-4 py-2 account-link hover:text-white"
+              >
+                Sign Out
+              </a>
+            </div> */}
           </div>
         </header>
 
@@ -189,26 +193,25 @@ const Layout = () => {
               Dashboard
             </Link>
             <Link
-              onClick={LogoutHandler}
+              onClick={handleLogout}
               className="flex items-center active-nav-link text-white py-2 pl-4 nav-item"
             >
-              <i className="fas fa-tachometer-alt mr-3"></i>
               Logout
             </Link>
             <div>
-              <NavLink to={"addauthority"}>
+              <NavLink>
                 <button className="w-full bg-white cta-btn font-semibold py-2 mt-5 rounded-br-lg rounded-bl-lg rounded-tr-lg shadow-lg hover:shadow-xl hover:bg-gray-300 flex items-center justify-center">
-                  <i className="fas fa-plus mr-3"></i> Add Authority
+                  <i className="fas fa-plus mr-3"></i> New Place
                 </button>
               </NavLink>
-              <NavLink to={""}>
+              <NavLink>
                 <button className="w-full bg-white cta-btn font-semibold py-2 mt-5 rounded-br-lg rounded-bl-lg rounded-tr-lg shadow-lg hover:shadow-xl hover:bg-gray-300 flex items-center justify-center">
-                  <i className="fas fa-plus mr-3"></i> Add Sports Complex
+                  <i className="fas fa-plus mr-3"></i> New Blog
                 </button>
               </NavLink>
-              <NavLink to={"addfacility"}>
+              <NavLink>
                 <button className="w-full bg-white cta-btn font-semibold py-2 mt-5 rounded-br-lg rounded-bl-lg rounded-tr-lg shadow-lg hover:shadow-xl hover:bg-gray-300 flex items-center justify-center">
-                  <i className="fas fa-plus mr-3"></i> Add Facility
+                  <i className="fas fa-plus mr-3"></i> New Category
                 </button>
               </NavLink>
             </div>
