@@ -58,6 +58,7 @@ const Login = () => {
           } else if (result.data.Role === 4) {
             navigate("/authority");
           } else if (result.data.Role === 3) {
+            navigate("/manager");
           } else if (result.data.Role === 2) {
           } else if (result.data.Role === 1) {
           } else if (result.data.Role === 0) {
