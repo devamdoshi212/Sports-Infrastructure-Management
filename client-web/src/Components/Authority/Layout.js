@@ -1,5 +1,7 @@
 import React, { useState } from "react";
-import { Outlet, NavLink, Link, Navigate, useNavigate } from "react-router-dom";
+import { Outlet, NavLink, Link, useNavigate } from "react-router-dom";
+import { FetchDistrict } from "../../API/FetchDistrict";
+
 const Layout = () => {
   const [isOpen, setIsOpen] = useState(false);
   const navigate = useNavigate();
@@ -7,6 +9,8 @@ const Layout = () => {
     localStorage.removeItem("token");
     navigate("/");
   };
+  FetchDistrict();
+
   return (
     <div className="bg-gray-100 font-family-karla flex">
       <aside className="relative bg-[#3d68ff] h-screen w-64 hidden sm:block shadow-xl">
@@ -74,14 +78,14 @@ const Layout = () => {
             Sports
           </Link>
           <div className="p-6">
-            <NavLink to={"addauthority"}>
+            <NavLink to={"addmanager"}>
               <button className="w-full bg-white cta-btn font-semibold py-2 mt-5 rounded-br-lg rounded-bl-lg rounded-tr-lg shadow-lg hover:shadow-xl hover:bg-gray-300 flex items-center justify-center">
-                <i className="fas fa-plus mr-3"></i>Add Authority
+                <i className="fas fa-plus mr-3"></i>Add Manager
               </button>
             </NavLink>
             <NavLink to={""}>
               <button className="w-full bg-white cta-btn font-semibold py-2 mt-5 rounded-br-lg rounded-bl-lg rounded-tr-lg shadow-lg hover:shadow-xl hover:bg-gray-300 flex items-center justify-center">
-                <i className="fas fa-plus mr-3"></i>Add Sports Complex
+                <i className="fas fa-plus mr-3"></i>Add Complex Details
               </button>
             </NavLink>
             <NavLink to={""}>
