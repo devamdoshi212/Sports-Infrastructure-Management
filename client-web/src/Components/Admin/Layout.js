@@ -1,7 +1,9 @@
 import React, { useState } from "react";
 import Swal from "sweetalert2";
 import { Outlet, NavLink, Link, useNavigate } from "react-router-dom";
+import { FetchDistrict } from "../../API/FetchDistrict";
 const Layout = () => {
+  FetchDistrict();
   const [isOpen, setIsOpen] = useState(false);
   const navigate = useNavigate();
   const LogoutHandler = () => {

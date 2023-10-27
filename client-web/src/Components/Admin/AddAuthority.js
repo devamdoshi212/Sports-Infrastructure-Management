@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useFormik } from "formik";
 import { userSchemas } from "../../Schemas";
-
+import { useSelector } from "react-redux";
+import Swal from "sweetalert2";
 const initialValues = {
   name: "",
   email: "",
@@ -10,6 +11,8 @@ const initialValues = {
   district: "",
 };
 const AddAuthority = () => {
+  const District = useSelector((state) => state.district.districts);
+
   const submitHandler = (values) => {
     var myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/json");
@@ -20,7 +23,7 @@ const AddAuthority = () => {
       ContactNum: values.mobileNumber,
       Role: 4,
       Name: values.name,
-      // DistrictId: "",
+      DistrictId: values.district,
     });
 
     var requestOptions = {
@@ -31,10 +34,15 @@ const AddAuthority = () => {
     };
 
     fetch("http://localhost:9999/signup", requestOptions)
-      .then((response) => response.text())
+      .then((response) => response.json())
       .then((result) => {
-        const data = result.json();
-        console.log(data);
+        Swal.fire({
+          position: "top-end",
+          icon: "success",
+          title: "Authority Added Successfully",
+          showConfirmButton: false,
+          timer: 1500,
+        });
       })
       .catch((error) => console.log("error", error));
   };
@@ -158,12 +166,11 @@ const AddAuthority = () => {
               onBlur={handleBlur}
             >
               <option value="">Select any One</option>
-              <option value="Heelo">Select any Nothig</option>
-              {/* {district.map((item) => (
-                <option key={item} value={item}>
-                  {item}
+              {District.map((item, index) => (
+                <option key={index} value={item._id}>
+                  {item.District}
                 </option>
-              ))} */}
+              ))}
               {/* <option value="Jamnagar">Jamnagar</option>
               <option value="Surat">Surat</option>
               <option value="Anand">Anand</option> */}
