@@ -1,7 +1,12 @@
 import React, { useState } from "react";
-import { Outlet, NavLink, Link } from "react-router-dom";
+import { Outlet, NavLink, Link, Navigate } from "react-router-dom";
 const Layout = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const navigate = Navigate();
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    navigate("/");
+  };
   return (
     <div className="bg-gray-100 font-family-karla flex">
       <aside className="relative bg-[#3d68ff] h-screen w-64 hidden sm:block shadow-xl">
@@ -103,7 +108,7 @@ const Layout = () => {
           >
             <NavLink to={""}>
               <button
-                onClick={() => setIsOpen(!isOpen)}
+                onClick={handleLogout}
                 className="realtive z-10 w-20 rounded-lg h-12 bg-white overflow-hidden border-4 hover:border-gray-300 focus:border-gray-300 focus:outline-none"
               >
                 Logout
@@ -194,10 +199,9 @@ const Layout = () => {
               Dashboard
             </Link>
             <Link
-              to={""}
+              onClick={handleLogout}
               className="flex items-center active-nav-link text-white py-2 pl-4 nav-item"
             >
-              <i className="fas fa-tachometer-alt mr-3"></i>
               Logout
             </Link>
             <div>

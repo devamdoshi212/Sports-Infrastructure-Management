@@ -12,6 +12,7 @@ import AddAuthority from "./Components/Admin/AddAuthority";
 import { ThemeProvider } from "@material-tailwind/react";
 import LoginVerify from "./Components/Auth/LoginVerify";
 import Verify from "./Components/Auth/Verify";
+import AddSports from "./Components/Admin/AddSport";
 const routes = createBrowserRouter([
   {
     path: "/",
@@ -34,6 +35,11 @@ const routes = createBrowserRouter([
       {
         path: "addauthority",
         element: <AddAuthority />,
+        errorElement: <ErrorPage />,
+      },
+      {
+        path: "addfacility",
+        element: <AddSports />,
         errorElement: <ErrorPage />,
       },
     ],
