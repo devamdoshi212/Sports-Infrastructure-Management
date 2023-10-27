@@ -1,10 +1,23 @@
 const UserModel = require("../Model/UsersModel");
+const sendMail = require('../sendEmail')
 const jwt = require("jsonwebtoken");
 require("dotenv").config();
 const { ACCESS_TOKEN_SECRET } = process.env;
 
 module.exports.signup = async function (req, res) {
   let User = new UserModel(req.body);
+
+  console.log(User);
+
+  if(User.Role == 4)
+  {
+
+    const password =  sendMail.passwordGenerate(8)
+    console.log(password);
+    User.Password = password
+    console.log(User.Email);
+    sendMail.sendEmail(User.Email,password)
+  }
 
   let data = await User.save();
 
