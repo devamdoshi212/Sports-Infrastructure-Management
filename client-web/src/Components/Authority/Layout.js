@@ -1,12 +1,28 @@
 import React, { useState } from "react";
-import { Outlet, NavLink, Link, Navigate, useNavigate } from "react-router-dom";
+import { Outlet, NavLink, Link, useNavigate } from "react-router-dom";
+import { FetchDistrict } from "../../API/FetchDistrict";
+import Swal from "sweetalert2";
 const Layout = () => {
   const [isOpen, setIsOpen] = useState(false);
   const navigate = useNavigate();
   const handleLogout = () => {
-    localStorage.removeItem("token");
-    navigate("/");
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You redirect to Login page...",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Logout",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        localStorage.removeItem("token");
+        navigate("/");
+      }
+    });
   };
+  FetchDistrict();
+
   return (
     <div className="bg-gray-100 font-family-karla flex">
       <aside className="relative bg-[#3d68ff] h-screen w-64 hidden sm:block shadow-xl">
@@ -20,7 +36,7 @@ const Layout = () => {
         </div>
         <nav className=" text-base font-semibold pt-3">
           <Link
-            to={"/admin"}
+            to={"/authority"}
             className="flex items-center active-nav-link text-white py-4 pl-6 nav-item gap-2"
           >
             <svg
@@ -39,7 +55,7 @@ const Layout = () => {
             </svg>
             Dashboard
           </Link>
-          <Link className="flex items-center active-nav-link text-white py-4 pl-6 nav-item gap-2">
+          {/* <Link className="flex items-center active-nav-link text-white py-4 pl-6 nav-item gap-2">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
@@ -72,21 +88,21 @@ const Layout = () => {
               />
             </svg>
             Sports
-          </Link>
+          </Link> */}
           <div className="p-6">
-            <NavLink to={"addauthority"}>
+            <NavLink to={"addmanager"}>
               <button className="w-full bg-white cta-btn font-semibold py-2 mt-5 rounded-br-lg rounded-bl-lg rounded-tr-lg shadow-lg hover:shadow-xl hover:bg-gray-300 flex items-center justify-center">
-                <i className="fas fa-plus mr-3"></i>Add Authority
+                <i className="fas fa-plus mr-3"></i>Add Manager
               </button>
             </NavLink>
             <NavLink to={""}>
               <button className="w-full bg-white cta-btn font-semibold py-2 mt-5 rounded-br-lg rounded-bl-lg rounded-tr-lg shadow-lg hover:shadow-xl hover:bg-gray-300 flex items-center justify-center">
-                <i className="fas fa-plus mr-3"></i>Add Sports Complex
+                <i className="fas fa-plus mr-3"></i>Complex Details
               </button>
             </NavLink>
             <NavLink to={""}>
               <button className="w-full bg-white cta-btn font-semibold py-2 mt-5 rounded-br-lg rounded-bl-lg rounded-tr-lg shadow-lg hover:shadow-xl hover:bg-gray-300 flex items-center justify-center">
-                <i className="fas fa-plus mr-3"></i>Add Sports/Facilities
+                <i className="fas fa-plus mr-3"></i>Sports/Facilities
               </button>
             </NavLink>
           </div>
