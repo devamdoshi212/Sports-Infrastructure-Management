@@ -15,6 +15,10 @@ const SportSchema = new mongoose.Schema({
         required: [true, "Please Enter Category name"],
         trim: true,
 
+    },
+
+    baseUrl:{
+        type:String
     }
   
 })

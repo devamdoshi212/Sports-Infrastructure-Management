@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 
 const DistrictSchema = new mongoose.Schema({
-  district: String,
+  District: String,
   authorityID: { type: mongoose.SchemaTypes.ObjectId, ref: "users" },
   CreatedAt: {
     type: Date,
