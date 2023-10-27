@@ -51,6 +51,7 @@ const Login = () => {
           if (result.data.Role === 5) {
             navigate("/admin");
           } else if (result.data.Role === 4) {
+            navigate("/authority");
           } else if (result.data.Role === 3) {
           } else if (result.data.Role === 2) {
           } else if (result.data.Role === 1) {
