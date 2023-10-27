@@ -47,4 +47,5 @@ module.exports.updateSportsComplex = async function (req, res) {
   let sportcomplex = await SportsComplex.findOne({ _id: id });
   sportcomplex.sports.push(json);
   let response = await sportcomplex.save();
+  res.json({ data: response, msg: "updated sucessfully", rcode: 200 });
 };

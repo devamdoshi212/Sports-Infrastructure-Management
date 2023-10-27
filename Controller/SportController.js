@@ -7,7 +7,7 @@ const mystorage = multer.diskStorage({
     cb(null, file.originalname);
   },
 });
-
+  
 module.exports.upload = multer({
   storage: mystorage,
   fileFilter: function (req, file, cb) {

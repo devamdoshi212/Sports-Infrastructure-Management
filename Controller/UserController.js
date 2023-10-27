@@ -1,6 +1,8 @@
 const UserModel = require("../Model/UsersModel");
+const DistrictModel = require("../Model/DistrictsModel");
 const sendMail = require("../sendEmail");
 const jwt = require("jsonwebtoken");
+const { default: mongoose } = require("mongoose");
 require("dotenv").config();
 const { ACCESS_TOKEN_SECRET } = process.env;
 
@@ -16,6 +18,11 @@ module.exports.signup = async function (req, res) {
   }
 
   let data = await User.save();
+  // let did = new mongoose.Types.ObjectId(data.DistrictId);
+  let district = await DistrictModel.findOne({ _id: data.DistrictId });
+  district.authorityID = new mongoose.Types.ObjectId(data._id);
+  let response = await district.save();
+  console.log(response);
 
   res.json({ data: data, msg: "User Added", rcode: 200 });
 };
