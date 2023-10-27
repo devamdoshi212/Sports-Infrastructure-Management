@@ -8,13 +8,20 @@ export const userSchemas = Yup.object().shape({
   dob: Yup.string().required("Select at Date of Birth"),
 });
 
+export const ManagerSchemas = Yup.object().shape({
+  name: Yup.string().required("Please Enter Name"),
+  email: Yup.string().email().required("Please Enter Valid Email"),
+  mobileNumber: Yup.number().required("Please Enter Mobile Number"),
+  dob: Yup.string().required("Select at Date of Birth"),
+});
+
 export const LoginSchemas = Yup.object().shape({
-  Email: Yup.string().email().required("Enter Email"),
-  Password: Yup.string().required("Enter Password"),
+  Email: Yup.string().email().required(" Email is Required"),
+  Password: Yup.string().required("Password is Required"),
 });
 
 export const sportSchema = Yup.object().shape({
-  name: Yup.string().required("Facility Name is Require "),
+  name: Yup.string().required("Facility Name is Required "),
   Image: Yup.array()
     .min(1, "Select at least one file")
     .max(1, "Select at least one file")
@@ -34,4 +41,12 @@ export const sportSchema = Yup.object().shape({
         })
     ),
   Category: Yup.string().required("Category is Require"),
+});
+export const sportComplexSchema = Yup.object().shape({
+  name: Yup.string().required("Sports Complex Name is Required "),
+  district: Yup.string().required("District is Required"),
+  area: Yup.string().required("Area is Required"),
+  taluka: Yup.string().required("Taluka is Required"),
+  location: Yup.string().required("Location is Required"),
+  operationalSince: Yup.string().required("Opreational Since is Required"),
 });
