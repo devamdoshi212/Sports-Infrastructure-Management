@@ -8,9 +8,9 @@ const initialValues = {
   email: "",
   mobileNumber: "",
   dob: "",
-  district: "",
+  //   district: "",
 };
-const AddAuthority = () => {
+const AddManager = () => {
   const District = useSelector((state) => state.district.districts);
 
   const submitHandler = (values) => {
@@ -24,6 +24,7 @@ const AddAuthority = () => {
       Role: 4,
       Name: values.name,
       DistrictId: values.district,
+      createdBy: "",
     });
 
     var requestOptions = {
@@ -62,7 +63,7 @@ const AddAuthority = () => {
     <div className="flex items-center justify-center bg-gray-200 min-h-screen">
       <div className="w-full max-w-2xl">
         <h2 className="text-center text-2xl uppercase font-semibold font-serif text-gray-800">
-          Add New Authority
+          Add New Manager
         </h2>
         <form
           onSubmit={handleSubmit}
@@ -197,4 +198,4 @@ const AddAuthority = () => {
   );
 };
 
-export default AddAuthority;
+export default AddManager;
