@@ -6,7 +6,7 @@ import Login from "../../Pages/Login";
 const Verify = async (role) => {
   const token = localStorage.getItem("token");
   if (token === null) {
-    return redirect("/login");
+    return redirect("/");
   } else {
     var myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/json");

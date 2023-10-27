@@ -5,7 +5,8 @@ import {
 } from "react-router-dom";
 import Login from "./Pages/Login";
 import ErrorPage from "./Pages/ErrorPage";
-import Layout from "./Components/Admin/Layout";
+import AdminLayout from "./Components/Admin/Layout";
+import AuthorityLayout from "./Components/Authority/Layout";
 import AdminDashboard from "./Pages/AdminDashboard";
 import AddAuthority from "./Components/Admin/AddAuthority";
 import { ThemeProvider } from "@material-tailwind/react";
@@ -20,7 +21,7 @@ const routes = createBrowserRouter([
   },
   {
     path: "/admin",
-    element: <Layout />,
+    element: <AdminLayout />,
     loader: () => {
       return Verify(5);
     },
@@ -34,6 +35,20 @@ const routes = createBrowserRouter([
         path: "addauthority",
         element: <AddAuthority />,
         errorElement: <ErrorPage />,
+      },
+    ],
+  },
+  {
+    path: "/authority",
+    element: <AuthorityLayout />,
+    loader: () => {
+      return Verify(4);
+    },
+    errorElement: <ErrorPage />,
+    children: [
+      {
+        index: true,
+        element: <AdminDashboard />,
       },
     ],
   },
