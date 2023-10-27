@@ -14,7 +14,7 @@ app.use(cors())
 
 //UserRoutes
 app.use('/',UserRoute)
-app.post('/decode',decodedToken.decodedToken)
+app.post('/verify',decodedToken.decodedToken)
 
 app.listen(9999)
 console.log("server started at 9999");
