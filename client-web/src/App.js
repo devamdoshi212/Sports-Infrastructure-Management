@@ -13,6 +13,8 @@ import { ThemeProvider } from "@material-tailwind/react";
 import LoginVerify from "./Components/Auth/LoginVerify";
 import Verify from "./Components/Auth/Verify";
 import AddSports from "./Components/Admin/AddSport";
+import AddSportsComplex from "./Components/Admin/AddSportsComplex";
+import AddManager from "./Components/Authority/AddManager";
 const routes = createBrowserRouter([
   {
     path: "/",
@@ -42,6 +44,11 @@ const routes = createBrowserRouter([
         element: <AddSports />,
         errorElement: <ErrorPage />,
       },
+      {
+        path: "addsportscomplex",
+        element: <AddSportsComplex />,
+        errorElement: <ErrorPage />,
+      },
     ],
   },
   {
@@ -55,6 +62,11 @@ const routes = createBrowserRouter([
       {
         index: true,
         element: <AdminDashboard />,
+      },
+      {
+        path: "addmanager",
+        element: <AddManager />,
+        errorElement: <ErrorPage />,
       },
     ],
   },

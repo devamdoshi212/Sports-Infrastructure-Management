@@ -1,56 +1,54 @@
 import React from "react";
 import { useFormik } from "formik";
-import { userSchemas } from "../../Schemas";
 import { useSelector } from "react-redux";
-import Swal from "sweetalert2";
+// import Swal from "sweetalert2";
+import { sportComplexSchema } from "../../Schemas";
 const initialValues = {
   name: "",
-  email: "",
-  mobileNumber: "",
-  dob: "",
+  location: "",
+  area: "",
+  taluka: "",
   district: "",
+  operationalSince: "",
 };
-const AddAuthority = () => {
+const AddSportsComplex = () => {
   const District = useSelector((state) => state.district.districts);
 
   const submitHandler = (values) => {
-    var myHeaders = new Headers();
-    myHeaders.append("Content-Type", "application/json");
-
-    var raw = JSON.stringify({
-      Email: values.email,
-      DOB: values.dob,
-      ContactNum: values.mobileNumber,
-      Role: 4,
-      Name: values.name,
-      DistrictId: values.district,
-    });
-
-    var requestOptions = {
-      method: "POST",
-      headers: myHeaders,
-      body: raw,
-      redirect: "follow",
-    };
-
-    fetch("http://localhost:9999/signup", requestOptions)
-      .then((response) => response.json())
-      .then((result) => {
-        Swal.fire({
-          position: "top-end",
-          icon: "success",
-          title: "Authority Added Successfully",
-          showConfirmButton: false,
-          timer: 1500,
-        });
-      })
-      .catch((error) => console.log("error", error));
+    // var myHeaders = new Headers();
+    // myHeaders.append("Content-Type", "application/json");
+    // var raw = JSON.stringify({
+    //   Email: values.email,
+    //   DOB: values.dob,
+    //   ContactNum: values.mobileNumber,
+    //   Role: 4,
+    //   Name: values.name,
+    //   DistrictId: values.district,
+    // });
+    // var requestOptions = {
+    //   method: "POST",
+    //   headers: myHeaders,
+    //   body: raw,
+    //   redirect: "follow",
+    // };
+    // fetch("http://localhost:9999/signup", requestOptions)
+    //   .then((response) => response.json())
+    //   .then((result) => {
+    //     Swal.fire({
+    //       position: "top-end",
+    //       icon: "success",
+    //       title: "Authority Added Successfully",
+    //       showConfirmButton: false,
+    //       timer: 1500,
+    //     });
+    //   })
+    //   .catch((error) => console.log("error", error));
   };
 
   const { values, errors, touched, handleBlur, handleChange, handleSubmit } =
     useFormik({
       initialValues: initialValues,
-      validationSchema: userSchemas,
+      validationSchema: sportComplexSchema,
       onSubmit: (values, action) => {
         console.log(values);
         submitHandler(values);
@@ -62,7 +60,7 @@ const AddAuthority = () => {
     <div className="flex items-center justify-center bg-gray-200 min-h-screen">
       <div className="w-full max-w-2xl">
         <h2 className="text-center text-2xl uppercase font-semibold font-serif text-gray-800">
-          Add New Authority
+          Add New Sports Complex
         </h2>
         <form
           onSubmit={handleSubmit}
@@ -73,7 +71,7 @@ const AddAuthority = () => {
               className="block text-gray-700 text-sm font-bold mb-2"
               htmlFor="name"
             >
-              Name
+              Sports Complex Name
             </label>
             <input
               className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
@@ -91,65 +89,66 @@ const AddAuthority = () => {
           <div className="mb-4">
             <label
               className="block text-gray-700 text-sm font-bold mb-2"
-              htmlFor="email"
+              htmlFor="name"
             >
-              Email
+              Taluka
             </label>
             <input
               className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-              name="email"
+              name="taluka"
               type="text"
-              placeholder="Enter Your Email"
-              value={values.email}
+              placeholder="Taluka"
+              value={values.taluka}
               onChange={handleChange}
               onBlur={handleBlur}
             />
-            {errors.email && touched.email ? (
-              <small className="text-ligth text-red-600">{errors.email}</small>
+            {errors.taluka && touched.taluka ? (
+              <small className="text-ligth text-red-600">{errors.taluka}</small>
             ) : null}
           </div>
-          <div className="mb-6">
+          <div className="mb-4">
             <label
               className="block text-gray-700 text-sm font-bold mb-2"
-              htmlFor="mobileNumber"
+              htmlFor="location"
             >
-              Mobile Number
+              Location
             </label>
             <input
-              name="mobileNumber"
-              type="number"
-              value={values.mobileNumber}
+              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              name="location"
+              type="text"
+              placeholder="Location"
+              value={values.location}
               onChange={handleChange}
               onBlur={handleBlur}
-              placeholder="Enter Number"
-              className="shadow appearance-none  rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
-            ></input>
-            {errors.mobileNumber && touched.mobileNumber ? (
+            />
+            {errors.location && touched.location ? (
               <small className="text-ligth text-red-600">
-                {errors.mobileNumber}
+                {errors.location}
               </small>
             ) : null}
           </div>
-          <div className="mb-6">
+          <div className="mb-4">
             <label
               className="block text-gray-700 text-sm font-bold mb-2"
-              htmlFor="dob"
+              htmlFor="area"
             >
-              Date of Birth
+              Area
             </label>
             <input
-              name="dob"
-              type="date"
-              value={values.dob}
+              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              name="area"
+              type="text"
+              placeholder="Area"
+              value={values.area}
               onChange={handleChange}
               onBlur={handleBlur}
-              placeholder="Enter Number"
-              className="shadow appearance-none  rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
-            ></input>
-            {errors.dob && touched.dob ? (
-              <small className="text-ligth text-red-600">{errors.dob}</small>
+            />
+            {errors.area && touched.area ? (
+              <small className="text-ligth text-red-600">{errors.area}</small>
             ) : null}
           </div>
+
           <div className="mb-4">
             <label
               className="block text-gray-700 text-sm font-bold mb-2"
@@ -181,7 +180,28 @@ const AddAuthority = () => {
               </small>
             ) : null}
           </div>
-
+          <div className="mb-4">
+            <label
+              className="block text-gray-700 text-sm font-bold mb-2"
+              htmlFor="operationalSince"
+            >
+              Operational Since
+            </label>
+            <input
+              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              name="operationalSince"
+              type="text"
+              placeholder="Operational Since"
+              value={values.operationalSince}
+              onChange={handleChange}
+              onBlur={handleBlur}
+            />
+            {errors.operationalSince && touched.operationalSince ? (
+              <small className="text-ligth text-red-600">
+                {errors.operationalSince}
+              </small>
+            ) : null}
+          </div>
           <div className="flex items-center justify-center">
             <button
               className="bg-blue-500 uppercase hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
@@ -197,4 +217,4 @@ const AddAuthority = () => {
   );
 };
 
-export default AddAuthority;
+export default AddSportsComplex;
