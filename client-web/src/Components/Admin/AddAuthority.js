@@ -10,7 +10,34 @@ const initialValues = {
   district: "",
 };
 const AddAuthority = () => {
-  const submitHandler = (values) => {};
+  const submitHandler = (values) => {
+    var myHeaders = new Headers();
+    myHeaders.append("Content-Type", "application/json");
+
+    var raw = JSON.stringify({
+      Email: values.email,
+      DOB: values.dob,
+      ContactNum: values.mobileNumber,
+      Role: 4,
+      Name: values.name,
+      // DistrictId: "",
+    });
+
+    var requestOptions = {
+      method: "POST",
+      headers: myHeaders,
+      body: raw,
+      redirect: "follow",
+    };
+
+    fetch("http://localhost:9999/signup", requestOptions)
+      .then((response) => response.text())
+      .then((result) => {
+        const data = result.json();
+        console.log(data);
+      })
+      .catch((error) => console.log("error", error));
+  };
 
   const { values, errors, touched, handleBlur, handleChange, handleSubmit } =
     useFormik({
