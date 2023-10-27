@@ -1,6 +1,6 @@
 import React from "react";
 import { useFormik } from "formik";
-import { userSchemas } from "../Schemas";
+import { userSchemas } from "../../Schemas";
 
 const initialValues = {
   name: "",
