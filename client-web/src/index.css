@@ -2,3 +2,12 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+.p-datatable table {
+  border-collapse: collapse;
+  border: 1px solid #ccc;
+}
+
+.p-datatable th,
+.p-datatable td {
+  border: 1px solid #ccc;
+}
