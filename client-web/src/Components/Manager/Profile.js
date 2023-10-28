@@ -26,7 +26,7 @@ const Profile = () => {
   return (
     <div className="text-3xl">
       <div>Authority Name : {lodaer && Profile.Name}</div>
-      <div>District : {lodaer && Profile.DistrictId.District}</div>
+      {/* <div>District : {lodaer && Profile.DistrictId.District}</div> */}
     </div>
   );
 };

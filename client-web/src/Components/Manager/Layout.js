@@ -1,10 +1,21 @@
 import React, { useState } from "react";
-import { Outlet, NavLink, Link, useNavigate } from "react-router-dom";
+import {
+  Outlet,
+  NavLink,
+  Link,
+  useNavigate,
+  useLoaderData,
+} from "react-router-dom";
 import { FetchDistrict } from "../../API/FetchDistrict";
 import Swal from "sweetalert2";
+import { UserActions } from "../../store/UserData";
+import { useDispatch } from "react-redux";
 const Layout = () => {
   const [isOpen, setIsOpen] = useState(false);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  dispatch(UserActions.getuserdata(useLoaderData()));
+
   const handleLogout = () => {
     Swal.fire({
       title: "Are you sure?",
@@ -75,7 +86,10 @@ const Layout = () => {
             </svg>
             Dashboard
           </Link>
-          <Link className="flex items-center active-nav-link text-white py-4 pl-6 nav-item gap-2">
+          <Link
+            className="flex items-center active-nav-link text-white py-4 pl-6 nav-item gap-2"
+            to={"allsupervisor"}
+          >
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
@@ -92,7 +106,10 @@ const Layout = () => {
             </svg>
             Supervisor
           </Link>
-          <Link className="flex items-center active-nav-link text-white py-4 pl-6 nav-item gap-2">
+          <Link
+            className="flex items-center active-nav-link text-white py-4 pl-6 nav-item gap-2"
+            to={"allinstructor"}
+          >
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
