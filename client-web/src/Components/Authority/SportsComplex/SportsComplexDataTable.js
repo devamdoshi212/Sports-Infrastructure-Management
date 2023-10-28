@@ -270,7 +270,7 @@ export default function SportComplexDataTable() {
         />
         <Column
           header="Manager"
-          //   field="createdAt" // Replace 'districtName' with the actual field name
+          field="manager.Name" // Replace 'districtName' with the actual field name
           filterField="createdAt" // Make sure this matches the actual field name
           style={{ minWidth: "12rem" }}
           //   body={dateBodyTemplate}

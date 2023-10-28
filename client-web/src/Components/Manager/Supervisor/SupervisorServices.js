@@ -1,6 +1,6 @@
-export const AuthorityService = {
+export const SupervisorService = {
   getData() {
-    return fetch("http://localhost:9999/getuserwithdistrict?Role=4")
+    return fetch("http://localhost:9999/getuser?Role=1")
       .then((res) => res.json())
       .then((res) => {
         return res.data;

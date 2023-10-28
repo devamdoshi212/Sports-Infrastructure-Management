@@ -30,9 +30,18 @@ module.exports.signup = async function (req, res) {
     let SportComplex = await SportComplexModel.findOne({
       _id: req.body.SportComplexId,
     });
+
     SportComplex.manager = new mongoose.Types.ObjectId(data._id);
     let response = await SportComplex.save();
     res.json({ data: data, msg: "User Added(role:3)", rcode: 200 });
+  } else if (User.Role == 2) {
+  } else if (User.Role == 1) {
+    const password = sendMail.passwordGenerate(8);
+    User.Password = password;
+    sendMail.sendEmail(User.Email, password);
+    let data = await User.save();
+    res.json({ data: data, msg: "User Added(role:1)", rcode: 200 });
+  } else if (User.Role == 0) {
   } else {
     res.json({ data: data, msg: "User Added", rcode: 200 });
   }
@@ -57,6 +66,40 @@ module.exports.login = async function (req, res) {
 
 module.exports.getUser = function (req, res) {
   UserModel.find(req.query)
+    .then((data) => {
+      res.json({ data: data, msg: "User Retrived", rcode: 200 });
+    })
+    .catch((err) => {
+      res.json({ data: err.msg, msg: "smw", rcode: -9 });
+    });
+};
+
+module.exports.getUserWithDistrict = function (req, res) {
+  UserModel.find(req.query)
+    .populate("DistrictId")
+    .then((data) => {
+      res.json({ data: data, msg: "User Retrived", rcode: 200 });
+    })
+    .catch((err) => {
+      res.json({ data: err.msg, msg: "smw", rcode: -9 });
+    });
+};
+
+module.exports.getUserWithSportsComplex = function (req, res) {
+  UserModel.find(req.query)
+    .populate("SportComplexId")
+    .then((data) => {
+      res.json({ data: data, msg: "User Retrived", rcode: 200 });
+    })
+    .catch((err) => {
+      res.json({ data: err.msg, msg: "smw", rcode: -9 });
+    });
+};
+
+module.exports.getUserWithDistrictandSportsComplex = function (req, res) {
+  UserModel.find(req.query)
+    .populate("SportComplexId")
+    .populate("DistrictId")
     .then((data) => {
       res.json({ data: data, msg: "User Retrived", rcode: 200 });
     })
