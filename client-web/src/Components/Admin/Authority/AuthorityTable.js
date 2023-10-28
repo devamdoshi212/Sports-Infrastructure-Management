@@ -17,6 +17,8 @@ export default function AuthorityTable() {
   const [customers, setCustomers] = useState(null);
   const [filters, setFilters] = useState(null);
   const [loading, setLoading] = useState(false);
+  let district = [{}];
+  district = useSelector((state) => state.district.districts);
   const [globalFilterValues, setGlobalFilterValues] = useState({
     Name: "",
     ContactNum: "",
@@ -61,11 +63,12 @@ export default function AuthorityTable() {
       setLoading(false);
     });
     initFilters();
-  }, [deleterefresh]);
+  }, [deleterefresh, district]);
 
   const getCustomers = (data) => {
     return [...(data || [])].map((d) => {
       d.date = new Date(d.date);
+      d.District = getDistrictName(d.DistrictId);
       return d;
     });
   };
@@ -186,10 +189,13 @@ export default function AuthorityTable() {
     return rowData.Category.join(", ");
   };
 
-  const district = useSelector((state) => state.district.districts);
-
   const DistrictBodyTemplete = (rowdata) => {
     const data = district.find((c) => c._id === rowdata.DistrictId);
+    return data.District;
+  };
+
+  const getDistrictName = (id) => {
+    const data = district.find((c) => c._id === id);
     return data.District;
   };
 
@@ -242,7 +248,7 @@ export default function AuthorityTable() {
           field="District" // Replace 'districtName' with the actual field name
           filterField="District" // Make sure this matches the actual field name
           style={{ minWidth: "12rem" }}
-          body={DistrictBodyTemplete}
+          // body={DistrictBodyTemplete}
           filterMatchMode={FilterMatchMode.CONTAINS}
           filterValue={globalFilterValues.District}
         />
