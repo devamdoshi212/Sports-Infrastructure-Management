@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useFormik } from "formik";
 import { userSchemas } from "../../../Schemas";
 import { useSelector } from "react-redux";
@@ -14,12 +14,17 @@ const initialValues = {
 };
 const AddAuthority = () => {
   const navigate = useNavigate();
-  const District = useSelector((state) => state.district.districts);
+  const [authority, setauthority] = useState(false);
+  const [RemainDistrict, SetRemainDistrict] = useState([{}]);
+  let District = [{}];
+  District = useSelector((state) => state.district.districts);
   function check(props) {
     return !props.hasOwnProperty("authorityID");
   }
 
-  const RemainDistrict = District.filter(check);
+  useEffect(() => {
+    SetRemainDistrict(District.filter(check));
+  }, [District, authority]);
   const submitHandler = (values) => {
     var myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/json");
@@ -43,6 +48,7 @@ const AddAuthority = () => {
     fetch("http://localhost:9999/signup", requestOptions)
       .then((response) => response.json())
       .then((result) => {
+        setauthority(!authority);
         Swal.fire({
           position: "top-end",
           icon: "success",
@@ -50,6 +56,7 @@ const AddAuthority = () => {
           showConfirmButton: false,
           timer: 1500,
         });
+        navigate("/admin/allauthority");
       })
       .catch((error) => console.log("error", error));
   };
@@ -62,7 +69,6 @@ const AddAuthority = () => {
         console.log(values);
         submitHandler(values);
         action.resetForm();
-        navigate("/admin/allauthority");
       },
     });
   return (
