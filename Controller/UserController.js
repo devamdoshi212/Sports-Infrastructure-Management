@@ -64,3 +64,37 @@ module.exports.getUser = function (req, res) {
       res.json({ data: err.msg, msg: "smw", rcode: -9 });
     });
 };
+
+module.exports.getUserWithDistrict = function (req, res) {
+  UserModel.find(req.query)
+    .populate("DistrictId")
+    .then((data) => {
+      res.json({ data: data, msg: "User Retrived", rcode: 200 });
+    })
+    .catch((err) => {
+      res.json({ data: err.msg, msg: "smw", rcode: -9 });
+    });
+};
+
+module.exports.getUserWithSportsComplex = function (req, res) {
+  UserModel.find(req.query)
+    .populate("SportComplexId")
+    .then((data) => {
+      res.json({ data: data, msg: "User Retrived", rcode: 200 });
+    })
+    .catch((err) => {
+      res.json({ data: err.msg, msg: "smw", rcode: -9 });
+    });
+};
+
+module.exports.getUserWithDistrictandSportsComplex = function (req, res) {
+  UserModel.find(req.query)
+    .populate("SportComplexId")
+    .populate("DistrictId")
+    .then((data) => {
+      res.json({ data: data, msg: "User Retrived", rcode: 200 });
+    })
+    .catch((err) => {
+      res.json({ data: err.msg, msg: "smw", rcode: -9 });
+    });
+};

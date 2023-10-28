@@ -38,6 +38,7 @@ import AllFacility from "./Components/Admin/Facility/AllFacility";
 import AllSportsComplex from "./Components/Admin/SportsComplex/AllSportsComplex";
 import AllManager from "./Components/Authority/Manager/AllManager";
 import AllAuthoritySportsComplex from "./Components/Authority/SportsComplex/AllSportsComplex";
+import Profile from "./Components/Authority/Profile/Profile";
 
 const routes = createBrowserRouter([
   {
@@ -101,6 +102,11 @@ const routes = createBrowserRouter([
       {
         index: true,
         element: <AuthorityDashboard />,
+      },
+      {
+        path: "profile",
+        element: <Profile />,
+        errorElement: <ErrorPage />,
       },
       {
         path: "addmanager",

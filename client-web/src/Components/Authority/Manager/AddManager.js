@@ -72,7 +72,7 @@ const AddManager = () => {
           showConfirmButton: false,
           timer: 1500,
         });
-        navigate("/admin/allmanager");
+        navigate("/authority/allmanager");
       })
       .catch((error) => console.log("error", error));
   };

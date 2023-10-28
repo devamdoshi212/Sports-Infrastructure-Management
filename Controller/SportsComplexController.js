@@ -19,13 +19,10 @@ module.exports.AddSportsComplex = async function (req, res) {
 module.exports.getSportsComplex = async function (req, res) {
   //req.query {manager: id}
   let data = await SportsComplex.find(req.query).populate("manager");
-  if(data)
-  {
+  if (data) {
     res.json({ data: data, msg: "Sport Retrived", rcode: 200 });
-  }
-  else {
+  } else {
     res.json({ data: err.msg, msg: "smw", rcode: -9 });
-
   }
 };
 
