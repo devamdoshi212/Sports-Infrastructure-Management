@@ -11,11 +11,116 @@ const initialValues = {
   dob: "",
   sports: [],
 };
+
+const SportsInitial = (data) => {
+  let Initial = [{}];
+  for (let index = 0; index < data.length; index++) {
+    const element = data[index];
+    let item = {
+      SportName: data[index].SportName,
+      value: data[index]._id,
+      experience: "",
+      fields: [{ startTime: "", endTime: "" }],
+    };
+    Initial.push(item);
+  }
+  Initial.shift();
+  return Initial;
+};
+
 const AddInstructor = () => {
   const navigate = useNavigate();
+  const [sport, setSports] = useState([{}]);
   const [instructor, setinstructor] = useState(false);
+  const [formData, setFormData] = useState([{}]);
+  const [checkedCheckboxes, setCheckedCheckboxes] = useState([]);
+  const [fieldsPerCheckbox, setFieldsPerCheckbox] = useState(
+    Array.from({ length: sport.length }, () => 1)
+  );
+
+  useEffect(() => {
+    var requestOptions = {
+      method: "GET",
+      redirect: "follow",
+    };
+
+    fetch("http://localhost:9999/getSports", requestOptions)
+      .then((response) => response.json())
+      .then((result) => {
+        setFormData(SportsInitial(result.data));
+      })
+      .catch((error) => console.log("error", error));
+  }, []);
+
+  const selectedData = formData
+    .filter((data, index) => checkedCheckboxes.includes(index))
+    .map((data) => ({
+      labSportNameel: data.SportName,
+      fields: data.fields,
+      value: data.value,
+      experience: data.experience,
+    }));
+
+  const handleCheckboxChange = (index) => {
+    const newCheckedCheckboxes = [...checkedCheckboxes];
+    if (newCheckedCheckboxes.includes(index)) {
+      newCheckedCheckboxes.splice(newCheckedCheckboxes.indexOf(index), 1);
+    } else {
+      newCheckedCheckboxes.push(index);
+      // Initialize fields for this checkbox if it's being checked
+      if (!formData[index].fields) {
+        formData[index].fields = [{ startTime: "", endTime: "" }];
+      }
+    }
+    setCheckedCheckboxes(newCheckedCheckboxes);
+  };
+
+  const handleExperience = (checkboxIndex, value) => {
+    const updatedFormData = [...formData];
+    updatedFormData[checkboxIndex].experience = value;
+    setFormData(updatedFormData);
+  };
+
+  const handleInputChange = (checkboxIndex, fieldIndex, field, value) => {
+    const updatedFormData = [...formData];
+    updatedFormData[checkboxIndex].fields[fieldIndex][field] = value;
+    setFormData(updatedFormData);
+  };
+
+  const handleAddField = (checkboxIndex) => {
+    const newFieldsPerCheckbox = [...fieldsPerCheckbox];
+    newFieldsPerCheckbox[checkboxIndex] += 1;
+
+    const updatedFormData = [...formData];
+    if (!updatedFormData[checkboxIndex].fields) {
+      updatedFormData[checkboxIndex].fields = [];
+    }
+    updatedFormData[checkboxIndex].fields.push({ startTime: "", endTime: "" });
+
+    setFieldsPerCheckbox(newFieldsPerCheckbox);
+    setFormData(updatedFormData);
+  };
+
+  const handleRemoveField = (checkboxIndex, fieldIndex) => {
+    const updatedFormData = [...formData];
+    updatedFormData[checkboxIndex].fields.splice(fieldIndex, 1);
+
+    setFieldsPerCheckbox(
+      fieldsPerCheckbox.map((count, index) =>
+        index === checkboxIndex ? count - 1 : count
+      )
+    );
+    setFormData(updatedFormData);
+  };
+
+  // const handleSubmit2 = (e) => {
+  //   e.preventDefault();
+  //   console.log(formData);
+  // };
 
   const submitHandler = (values) => {
+    console.log(formData);
+
     var myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/json");
 
@@ -49,29 +154,13 @@ const AddInstructor = () => {
       })
       .catch((error) => console.log("error", error));
   };
-  const [sport, setSports] = useState([]);
-
-  useEffect(() => {
-    var requestOptions = {
-      method: "GET",
-      redirect: "follow",
-    };
-
-    fetch("http://localhost:9999/getSports", requestOptions)
-      .then((response) => response.json())
-      .then((result) => {
-        // console.log(result.data);
-        setSports(result.data);
-      })
-      .catch((error) => console.log("error", error));
-  }, []);
 
   const { values, errors, touched, handleBlur, handleChange, handleSubmit } =
     useFormik({
       initialValues: initialValues,
       validationSchema: SupervisorSchemas,
       onSubmit: (values, action) => {
-        console.log(values);
+        console.log(selectedData);
         // submitHandler(values);
         action.resetForm();
       },
@@ -181,7 +270,7 @@ const AddInstructor = () => {
                 <small className="text-ligth text-red-600">{errors.dob}</small>
               ) : null}
             </div>
-            <div className="mb-4">
+            {/* <div className="mb-4">
               <label
                 className="block text-gray-700 text-sm font-bold mb-2"
                 htmlFor="sports"
@@ -210,6 +299,93 @@ const AddInstructor = () => {
                   {errors.sports}
                 </small>
               ) : null}
+            </div> */}
+
+            <div className="mb-6">
+              <div>
+                <label
+                  className="block text-gray-700 text-sm font-bold mb-2"
+                  htmlFor="dob"
+                >
+                  Facility
+                </label>
+              </div>
+              {formData.map((data, checkboxIndex) => (
+                <div key={checkboxIndex}>
+                  <label>
+                    <input
+                      // className="shadow appearance-none  rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
+                      type="checkbox"
+                      checked={checkedCheckboxes.includes(checkboxIndex)}
+                      onChange={() => handleCheckboxChange(checkboxIndex)}
+                    />
+                    {data.SportName}
+                  </label>
+                  {checkedCheckboxes.includes(checkboxIndex) && (
+                    <div>
+                      <input
+                        type="text"
+                        value={data.experience}
+                        onChange={(e) =>
+                          handleExperience(checkboxIndex, e.target.value)
+                        }
+                        placeholder="experience"
+                        className="shadow appearance-none w-full rounded py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
+                      />
+                      {data.fields.map((field, fieldIndex) => (
+                        <div key={fieldIndex} className="flex gap-2">
+                          <input
+                            className="shadow appearance-none rounded py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
+                            type="text"
+                            placeholder="Start Time"
+                            value={field.startTime}
+                            onChange={(e) =>
+                              handleInputChange(
+                                checkboxIndex,
+                                fieldIndex,
+                                "startTime",
+                                e.target.value
+                              )
+                            }
+                            required
+                          />
+                          <input
+                            type="text"
+                            className="shadow appearance-none  rounded py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
+                            placeholder="End Time"
+                            value={field.endTime}
+                            onChange={(e) =>
+                              handleInputChange(
+                                checkboxIndex,
+                                fieldIndex,
+                                "endTime",
+                                e.target.value
+                              )
+                            }
+                            required
+                          />
+                          <button
+                            type="button"
+                            className="bg-gray-400 text-white rounded-md py-2 h-10"
+                            onClick={() =>
+                              handleRemoveField(checkboxIndex, fieldIndex)
+                            }
+                          >
+                            Remove Field
+                          </button>
+                        </div>
+                      ))}
+                      <button
+                        type="button"
+                        onClick={() => handleAddField(checkboxIndex)}
+                        className="bg-gray-400 text-white rounded-md py-2 h-10"
+                      >
+                        Add Field
+                      </button>
+                    </div>
+                  )}
+                </div>
+              ))}
             </div>
 
             <div className="flex items-center justify-center">
