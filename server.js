@@ -73,5 +73,6 @@ app.patch("/updateInstructors/:id", InstructorContrller.updateInstructor);
 app.post('/paymentdetail',PaymentController.addPayment)
 app.get('/getPaymentDetails',PaymentController.getAllPayments)
 app.patch('/updatePaymentDetails/:id',PaymentController.updatePayment)
+
 app.listen(9999);
 console.log("server started at 9999");
