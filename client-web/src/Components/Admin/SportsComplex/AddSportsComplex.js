@@ -46,6 +46,7 @@ const AddSportsComplex = () => {
           showConfirmButton: false,
           timer: 1500,
         });
+        navigate("/admin/allsportscomplex");
       })
       .catch((error) => console.log("error", error));
   };
@@ -58,7 +59,6 @@ const AddSportsComplex = () => {
         console.log(values);
         submitHandler(values);
         action.resetForm();
-        navigate("/admin/allsportscomplex");
       },
     });
   return (

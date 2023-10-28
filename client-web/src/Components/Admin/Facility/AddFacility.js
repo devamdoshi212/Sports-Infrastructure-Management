@@ -38,6 +38,7 @@ const AddFacility = () => {
           showConfirmButton: false,
           timer: 1500,
         });
+        navigate("/admin/allfacility");
       })
       .catch((error) => console.log("error", error));
   };
@@ -57,7 +58,6 @@ const AddFacility = () => {
       console.log(values);
       submitHandler(values);
       action.resetForm();
-      navigate("/admin/allfacility");
     },
   });
   return (
