@@ -4,6 +4,8 @@ import { SupervisorSchemas } from "../../../Schemas";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@material-tailwind/react";
+import { useSelector } from "react-redux";
+import { UserActions } from "../../../store/UserData";
 const initialValues = {
   name: "",
   email: "",
@@ -20,7 +22,7 @@ const SportsInitial = (data) => {
       SportName: data[index].SportName,
       value: data[index]._id,
       experience: "",
-      fields: [{ startTime: "", endTime: "" }],
+      fields: [{ from: "", to: "" }],
     };
     Initial.push(item);
   }
@@ -29,6 +31,7 @@ const SportsInitial = (data) => {
 };
 
 const AddInstructor = () => {
+  const { _id } = useSelector((state) => state.user.user);
   const navigate = useNavigate();
   const [sport, setSports] = useState([{}]);
   const [instructor, setinstructor] = useState(false);
@@ -55,9 +58,8 @@ const AddInstructor = () => {
   const selectedData = formData
     .filter((data, index) => checkedCheckboxes.includes(index))
     .map((data) => ({
-      labSportNameel: data.SportName,
-      fields: data.fields,
-      value: data.value,
+      timeSlot: data.fields,
+      sport: data.value,
       experience: data.experience,
     }));
 
@@ -69,7 +71,7 @@ const AddInstructor = () => {
       newCheckedCheckboxes.push(index);
       // Initialize fields for this checkbox if it's being checked
       if (!formData[index].fields) {
-        formData[index].fields = [{ startTime: "", endTime: "" }];
+        formData[index].fields = [{ from: "", to: "" }];
       }
     }
     setCheckedCheckboxes(newCheckedCheckboxes);
@@ -95,7 +97,7 @@ const AddInstructor = () => {
     if (!updatedFormData[checkboxIndex].fields) {
       updatedFormData[checkboxIndex].fields = [];
     }
-    updatedFormData[checkboxIndex].fields.push({ startTime: "", endTime: "" });
+    updatedFormData[checkboxIndex].fields.push({ from: "", to: "" });
 
     setFieldsPerCheckbox(newFieldsPerCheckbox);
     setFormData(updatedFormData);
@@ -119,7 +121,8 @@ const AddInstructor = () => {
   // };
 
   const submitHandler = (values) => {
-    console.log(formData);
+    values.sports = selectedData;
+    // console.log(values);
 
     var myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/json");
@@ -130,6 +133,8 @@ const AddInstructor = () => {
       ContactNum: values.mobileNumber,
       Role: 2,
       Name: values.name,
+      createdBy: _id,
+      sports: values.sports,
     });
 
     var requestOptions = {
@@ -160,8 +165,8 @@ const AddInstructor = () => {
       initialValues: initialValues,
       validationSchema: SupervisorSchemas,
       onSubmit: (values, action) => {
-        console.log(selectedData);
-        // submitHandler(values);
+        // console.log(selectedData);
+        submitHandler(values);
         action.resetForm();
       },
     });
@@ -338,12 +343,12 @@ const AddInstructor = () => {
                             className="shadow appearance-none rounded py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
                             type="text"
                             placeholder="Start Time"
-                            value={field.startTime}
+                            value={field.from}
                             onChange={(e) =>
                               handleInputChange(
                                 checkboxIndex,
                                 fieldIndex,
-                                "startTime",
+                                "from",
                                 e.target.value
                               )
                             }
@@ -353,12 +358,12 @@ const AddInstructor = () => {
                             type="text"
                             className="shadow appearance-none  rounded py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
                             placeholder="End Time"
-                            value={field.endTime}
+                            value={field.to}
                             onChange={(e) =>
                               handleInputChange(
                                 checkboxIndex,
                                 fieldIndex,
-                                "endTime",
+                                "to",
                                 e.target.value
                               )
                             }
