@@ -1,7 +1,7 @@
 import React from "react";
-import AuthorityTable from "../Authority/AuthorityTable";
 import { NavLink } from "react-router-dom";
 import { Button } from "@material-tailwind/react";
+import FacilityTable from "./FacilityTable";
 
 const AllFacility = () => {
   return (
@@ -13,7 +13,7 @@ const AllFacility = () => {
           </Button>
         </NavLink>
       </div>
-      <AuthorityTable />
+      <FacilityTable />
     </div>
   );
 };
