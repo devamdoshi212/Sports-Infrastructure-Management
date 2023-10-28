@@ -1,5 +1,4 @@
-import { useCookies } from "react-cookie";
-import { redirect, useNavigate } from "react-router-dom";
+import { redirect } from "react-router-dom";
 
 const LoginVerify = async () => {
   const token = localStorage.getItem("token");

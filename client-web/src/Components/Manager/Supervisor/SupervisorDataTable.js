@@ -7,18 +7,15 @@ import { Column } from "primereact/column";
 import { InputText } from "primereact/inputtext";
 import { Button } from "primereact/button";
 import { Calendar } from "primereact/calendar";
-import { useSelector } from "react-redux/es/hooks/useSelector";
 import { Link } from "react-router-dom";
-import { ManagerService } from "./ManagerService";
 import { useCookies } from "react-cookie";
+import { SupervisorService } from "./SupervisorServices";
 
-export default function ManagerDateTable() {
+export default function SupervisorDataTable() {
   const [deleterefresh, setdeleterefresh] = useState(true);
   const [customers, setCustomers] = useState(null);
   const [filters, setFilters] = useState(null);
   const [loading, setLoading] = useState(false);
-  let district = [{}];
-  district = useSelector((state) => state.district.districts);
   const [globalFilterValues, setGlobalFilterValues] = useState({
     Name: "",
     ContactNum: "",
@@ -56,19 +53,18 @@ export default function ManagerDateTable() {
       }
     });
   };
-  const Authoritydata = useSelector((state) => state.user.user);
+
   useEffect(() => {
-    ManagerService.getCustomersXLarge(Authoritydata._id).then((data) => {
+    SupervisorService.getCustomersXLarge().then((data) => {
       setCustomers(getCustomers(data));
       setLoading(false);
     });
     initFilters();
-  }, [deleterefresh, district]);
+  }, [deleterefresh]);
 
   const getCustomers = (data) => {
     return [...(data || [])].map((d) => {
       d.date = new Date(d.date);
-      d.District = getDistrictName(d.DistrictId);
       return d;
     });
   };
@@ -189,15 +185,15 @@ export default function ManagerDateTable() {
     return rowData.Category.join(", ");
   };
 
-  const DistrictBodyTemplete = (rowdata) => {
-    const data = district.find((c) => c._id === rowdata.DistrictId);
-    return data.District;
-  };
+  // const DistrictBodyTemplete = (rowdata) => {
+  //   const data = district.find((c) => c._id === rowdata.DistrictId);
+  //   return data.District;
+  // };
 
-  const getDistrictName = (id) => {
-    const data = district.find((c) => c._id === id);
-    return data.District;
-  };
+  // const getDistrictName = (id) => {
+  //   const data = district.find((c) => c._id === id);
+  //   return data.District;
+  // };
 
   return (
     <div className="card">
@@ -243,15 +239,15 @@ export default function ManagerDateTable() {
           filterField="Email"
           style={{ minWidth: "12rem" }}
         />
-        <Column
-          header="Sports Complex"
-          field="SportComplexId.name" // Replace 'districtName' with the actual field name
-          //   filterField="District" // Make sure this matches the actual field name
+        {/* <Column
+          header="District"
+          field="DistrictId.District" // Replace 'districtName' with the actual field name
+          filterField="District" // Make sure this matches the actual field name
           style={{ minWidth: "12rem" }}
           // body={DistrictBodyTemplete}
-          //   filterMatchMode={FilterMatchMode.CONTAINS}
-          //   filterValue={globalFilterValues.District}
-        />
+          filterMatchMode={FilterMatchMode.CONTAINS}
+          filterValue={globalFilterValues.District}
+        /> */}
       </DataTable>
     </div>
   );

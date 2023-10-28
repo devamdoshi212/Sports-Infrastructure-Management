@@ -15,6 +15,12 @@ export const ManagerSchemas = Yup.object().shape({
   dob: Yup.string().required("Select at Date of Birth"),
   Sportscomplex: Yup.string().required("Select Sports Complex"),
 });
+export const SupervisorSchemas = Yup.object().shape({
+  name: Yup.string().required("Please Enter Name"),
+  email: Yup.string().email().required("Please Enter Valid Email"),
+  mobileNumber: Yup.number().required("Please Enter Mobile Number"),
+  dob: Yup.string().required("Select at Date of Birth"),
+});
 
 export const LoginSchemas = Yup.object().shape({
   Email: Yup.string().email().required(" Email is Required"),

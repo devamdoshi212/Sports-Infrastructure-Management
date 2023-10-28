@@ -17,13 +17,13 @@ module.exports.AddSportsComplex = async function (req, res) {
 };
 
 module.exports.getSportsComplex = async function (req, res) {
-    SportsComplex.find(req.query)
-        .then((data) => {
-            res.json({ data: data, msg: "Sport Retrived", rcode: 200 });
-        })
-        .catch((err) => {
-            res.json({ data: err.msg, msg: "smw", rcode: -9 });
-        });
+  //req.query {manager: id}
+  let data = await SportsComplex.find(req.query).populate("manager");
+  if (data) {
+    res.json({ data: data, msg: "Sport Retrived", rcode: 200 });
+  } else {
+    res.json({ data: err.msg, msg: "smw", rcode: -9 });
+  }
 };
 
 module.exports.updateSportsComplex = async function (req, res) {

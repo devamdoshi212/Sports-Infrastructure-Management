@@ -1,10 +1,21 @@
 import React, { useState } from "react";
-import { Outlet, NavLink, Link, useNavigate } from "react-router-dom";
+import {
+  Outlet,
+  NavLink,
+  Link,
+  useNavigate,
+  useLoaderData,
+} from "react-router-dom";
 import { FetchDistrict } from "../../API/FetchDistrict";
 import Swal from "sweetalert2";
+import { UserActions } from "../../store/UserData";
+import { useDispatch } from "react-redux";
 const Layout = () => {
   const [isOpen, setIsOpen] = useState(false);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  dispatch(UserActions.getuserdata(useLoaderData()));
+
   const handleLogout = () => {
     Swal.fire({
       title: "Are you sure?",
@@ -36,6 +47,26 @@ const Layout = () => {
         </div>
         <nav className=" text-base font-semibold pt-3">
           <Link
+            to={"profile"}
+            className="flex items-center active-nav-link text-white py-4 pl-6 nav-item gap-2"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              strokeWidth={1.5}
+              stroke="currentColor"
+              className="w-6 h-6"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z"
+              />
+            </svg>
+            Profile
+          </Link>
+          <Link
             to={"/manager"}
             className="flex items-center active-nav-link text-white py-4 pl-6 nav-item gap-2"
           >
@@ -55,7 +86,10 @@ const Layout = () => {
             </svg>
             Dashboard
           </Link>
-          {/* <Link className="flex items-center active-nav-link text-white py-4 pl-6 nav-item gap-2">
+          <Link
+            className="flex items-center active-nav-link text-white py-4 pl-6 nav-item gap-2"
+            to={"allsupervisor"}
+          >
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
@@ -70,9 +104,12 @@ const Layout = () => {
                 d="M12 21v-8.25M15.75 21v-8.25M8.25 21v-8.25M3 9l9-6 9 6m-1.5 12V10.332A48.36 48.36 0 0012 9.75c-2.551 0-5.056.2-7.5.582V21M3 21h18M12 6.75h.008v.008H12V6.75z"
               />
             </svg>
-            Authority
+            Supervisor
           </Link>
-          <Link className="flex items-center active-nav-link text-white py-4 pl-6 nav-item gap-2">
+          <Link
+            className="flex items-center active-nav-link text-white py-4 pl-6 nav-item gap-2"
+            to={"allinstructor"}
+          >
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
@@ -87,8 +124,8 @@ const Layout = () => {
                 d="M12 21v-8.25M15.75 21v-8.25M8.25 21v-8.25M3 9l9-6 9 6m-1.5 12V10.332A48.36 48.36 0 0012 9.75c-2.551 0-5.056.2-7.5.582V21M3 21h18M12 6.75h.008v.008H12V6.75z"
               />
             </svg>
-            Sports
-          </Link> */}
+            Instructor
+          </Link>
           <div className="p-6">
             {/* <NavLink to={"addmanager"}>
               <button className="w-full bg-white cta-btn font-semibold py-2 mt-5 rounded-br-lg rounded-bl-lg rounded-tr-lg shadow-lg hover:shadow-xl hover:bg-gray-300 flex items-center justify-center">
