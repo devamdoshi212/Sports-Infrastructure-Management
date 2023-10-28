@@ -12,7 +12,7 @@ const Profile = () => {
     };
 
     fetch(
-      `http://localhost:9999/getuserwithdistrict?_id=${AuthorityData._id}`,
+      `http://localhost:9999/getuserwithsportswithcomplex?_id=${AuthorityData._id}`,
       requestOptions
     )
       .then((response) => response.json())
@@ -25,8 +25,8 @@ const Profile = () => {
   }, []);
   return (
     <div className="text-3xl">
-      <div>Authority Name : {lodaer && Profile.Name}</div>
-      {/* <div>District : {lodaer && Profile.DistrictId.District}</div> */}
+      <div>Manager Name : {lodaer && Profile.Name}</div>
+      <div>Sports Complex Name : {lodaer && Profile.SportComplexId.name}</div>
     </div>
   );
 };
