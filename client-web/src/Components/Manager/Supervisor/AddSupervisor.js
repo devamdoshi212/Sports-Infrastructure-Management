@@ -1,45 +1,19 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useFormik } from "formik";
-import { ManagerSchemas } from "../../../Schemas";
-import { useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
-
+import { SupervisorSchemas } from "../../../Schemas";
 import Swal from "sweetalert2";
+import { useNavigate } from "react-router-dom";
 import { Button } from "@material-tailwind/react";
 const initialValues = {
   name: "",
   email: "",
   mobileNumber: "",
   dob: "",
-  Sportscomplex: "",
 };
-const AddManager = () => {
+const AddSupervisor = () => {
   const navigate = useNavigate();
-  const AuthorityData = useSelector((state) => state.user.user);
-  const [SportsComplex, setSportsComplex] = useState([]);
-  function checkSportsComplex(props) {
-    return !props.hasOwnProperty("manager");
-  }
-  useEffect(() => {
-    var requestOptions = {
-      method: "GET",
-      redirect: "follow",
-    };
+  const [supervisor, setsupervisor] = useState(false);
 
-    fetch(
-      `http://localhost:9999/getSportsComplex/?district=${AuthorityData.DistrictId}`,
-      requestOptions
-    )
-      .then((response) => response.json())
-      .then((result) => {
-        const data = result.data.filter(checkSportsComplex);
-        setSportsComplex(data);
-      })
-      .catch((error) => console.log("error", error));
-  }, []);
-  const District = useSelector((state) => state.district.districts);
-  const UserData = useSelector((state) => state.user.user);
-  // console.log(UserData);
   const submitHandler = (values) => {
     var myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/json");
@@ -48,10 +22,8 @@ const AddManager = () => {
       Email: values.email,
       DOB: values.dob,
       ContactNum: values.mobileNumber,
-      Role: 3,
+      Role: 1,
       Name: values.name,
-      SportComplexId: values.Sportscomplex,
-      createdBy: UserData._id,
     });
 
     var requestOptions = {
@@ -64,15 +36,15 @@ const AddManager = () => {
     fetch("http://localhost:9999/signup", requestOptions)
       .then((response) => response.json())
       .then((result) => {
-        console.log(result);
+        setsupervisor(!supervisor);
         Swal.fire({
           position: "top-end",
           icon: "success",
-          title: "Manager Added Successfully",
+          title: "Supervisor Added Successfully",
           showConfirmButton: false,
           timer: 1500,
         });
-        navigate("/authority/allmanager");
+        navigate("/manager/allsupervisor");
       })
       .catch((error) => console.log("error", error));
   };
@@ -80,11 +52,10 @@ const AddManager = () => {
   const { values, errors, touched, handleBlur, handleChange, handleSubmit } =
     useFormik({
       initialValues: initialValues,
-      validationSchema: ManagerSchemas,
+      validationSchema: SupervisorSchemas,
       onSubmit: (values, action) => {
         console.log(values);
         submitHandler(values);
-
         action.resetForm();
       },
     });
@@ -103,7 +74,7 @@ const AddManager = () => {
       <div className="flex items-center justify-center bg-gray-200 min-h-screen">
         <div className="w-full max-w-2xl">
           <h2 className="text-center text-2xl uppercase font-semibold font-serif text-gray-800">
-            Add New Manager
+            Add New Supervisor
           </h2>
           <form
             onSubmit={handleSubmit}
@@ -193,37 +164,6 @@ const AddManager = () => {
                 <small className="text-ligth text-red-600">{errors.dob}</small>
               ) : null}
             </div>
-            <div className="mb-4">
-              <label
-                className="block text-gray-700 text-sm font-bold mb-2"
-                htmlFor="Sportscomplex"
-              >
-                Sports Complex
-              </label>
-              <select
-                name="Sportscomplex"
-                id="Sportscomplex"
-                value={values.Sportscomplex}
-                className=" border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                onChange={handleChange}
-                onBlur={handleBlur}
-              >
-                <option value="">Select any One</option>
-                {SportsComplex.map((item, index) => (
-                  <option key={index} value={item._id}>
-                    {item.name}
-                  </option>
-                ))}
-                {/* <option value="Jamnagar">Jamnagar</option>
-              <option value="Surat">Surat</option>
-              <option value="Anand">Anand</option> */}
-              </select>
-              {errors.Sportscomplex && touched.Sportscomplex ? (
-                <small className="text-ligth text-red-600">
-                  {errors.Sportscomplex}
-                </small>
-              ) : null}
-            </div>
 
             <div className="flex items-center justify-center">
               <button
@@ -241,4 +181,4 @@ const AddManager = () => {
   );
 };
 
-export default AddManager;
+export default AddSupervisor;

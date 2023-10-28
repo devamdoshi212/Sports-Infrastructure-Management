@@ -26,6 +26,12 @@ app.use(cors());
 app.use("/", UserRoute);
 app.post("/verify", decodedToken.decodedToken);
 app.get("/getuser", UserController.getUser);
+app.get("/getuserwithdistrict", UserController.getUserWithDistrict);
+app.get("/getuserwithsportscomplex", UserController.getUserWithSportsComplex);
+app.get(
+  "/getuserwithsportswithcomplex",
+  UserController.getUserWithDistrictandSportsComplex
+);
 
 //Sport routes
 app.post(
@@ -48,16 +54,19 @@ app.patch(
   SportsComplexController.updateSportsComplex
 );
 
-
 //athlete routes
-app.post('/addAthlete',AthleteImageController.upload.single("picture"),AthleteController.addAthlete)
-app.get('/getAthletes',AthleteController.getAthlete)
-app.patch('/updateAthlete/:id',AthleteController.updateAthlete)
+app.post(
+  "/addAthlete",
+  AthleteImageController.upload.single("picture"),
+  AthleteController.addAthlete
+);
+app.get("/getAthletes", AthleteController.getAthlete);
+app.patch("/updateAthlete/:id", AthleteController.updateAthlete);
 
 //Instructor routes
-app.post('/addInstructor',InstructorContrller.addInstructor)
-app.get('/getInstructors',InstructorContrller.getInstructor)
-app.patch('/updateInstructors/:id',InstructorContrller.updateInstructor)
+app.post("/addInstructor", InstructorContrller.addInstructor);
+app.get("/getInstructors", InstructorContrller.getInstructor);
+app.patch("/updateInstructors/:id", InstructorContrller.updateInstructor);
 
 
 //payment routes
