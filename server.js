@@ -10,10 +10,10 @@ const DistrictController = require("./Controller/DistrictController");
 const SportsComplexController = require("./Controller/SportsComplexController");
 const UserController = require("./Controller/UserController");
 const AthleteController = require("./Controller/AthleteController")
-const InstructorContrller = require("./Controller/InstructorController")
+const InstructorController = require("./Controller/InstructorController")
 const AthleteImageController = require("./Controller/AthleteImageController")
 const PaymentController = require("./Controller/PaymentController")
-
+const RatingController = require("./Controller/RatingController")
 const app = express();
 
 //middleware
@@ -64,15 +64,20 @@ app.get("/getAthletes", AthleteController.getAthlete);
 app.patch("/updateAthlete/:id", AthleteController.updateAthlete);
 
 //Instructor routes
-app.post("/addInstructor", InstructorContrller.addInstructor);
-app.get("/getInstructors", InstructorContrller.getInstructor);
-app.patch("/updateInstructors/:id", InstructorContrller.updateInstructor);
+app.post("/addInstructor", InstructorController.addInstructor);
+app.get("/getInstructors", InstructorController.getInstructor);
+app.patch("/updateInstructors/:id", InstructorController.updateInstructor);
 
 
 //payment routes
 app.post('/paymentdetail',PaymentController.addPayment)
 app.get('/getPaymentDetails',PaymentController.getAllPayments)
 app.patch('/updatePaymentDetails/:id',PaymentController.updatePayment)
+
+
+//Rating routes
+app.post('/addRating', RatingController.addRating)
+app.get('/getAllRatings', RatingController.getAllRatings)
 
 app.listen(9999);
 console.log("server started at 9999");
