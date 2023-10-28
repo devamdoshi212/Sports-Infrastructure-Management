@@ -9,6 +9,10 @@ const SportDataController = require("./Controller/SportDataController");
 const DistrictController = require("./Controller/DistrictController");
 const SportsComplexController = require("./Controller/SportsComplexController");
 const UserController = require("./Controller/UserController");
+const AthleteController = require("./Controller/AthleteController")
+const InstructorContrller = require("./Controller/InstructorController")
+const AthleteImageController = require("./Controller/AthleteImageController")
+const PaymentController = require("./Controller/PaymentController")
 
 const app = express();
 
@@ -22,6 +26,12 @@ app.use(cors());
 app.use("/", UserRoute);
 app.post("/verify", decodedToken.decodedToken);
 app.get("/getuser", UserController.getUser);
+app.get("/getuserwithdistrict", UserController.getUserWithDistrict);
+app.get("/getuserwithsportscomplex", UserController.getUserWithSportsComplex);
+app.get(
+  "/getuserwithsportswithcomplex",
+  UserController.getUserWithDistrictandSportsComplex
+);
 
 //Sport routes
 app.post(
@@ -43,6 +53,26 @@ app.patch(
     SportController.upload.array("images"),
     SportsComplexController.updateSportsComplex
 );
+
+//athlete routes
+app.post(
+  "/addAthlete",
+  AthleteImageController.upload.single("picture"),
+  AthleteController.addAthlete
+);
+app.get("/getAthletes", AthleteController.getAthlete);
+app.patch("/updateAthlete/:id", AthleteController.updateAthlete);
+
+//Instructor routes
+app.post("/addInstructor", InstructorContrller.addInstructor);
+app.get("/getInstructors", InstructorContrller.getInstructor);
+app.patch("/updateInstructors/:id", InstructorContrller.updateInstructor);
+
+
+//payment routes
+app.post('/paymentdetail',PaymentController.addPayment)
+app.get('/getPaymentDetails',PaymentController.getAllPayments)
+app.patch('/updatePaymentDetails/:id',PaymentController.updatePayment)
 
 app.listen(9999);
 console.log("server started at 9999");

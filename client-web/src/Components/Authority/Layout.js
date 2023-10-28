@@ -46,6 +46,26 @@ const Layout = () => {
         </div>
         <nav className=" text-base font-semibold pt-3">
           <Link
+            to={"profile"}
+            className="flex items-center active-nav-link text-white py-4 pl-6 nav-item gap-2"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              strokeWidth={1.5}
+              stroke="currentColor"
+              className="w-6 h-6"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z"
+              />
+            </svg>
+            Profile
+          </Link>
+          <Link
             to={"/authority"}
             className="flex items-center active-nav-link text-white py-4 pl-6 nav-item gap-2"
           >
@@ -65,7 +85,10 @@ const Layout = () => {
             </svg>
             Dashboard
           </Link>
-          <Link className="flex items-center active-nav-link text-white py-4 pl-6 nav-item gap-2">
+          <Link
+            className="flex items-center active-nav-link text-white py-4 pl-6 nav-item gap-2"
+            to={"allsportscomplex"}
+          >
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
@@ -82,7 +105,10 @@ const Layout = () => {
             </svg>
             Sports Complex
           </Link>
-          <Link className="flex items-center active-nav-link text-white py-4 pl-6 nav-item gap-2">
+          <Link
+            className="flex items-center active-nav-link text-white py-4 pl-6 nav-item gap-2"
+            to={"allmanager"}
+          >
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
@@ -117,7 +143,7 @@ const Layout = () => {
             Sports
           </Link> */}
           <div className="p-6">
-            <NavLink to={"addmanager"}>
+            {/* <NavLink to={"addmanager"}>
               <button className="w-full bg-white cta-btn font-semibold py-2 mt-5 rounded-br-lg rounded-bl-lg rounded-tr-lg shadow-lg hover:shadow-xl hover:bg-gray-300 flex items-center justify-center">
                 <i className="fas fa-plus mr-3"></i>Add Manager
               </button>
@@ -131,7 +157,7 @@ const Layout = () => {
               <button className="w-full bg-white cta-btn font-semibold py-2 mt-5 rounded-br-lg rounded-bl-lg rounded-tr-lg shadow-lg hover:shadow-xl hover:bg-gray-300 flex items-center justify-center">
                 <i className="fas fa-plus mr-3"></i>Sports/Facilities
               </button>
-            </NavLink>
+            </NavLink> */}
           </div>
         </nav>
       </aside>
