@@ -3,8 +3,7 @@ import { useFormik } from "formik";
 import { useSelector } from "react-redux";
 import { NavLink, useNavigate } from "react-router-dom";
 import { Button } from "@material-tailwind/react";
-
-// import Swal from "sweetalert2";
+import Swal from "sweetalert2";
 import { sportComplexSchema } from "../../../Schemas";
 const initialValues = {
   name: "",
@@ -18,34 +17,37 @@ const AddSportsComplex = () => {
   const District = useSelector((state) => state.district.districts);
   const navigate = useNavigate();
   const submitHandler = (values) => {
-    // var myHeaders = new Headers();
-    // myHeaders.append("Content-Type", "application/json");
-    // var raw = JSON.stringify({
-    //   Email: values.email,
-    //   DOB: values.dob,
-    //   ContactNum: values.mobileNumber,
-    //   Role: 4,
-    //   Name: values.name,
-    //   DistrictId: values.district,
-    // });
-    // var requestOptions = {
-    //   method: "POST",
-    //   headers: myHeaders,
-    //   body: raw,
-    //   redirect: "follow",
-    // };
-    // fetch("http://localhost:9999/signup", requestOptions)
-    //   .then((response) => response.json())
-    //   .then((result) => {
-    //     Swal.fire({
-    //       position: "top-end",
-    //       icon: "success",
-    //       title: "Authority Added Successfully",
-    //       showConfirmButton: false,
-    //       timer: 1500,
-    //     });
-    //   })
-    //   .catch((error) => console.log("error", error));
+    var myHeaders = new Headers();
+    myHeaders.append("Content-Type", "application/json");
+
+    var raw = JSON.stringify({
+      name: values.name,
+      location: values.location,
+      taluka: values.taluka,
+      area: values.area,
+      operationalSince: values.operationalSince,
+      district: values.district,
+    });
+
+    var requestOptions = {
+      method: "POST",
+      headers: myHeaders,
+      body: raw,
+      redirect: "follow",
+    };
+
+    fetch("http://localhost:9999/addSportsComplex", requestOptions)
+      .then((response) => response.text())
+      .then((result) => {
+        Swal.fire({
+          position: "top-end",
+          icon: "success",
+          title: "Sport Complex Added Successfully",
+          showConfirmButton: false,
+          timer: 1500,
+        });
+      })
+      .catch((error) => console.log("error", error));
   };
 
   const { values, errors, touched, handleBlur, handleChange, handleSubmit } =
@@ -55,8 +57,8 @@ const AddSportsComplex = () => {
       onSubmit: (values, action) => {
         console.log(values);
         submitHandler(values);
-
-        // action.resetForm();
+        action.resetForm();
+        navigate("/admin/allsportscomplex");
       },
     });
   return (

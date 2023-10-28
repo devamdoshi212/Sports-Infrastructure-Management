@@ -2,6 +2,7 @@ import React from "react";
 import AuthorityTable from "../Authority/AuthorityTable";
 import { NavLink } from "react-router-dom";
 import { Button } from "@material-tailwind/react";
+import SportComplexTable from "./SportsComplexTable";
 
 const AllSportsComplex = () => {
   return (
@@ -16,7 +17,7 @@ const AllSportsComplex = () => {
           </Button>
         </NavLink>
       </div>
-      <AuthorityTable />
+      <SportComplexTable />
     </div>
   );
 };
