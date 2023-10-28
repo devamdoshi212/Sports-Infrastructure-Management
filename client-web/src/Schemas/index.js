@@ -13,6 +13,7 @@ export const ManagerSchemas = Yup.object().shape({
   email: Yup.string().email().required("Please Enter Valid Email"),
   mobileNumber: Yup.number().required("Please Enter Mobile Number"),
   dob: Yup.string().required("Select at Date of Birth"),
+  Sportscomplex: Yup.string().required("Select Sports Complex"),
 });
 
 export const LoginSchemas = Yup.object().shape({
