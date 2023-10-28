@@ -25,9 +25,9 @@ app.get("/getuser", UserController.getUser);
 
 //Sport routes
 app.post(
-  "/sport",
-  SportController.upload.single("picture"),
-  SportDataController.AddSport
+    "/sport",
+    SportController.upload.single("picture"),
+    SportDataController.AddSport
 );
 app.get("/getSports", SportDataController.getSport);
 
@@ -39,9 +39,9 @@ app.get("/getDistrict", DistrictController.getDistrict);
 app.post("/addSportsComplex", SportsComplexController.AddSportsComplex);
 app.get("/getSportsComplex", SportsComplexController.getSportsComplex);
 app.patch(
-  "/updateSportsComplex/:id",
-  SportController.upload.array("images"),
-  SportsComplexController.updateSportsComplex
+    "/updateSportsComplex/:id",
+    SportController.upload.array("images"),
+    SportsComplexController.updateSportsComplex
 );
 
 app.listen(9999);
