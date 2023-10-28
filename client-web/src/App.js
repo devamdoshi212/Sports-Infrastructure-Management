@@ -36,6 +36,8 @@ import AddManager from "./Components/Authority/Manager/AddManager";
 import AllAuthority from "./Components/Admin/Authority/AllAuthority";
 import AllFacility from "./Components/Admin/Facility/AllFacility";
 import AllSportsComplex from "./Components/Admin/SportsComplex/AllSportsComplex";
+import AllManager from "./Components/Authority/Manager/AllManager";
+import AllAuthoritySportsComplex from "./Components/Authority/SportsComplex/AllSportsComplex";
 
 const routes = createBrowserRouter([
   {
@@ -103,6 +105,16 @@ const routes = createBrowserRouter([
       {
         path: "addmanager",
         element: <AddManager />,
+        errorElement: <ErrorPage />,
+      },
+      {
+        path: "allmanager",
+        element: <AllManager />,
+        errorElement: <ErrorPage />,
+      },
+      {
+        path: "allsportscomplex",
+        element: <AllAuthoritySportsComplex />,
         errorElement: <ErrorPage />,
       },
     ],
