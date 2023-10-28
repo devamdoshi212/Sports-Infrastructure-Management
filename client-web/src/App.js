@@ -32,7 +32,7 @@ import AddFacility from "./Components/Admin/Facility/AddFacility";
 import AddSportsComplex from "./Components/Admin/SportsComplex/AddSportsComplex";
 
 //Authority Pages
-import AddManager from "./Components/Authority/AddManager";
+import AddManager from "./Components/Authority/Manager/AddManager";
 import AllAuthority from "./Components/Admin/Authority/AllAuthority";
 import AllFacility from "./Components/Admin/Facility/AllFacility";
 import AllSportsComplex from "./Components/Admin/SportsComplex/AllSportsComplex";
