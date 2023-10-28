@@ -11,20 +11,26 @@ module.exports.signup = async function (req, res) {
 
   console.log(User);
 
-  if (User.Role == 4 || User.Role == 3 || User.Role == 2 || User.Role == 1) {
+  if (User.Role == 4) {
     const password = sendMail.passwordGenerate(8);
     User.Password = password;
     sendMail.sendEmail(User.Email, password);
+
+    let data = await User.save();
+    // let did = new mongoose.Types.ObjectId(data.DistrictId);
+    let district = await DistrictModel.findOne({ _id: data.DistrictId });
+    district.authorityID = new mongoose.Types.ObjectId(data._id);
+    let response = await district.save();
+    console.log(response);
+    res.json({ data: data, msg: "User Added", rcode: 200 });
+  } else if (User.Role == 3) {
+    const password = sendMail.passwordGenerate(8);
+    User.Password = password;
+    sendMail.sendEmail(User.Email, password);
+    let data = await User.save();
+  } else {
+    res.json({ data: data, msg: "User Added", rcode: 200 });
   }
-
-  let data = await User.save();
-  // let did = new mongoose.Types.ObjectId(data.DistrictId);
-  let district = await DistrictModel.findOne({ _id: data.DistrictId });
-  district.authorityID = new mongoose.Types.ObjectId(data._id);
-  let response = await district.save();
-  console.log(response);
-
-  res.json({ data: data, msg: "User Added", rcode: 200 });
 };
 
 module.exports.login = async function (req, res) {
