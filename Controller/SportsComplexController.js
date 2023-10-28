@@ -5,7 +5,7 @@ module.exports.AddSportsComplex = async function (req, res) {
   let SportComplex = new SportsComplex({
     name: req.body.name,
     location: req.body.location,
-    // district: { type: mongoose.SchemaTypes.ObjectId, ref: "districts" },
+    district: req.body.district,
     // sports: [],
     taluka: req.body.taluka,
     area: req.body.area,
