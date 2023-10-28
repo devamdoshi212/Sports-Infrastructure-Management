@@ -245,7 +245,7 @@ export default function ManagerDateTable() {
         />
         <Column
           header="Sports Complex"
-          //   field="District" // Replace 'districtName' with the actual field name
+          field="SportComplexId.name" // Replace 'districtName' with the actual field name
           //   filterField="District" // Make sure this matches the actual field name
           style={{ minWidth: "12rem" }}
           // body={DistrictBodyTemplete}
