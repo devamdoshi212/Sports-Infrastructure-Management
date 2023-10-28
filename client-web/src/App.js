@@ -40,6 +40,14 @@ import AllManager from "./Components/Authority/Manager/AllManager";
 import AllAuthoritySportsComplex from "./Components/Authority/SportsComplex/AllSportsComplex";
 import Profile from "./Components/Authority/Profile/Profile";
 
+// Manager Pages
+
+import AuthorityProfile from "./Components/Manager/Profile";
+import AddSupervisor from "./Components/Manager/Supervisor/AddSupervisor";
+import AllSupervisor from "./Components/Manager/Supervisor/AllSupervisor";
+import AddInstructor from "./Components/Manager/Instructor/AddInstructor";
+import AllInstructor from "./Components/Manager/Instructor/AllInstructor";
+
 const routes = createBrowserRouter([
   {
     path: "/",
@@ -136,6 +144,31 @@ const routes = createBrowserRouter([
       {
         index: true,
         element: <ManagerDashboard />,
+      },
+      {
+        path: "profile",
+        element: <AuthorityProfile />,
+        errorElement: <ErrorPage />,
+      },
+      {
+        path: "allsupervisor",
+        element: <AllSupervisor />,
+        errorElement: <ErrorPage />,
+      },
+      {
+        path: "addsupervisor",
+        element: <AddSupervisor />,
+        errorElement: <ErrorPage />,
+      },
+      {
+        path: "allinstructor",
+        element: <AllInstructor />,
+        errorElement: <ErrorPage />,
+      },
+      {
+        path: "addinstructor",
+        element: <AddInstructor />,
+        errorElement: <ErrorPage />,
       },
     ],
   },
