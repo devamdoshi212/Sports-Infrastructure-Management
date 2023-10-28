@@ -27,13 +27,15 @@ import AuthorityDashboard from "./Pages/AuthorityDashboard";
 import ManagerDashboard from "./Pages/ManagerDashboard";
 
 //Admin Pages
-import AddAuthority from "./Components/Admin/AddAuthority";
-import AddSports from "./Components/Admin/AddSport";
-import AddSportsComplex from "./Components/Admin/AddSportsComplex";
+import AddAuthority from "./Components/Admin/Authority/AddAuthority";
+import AddFacility from "./Components/Admin/Facility/AddFacility";
+import AddSportsComplex from "./Components/Admin/SportsComplex/AddSportsComplex";
 
 //Authority Pages
 import AddManager from "./Components/Authority/AddManager";
-import AllAuthority from "./Components/Admin/AllAuthority";
+import AllAuthority from "./Components/Admin/Authority/AllAuthority";
+import AllFacility from "./Components/Admin/Facility/AllFacility";
+import AllSportsComplex from "./Components/Admin/SportsComplex/AllSportsComplex";
 
 const routes = createBrowserRouter([
   {
@@ -65,8 +67,18 @@ const routes = createBrowserRouter([
         errorElement: <ErrorPage />,
       },
       {
+        path: "allfacility",
+        element: <AllFacility />,
+        errorElement: <ErrorPage />,
+      },
+      {
         path: "addfacility",
-        element: <AddSports />,
+        element: <AddFacility />,
+        errorElement: <ErrorPage />,
+      },
+      {
+        path: "allsportscomplex",
+        element: <AllSportsComplex />,
         errorElement: <ErrorPage />,
       },
       {
