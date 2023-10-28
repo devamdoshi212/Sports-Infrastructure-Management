@@ -136,14 +136,14 @@ const Layout = () => {
             x-data="{ isOpen: false }"
             className="relative w-1/2 flex justify-end"
           >
-            <NavLink to={""}>
-              <button
-                onClick={LogoutHandler}
-                className="realtive z-10 w-20 rounded-lg h-12 bg-white overflow-hidden border-4 hover:border-gray-300 focus:border-gray-300 focus:outline-none"
-              >
-                Logout
-              </button>
-            </NavLink>
+            {/* <NavLink to={""}> */}
+            <button
+              onClick={LogoutHandler}
+              className="realtive z-10 w-20 rounded-lg h-12 bg-white overflow-hidden border-4 hover:border-gray-300 focus:border-gray-300 focus:outline-none"
+            >
+              Logout
+            </button>
+            {/* </NavLink> */}
             <button
               style={{ display: isOpen ? "block" : "none" }}
               onClick={() => setIsOpen(false)}
