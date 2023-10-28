@@ -65,7 +65,10 @@ const Layout = () => {
             </svg>
             Dashboard
           </Link>
-          <Link className="flex items-center active-nav-link text-white py-4 pl-6 nav-item gap-2">
+          <Link
+            className="flex items-center active-nav-link text-white py-4 pl-6 nav-item gap-2"
+            to={"allsportscomplex"}
+          >
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
@@ -82,7 +85,10 @@ const Layout = () => {
             </svg>
             Sports Complex
           </Link>
-          <Link className="flex items-center active-nav-link text-white py-4 pl-6 nav-item gap-2">
+          <Link
+            className="flex items-center active-nav-link text-white py-4 pl-6 nav-item gap-2"
+            to={"allmanager"}
+          >
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
@@ -117,7 +123,7 @@ const Layout = () => {
             Sports
           </Link> */}
           <div className="p-6">
-            <NavLink to={"addmanager"}>
+            {/* <NavLink to={"addmanager"}>
               <button className="w-full bg-white cta-btn font-semibold py-2 mt-5 rounded-br-lg rounded-bl-lg rounded-tr-lg shadow-lg hover:shadow-xl hover:bg-gray-300 flex items-center justify-center">
                 <i className="fas fa-plus mr-3"></i>Add Manager
               </button>
@@ -131,7 +137,7 @@ const Layout = () => {
               <button className="w-full bg-white cta-btn font-semibold py-2 mt-5 rounded-br-lg rounded-bl-lg rounded-tr-lg shadow-lg hover:shadow-xl hover:bg-gray-300 flex items-center justify-center">
                 <i className="fas fa-plus mr-3"></i>Sports/Facilities
               </button>
-            </NavLink>
+            </NavLink> */}
           </div>
         </nav>
       </aside>
