@@ -26,7 +26,7 @@ const Verify = async (role) => {
     const result = await response.json();
     if (result.rcode === 200) {
       if (result.data.Role == role) {
-        return null;
+        return result.data;
       } else {
         return redirect("/");
       }
