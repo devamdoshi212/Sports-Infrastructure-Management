@@ -16,10 +16,9 @@ const SportsComplexSchema = new mongoose.Schema(
         fees: String,
       },
     ],
-    manager: {
-      id: { type: mongoose.SchemaTypes.ObjectId, ref: "managers" },
+    manager: { type: mongoose.SchemaTypes.ObjectId, ref: "managers" },
       // assignedBy: { type: mongoose.SchemaTypes.ObjectId, ref: "authorities" },
-    },
+    
     timings: { openingTime: String, closingTime: String },
   },
   { timestamps: true }

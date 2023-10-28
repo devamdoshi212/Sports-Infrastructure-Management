@@ -1,5 +1,6 @@
 const UserModel = require("../Model/UsersModel");
 const DistrictModel = require("../Model/DistrictsModel");
+const SportComplexModel = require("../Model/SportsComplexModel");
 const sendMail = require("../sendEmail");
 const jwt = require("jsonwebtoken");
 const { default: mongoose } = require("mongoose");
@@ -22,12 +23,22 @@ module.exports.signup = async function (req, res) {
     district.authorityID = new mongoose.Types.ObjectId(data._id);
     let response = await district.save();
     console.log(response);
-    res.json({ data: data, msg: "User Added", rcode: 200 });
+    res.json({ data: data, msg: "User Added(role:4)", rcode: 200 });
   } else if (User.Role == 3) {
     const password = sendMail.passwordGenerate(8);
     User.Password = password;
     sendMail.sendEmail(User.Email, password);
     let data = await User.save();
+
+    let SportComplex = await SportComplexModel.findOne({
+      _id: req.body.SportComplexId,
+    });
+    console.log(SportComplex);
+    console.log(data._id);
+    SportComplex.manager = new mongoose.Types.ObjectId(data._id);
+    let response = await SportComplex.save();
+    console.log(response);
+    res.json({ data: data, msg: "User Added(role:3)", rcode: 200 });
   } else {
     res.json({ data: data, msg: "User Added", rcode: 200 });
   }
