@@ -1,6 +1,6 @@
 import React from "react";
 import { useFormik } from "formik";
-import { ManagerSchemas } from "../../Schemas";
+import { ManagerSchemas } from "../../../Schemas";
 import { useSelector } from "react-redux";
 import Swal from "sweetalert2";
 const initialValues = {
