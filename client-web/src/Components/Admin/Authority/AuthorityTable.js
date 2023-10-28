@@ -468,7 +468,8 @@ export default function AuthorityTable() {
   const representativeBodyTemplate = (rowData) => {
     return rowData.Category.join(", ");
   };
-  const district = useSelector((state) => state.district.districts);
+  let district = [{}];
+  district = useSelector((state) => state.district.districts);
   const DistrictBodyTemplete = (rowdata) => {
     const data = district.find((c) => c._id === rowdata.DistrictId);
     return data.District;

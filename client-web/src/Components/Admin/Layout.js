@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import Swal from "sweetalert2";
 import { Outlet, NavLink, Link, useNavigate } from "react-router-dom";
 import { FetchDistrict } from "../../API/FetchDistrict";
-import { Button } from "primereact/button";
 const Layout = () => {
   FetchDistrict();
   const [isOpen, setIsOpen] = useState(false);
@@ -76,7 +75,7 @@ const Layout = () => {
             Authority
           </Link>
           <Link
-            to={""}
+            to={"allfacility"}
             className="flex items-center active-nav-link text-white py-4 pl-6 nav-item gap-2"
           >
             <svg
@@ -93,10 +92,30 @@ const Layout = () => {
                 d="M12 21v-8.25M15.75 21v-8.25M8.25 21v-8.25M3 9l9-6 9 6m-1.5 12V10.332A48.36 48.36 0 0012 9.75c-2.551 0-5.056.2-7.5.582V21M3 21h18M12 6.75h.008v.008H12V6.75z"
               />
             </svg>
-            Sports
+            Facilities
+          </Link>
+          <Link
+            to={"allsportscomplex"}
+            className="flex items-center active-nav-link text-white py-4 pl-6 nav-item gap-2"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              strokeWidth={1.5}
+              stroke="currentColor"
+              className="w-6 h-6"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M12 21v-8.25M15.75 21v-8.25M8.25 21v-8.25M3 9l9-6 9 6m-1.5 12V10.332A48.36 48.36 0 0012 9.75c-2.551 0-5.056.2-7.5.582V21M3 21h18M12 6.75h.008v.008H12V6.75z"
+              />
+            </svg>
+            Sports Complex
           </Link>
           <div className="p-6">
-            <NavLink to={"addsportscomplex"}>
+            {/* <NavLink to={"addsportscomplex"}>
               <button className="w-full bg-white cta-btn font-semibold py-2 mt-5 rounded-br-lg rounded-bl-lg rounded-tr-lg shadow-lg hover:shadow-xl hover:bg-gray-300 flex items-center justify-center">
                 <i className="fas fa-plus mr-3"></i>Add Sports Complex
               </button>
@@ -105,7 +124,7 @@ const Layout = () => {
               <button className="w-full bg-white cta-btn font-semibold py-2 mt-5 rounded-br-lg rounded-bl-lg rounded-tr-lg shadow-lg hover:shadow-xl hover:bg-gray-300 flex items-center justify-center">
                 <i className="fas fa-plus mr-3"></i>Add Facility
               </button>
-            </NavLink>
+            </NavLink> */}
           </div>
         </nav>
       </aside>
