@@ -2,7 +2,8 @@ import React from "react";
 import { useFormik } from "formik";
 import { sportSchema } from "../../../Schemas";
 import { Button } from "@material-tailwind/react";
-import { Navigate, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
 const initialValues = {
   name: "",
   Category: "",
@@ -29,7 +30,15 @@ const AddFacility = () => {
 
     fetch("http://localhost:9999/sport", requestOptions)
       .then((response) => response.text())
-      .then((result) => console.log(result))
+      .then((result) => {
+        Swal.fire({
+          position: "top-end",
+          icon: "success",
+          title: "Facility Added Successfully",
+          showConfirmButton: false,
+          timer: 1500,
+        });
+      })
       .catch((error) => console.log("error", error));
   };
 
@@ -47,8 +56,8 @@ const AddFacility = () => {
     onSubmit: (values, action) => {
       console.log(values);
       submitHandler(values);
-
       action.resetForm();
+      navigate("/admin/allfacility");
     },
   });
   return (
