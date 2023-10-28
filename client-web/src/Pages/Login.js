@@ -46,6 +46,7 @@ const Login = () => {
           });
         }
         if (errorCode === 200) {
+          // dispatch(UserActions.getuserdata(result.data));
           dispatch(UserActions.getuserdata(result.data));
           const maxAgeInSeconds = 86400; // 60 seconds
           setCookies("token", result.token, {
