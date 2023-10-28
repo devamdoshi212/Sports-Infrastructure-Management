@@ -9,6 +9,9 @@ const SportDataController = require("./Controller/SportDataController");
 const DistrictController = require("./Controller/DistrictController");
 const SportsComplexController = require("./Controller/SportsComplexController");
 const UserController = require("./Controller/UserController");
+const AthleteController = require("./Controller/AthleteController")
+const InstructorContrller = require("./Controller/InstructorController")
+const AthleteImageController = require("./Controller/AthleteImageController")
 
 const app = express();
 
@@ -43,6 +46,17 @@ app.patch(
   SportController.upload.array("images"),
   SportsComplexController.updateSportsComplex
 );
+
+
+//athlete routes
+app.post('/addAthlete',AthleteImageController.upload.single("picture"),AthleteController.addAthlete)
+app.get('/getAthletes',AthleteController.getAthlete)
+app.patch('/updateAthlete/:id',AthleteController.updateAthlete)
+
+//Instructor routes
+app.post('/addInstructor',InstructorContrller.addInstructor)
+app.get('/getInstructors',InstructorContrller.getInstructor)
+app.patch('/updateInstructors/:id',InstructorContrller.updateInstructor)
 
 app.listen(9999);
 console.log("server started at 9999");
