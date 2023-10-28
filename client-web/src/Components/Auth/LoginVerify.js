@@ -27,9 +27,9 @@ const LoginVerify = async () => {
       if (result.data.Role === 5) {
         return redirect("/admin");
       } else if (result.data.Role === 4) {
-        return redirect("/admin");
+        return redirect("/authority");
       } else if (result.data.Role === 3) {
-        return redirect("/admin");
+        return redirect("/manager");
       } else {
         return redirect("/");
       }

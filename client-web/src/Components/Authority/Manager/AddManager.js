@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useFormik } from "formik";
 import { ManagerSchemas } from "../../../Schemas";
 import { useSelector } from "react-redux";
@@ -8,8 +8,31 @@ const initialValues = {
   email: "",
   mobileNumber: "",
   dob: "",
+  Sportscomplex: "",
 };
 const AddManager = () => {
+  const AuthorityData = useSelector((state) => state.user.user);
+  const [SportsComplex, setSportsComplex] = useState([]);
+  function checkSportsComplex(props) {
+    return !props.hasOwnProperty("manager");
+  }
+  useEffect(() => {
+    var requestOptions = {
+      method: "GET",
+      redirect: "follow",
+    };
+
+    fetch(
+      `http://localhost:9999/getSportsComplex/?district=${AuthorityData.DistrictId}`,
+      requestOptions
+    )
+      .then((response) => response.json())
+      .then((result) => {
+        const data = result.data.filter(checkSportsComplex);
+        setSportsComplex(data);
+      })
+      .catch((error) => console.log("error", error));
+  }, [AuthorityData, SportsComplex]);
   const District = useSelector((state) => state.district.districts);
   const UserData = useSelector((state) => state.user.user);
   console.log(UserData);
@@ -148,6 +171,37 @@ const AddManager = () => {
             ></input>
             {errors.dob && touched.dob ? (
               <small className="text-ligth text-red-600">{errors.dob}</small>
+            ) : null}
+          </div>
+          <div className="mb-4">
+            <label
+              className="block text-gray-700 text-sm font-bold mb-2"
+              htmlFor="Sportscomplex"
+            >
+              Sports Complex
+            </label>
+            <select
+              name="Sportscomplex"
+              id="Sportscomplex"
+              value={values.Sportscomplex}
+              className=" border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              onChange={handleChange}
+              onBlur={handleBlur}
+            >
+              <option value="">Select any One</option>
+              {SportsComplex.map((item, index) => (
+                <option key={index} value={item._id}>
+                  {item.name}
+                </option>
+              ))}
+              {/* <option value="Jamnagar">Jamnagar</option>
+              <option value="Surat">Surat</option>
+              <option value="Anand">Anand</option> */}
+            </select>
+            {errors.Sportscomplex && touched.Sportscomplex ? (
+              <small className="text-ligth text-red-600">
+                {errors.Sportscomplex}
+              </small>
             ) : null}
           </div>
 
