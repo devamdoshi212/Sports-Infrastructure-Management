@@ -5,7 +5,6 @@ export const FacilityService = {
     )
       .then((res) => res.json())
       .then((res) => {
-        console.log(res.data[0].sports);
         return res.data[0].sports;
       });
   },

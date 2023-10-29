@@ -14,7 +14,7 @@ import { useSelector } from "react-redux";
 export default function FacilityDataTable() {
   const { _id } = useSelector((state) => state.user.user);
   const [deleterefresh, setdeleterefresh] = useState(true);
-  const [customers, setCustomers] = useState(null);
+  const [customers, setCustomers] = useState([]);
   const [filters, setFilters] = useState(null);
   const [loading, setLoading] = useState(false);
   const [globalFilterValues, setGlobalFilterValues] = useState({
@@ -204,22 +204,31 @@ export default function FacilityDataTable() {
 
         <Column
           header="Facility Name"
-          field="SportName"
+          field="sport.SportName"
           filterField="Name"
           style={{ minWidth: "12rem" }}
         />
         <Column
           header="Category"
-          field="Category"
+          field="sport.Category"
+          filterField="Category"
+          style={{ minWidth: "12rem" }}
+        />
+        <Column
+          header="Fees"
+          field="fees"
           filterField="Category"
           style={{ minWidth: "12rem" }}
         />
         <Column
           header="Image"
-          field="baseUrl"
-          filterField="baseUrl"
+          field="images"
+          filterField="images"
           body={(rowdata) => {
-            return <img src={rowdata.baseUrl} alt="Sport Facility Pic" />;
+            console.log(rowdata);
+            return rowdata.images.map((item) => (
+              <img src={item} alt="Sport Facility Pic" />
+            ));
           }}
           style={{ minWidth: "12rem" }}
         />
