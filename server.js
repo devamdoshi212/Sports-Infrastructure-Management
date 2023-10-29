@@ -15,6 +15,7 @@ const AthleteImageController = require("./Controller/AthleteImageController");
 const PaymentController = require("./Controller/PaymentController");
 const RatingController = require("./Controller/RatingController");
 const ComplaintController = require("./Controller/ComplaintController");
+const SessionController = require("./Controller/SessionConroller");
 const {
   filtersportsforcomplex,
 } = require("./Controller/FilterSportsForComplex");
@@ -103,6 +104,12 @@ app.get("/getAllRatings", RatingController.getAllRatings);
 app.post("/addComplaint", ComplaintController.addComplaint);
 app.get("/getAllComplaints", ComplaintController.getAllComplaints);
 app.patch("/updateComplaint/:id", ComplaintController.updateComplaint);
+
+//session routes
+app.get("/getSession", SessionController.getSession);
+app.post("/addSession", SessionController.addSession);
+app.patch("/updateSession", SessionController.updateSession)
+
 
 app.get("/filtersport/:id", filtersportsforcomplex);
 
