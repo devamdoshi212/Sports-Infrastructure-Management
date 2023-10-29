@@ -30,7 +30,7 @@ import ManagerDashboard from "./Pages/ManagerDashboard";
 import AddAuthority from "./Components/Admin/Authority/AddAuthority";
 import AddFacility from "./Components/Admin/Facility/AddFacility";
 import AddSportsComplex from "./Components/Admin/SportsComplex/AddSportsComplex";
-
+import AdminAllManager from "./Components/Admin/Manager/AllManager";
 //Authority Pages
 import AddManager from "./Components/Authority/Manager/AddManager";
 import AllAuthority from "./Components/Admin/Authority/AllAuthority";
@@ -77,6 +77,11 @@ const routes = createBrowserRouter([
       {
         path: "addauthority",
         element: <AddAuthority />,
+        errorElement: <ErrorPage />,
+      },
+      {
+        path: "allmanager",
+        element: <AdminAllManager />,
         errorElement: <ErrorPage />,
       },
       {

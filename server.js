@@ -33,7 +33,7 @@ app.get("/getuser", UserController.getUser);
 app.get("/getuserwithdistrict", UserController.getUserWithDistrict);
 app.get("/getuserwithsportscomplex", UserController.getUserWithSportsComplex);
 app.get(
-  "/getuserwithsportswithcomplex",
+  "/getuserwithdistrictwithcomplex",
   UserController.getUserWithDistrictandSportsComplex
 );
 
