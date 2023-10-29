@@ -1,6 +1,7 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
 import { Button } from "@material-tailwind/react";
+import FacilityDataTable from "./FacilityDataTable";
 const SportsComplexDetails = () => {
   return (
     <div className="px-4">
@@ -11,7 +12,7 @@ const SportsComplexDetails = () => {
           </Button>
         </NavLink>
       </div>
-      {/* <SupervisorDataTable /> */}
+      <FacilityDataTable />
     </div>
   );
 };

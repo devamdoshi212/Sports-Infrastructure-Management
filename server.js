@@ -49,6 +49,15 @@ app.get("/getDistrict", DistrictController.getDistrict);
 //Sports Complex routes
 app.post("/addSportsComplex", SportsComplexController.AddSportsComplex);
 app.get("/getSportsComplex", SportsComplexController.getSportsComplex);
+app.get(
+  "/getSportsComplexwithmanager",
+  SportsComplexController.getSportsComplexwithmanager
+);
+app.get(
+  "/getSportsComplexwithsport",
+  SportsComplexController.getSportsComplexwithSportName
+);
+
 app.patch(
     "/updateSportsComplex/:id",
     SportController.upload.array("images"),

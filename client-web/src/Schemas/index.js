@@ -57,3 +57,26 @@ export const sportComplexSchema = Yup.object().shape({
   location: Yup.string().required("Location is Required"),
   operationalSince: Yup.string().required("Opreational Since is Required"),
 });
+
+export const facilitySchema = Yup.object().shape({
+  Fees: Yup.number().required("Fees is Required"),
+  Image: Yup.array()
+    .min(1, "Select at least one file")
+    .max(10, "Select at least one file")
+    .of(
+      Yup.mixed()
+        .test("fileFormat", "Only image files are allowed", (value) => {
+          if (!value) return true; // If no file is selected, skip validation
+
+          const acceptedFormats = ["image/jpeg", "image/png", "image/gif"];
+          return acceptedFormats.includes(value.type);
+        })
+        .test("fileSize", "File size is too large", (value) => {
+          if (!value) return true; // If no file is selected, skip validation
+
+          const maxSizeInBytes = 10 * 1024 * 1024; // 50MB
+          return value.size <= maxSizeInBytes;
+        })
+    ),
+  Facility: Yup.string().required("Facility is Required"),
+});

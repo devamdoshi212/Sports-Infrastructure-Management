@@ -7,7 +7,7 @@ import Swal from "sweetalert2";
 const initialValues = {
   name: "",
   Category: "",
-  Image: "",
+  Image: [],
 };
 const AddFacility = () => {
   const navigate = useNavigate();

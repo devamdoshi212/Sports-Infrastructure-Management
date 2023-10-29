@@ -1,6 +1,8 @@
 export const ManagerService = {
   getData(id) {
-    return fetch(`http://localhost:9999/getuser?Role=3&&createdBy=${id}`)
+    return fetch(
+      `http://localhost:9999/getuserwithsportscomplex?Role=3&&createdBy=${id}`
+    )
       .then((res) => res.json())
       .then((res) => {
         return res.data;
