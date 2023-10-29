@@ -4,6 +4,7 @@ import { SupervisorSchemas } from "../../../Schemas";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@material-tailwind/react";
+import { useSelector } from "react-redux";
 const initialValues = {
   name: "",
   email: "",
@@ -11,6 +12,8 @@ const initialValues = {
   dob: "",
 };
 const AddSupervisor = () => {
+  const { _id } = useSelector((state) => state.user.user);
+  const { SportComplexId } = useSelector((state) => state.user.user);
   const navigate = useNavigate();
   const [supervisor, setsupervisor] = useState(false);
 
@@ -24,6 +27,8 @@ const AddSupervisor = () => {
       ContactNum: values.mobileNumber,
       Role: 1,
       Name: values.name,
+      createdBy: _id,
+      SportComplexId: SportComplexId,
     });
 
     var requestOptions = {
