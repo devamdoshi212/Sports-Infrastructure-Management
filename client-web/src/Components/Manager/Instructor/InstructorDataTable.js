@@ -251,7 +251,7 @@ export default function InstructorDataTable() {
               return (
                 <ul>
                   {sports.map((sport, sportIndex) => (
-                    <li key={sportIndex} className="flex">
+                    <li key={sportIndex} className="flex border-2">
                       <div className="flex flex-col mx-4">
                         <span className="font-bold text-black">{`Sport: ${sport.sport.SportName}`}</span>
                         <span className="font-bold text-red-400">{`Experince : ${sport.experience}`}</span>
