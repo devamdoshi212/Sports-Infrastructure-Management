@@ -6,7 +6,6 @@ module.exports.filtersportsforcomplex = async function (req, res) {
   let SportsComplex = await SportsComplexModel.findOne({ _id: id });
   const removeId = await SportsComplex.sports.map((item) => item.sport);
 
-  console.log(removeId);
   let FilterSports = await SportModel.find({ _id: { $nin: removeId } });
 
   try {
