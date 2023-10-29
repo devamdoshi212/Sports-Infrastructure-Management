@@ -144,6 +144,7 @@ const AddInstructor = () => {
       Role: 2,
       Name: values.name,
       createdBy: _id,
+      SportComplexId: SportComplexId,
       sports: values.sports,
     });
 

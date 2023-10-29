@@ -10,8 +10,10 @@ import { Calendar } from "primereact/calendar";
 import { Link } from "react-router-dom";
 import { useCookies } from "react-cookie";
 import { InstructorService } from "./InstructorServices";
+import { useSelector } from "react-redux";
 
 export default function InstructorDataTable() {
+  const { _id } = useSelector((state) => state.user.user);
   const [deleterefresh, setdeleterefresh] = useState(true);
   const [customers, setCustomers] = useState(null);
   const [filters, setFilters] = useState(null);
@@ -55,7 +57,7 @@ export default function InstructorDataTable() {
   };
 
   useEffect(() => {
-    InstructorService.getCustomersXLarge().then((data) => {
+    InstructorService.getCustomersXLarge(_id).then((data) => {
       setCustomers(getCustomers(data));
       setLoading(false);
     });
