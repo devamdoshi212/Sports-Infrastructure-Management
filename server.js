@@ -9,11 +9,11 @@ const SportDataController = require("./Controller/SportDataController");
 const DistrictController = require("./Controller/DistrictController");
 const SportsComplexController = require("./Controller/SportsComplexController");
 const UserController = require("./Controller/UserController");
-const AthleteController = require("./Controller/AthleteController")
-const InstructorController = require("./Controller/InstructorController")
-const AthleteImageController = require("./Controller/AthleteImageController")
-const PaymentController = require("./Controller/PaymentController")
-const RatingController = require("./Controller/RatingController")
+const AthleteController = require("./Controller/AthleteController");
+const InstructorController = require("./Controller/InstructorController");
+const AthleteImageController = require("./Controller/AthleteImageController");
+const PaymentController = require("./Controller/PaymentController");
+const RatingController = require("./Controller/RatingController");
 const app = express();
 
 //middleware
@@ -35,9 +35,9 @@ app.get(
 
 //Sport routes
 app.post(
-    "/sport",
-    SportController.upload.single("picture"),
-    SportDataController.AddSport
+  "/sport",
+  SportController.upload.single("picture"),
+  SportDataController.AddSport
 );
 app.get("/getSports", SportDataController.getSport);
 
@@ -49,9 +49,9 @@ app.get("/getDistrict", DistrictController.getDistrict);
 app.post("/addSportsComplex", SportsComplexController.AddSportsComplex);
 app.get("/getSportsComplex", SportsComplexController.getSportsComplex);
 app.patch(
-    "/updateSportsComplex/:id",
-    SportController.upload.array("images"),
-    SportsComplexController.updateSportsComplex
+  "/updateSportsComplex/:id",
+  SportController.upload.array("images"),
+  SportsComplexController.updateSportsComplex
 );
 
 //athlete routes
@@ -66,18 +66,25 @@ app.patch("/updateAthlete/:id", AthleteController.updateAthlete);
 //Instructor routes
 app.post("/addInstructor", InstructorController.addInstructor);
 app.get("/getInstructors", InstructorController.getInstructor);
+app.get(
+  "/getInstructorswithuser",
+  InstructorController.getInstructorwithUserName
+);
+app.get(
+  "/getInstructorswithsport",
+  InstructorController.getInstructorwithSportsName
+);
+app.get("/getInstructorswithall", InstructorController.getInstructorwithAll);
 app.patch("/updateInstructors/:id", InstructorController.updateInstructor);
 
-
 //payment routes
-app.post('/paymentdetail',PaymentController.addPayment)
-app.get('/getPaymentDetails',PaymentController.getAllPayments)
-app.patch('/updatePaymentDetails/:id',PaymentController.updatePayment)
-
+app.post("/paymentdetail", PaymentController.addPayment);
+app.get("/getPaymentDetails", PaymentController.getAllPayments);
+app.patch("/updatePaymentDetails/:id", PaymentController.updatePayment);
 
 //Rating routes
-app.post('/addRating', RatingController.addRating)
-app.get('/getAllRatings', RatingController.getAllRatings)
+app.post("/addRating", RatingController.addRating);
+app.get("/getAllRatings", RatingController.getAllRatings);
 
 app.listen(9999);
 console.log("server started at 9999");
