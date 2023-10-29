@@ -47,6 +47,8 @@ import AddSupervisor from "./Components/Manager/Supervisor/AddSupervisor";
 import AllSupervisor from "./Components/Manager/Supervisor/AllSupervisor";
 import AddInstructor from "./Components/Manager/Instructor/AddInstructor";
 import AllInstructor from "./Components/Manager/Instructor/AllInstructor";
+import SportsComplexDetails from "./Components/Manager/SportsComplexDetails/SportsComplexDetails";
+import EditSportsComplexDetails from "./Components/Manager/SportsComplexDetails/EditSportsComplexDetails";
 
 const routes = createBrowserRouter([
   {
@@ -148,6 +150,16 @@ const routes = createBrowserRouter([
       {
         path: "profile",
         element: <AuthorityProfile />,
+        errorElement: <ErrorPage />,
+      },
+      {
+        path: "complexdetails",
+        element: <SportsComplexDetails />,
+        errorElement: <ErrorPage />,
+      },
+      {
+        path: "editsportscomplex",
+        element: <EditSportsComplexDetails />,
         errorElement: <ErrorPage />,
       },
       {
