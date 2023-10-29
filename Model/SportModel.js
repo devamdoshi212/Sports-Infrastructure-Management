@@ -16,6 +16,9 @@ const SportSchema = new mongoose.Schema({
   baseUrl: {
     type: String,
   },
-});
+},
+{ timestamps: true }
+
+);
 
 module.exports = mongoose.model("sports", SportSchema);
