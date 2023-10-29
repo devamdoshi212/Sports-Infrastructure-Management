@@ -153,12 +153,12 @@ const routes = createBrowserRouter([
         errorElement: <ErrorPage />,
       },
       {
-        path: "complexdetails",
+        path: "facilitydetails",
         element: <SportsComplexDetails />,
         errorElement: <ErrorPage />,
       },
       {
-        path: "editsportscomplex",
+        path: "editfacility",
         element: <EditSportsComplexDetails />,
         errorElement: <ErrorPage />,
       },
