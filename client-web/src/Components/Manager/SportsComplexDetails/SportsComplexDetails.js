@@ -8,7 +8,7 @@ const SportsComplexDetails = () => {
       <div className="flex justify-end mb-4">
         <NavLink to={"/manager/editfacility"}>
           <Button className="items-end cta-btn font-semibold py-4 mt-5 rounded-br-lg rounded-bl-lg rounded-tr-lg shadow-lg hover:shadow-xl ">
-            Edit Facility Details
+            Add Facility Details
           </Button>
         </NavLink>
       </div>

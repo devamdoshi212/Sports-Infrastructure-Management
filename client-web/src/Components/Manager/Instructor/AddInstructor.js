@@ -19,19 +19,21 @@ const SportsInitial = (data) => {
   for (let index = 0; index < data.length; index++) {
     const element = data[index];
     let item = {
-      SportName: data[index].SportName,
-      value: data[index]._id,
+      SportName: data[index].sport.SportName,
+      value: data[index].sport._id,
       experience: "",
       fields: [{ from: "", to: "" }],
     };
     Initial.push(item);
   }
   Initial.shift();
+  console.log(Initial);
   return Initial;
 };
 
 const AddInstructor = () => {
   const { _id } = useSelector((state) => state.user.user);
+  const { SportComplexId } = useSelector((state) => state.user.user);
   const navigate = useNavigate();
   const [sport, setSports] = useState([{}]);
   const [instructor, setinstructor] = useState(false);
@@ -47,10 +49,18 @@ const AddInstructor = () => {
       redirect: "follow",
     };
 
-    fetch("http://localhost:9999/getSports", requestOptions)
+    fetch(
+      `http://localhost:9999/getSportsComplexwithsport?_id=${SportComplexId}`,
+      requestOptions
+    )
       .then((response) => response.json())
+      .then((res) => {
+        console.log(res.data[0].sports);
+        setFormData(SportsInitial(res.data[0].sports));
+      })
       .then((result) => {
-        setFormData(SportsInitial(result.data));
+        // console.log(result.data);
+        // setFormData(SportsInitial(result.data));
       })
       .catch((error) => console.log("error", error));
   }, []);
