@@ -1,3 +1,4 @@
+const UsersModel = require("../Model/UsersModel");
 const InstructorModel = require("../Model/instructorModel");
 
 module.exports.addInstructor = async function (req, res) {
@@ -12,6 +13,37 @@ module.exports.addInstructor = async function (req, res) {
 
 module.exports.getInstructor = async function (req, res) {
   InstructorModel.find(req.query)
+    .then((data) => {
+      res.json({ data: data, msg: "Instructor Retrived", rcode: 200 });
+    })
+    .catch((err) => {
+      res.json({ data: err.msg, msg: "smw", rcode: -9 });
+    });
+};
+module.exports.getInstructorwithUserName = async function (req, res) {
+  InstructorModel.find(req.query)
+    .populate("userId")
+    .then((data) => {
+      res.json({ data: data, msg: "Instructor Retrived", rcode: 200 });
+    })
+    .catch((err) => {
+      res.json({ data: err.msg, msg: "smw", rcode: -9 });
+    });
+};
+module.exports.getInstructorwithSportsName = async function (req, res) {
+  InstructorModel.find(req.query)
+    .populate("sports.sport")
+    .then((data) => {
+      res.json({ data: data, msg: "Instructor Retrived", rcode: 200 });
+    })
+    .catch((err) => {
+      res.json({ data: err.msg, msg: "smw", rcode: -9 });
+    });
+};
+module.exports.getInstructorwithAll = async function (req, res) {
+  InstructorModel.find(req.query)
+    .populate("sports.sport")
+    .populate("userId")
     .then((data) => {
       res.json({ data: data, msg: "Instructor Retrived", rcode: 200 });
     })
