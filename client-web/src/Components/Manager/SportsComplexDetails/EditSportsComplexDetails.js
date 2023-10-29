@@ -29,13 +29,15 @@ const EditSportsComplexDetails = () => {
       redirect: "follow",
     };
 
-    fetch("http://localhost:9999/getSports", requestOptions)
+    fetch(`http://localhost:9999/filtersport/${SportComplexId}`, requestOptions)
       .then((response) => response.json())
       .then((result) => {
         setSports(result.data);
       })
       .catch((error) => console.log("error", error));
   }, []);
+
+  // submit handler
 
   const submitHandler = (values) => {
     var formdata = new FormData();
