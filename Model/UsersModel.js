@@ -43,10 +43,10 @@ const UserSchema = new mongoose.Schema(
       default: 1,
     },
 
-    DistrictId: { type: mongoose.SchemaTypes.ObjectId, ref: "District" },
+    DistrictId: { type: mongoose.SchemaTypes.ObjectId, ref: "districts" },
     SportComplexId: {
       type: mongoose.SchemaTypes.ObjectId,
-      ref: "SportsComplex",
+      ref: "sportscomplexes",
     },
     createdBy: { type: mongoose.SchemaTypes.ObjectId, ref: "users" },
   },
