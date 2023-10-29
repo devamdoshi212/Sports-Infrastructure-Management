@@ -11,7 +11,7 @@ import { Link } from "react-router-dom";
 import { FacilityService } from "./FacilityService";
 import { useSelector } from "react-redux";
 
-export default function FacilityTable() {
+export default function FacilityDataTable() {
   const { _id } = useSelector((state) => state.user.user);
   const [deleterefresh, setdeleterefresh] = useState(true);
   const [customers, setCustomers] = useState(null);
