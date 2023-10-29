@@ -6,7 +6,7 @@ const instructorSchema = new mongoose.Schema(
     createdBy: { type: mongoose.SchemaTypes.ObjectId, ref: "users" },
     sports: [
       {
-        sport: { type: mongoose.SchemaTypes.ObjectId, ref: "Sports" },
+        sport: { type: mongoose.SchemaTypes.ObjectId, ref: "sports" },
         timeSlot: [{ from: String, to: String }],
         experience: Number, //in years
       },
@@ -15,4 +15,4 @@ const instructorSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-module.exports = mongoose.model("instructor", instructorSchema);
+module.exports = mongoose.model("instructors", instructorSchema);

@@ -1,6 +1,6 @@
 export const InstructorService = {
   getData() {
-    return fetch("http://localhost:9999/getInstructors")
+    return fetch("http://localhost:9999/getInstructorswithall")
       .then((res) => res.json())
       .then((res) => {
         return res.data;
@@ -23,17 +23,17 @@ export const InstructorService = {
     return Promise.resolve(this.getData());
   },
 
-  getCustomers(params) {
-    const queryParams = params
-      ? Object.keys(params)
-          .map(
-            (k) => encodeURIComponent(k) + "=" + encodeURIComponent(params[k])
-          )
-          .join("&")
-      : "";
+  // getCustomers(params) {
+  //   const queryParams = params
+  //     ? Object.keys(params)
+  //         .map(
+  //           (k) => encodeURIComponent(k) + "=" + encodeURIComponent(params[k])
+  //         )
+  //         .join("&")
+  //     : "";
 
-    return fetch("http://localhost:9999/getuser?Role=4" + queryParams).then(
-      (res) => res.json()
-    );
-  },
+  //   return fetch("http://localhost:9999/getuser?Role=4" + queryParams).then(
+  //     (res) => res.json()
+  //   );
+  // },
 };

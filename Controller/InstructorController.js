@@ -41,15 +41,16 @@ module.exports.getInstructorwithSportsName = async function (req, res) {
     });
 };
 module.exports.getInstructorwithAll = async function (req, res) {
-  InstructorModel.find(req.query)
+  let data = await InstructorModel.find(req.query)
     .populate("sports.sport")
-    .populate("userId")
-    .then((data) => {
-      res.json({ data: data, msg: "Instructor Retrived", rcode: 200 });
-    })
-    .catch((err) => {
-      res.json({ data: err.msg, msg: "smw", rcode: -9 });
-    });
+    .populate("userId");
+  res.json({ data: data, msg: "Instructor Retrived", rcode: 200 });
+
+  // .then((data) => {
+  // })
+  // .catch((err) => {
+  //   res.json({ data: err, msg: "smw", rcode: -9 });
+  // });
 };
 
 module.exports.updateInstructor = async function (req, res) {

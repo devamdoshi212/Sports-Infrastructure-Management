@@ -4,13 +4,13 @@ const SportsComplexSchema = new mongoose.Schema(
   {
     name: String,
     location: String,
-    district: { type: mongoose.SchemaTypes.ObjectId, ref: "District" },
+    district: { type: mongoose.SchemaTypes.ObjectId, ref: "districts" },
     taluka: String,
     area: String, //in acres
     operationalSince: String,
     sports: [
       {
-        sport: { type: mongoose.SchemaTypes.ObjectId, ref: "Sport" },
+        sport: { type: mongoose.SchemaTypes.ObjectId, ref: "sports" },
         images: [String],
         rating: Number,
         fees: String,
@@ -24,4 +24,4 @@ const SportsComplexSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-module.exports = mongoose.model("SportsComplex", SportsComplexSchema);
+module.exports = mongoose.model("sportscomplexes", SportsComplexSchema);
