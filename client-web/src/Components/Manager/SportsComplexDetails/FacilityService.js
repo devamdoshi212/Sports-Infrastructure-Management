@@ -1,10 +1,12 @@
 export const FacilityService = {
   getData(id) {
-    return fetch(`http://localhost:9999/getSportsComplex?manager=${id}`)
+    return fetch(
+      `http://localhost:9999/getSportsComplexwithsport?manager=${id}`
+    )
       .then((res) => res.json())
       .then((res) => {
-        console.log(res.data.sports);
-        return res.data.sports;
+        console.log(res.data[0].sports);
+        return res.data[0].sports;
       });
   },
 
