@@ -8,7 +8,7 @@ module.exports.addPayment = async function(req,res){
 
     console.log(data);
 
-    res.json({data:data , msg: "Payment Genrated", rcode: 200})
+    res.json({data:data , msg: "Payment Generated", rcode: 200})
 }
 
 module.exports.getAllPayments = async function(req,res){
