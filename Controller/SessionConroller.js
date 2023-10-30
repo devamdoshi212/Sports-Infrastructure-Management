@@ -3,24 +3,38 @@ const sessions = require("../Model/SessionModel");
 
 module.exports.addSession = async function (req, res) {
   let existingSession = await sessions.findOne({
-    sportscomplex: req.params.id,
+    "sportscomplex": req.params.id,
   });
 
-  if (existingSession) {
+  
+  const testcurrentDate = new Date();
+const testexistingSessionDate = new Date(existingSession.createdAt);
+const currentDate = `${testcurrentDate.getFullYear()}-${String(testcurrentDate.getMonth() + 1).padStart(2, '0')}-${String(testcurrentDate.getDate()).padStart(2, '0')}`;
+const existingSessionDate = `${testexistingSessionDate.getFullYear()}-${String(testexistingSessionDate.getMonth() + 1).padStart(2, '0')}-${String(testexistingSessionDate.getDate()).padStart(2, '0')}`;
+
+console.log("1 => "+ existingSessionDate);
+console.log("2 => "+ currentDate);
+
+
+  if (existingSession && existingSessionDate.toString() == currentDate.toString()) {
     //if sportComplex's Session Exist
     const currentUser = req.body.userId;
 
+    console.log(existingSession);
+
+    console.log(existingSession.enrolls[0].userId.toString() == req.body.userId);
+
     const currentUserEnroll = existingSession.enrolls.filter(
-      (enroll) => enroll.userId.toString() === req.body.userId
+      (enroll) => enroll.userId.toString() == req.body.userId
     );
 
-    console.log();
+    console.log(currentUserEnroll);
 
     if (
       currentUserEnroll &&
-      currentUserEnroll[currentUserEnroll.length - 1].exit == null
+      currentUserEnroll[currentUserEnroll.length - 1].exit== null
     ) {
-      // Update the exit time for the user's enrollment [gandfaad Condition]
+      // Update the exit time for the user's enrollment 
       currentUserEnroll[currentUserEnroll.length - 1].exit = new Date();
       let data = await existingSession.save();
 
@@ -38,6 +52,7 @@ module.exports.addSession = async function (req, res) {
         exit: null,
       };
       existingSession.enrolls.push(newEnroll);
+
       let data = await existingSession.save();
       res.json({
         data: data,
@@ -46,6 +61,7 @@ module.exports.addSession = async function (req, res) {
     }
   } else {
     // sportComplex's Session doesn't exist, send a POST request to create
+
     const newSession = new sessions();
     newSession.sportscomplex = req.params.id;
     const currentDate = new Date();
@@ -56,6 +72,7 @@ module.exports.addSession = async function (req, res) {
       exit: null,
     };
     newSession.enrolls.push(newEnroll);
+    newSession.date = Date.now();
     let data1 = await newSession.save();
     res.json({
       data: data1,
