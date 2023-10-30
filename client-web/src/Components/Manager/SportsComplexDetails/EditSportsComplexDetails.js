@@ -61,7 +61,16 @@ const EditSportsComplexDetails = () => {
       requestOptions
     )
       .then((response) => response.json())
-      .then((result) => console.log(result))
+      .then((result) => {
+        Swal.fire({
+          position: "top-end",
+          icon: "success",
+          title: "Facility Added Successfully",
+          showConfirmButton: false,
+          timer: 1500,
+        });
+        navigate("/manager/facilitydetails");
+      })
       .catch((error) => console.log("error", error));
   };
 
