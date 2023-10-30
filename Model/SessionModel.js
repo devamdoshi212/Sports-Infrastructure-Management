@@ -2,6 +2,10 @@ const mongoose = require("mongoose");
 
 const sessionSchema = new mongoose.Schema(
   {
+    date: {
+      type: Date,
+      // set: (value) => (value ? value.setHours(0, 0, 0, 0) : null),
+    },
     sportscomplex: {
       type: mongoose.SchemaTypes.ObjectId,
       ref: "sportcomplexes",
@@ -18,4 +22,3 @@ const sessionSchema = new mongoose.Schema(
 );
 
 module.exports = mongoose.model("sessions", sessionSchema);
-  
