@@ -20,7 +20,7 @@ export default function SportComplexDataTable() {
     Name: "",
     ContactNum: "",
     Email: "",
-    District: "",
+    district: "",
   });
   const [cookies] = useCookies(["token"]);
 
@@ -87,7 +87,7 @@ export default function SportComplexDataTable() {
       Name: value,
       ContactNum: value,
       Email: value,
-      District: value,
+      district: value,
     });
 
     setFilters(_filters);
@@ -103,7 +103,7 @@ export default function SportComplexDataTable() {
       Name: "",
       ContactNum: "",
       Email: "",
-      District: "",
+      district: "",
     });
   };
 
@@ -195,6 +195,10 @@ export default function SportComplexDataTable() {
     const data = district.find((c) => c._id === rowdata.district);
     return data.District;
   };
+  const districtFilterFunction = (rowData) => {
+    const district = rowData.district?.District;
+    return district?.startsWith(globalFilterValues.district);
+  };
 
   return (
     <div className="card">
@@ -208,9 +212,18 @@ export default function SportComplexDataTable() {
         loading={loading}
         dataKey="_id"
         filters={filters}
-        globalFilterFields={["Name", "ContactNum", "Email"]}
+        globalFilterFields={[
+          "name",
+          "location",
+          "operationalSince",
+          "area",
+          "taluka",
+          "district",
+          "manager.Name",
+          "createdAt",
+        ]}
         header={header}
-        emptyMessage="No Blogs found."
+        emptyMessage="No Data found."
       >
         <Column
           field="index"
@@ -235,7 +248,7 @@ export default function SportComplexDataTable() {
           style={{ minWidth: "12rem" }}
         />
         <Column
-          header="operationalSince"
+          header="Operational Since"
           field="operationalSince"
           filterField="operationalSince"
           style={{ minWidth: "12rem" }}
@@ -254,12 +267,12 @@ export default function SportComplexDataTable() {
         />
         <Column
           header="District"
-          field="district" // Replace 'districtName' with the actual field name
-          filterField="District" // Make sure this matches the actual field name
+          field="district"
+          filterField="district"
           style={{ minWidth: "12rem" }}
           body={DistrictBodyTemplete}
-          filterMatchMode={FilterMatchMode.CONTAINS}
-          filterValue={globalFilterValues.District}
+          filterCallback={districtFilterFunction}
+          filterValue={globalFilterValues.district}
         />
         <Column
           header="createdAt"

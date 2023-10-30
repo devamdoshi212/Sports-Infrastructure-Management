@@ -211,7 +211,12 @@ export default function ManagerDateTable() {
         loading={loading}
         dataKey="_id"
         filters={filters}
-        globalFilterFields={["Name", "ContactNum", "Email"]}
+        globalFilterFields={[
+          "Name",
+          "ContactNum",
+          "Email",
+          "SportComplexId.name",
+        ]}
         header={header}
         emptyMessage="No Blogs found."
       >

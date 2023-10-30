@@ -34,7 +34,7 @@ app.get("/getuser", UserController.getUser);
 app.get("/getuserwithdistrict", UserController.getUserWithDistrict);
 app.get("/getuserwithsportscomplex", UserController.getUserWithSportsComplex);
 app.get(
-  "/getuserwithsportswithcomplex",
+  "/getuserwithdistrictwithcomplex",
   UserController.getUserWithDistrictandSportsComplex
 );
 
@@ -60,6 +60,10 @@ app.get(
 app.get(
   "/getSportsComplexwithsport",
   SportsComplexController.getSportsComplexwithSportName
+);
+app.get(
+  "/getSportsComplexwithdistrict",
+  SportsComplexController.getSportsComplexwithdistrict
 );
 
 app.patch(
@@ -108,8 +112,7 @@ app.patch("/updateComplaint/:id", ComplaintController.updateComplaint);
 //session routes
 app.get("/getSession", SessionController.getSession);
 app.post("/addSession", SessionController.addSession);
-app.patch("/updateSession", SessionController.updateSession)
-
+app.patch("/updateSession", SessionController.updateSession);
 
 app.get("/filtersport/:id", filtersportsforcomplex);
 
