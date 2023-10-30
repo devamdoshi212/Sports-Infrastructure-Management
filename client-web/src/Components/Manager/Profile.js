@@ -12,7 +12,7 @@ const Profile = () => {
     };
 
     fetch(
-      `http://localhost:9999/getuserwithsportswithcomplex?_id=${AuthorityData._id}`,
+      `http://localhost:9999/getuserwithsportscomplex?_id=${AuthorityData._id}`,
       requestOptions
     )
       .then((response) => response.json())
