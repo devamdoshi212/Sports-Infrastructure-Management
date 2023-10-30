@@ -65,6 +65,10 @@ app.get(
   "/getSportsComplexwithdistrict",
   SportsComplexController.getSportsComplexwithdistrict
 );
+app.get(
+  "/getSportsComplexwithmanagerwithdistrict",
+  SportsComplexController.getSportsComplexwithmanagerwithdistrict
+);
 
 app.patch(
   "/updateSportsComplex/:id",

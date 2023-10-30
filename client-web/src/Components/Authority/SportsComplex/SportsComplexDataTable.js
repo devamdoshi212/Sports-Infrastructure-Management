@@ -218,7 +218,7 @@ export default function SportComplexDataTable() {
           "operationalSince",
           "area",
           "taluka",
-          "district",
+          "district.District",
           "manager.Name",
           "createdAt",
         ]}
@@ -267,10 +267,10 @@ export default function SportComplexDataTable() {
         />
         <Column
           header="District"
-          field="district"
+          field="district.District"
           filterField="district"
           style={{ minWidth: "12rem" }}
-          body={DistrictBodyTemplete}
+          // body={DistrictBodyTemplete}
           filterCallback={districtFilterFunction}
           filterValue={globalFilterValues.district}
         />
