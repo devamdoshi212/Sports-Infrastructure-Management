@@ -61,6 +61,10 @@ app.get(
   "/getSportsComplexwithsport",
   SportsComplexController.getSportsComplexwithSportName
 );
+app.get(
+  "/getSportsComplexwithdistrict",
+  SportsComplexController.getSportsComplexwithdistrict
+);
 
 app.patch(
   "/updateSportsComplex/:id",
@@ -108,8 +112,7 @@ app.patch("/updateComplaint/:id", ComplaintController.updateComplaint);
 //session routes
 app.get("/getSession", SessionController.getSession);
 app.post("/addSession", SessionController.addSession);
-app.patch("/updateSession", SessionController.updateSession)
-
+app.patch("/updateSession", SessionController.updateSession);
 
 app.get("/filtersport/:id", filtersportsforcomplex);
 

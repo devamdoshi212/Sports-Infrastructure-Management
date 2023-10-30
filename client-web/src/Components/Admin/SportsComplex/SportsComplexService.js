@@ -1,6 +1,6 @@
 export const SportComplexService = {
   getData() {
-    return fetch("http://localhost:9999/getSportsComplex")
+    return fetch("http://localhost:9999/getSportsComplexwithdistrict")
       .then((res) => res.json())
       .then((res) => {
         return res.data;
