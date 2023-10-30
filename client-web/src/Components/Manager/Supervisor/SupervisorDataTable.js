@@ -183,20 +183,6 @@ export default function SupervisorDataTable() {
     return currentPage * 10 + rowIndex + 1;
   };
 
-  const representativeBodyTemplate = (rowData) => {
-    return rowData.Category.join(", ");
-  };
-
-  // const DistrictBodyTemplete = (rowdata) => {
-  //   const data = district.find((c) => c._id === rowdata.DistrictId);
-  //   return data.District;
-  // };
-
-  // const getDistrictName = (id) => {
-  //   const data = district.find((c) => c._id === id);
-  //   return data.District;
-  // };
-
   return (
     <div className="card">
       <DataTable
@@ -241,15 +227,6 @@ export default function SupervisorDataTable() {
           filterField="Email"
           style={{ minWidth: "12rem" }}
         />
-        {/* <Column
-          header="District"
-          field="DistrictId.District" // Replace 'districtName' with the actual field name
-          filterField="District" // Make sure this matches the actual field name
-          style={{ minWidth: "12rem" }}
-          // body={DistrictBodyTemplete}
-          filterMatchMode={FilterMatchMode.CONTAINS}
-          filterValue={globalFilterValues.District}
-        /> */}
       </DataTable>
     </div>
   );

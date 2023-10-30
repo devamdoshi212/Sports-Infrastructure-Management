@@ -182,20 +182,6 @@ export default function AuthorityTable() {
     return currentPage * 10 + rowIndex + 1;
   };
 
-  const representativeBodyTemplate = (rowData) => {
-    return rowData.Category.join(", ");
-  };
-
-  // const DistrictBodyTemplete = (rowdata) => {
-  //   const data = district.find((c) => c._id === rowdata.DistrictId);
-  //   return data.District;
-  // };
-
-  // const getDistrictName = (id) => {
-  //   const data = district.find((c) => c._id === id);
-  //   return data.District;
-  // };
-
   return (
     <div className="card">
       <DataTable
@@ -208,9 +194,14 @@ export default function AuthorityTable() {
         loading={loading}
         dataKey="_id"
         filters={filters}
-        globalFilterFields={["Name", "ContactNum", "Email"]}
+        globalFilterFields={[
+          "Name",
+          "ContactNum",
+          "Email",
+          "DistrictId.District",
+        ]}
         header={header}
-        emptyMessage="No Blogs found."
+        emptyMessage="No Data found."
       >
         <Column
           field="index"
@@ -242,12 +233,10 @@ export default function AuthorityTable() {
         />
         <Column
           header="District"
-          field="DistrictId.District" // Replace 'districtName' with the actual field name
-          filterField="District" // Make sure this matches the actual field name
+          field="DistrictId.District"
+          filterField="DistrictId.District"
           style={{ minWidth: "12rem" }}
-          // body={DistrictBodyTemplete}
           filterMatchMode={FilterMatchMode.CONTAINS}
-          filterValue={globalFilterValues.District}
         />
       </DataTable>
     </div>

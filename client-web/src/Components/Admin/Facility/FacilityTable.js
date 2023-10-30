@@ -188,9 +188,9 @@ export default function FacilityTable() {
         loading={loading}
         dataKey="_id"
         filters={filters}
-        globalFilterFields={["Name", "ContactNum", "Email"]}
+        globalFilterFields={["SportName", "Category"]}
         header={header}
-        emptyMessage="No Blogs found."
+        emptyMessage="No Data found."
       >
         <Column
           field="index"

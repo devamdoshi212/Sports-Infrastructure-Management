@@ -7,7 +7,6 @@ import { Column } from "primereact/column";
 import { InputText } from "primereact/inputtext";
 import { Button } from "primereact/button";
 import { Calendar } from "primereact/calendar";
-import { useSelector } from "react-redux/es/hooks/useSelector";
 import { Link } from "react-router-dom";
 import { useCookies } from "react-cookie";
 import { ManagerService } from "./ManagerService";
@@ -83,7 +82,6 @@ export default function ManagerDataTable() {
       Name: value,
       ContactNum: value,
       Email: value,
-      District: value,
     });
 
     setFilters(_filters);
@@ -99,7 +97,6 @@ export default function ManagerDataTable() {
       Name: "",
       ContactNum: "",
       Email: "",
-      District: "",
     });
   };
 
@@ -185,16 +182,6 @@ export default function ManagerDataTable() {
     return rowData.Category.join(", ");
   };
 
-  // const DistrictBodyTemplete = (rowdata) => {
-  //   const data = district.find((c) => c._id === rowdata.DistrictId);
-  //   return data.District;
-  // };
-
-  // const getDistrictName = (id) => {
-  //   const data = district.find((c) => c._id === id);
-  //   return data.District;
-  // };
-
   return (
     <div className="card">
       <DataTable
@@ -207,9 +194,14 @@ export default function ManagerDataTable() {
         loading={loading}
         dataKey="_id"
         filters={filters}
-        globalFilterFields={["Name", "ContactNum", "Email"]}
+        globalFilterFields={[
+          "Name",
+          "ContactNum",
+          "Email",
+          "SportComplexId.name",
+        ]}
         header={header}
-        emptyMessage="No Blogs found."
+        emptyMessage="No Data found."
       >
         <Column
           field="index"
@@ -244,9 +236,6 @@ export default function ManagerDataTable() {
           field="SportComplexId.name" // Replace 'districtName' with the actual field name
           filterField="SportsComplexId.name" // Make sure this matches the actual field name
           style={{ minWidth: "12rem" }}
-          // body={DistrictBodyTemplete}
-          //   filterMatchMode={FilterMatchMode.CONTAINS}
-          //   filterValue={globalFilterValues.District}
         />
       </DataTable>
     </div>
