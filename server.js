@@ -116,7 +116,7 @@ app.patch("/updateComplaint/:id", ComplaintController.updateComplaint);
 //session routes
 app.get("/getSession", SessionController.getSession);
 app.post("/addSession/:id", SessionController.addSession);
-app.patch("/updateSession", SessionController.updateSession);
+app.get("/attendance", SessionController.attendance);
 
 app.get("/filtersport/:id", filtersportsforcomplex);
 
