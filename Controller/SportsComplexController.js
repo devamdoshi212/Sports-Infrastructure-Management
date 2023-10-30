@@ -26,6 +26,16 @@ module.exports.getSportsComplex = async function (req, res) {
   }
 };
 
+module.exports.getSportsComplexwithdistrict = async function (req, res) {
+  //req.query {manager: id}
+  let data = await SportsComplex.find(req.query).populate("district");
+  if (data) {
+    res.json({ data: data, msg: "Sport Retrived", rcode: 200 });
+  } else {
+    res.json({ data: err.msg, msg: "smw", rcode: -9 });
+  }
+};
+
 module.exports.getSportsComplexwithmanager = async function (req, res) {
   //req.query {manager: id}
   let data = await SportsComplex.find(req.query).populate("manager");
@@ -54,8 +64,6 @@ module.exports.updateSportsComplex = async function (req, res) {
   req.files.forEach((ele) => {
     resourcesarray.push(`http://localhost:9999/uploads/${ele.originalname}`);
   });
-
-  console.log(resourcesarray);
 
   let json = {
     sport: req.body.sport, // Replace with the actual sport ID

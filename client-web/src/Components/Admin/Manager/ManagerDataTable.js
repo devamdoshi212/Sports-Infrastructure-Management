@@ -7,12 +7,10 @@ import { Column } from "primereact/column";
 import { InputText } from "primereact/inputtext";
 import { Button } from "primereact/button";
 import { Calendar } from "primereact/calendar";
-import { useSelector } from "react-redux/es/hooks/useSelector";
 import { Link } from "react-router-dom";
-import { AuthorityService } from "./AuthorityService";
 import { useCookies } from "react-cookie";
-
-export default function AuthorityTable() {
+import { ManagerService } from "./ManagerService";
+export default function ManagerDataTable() {
   const [deleterefresh, setdeleterefresh] = useState(true);
   const [customers, setCustomers] = useState(null);
   const [filters, setFilters] = useState(null);
@@ -56,7 +54,7 @@ export default function AuthorityTable() {
   };
 
   useEffect(() => {
-    AuthorityService.getCustomersXLarge().then((data) => {
+    ManagerService.getCustomersXLarge().then((data) => {
       setCustomers(getCustomers(data));
       setLoading(false);
     });
@@ -84,7 +82,6 @@ export default function AuthorityTable() {
       Name: value,
       ContactNum: value,
       Email: value,
-      District: value,
     });
 
     setFilters(_filters);
@@ -100,7 +97,6 @@ export default function AuthorityTable() {
       Name: "",
       ContactNum: "",
       Email: "",
-      District: "",
     });
   };
 
@@ -182,6 +178,10 @@ export default function AuthorityTable() {
     return currentPage * 10 + rowIndex + 1;
   };
 
+  const representativeBodyTemplate = (rowData) => {
+    return rowData.Category.join(", ");
+  };
+
   return (
     <div className="card">
       <DataTable
@@ -198,7 +198,7 @@ export default function AuthorityTable() {
           "Name",
           "ContactNum",
           "Email",
-          "DistrictId.District",
+          "SportComplexId.name",
         ]}
         header={header}
         emptyMessage="No Data found."
@@ -232,11 +232,10 @@ export default function AuthorityTable() {
           style={{ minWidth: "12rem" }}
         />
         <Column
-          header="District"
-          field="DistrictId.District"
-          filterField="DistrictId.District"
+          header="Sports Complex"
+          field="SportComplexId.name" // Replace 'districtName' with the actual field name
+          filterField="SportsComplexId.name" // Make sure this matches the actual field name
           style={{ minWidth: "12rem" }}
-          filterMatchMode={FilterMatchMode.CONTAINS}
         />
       </DataTable>
     </div>

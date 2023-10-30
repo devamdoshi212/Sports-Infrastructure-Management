@@ -205,7 +205,14 @@ export default function SportComplexTable() {
         loading={loading}
         dataKey="_id"
         filters={filters}
-        globalFilterFields={["Name", "ContactNum", "Email"]}
+        globalFilterFields={[
+          "name",
+          "location",
+          "operationalSince",
+          "area",
+          "taluka",
+          "district.District",
+        ]}
         header={header}
         emptyMessage="No Blogs found."
       >
@@ -251,10 +258,10 @@ export default function SportComplexTable() {
         />
         <Column
           header="District"
-          field="district" // Replace 'districtName' with the actual field name
+          field="district.District" // Replace 'districtName' with the actual field name
           filterField="District" // Make sure this matches the actual field name
           style={{ minWidth: "12rem" }}
-          body={DistrictBodyTemplete}
+          // body={DistrictBodyTemplete}
           filterMatchMode={FilterMatchMode.CONTAINS}
           filterValue={globalFilterValues.District}
         />
