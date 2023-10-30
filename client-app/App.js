@@ -8,7 +8,7 @@ import { NetworkActions } from "./store/Network";
 import { NavigationContainer } from "@react-navigation/native";
 import General from "./screens/General/General";
 
-const Network1 = () => {
+const Network1 = ({ navigation }) => {
   const dispatch = useDispatch();
   useEffect(() => {
     const getIpAddress = async () => {
@@ -17,11 +17,7 @@ const Network1 = () => {
     };
     getIpAddress();
   }, []);
-  return (
-    <View>
-      <General />
-    </View>
-  );
+  return <General />;
 };
 
 export default function App() {
