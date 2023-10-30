@@ -5,6 +5,8 @@ import { useDispatch } from "react-redux";
 import { Provider } from "react-redux";
 import store from "./store";
 import { NetworkActions } from "./store/Network";
+import { NavigationContainer } from "@react-navigation/native";
+import General from "./screens/General/General";
 
 const Network1 = () => {
   const dispatch = useDispatch();
@@ -16,24 +18,18 @@ const Network1 = () => {
     getIpAddress();
   }, []);
   return (
-    <View style={styles.container}>
-      <Athelte />
+    <View>
+      <General />
     </View>
   );
 };
+
 export default function App() {
   return (
     <Provider store={store}>
-      <Network1 />
+      <NavigationContainer>
+        <Network1 />
+      </NavigationContainer>
     </Provider>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-});
