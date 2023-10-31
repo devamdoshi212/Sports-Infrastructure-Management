@@ -71,6 +71,8 @@ app.get(
   "/getSportsComplexwithmanagerwithdistrict",
   SportsComplexController.getSportsComplexwithmanagerwithdistrict
 );
+app.get("/searchSportsComplex", SportsComplexController.SearchComplex);
+
 
 app.patch(
   "/updateSportsComplex/:id",
