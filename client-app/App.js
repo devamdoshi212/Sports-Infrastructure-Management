@@ -12,7 +12,7 @@ const Network1 = ({ navigation }) => {
   useEffect(() => {
     const getIpAddress = async () => {
       //write down ip in getip function in string form
-      dispatch(NetworkActions.getip("192.168.151.243"));
+      dispatch(NetworkActions.getip("192.168.29.60"));
     };
     getIpAddress();
   }, []);

@@ -1,7 +1,14 @@
 import React, { useState } from "react";
-import { View, TextInput, TouchableOpacity, StyleSheet } from "react-native";
+import {
+  View,
+  TextInput,
+  TouchableOpacity,
+  StyleSheet,
+  SafeAreaView,
+} from "react-native";
 import { FontAwesome } from "@expo/vector-icons";
 import { Picker } from "@react-native-picker/picker";
+import FlatListScreen from "./FlatListScreen";
 
 const Search = () => {
   const [isSearchVisible, setSearchVisible] = useState(true);
@@ -21,44 +28,49 @@ const Search = () => {
   };
 
   return (
-    <View style={styles.container}>
-      <View style={styles.header}>
-        {isSearchVisible ? (
-          <View style={styles.searchContainer}>
-            <TextInput
-              style={styles.input}
-              placeholder="Search..."
-              onChangeText={(text) => setSearchQuery(text)}
-              value={searchQuery}
-            />
+    <View
+      style={{
+        marginTop: 60,
+      }}
+    >
+      <View style={styles.container}>
+        <View style={styles.header}>
+          {isSearchVisible ? (
+            <View style={styles.searchContainer}>
+              <TextInput
+                style={styles.input}
+                placeholder="Search..."
+                onChangeText={(text) => setSearchQuery(text)}
+                value={searchQuery}
+              />
+              <TouchableOpacity
+                style={styles.searchButton}
+                onPress={handleSearch}
+              >
+                <FontAwesome name="search" size={24} color="black" />
+              </TouchableOpacity>
+            </View>
+          ) : (
             <TouchableOpacity
               style={styles.searchButton}
-              onPress={handleSearch}
+              onPress={() => setSearchVisible(true)}
             >
               <FontAwesome name="search" size={24} color="black" />
             </TouchableOpacity>
-          </View>
-        ) : (
-          <TouchableOpacity
-            style={styles.searchButton}
-            onPress={() => setSearchVisible(true)}
+          )}
+          <Picker
+            style={styles.dropdownPicker}
+            selectedValue={selectedOption}
+            onValueChange={handleDropdownChange}
           >
-            <FontAwesome name="search" size={24} color="black" />
-          </TouchableOpacity>
-        )}
-        <Picker
-          style={styles.dropdownPicker}
-          selectedValue={selectedOption}
-          onValueChange={handleDropdownChange}
-          placeholder="Browser"
-        >
-          <Picker.Item label="Option 1" value="Option 1" />
-          <Picker.Item label="Option 2" value="Option 2" />
-          <Picker.Item label="Option 3" value="Option 3" />
-        </Picker>
+            <Picker.Item label="Facilities" value="getSports" />
+            <Picker.Item label="Sports Complex" value="getSportsComplex" />
+          </Picker>
+        </View>
       </View>
-      {/* Rest of your content */}
+      <FlatListScreen />
     </View>
+    //
   );
 };
 
@@ -67,11 +79,13 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
+    marginTop: 20,
   },
   header: {
     flexDirection: "row",
     alignItems: "center",
-    paddingHorizontal: 16,
+    paddingHorizontal: 30,
+    marginBottom: 20,
   },
   searchContainer: {
     flexDirection: "row",
@@ -79,19 +93,27 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   input: {
-    flex: 1,
+    flex: 4, // 80% width
     height: 40,
+    backgroundColor: "white",
+    borderColor: "lightgray",
     borderWidth: 1,
-    borderRadius: 20,
+    borderRadius: 10,
     paddingHorizontal: 12,
-    marginRight: 8,
+    marginRight: 8, // Add some margin to separate it from the search button
   },
   searchButton: {
+    flex: 1, // 20% width
     marginVertical: 8,
+    height: 40,
+    alignItems: "center",
+    justifyContent: "center",
   },
   dropdownPicker: {
+    flex: 1,
     width: 120,
     height: 40,
+    borderColor: "lightgray",
   },
 });
 
