@@ -4,7 +4,7 @@ import "react-native-gesture-handler";
 import Search from "./Search";
 const Tab = createBottomTabNavigator();
 import { FontAwesome } from "@expo/vector-icons";
-import Profile from "./LoginSignupTab";
+import Profile from "./Profile";
 
 const NoAuthTab = ({ navigation }) => {
   return (
