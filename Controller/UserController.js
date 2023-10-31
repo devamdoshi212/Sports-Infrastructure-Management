@@ -152,3 +152,25 @@ module.exports.getUserWithDistrictandSportsComplex = function (req, res) {
 module.exports.uploadPhoto = async (req, res) => {
   res.json({ rcode: 200 });
 };
+
+module.exports.athleteDetail = async function (req, res) {
+  try {
+    const data = await UserModel.find(req.query);
+
+    // Assuming data is an array or a single object, not a circular structure
+    let athleteDetail = await athleteModel.find({ userId: data._id });
+
+    // Extract only the necessary data from data, excluding circular references
+    const responseData = {
+      data: data,
+      athleteDetail: athleteDetail,
+      msg: "User Retrieved",
+      rcode: 200,
+    };
+
+    res.json(responseData);
+  } catch (err) {
+    console.log(err);
+    res.json({ data: err.message, msg: "Error occurred", rcode: -9 });
+  }
+};
