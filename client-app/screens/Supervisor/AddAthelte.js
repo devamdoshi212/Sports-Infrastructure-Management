@@ -9,7 +9,6 @@ import {
 } from "react-native";
 import { Picker } from "@react-native-picker/picker";
 import Checkbox from "expo-checkbox";
-import { useSelector } from "react-redux";
 import ipconfig from "../../ipconfig";
 const CheckboxWithLabel = ({
   label,
@@ -32,99 +31,85 @@ const CheckboxWithLabel = ({
   );
 };
 
-// const fetchsportsofcomplex = (id) => {
-//   var requestOptions = {
-//     method: "GET",
-//     redirect: "follow",
-//   };
-
-//   fetch(
-//     `http://${ipconfig.ip}:9999/getSportsComplexwithsport?_id=${id}`,
-//     requestOptions
-//   )
-//     .then((response) => response.json())
-//     .then((result) => {
-//       return result.data[0].sports;
-//     })
-//     .catch((error) => console.log("error", error));
-// };
-const fetchsportsofcomplex = (id) => {
-  return new Promise((resolve, reject) => {
+const Form = ({ navigation }) => {
+  const ip = ipconfig.ip;
+  const [sports, setsports] = useState([]);
+  useEffect(() => {
     var requestOptions = {
       method: "GET",
       redirect: "follow",
     };
 
     fetch(
-      `http://${ipconfig.ip}:9999/getSportsComplexwithsport?_id=${id}`,
+      `http://${ip}:9999/getSportsComplexwithsport?_id=6540e57553d1815b95f1c5c5`,
       requestOptions
     )
       .then((response) => response.json())
       .then((result) => {
-        resolve(result.data[0].sports);
+        setsports(result.data[0].sports);
+        // console.log(result.data[0].sports);
       })
-      .catch((error) => {
-        reject(error);
-      });
-  });
-};
-
-const AddAthelte = ({ navigation }) => {
-  const { SportComplexId } = useSelector((state) => state.user.User);
-  const [Sports, setSports] = useState([
-    {
-      sport: {
-        _id: "6540e2b1af277f6329395500",
-        SportName: "Cricket",
-      },
-    },
-  ]);
-  setSports(fetchsportsofcomplex(SportComplexId));
+      .catch((error) => console.log("error", error));
+  }, []);
   const [email, setEmail] = useState("");
   const [selectedOption, setSelectedOption] = useState("getSports");
+  const [user, setUser] = useState(false);
+  const [userDetail, setUserDetail] = useState([]);
+  const [athleteDetail, setAthleteDetails] = useState([]);
+  const handleLogin = () => {
+    // Handle login logic here, e.g., authentication with API
 
-  useEffect(() => {
-    const fetchSportsData = async () => {
-      try {
-        const sportsData = await fetchsportsofcomplex(SportComplexId);
-        setSports(sportsData);
-      } catch (error) {
-        console.error("Error fetching sports data: ", error);
-        // Handle error if the fetch fails
-      }
+    var requestOptions = {
+      method: "GET",
+      redirect: "follow",
     };
 
-    fetchSportsData();
-  }, [SportComplexId]);
-  const handleLogin = () => {
-    console.log(SportComplexId);
-
-    // Handle login logic here, e.g., authentication with API
+    fetch(`http://${ip}:9999/getuserwithathelte?Email=${email}`, requestOptions)
+      .then((response) => response.json())
+      .then((result) => {
+        if (result.rcode === 200) {
+          setUserDetail(result.data[0]);
+          setAthleteDetails(result.athleteDetail[0]);
+          setUser(true);
+          console.log("Hello");
+        }
+      })
+      .catch((error) => console.log("error", error));
   };
 
-  const [isChecked, setIsChecked] = React.useState({
-    option1: false,
-    option2: false,
-    option3: false,
+  const [isChecked, setIsChecked] = React.useState(() => {
+    // Create an initial state object based on the Sports data
+    const initialState = {};
+
+    // Assuming Sports is an array with SportName property
+    sports.forEach((sport) => {
+      initialState[sport.SportName] = false;
+    });
+
+    return initialState;
   });
 
   const handleChange = (option) => {
     setIsChecked({ ...isChecked, [option]: !isChecked[option] });
     if (!isChecked[option]) {
-      console.log(`${option}ischecked.`);
+      console.log(`${option} is checked.`);
     }
   };
 
-  const checkboxOptions = [];
+  const checkboxOptions = [
+    { label: "Option 1", value: "option1" },
+    { label: "Option 2", value: "option2" },
+    { label: "Option 3", value: "option3" },
+  ];
 
   const renderCheckboxes = () => {
-    return Sports.map((option, index) => {
+    return sports.map((sports, index) => {
       return (
         <CheckboxWithLabel
           key={index}
-          label={option.sport.SportName}
-          value={isChecked[option.sport._id]}
-          onValueChange={() => handleChange(option.value)}
+          label={sports.sport.SportName}
+          value={isChecked[sports.sport._id]}
+          onValueChange={() => handleChange(sports.sport._id)}
           disabled={false}
           style={styles.checkboxItem}
         />
@@ -152,20 +137,34 @@ const AddAthelte = ({ navigation }) => {
         <TouchableOpacity style={styles.loginButton} onPress={handleLogin}>
           <Text style={styles.buttonText}>Check Email</Text>
         </TouchableOpacity>
-        <View style={styles.userInfo}>
-          <Text style={styles.userInfoText}>Name: UDAY GOHEL</Text>
-          <Text style={styles.userInfoText}>Email: UDAY@GOHEL</Text>
-          <Text style={styles.userInfoText}>Mobile Number: 94816165164</Text>
-          <Text style={styles.userInfoText}>Blood Group: B+</Text>
-          <Text style={styles.userInfoText}>Date of Birth: 11-11-2003</Text>
-          <Text style={styles.userInfoText}>Disability: 3</Text>
-          <Text style={styles.userInfoText}>Health Issue: NONE</Text>
-          <Text style={styles.userInfoText}>Address: DHORAJI</Text>
-          <Text style={styles.userInfoText}>Emergency Number: 94094748494</Text>
-        </View>
-        {Sports && (
-          <View style={styles.checkboxContainer}>{renderCheckboxes()}</View>
+        {user && (
+          <View style={styles.userInfo}>
+            <Text style={styles.userInfoText}>Name: {userDetail.Name}</Text>
+            <Text style={styles.userInfoText}>Email: {userDetail.Email}</Text>
+            <Text style={styles.userInfoText}>
+              Mobile Number: {userDetail.ContactNum}
+            </Text>
+            <Text style={styles.userInfoText}>
+              Blood Group: {athleteDetail.bloodGroup}
+            </Text>
+            <Text style={styles.userInfoText}>
+              Date of Birth: {userDetail.DOB}
+            </Text>
+            <Text style={styles.userInfoText}>
+              Disability: {athleteDetail.disability}
+            </Text>
+            <Text style={styles.userInfoText}>
+              Health Issue: {athleteDetail.healthIssue}
+            </Text>
+            <Text style={styles.userInfoText}>
+              Address: {athleteDetail.address}
+            </Text>
+            <Text style={styles.userInfoText}>
+              Emergency Number: {athleteDetail.emergencyNumber}
+            </Text>
+          </View>
         )}
+        <View style={styles.checkboxContainer}>{renderCheckboxes()}</View>
         <Picker
           style={styles.dropdownPicker}
           selectedValue={selectedOption}
@@ -261,4 +260,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default AddAthelte;
+export default Form;
