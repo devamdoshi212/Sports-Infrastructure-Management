@@ -13,7 +13,7 @@ import FlatListScreen from "./FlatListScreen";
 const Search = () => {
   const [isSearchVisible, setSearchVisible] = useState(true);
   const [searchQuery, setSearchQuery] = useState("");
-  const [selectedOption, setSelectedOption] = useState("Browser");
+  const [selectedOption, setSelectedOption] = useState("getSports");
 
   const handleSearch = () => {
     // Handle search logic here
@@ -26,6 +26,7 @@ const Search = () => {
     // Handle dropdown selection logic here
     setSelectedOption(itemValue);
   };
+  console.log(selectedOption);
 
   return (
     <View
@@ -68,7 +69,7 @@ const Search = () => {
           </Picker>
         </View>
       </View>
-      <FlatListScreen />
+      <FlatListScreen optionField={selectedOption} />
     </View>
     //
   );

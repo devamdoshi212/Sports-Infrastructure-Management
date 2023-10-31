@@ -7,28 +7,65 @@ import {
   StyleSheet,
   Platform,
   FlatList,
+  ImageBackground,
 } from "react-native";
 
-function renderCategoryItem(itemData) {
-  return (
-    <View style={styles.gridItem}>
-      <Pressable
-        android_ripple={{ color: "#ccc" }}
-        style={({ pressed }) => [
-          styles.button,
-          pressed ? styles.buttonPressed : null,
-        ]}
-        // onPress={onPress}
-      >
-        <View style={[styles.innerContainer, { backgroundColor: "gray" }]}>
-          <Text style={styles.title}>{itemData.item.name}</Text>
-        </View>
-      </Pressable>
-    </View>
-  );
+function renderCategoryItem(itemData, ip) {
+  if (itemData.item.baseUrl) {
+    const image = itemData.item.baseUrl;
+    const updatedImage = image.replace("localhost", ip); // Replace "localhost" with the IP address
+
+    return (
+      <View style={styles.gridItem}>
+        <Pressable
+          android_ripple={{ color: "#ccc" }}
+          style={({ pressed }) => [
+            styles.button,
+            pressed ? styles.buttonPressed : null,
+          ]}
+          // onPress={onPress}
+        >
+          {/* <View style={[styles.innerContainer, { backgroundColor: "gray" }]}> */}
+          <ImageBackground
+            source={{ uri: updatedImage }}
+            style={styles.imageBackground}
+          ></ImageBackground>
+          <View>
+            <Text
+              style={{
+                textAlign: "center",
+                fontSize: 16,
+                fontWeight: "bold",
+              }}
+            >
+              {itemData.item.SportName}
+            </Text>
+          </View>
+          {/* </View> */}
+        </Pressable>
+      </View>
+    );
+  } else {
+    return (
+      <View style={styles.gridItem}>
+        <Pressable
+          android_ripple={{ color: "#ccc" }}
+          style={({ pressed }) => [
+            styles.button,
+            pressed ? styles.buttonPressed : null,
+          ]}
+          // onPress={onPress}
+        >
+          <View style={[styles.innerContainer, { backgroundColor: "gray" }]}>
+            <Text style={styles.title}>{itemData.item.name}</Text>
+          </View>
+        </Pressable>
+      </View>
+    );
+  }
 }
 
-function FlatListScreen({ navigation }) {
+function FlatListScreen({ navigation, optionField }) {
   const [complex, setComplex] = useState([]);
   const ip = useSelector((state) => state.network.ipaddress);
   useEffect(() => {
@@ -37,18 +74,19 @@ function FlatListScreen({ navigation }) {
       redirect: "follow",
     };
 
-    fetch(`http://${ip}:9999/getSportsComplex`, requestOptions)
+    fetch(`http://${ip}:9999/${optionField}`, requestOptions)
       .then((response) => response.json())
       .then((result) => setComplex(result.data))
       .catch((error) => console.log("error", error));
-  }, [ip]);
+  }, [ip, optionField]);
 
   return (
     <FlatList
       data={complex}
       keyExtractor={(item) => item._id}
-      renderItem={renderCategoryItem}
+      renderItem={(itemData) => renderCategoryItem(itemData, ip)}
       numColumns={2}
+      extraData={ip}
     />
   );
 }
@@ -84,6 +122,14 @@ const styles = StyleSheet.create({
   },
   title: {
     fontWeight: "bold",
-    fontSize: 18,
+    fontSize: 16,
+  },
+  imageBackground: {
+    flex: 1, // This will make the ImageBackground take up the full parent view
+  },
+  centeredContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
   },
 });
