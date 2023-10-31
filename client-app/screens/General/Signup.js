@@ -16,10 +16,10 @@ import DateTimePickerModal from "react-native-modal-datetime-picker";
 import * as FileSystem from "expo-file-system";
 import * as ImagePicker from "expo-image-picker";
 import mime from "mime";
-import { useDispatch, useSelector } from "react-redux";
+import ipconfig from "../../ipconfig";
 
 const SignUp = ({ navigation }) => {
-  const ip = "192.168.151.243";
+  const ip = ipconfig.ip;
 
   const bloodgroups = [
     "A Positive",
@@ -89,19 +89,6 @@ const SignUp = ({ navigation }) => {
       return;
     }
     console.log(fdata);
-    // var formdata = new FormData();
-    // formdata.append("photo", {
-    //   uri: fdata.photo,
-    //   type: fdata.phototype,
-    //   name: fdata.username,
-    // });
-    // formdata.append("Password", fdata.Password);
-    // formdata.append("Name", fdata.Name);
-    // formdata.append("Email", fdata.Email);
-    // formdata.append("address", fdata.address);
-    // formdata.append("district", fdata.district);
-    // formdata.append("ContactNum", fdata.ContactNum);
-    // formdata.append("DOB", fdata.DOB);
 
     var myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/json");

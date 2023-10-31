@@ -9,10 +9,10 @@ import {
 
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { UserActions } from "../../store/User";
-import { useDispatch, useSelector } from "react-redux";
-
+import { useDispatch } from "react-redux";
+import ipconfig from "../../ipconfig";
 const Login = ({ navigation }) => {
-  const ip = useSelector((state) => state.network.ipaddress);
+  const ip = ipconfig.ip;
 
   const dispatch = useDispatch();
   const [email, setEmail] = useState("");

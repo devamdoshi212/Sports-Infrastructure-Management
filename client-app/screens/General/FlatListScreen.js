@@ -9,7 +9,7 @@ import {
   FlatList,
   ImageBackground,
 } from "react-native";
-
+import ipconfig from "../../ipconfig";
 function renderCategoryItem(itemData, ip) {
   if (itemData.item.baseUrl) {
     const image = itemData.item.baseUrl;
@@ -67,7 +67,7 @@ function renderCategoryItem(itemData, ip) {
 
 function FlatListScreen({ navigation, optionField }) {
   const [complex, setComplex] = useState([]);
-  const ip = useSelector((state) => state.network.ipaddress);
+  const ip = ipconfig.ip;
   useEffect(() => {
     var requestOptions = {
       method: "GET",
