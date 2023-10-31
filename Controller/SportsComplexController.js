@@ -114,11 +114,19 @@ module.exports.SearchComplex = async function (req, res) {
         },
       },
       {
+        $lookup: {
+          from: "sports", // Replace with the actual name of your "Sports" collection
+          localField: "sports.sport",
+          foreignField: "_id",
+          as: "sportsInfo",
+        },
+      },
+      {
         $match: {
           $or: [
             { name: { $regex: `^${query}`, $options: "i" } },
             { "districtInfo.District": { $regex: `^${query}`, $options: "i" } },
-            // { taluka: { $regex: `^${query}`, $options: "i" } },
+            { "sportsInfo.SportName": { $regex: `^${query}`, $options: "i" } },
           ],
         },
       },
