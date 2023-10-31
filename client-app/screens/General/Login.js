@@ -8,8 +8,10 @@ import {
 } from "react-native";
 
 import AsyncStorage from "@react-native-async-storage/async-storage";
-
+import { UserActions } from "../../store/User";
+import { useDispatch } from "react-redux";
 const Login = ({ navigation }) => {
+  const dispatch = useDispatch();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -44,7 +46,8 @@ const Login = ({ navigation }) => {
       .then((result) => {
         if (result.data.Role === 0) {
           setLoginData(result.token);
-          navigation.navigate("SignUp");
+          dispatch(UserActions.getuserRole(0));
+          // navigation.replace("AthelteAuth");
         } else {
           alert("Invalid Cradential !! ");
         }
