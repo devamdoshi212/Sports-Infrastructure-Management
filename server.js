@@ -39,6 +39,7 @@ app.get(
   "/getuserwithdistrictwithcomplex",
   UserController.getUserWithDistrictandSportsComplex
 );
+app.get("/getuserwithathelte", UserController.athleteDetail);
 
 //Sport routes
 app.post(
@@ -72,7 +73,6 @@ app.get(
   SportsComplexController.getSportsComplexwithmanagerwithdistrict
 );
 app.get("/searchSportsComplex", SportsComplexController.SearchComplex);
-
 
 app.patch(
   "/updateSportsComplex/:id",
