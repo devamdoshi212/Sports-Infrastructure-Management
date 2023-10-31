@@ -1,5 +1,6 @@
 const { default: mongoose } = require("mongoose");
 const SportsComplex = require("../Model/SportsComplexModel");
+// const SportsComplexModel = require("../Model/SportsComplexModel");
 
 module.exports.AddSportsComplex = async function (req, res) {
   let SportComplex = new SportsComplex({
@@ -90,4 +91,49 @@ module.exports.updateSportsComplex = async function (req, res) {
   sportcomplex.sports.push(json);
   let response = await sportcomplex.save();
   res.json({ data: response, msg: "updated successfully", rcode: 200 });
+};
+
+module.exports.SearchComplex = async function (req, res) {
+  try {
+    const query = req.query.q;
+    var data = [];
+    if (!query) {
+      return res.status(200).json({
+        status: "Success",
+        data: data,
+      });
+    }
+
+    data = await SportsComplex.aggregate([
+      {
+        $lookup: {
+          from: "districts", // Replace with the actual name of your "districts" collection
+          localField: "district",
+          foreignField: "_id",
+          as: "districtInfo",
+        },
+      },
+      {
+        $match: {
+          $or: [
+            { name: { $regex: `^${query}`, $options: "i" } },
+            { "districtInfo.District": { $regex: `^${query}`, $options: "i" } },
+            // { taluka: { $regex: `^${query}`, $options: "i" } },
+          ],
+        },
+      },
+    ]);
+
+    res.json({
+      result: data.length,
+      data: data,
+      rcode: 200,
+    });
+  } catch (err) {
+    console.log(err);
+    res.json({
+      error: err.msg,
+      rcode: -9,
+    });
+  }
 };
