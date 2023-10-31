@@ -116,10 +116,8 @@ app.get("/getAllComplaints", ComplaintController.getAllComplaints);
 app.patch("/updateComplaint/:id", ComplaintController.updateComplaint);
 
 //session routes
-app.get("/getSession", SessionController.getSession);
+// app.get("/getSession", SessionController.getSession);
 app.post("/addSession/:id", SessionController.addSession);
-app.get("/attendance", SessionController.attendance);
-
 app.get("/filtersport/:id", filtersportsforcomplex);
 
 app.listen(9999);
