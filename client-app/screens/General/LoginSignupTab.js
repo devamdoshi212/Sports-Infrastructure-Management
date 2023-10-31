@@ -4,6 +4,7 @@ import { createStackNavigator } from "@react-navigation/stack";
 const Stack = createStackNavigator();
 import Login from "./Login";
 import Signup from "./Signup";
+import Main from "../Athelte/Main";
 const Profile = ({ navigation }) => {
   return (
     <Stack.Navigator>
