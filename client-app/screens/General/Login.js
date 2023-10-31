@@ -9,18 +9,18 @@ import {
 
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { UserActions } from "../../store/User";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+
 const Login = ({ navigation }) => {
+  const ip = useSelector((state) => state.network.ipaddress);
+
   const dispatch = useDispatch();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   const setLoginData = async (value) => {
+    console.log("here" + value);
     await AsyncStorage.setItem("token", value);
-  };
-  const getLoginData = async () => {
-    const token = await AsyncStorage.getItem("token");
-    console.warn(token);
   };
 
   const handleLogin = () => {
@@ -41,24 +41,19 @@ const Login = ({ navigation }) => {
       redirect: "follow",
     };
 
-    fetch("http://192.168.29.60:9999/login", requestOptions)
+    fetch(`http://${ip}:9999/login`, requestOptions)
       .then((response) => response.json())
       .then((result) => {
         if (result.data.Role === 0) {
           setLoginData(result.token);
-          dispatch(UserActions.getuserRole(0));
-          // navigation.replace("AthelteAuth");
+          dispatch(UserActions.getuserRole(result.data));
         } else {
           alert("Invalid Cradential !! ");
         }
-        getLoginData();
         setPassword("");
         setEmail("");
       })
       .catch((error) => console.log("error", error));
-
-    // console.log("Email:", email);
-    // console.log("Password:", password);
   };
 
   return (
