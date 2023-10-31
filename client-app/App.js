@@ -1,20 +1,30 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import "react-native-gesture-handler";
+import { useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { Provider } from "react-redux";
+import store from "./store";
+import { NetworkActions } from "./store/Network";
+import { NavigationContainer } from "@react-navigation/native";
+import Main from "./screens/General/Main";
+
+const Network1 = ({ navigation }) => {
+  const dispatch = useDispatch();
+  useEffect(() => {
+    const getIpAddress = async () => {
+      //write down ip in getip function in string form
+      dispatch(NetworkActions.getip("192.168.151.243"));
+    };
+    getIpAddress();
+  }, []);
+  return <Main />;
+};
 
 export default function App() {
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <Provider store={store}>
+      <NavigationContainer>
+        <Network1 />
+      </NavigationContainer>
+    </Provider>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
