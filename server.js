@@ -17,13 +17,15 @@ const RatingController = require("./Controller/RatingController");
 const ComplaintController = require("./Controller/ComplaintController");
 const SessionController = require("./Controller/SessionConroller");
 const {
-  filtersportsforcomplex,
+    filtersportsforcomplex,
 } = require("./Controller/FilterSportsForComplex");
+
+const bodyParser = require("body-parser");
 const app = express();
 
 //middleware
 app.use(express.static("public"));
-app.use(express.urlencoded({ extended: true }));
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(cors());
 
@@ -34,15 +36,15 @@ app.get("/getuser", UserController.getUser);
 app.get("/getuserwithdistrict", UserController.getUserWithDistrict);
 app.get("/getuserwithsportscomplex", UserController.getUserWithSportsComplex);
 app.get(
-  "/getuserwithdistrictwithcomplex",
-  UserController.getUserWithDistrictandSportsComplex
+    "/getuserwithdistrictwithcomplex",
+    UserController.getUserWithDistrictandSportsComplex
 );
 
 //Sport routes
 app.post(
-  "/sport",
-  SportController.upload.single("picture"),
-  SportDataController.AddSport
+    "/sport",
+    SportController.upload.single("picture"),
+    SportDataController.AddSport
 );
 app.get("/getSports", SportDataController.getSport);
 
@@ -54,33 +56,33 @@ app.get("/getDistrict", DistrictController.getDistrict);
 app.post("/addSportsComplex", SportsComplexController.AddSportsComplex);
 app.get("/getSportsComplex", SportsComplexController.getSportsComplex);
 app.get(
-  "/getSportsComplexwithmanager",
-  SportsComplexController.getSportsComplexwithmanager
+    "/getSportsComplexwithmanager",
+    SportsComplexController.getSportsComplexwithmanager
 );
 app.get(
-  "/getSportsComplexwithsport",
-  SportsComplexController.getSportsComplexwithSportName
+    "/getSportsComplexwithsport",
+    SportsComplexController.getSportsComplexwithSportName
 );
 app.get(
-  "/getSportsComplexwithdistrict",
-  SportsComplexController.getSportsComplexwithdistrict
+    "/getSportsComplexwithdistrict",
+    SportsComplexController.getSportsComplexwithdistrict
 );
 app.get(
-  "/getSportsComplexwithmanagerwithdistrict",
-  SportsComplexController.getSportsComplexwithmanagerwithdistrict
+    "/getSportsComplexwithmanagerwithdistrict",
+    SportsComplexController.getSportsComplexwithmanagerwithdistrict
 );
 
 app.patch(
-  "/updateSportsComplex/:id",
-  SportController.upload.array("images"),
-  SportsComplexController.updateSportsComplex
+    "/updateSportsComplex/:id",
+    SportController.upload.array("images"),
+    SportsComplexController.updateSportsComplex
 );
 
 //athlete routes
 app.post(
-  "/addAthlete",
-  AthleteImageController.upload.single("picture"),
-  AthleteController.addAthlete
+    "/addAthlete",
+    AthleteImageController.upload.single("picture"),
+    AthleteController.addAthlete
 );
 app.get("/getAthletes", AthleteController.getAthlete);
 app.patch("/updateAthlete/:id", AthleteController.updateAthlete);
@@ -89,12 +91,12 @@ app.patch("/updateAthlete/:id", AthleteController.updateAthlete);
 app.post("/addInstructor", InstructorController.addInstructor);
 app.get("/getInstructors", InstructorController.getInstructor);
 app.get(
-  "/getInstructorswithuser",
-  InstructorController.getInstructorwithUserName
+    "/getInstructorswithuser",
+    InstructorController.getInstructorwithUserName
 );
 app.get(
-  "/getInstructorswithsport",
-  InstructorController.getInstructorwithSportsName
+    "/getInstructorswithsport",
+    InstructorController.getInstructorwithSportsName
 );
 app.get("/getInstructorswithall", InstructorController.getInstructorwithAll);
 app.patch("/updateInstructors/:id", InstructorController.updateInstructor);
@@ -114,10 +116,8 @@ app.get("/getAllComplaints", ComplaintController.getAllComplaints);
 app.patch("/updateComplaint/:id", ComplaintController.updateComplaint);
 
 //session routes
-app.get("/getSession", SessionController.getSession);
+// app.get("/getSession", SessionController.getSession);
 app.post("/addSession/:id", SessionController.addSession);
-app.get("/attendance", SessionController.attendance);
-
 app.get("/filtersport/:id", filtersportsforcomplex);
 
 app.listen(9999);
