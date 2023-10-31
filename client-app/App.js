@@ -1,12 +1,11 @@
-import { StyleSheet, Text, View } from "react-native";
-import Athelte from "./screens/Athelte/Athelte";
-import { useEffect, useState } from "react";
+import "react-native-gesture-handler";
+import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { Provider } from "react-redux";
 import store from "./store";
 import { NetworkActions } from "./store/Network";
 import { NavigationContainer } from "@react-navigation/native";
-import General from "./screens/General/General";
+import Main from "./screens/General/Main";
 
 const Network1 = ({ navigation }) => {
   const dispatch = useDispatch();
@@ -17,7 +16,7 @@ const Network1 = ({ navigation }) => {
     };
     getIpAddress();
   }, []);
-  return <General />;
+  return <Main />;
 };
 
 export default function App() {
