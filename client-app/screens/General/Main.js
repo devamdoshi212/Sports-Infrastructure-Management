@@ -6,6 +6,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import NoAuthTab from "./NoAuthTab";
 import AthelteMain from "../Athelte/Main";
 import ipconfig from "../../ipconfig";
+import SupervisorMain from "../Supervisor/SupervisorMain";
 const getLoginData = async () => {
   return await AsyncStorage.getItem("token");
 };
@@ -45,6 +46,8 @@ const Main = ({ navigation }) => {
 
   if (UserData.Role === 0) {
     return <AthelteMain />;
+  } else if (UserData.Role === 1) {
+    return <SupervisorMain />;
   } else {
     return <NoAuthTab />;
   }

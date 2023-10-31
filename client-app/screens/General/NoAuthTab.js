@@ -3,8 +3,8 @@ import React from "react";
 import "react-native-gesture-handler";
 import Search from "./Search";
 const Tab = createBottomTabNavigator();
-import { FontAwesome } from "@expo/vector-icons";
 import Profile from "./Profile";
+import Ionicons from "@expo/vector-icons/Ionicons";
 
 const NoAuthTab = ({ navigation }) => {
   return (
@@ -16,13 +16,13 @@ const NoAuthTab = ({ navigation }) => {
 
           // Set icon names based on route names (customize as needed)
           if (route.name === "Search") {
-            iconName = "search";
+            iconName = "search-outline";
           } else if (route.name === "Profile") {
-            iconName = "user";
+            iconName = "person-outline";
           }
 
           // Return icon component
-          return <FontAwesome name={iconName} size={size} color={color} />;
+          return <Ionicons name={iconName} size={32} color="black" />;
         },
         tabBarActiveTintColor: "blue", // Color of the active tab icon
         tabBarInactiveTintColor: "gray", // Color of the inactive tab icon

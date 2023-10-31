@@ -12,7 +12,7 @@ async function removeItem() {
   }
 }
 
-const Profile = () => {
+const SupervisorProfile = () => {
   const dispatch = useDispatch();
 
   const handleLogout = () => {
@@ -51,4 +51,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Profile;
+export default SupervisorProfile;
