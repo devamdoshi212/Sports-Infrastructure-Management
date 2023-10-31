@@ -6,17 +6,56 @@ import {
   Text,
   StyleSheet,
 } from "react-native";
+
+import AsyncStorage from "@react-native-async-storage/async-storage";
+
 const Login = ({ navigation }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
+  const setLoginData = async (value) => {
+    await AsyncStorage.setItem("token", value);
+  };
+  const getLoginData = async () => {
+    const token = await AsyncStorage.getItem("token");
+    console.warn(token);
+  };
+
   const handleLogin = () => {
     // Handle login logic here, e.g., authentication with API
-    console.log("Email:", email);
-    console.log("Password:", password);
-    setEmail("");
-    setPassword("");
-    navigation.navigate("SignUp");
+
+    var myHeaders = new Headers();
+    myHeaders.append("Content-Type", "application/json");
+
+    var raw = JSON.stringify({
+      Email: email,
+      Password: password,
+    });
+
+    var requestOptions = {
+      method: "POST",
+      headers: myHeaders,
+      body: raw,
+      redirect: "follow",
+    };
+
+    fetch("http://192.168.29.60:9999/login", requestOptions)
+      .then((response) => response.json())
+      .then((result) => {
+        if (result.data.Role === 0) {
+          setLoginData(result.token);
+          navigation.navigate("SignUp");
+        } else {
+          alert("Invalid Cradential !! ");
+        }
+        getLoginData();
+        setPassword("");
+        setEmail("");
+      })
+      .catch((error) => console.log("error", error));
+
+    // console.log("Email:", email);
+    // console.log("Password:", password);
   };
 
   return (
