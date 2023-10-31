@@ -4,6 +4,7 @@ const sessionSchema = new mongoose.Schema(
   {
     date: {
       type: Date,
+      default: Date.now(),
       // set: (value) => (value ? value.setHours(0, 0, 0, 0) : null),
     },
     sportscomplex: {
@@ -15,7 +16,7 @@ const sessionSchema = new mongoose.Schema(
         userId: { type: mongoose.SchemaTypes.ObjectId, ref: "users" },
         entry: Date,
         exit: Date,
-      },
+      },  
     ],
   },
   { timestamps: true }
