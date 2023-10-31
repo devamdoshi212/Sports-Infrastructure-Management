@@ -1,13 +1,12 @@
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import React from "react";
 import "react-native-gesture-handler";
-import Search from "./../General/Search";
 const Tab = createBottomTabNavigator();
+import AddAthelte from "./AddAthelte";
+import ComplexDetails from "./ComplexDetails";
+import SupervisorProfile from "./SupervisorProfile";
 import Ionicons from "@expo/vector-icons/Ionicons";
-
-import QR from "./QR";
-import Profile from "./Profile";
-const Main = ({ navigation }) => {
+const SupervisorMain = ({ navigation }) => {
   return (
     <Tab.Navigator
       screenOptions={({ route }) => ({
@@ -16,12 +15,12 @@ const Main = ({ navigation }) => {
           let iconName;
 
           // Set icon names based on route names (customize as needed)
-          if (route.name === "AthelteSearch") {
-            iconName = "search-outline";
-          } else if (route.name === "AthelteProfile") {
+          if (route.name === "AddAthelte") {
+            iconName = "person-add-outline";
+          } else if (route.name === "ComplexDetails") {
+            iconName = "home-outline";
+          } else if (route.name === "SupervisorProfile") {
             iconName = "person-outline";
-          } else if (route.name === "QR") {
-            iconName = "qr-code-outline";
           }
 
           // Return icon component
@@ -33,10 +32,10 @@ const Main = ({ navigation }) => {
         // showLabel: false,
       })}
     >
-      <Tab.Screen name="AthelteSearch" component={Search} />
-      <Tab.Screen name="QR" component={QR} />
-      <Tab.Screen name="AthelteProfile" component={Profile} />
+      <Tab.Screen name="AddAthelte" component={AddAthelte} />
+      <Tab.Screen name="ComplexDetails" component={ComplexDetails} />
+      <Tab.Screen name="SupervisorProfile" component={SupervisorProfile} />
     </Tab.Navigator>
   );
 };
-export default Main;
+export default SupervisorMain;

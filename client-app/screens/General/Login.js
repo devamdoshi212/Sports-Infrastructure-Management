@@ -44,7 +44,7 @@ const Login = ({ navigation }) => {
     fetch(`http://${ip}:9999/login`, requestOptions)
       .then((response) => response.json())
       .then((result) => {
-        if (result.data.Role === 0) {
+        if (result.rcode === 200) {
           setLoginData(result.token);
           dispatch(UserActions.getuserRole(result.data));
         } else {
