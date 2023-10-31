@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 const initialValues = {
-  User: "",
+  User: [{}],
 };
 
 const UserSlice = createSlice({

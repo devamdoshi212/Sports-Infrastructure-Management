@@ -16,8 +16,11 @@ import DateTimePickerModal from "react-native-modal-datetime-picker";
 import * as FileSystem from "expo-file-system";
 import * as ImagePicker from "expo-image-picker";
 import mime from "mime";
+import { useDispatch, useSelector } from "react-redux";
 
 const SignUp = ({ navigation }) => {
+  const ip = "192.168.151.243";
+
   const bloodgroups = [
     "A Positive",
     "A Negative",
@@ -112,45 +115,27 @@ const SignUp = ({ navigation }) => {
       redirect: "follow",
     };
 
-    let res = await fetch(
-      `http://${"192.168.29.203"}:9999/signup`,
-      requestOptions
-    );
+    let res = await fetch(`http://${ip}:9999/signup`, requestOptions);
     let data = await res.json();
     if (data.rcode == 200) {
-      let photoTo = fdata.photo.split("/");
-      photoTo.pop();
-      console.log(data.myPhotoName);
-      photoTo.push(data.myPhotoName);
-      photoTo = photoTo.join("/");
-      let move = await FileSystem.moveAsync({
-        from: fdata.photo,
-        to: photoTo,
-      });
+      // let photoTo = fdata.photo.split("/");
+      // photoTo.pop();
+      // console.log(data.myPhotoName);
+      // photoTo.push(data.myPhotoName);
+      // photoTo = photoTo.join("/");
+      // let move = await FileSystem.moveAsync({
+      //   from: fdata.photo,
+      //   to: photoTo,
+      // });
       let response = await FileSystem.uploadAsync(
-        `http://${"192.168.29.203"}:9999/uploadPhoto`,
-        photoTo,
+        `http://${ip}:9999/uploadPhoto`,
+        fdata.photo,
         {
           fieldName: "photo",
           httpMethod: "POST",
           uploadType: FileSystem.FileSystemUploadType.MULTIPART,
         }
       );
-      // AsyncStorage.setItem(
-      //     "data",
-      //     JSON.stringify({
-      //         token: data.token,
-      //         username: fdata.username,
-      //         Password: fdata.Password,
-      //     })
-      // );
-      // dispatch(
-      //     setAuth({
-      //         token: data.token,
-      //         username: fdata.username,
-      //         Password: fdata.Password,
-      //     })
-      // );
     }
   };
 
