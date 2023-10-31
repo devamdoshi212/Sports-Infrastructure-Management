@@ -5,7 +5,6 @@ import {
   TouchableOpacity,
   Text,
   StyleSheet,
-  ImageBackground,
 } from "react-native";
 const Login = ({ navigation }) => {
   const [email, setEmail] = useState("");
@@ -37,6 +36,12 @@ const Login = ({ navigation }) => {
         value={password}
         secureTextEntry
       />
+      <View style={styles.loginContainer}>
+        <Text style={styles.loginText}>Create new account?</Text>
+        <TouchableOpacity>
+          <Text style={styles.loginLink}>Register Here</Text>
+        </TouchableOpacity>
+      </View>
       <TouchableOpacity style={styles.loginButton} onPress={handleLogin}>
         <Text style={styles.buttonText}>Login</Text>
       </TouchableOpacity>
@@ -83,6 +88,20 @@ const styles = StyleSheet.create({
   buttonText: {
     color: "white",
     fontSize: 18,
+  },
+  loginContainer: {
+    marginTop: 10,
+    flexDirection: "row",
+    justifyContent: "center",
+  },
+  loginText: {
+    fontSize: 16,
+    marginRight: 5,
+  },
+  loginLink: {
+    fontSize: 16,
+    fontWeight: "bold",
+    color: "blue",
   },
 });
 
