@@ -12,7 +12,7 @@ import {
 } from "react-native";
 import { Picker } from "@react-native-picker/picker";
 import { ScrollView } from "react-native-gesture-handler";
-
+import DateTimePickerModal from "react-native-modal-datetime-picker";
 const SignUp = ({ navigation }) => {
   const bloodgroups = [
     "A Positive",
@@ -44,6 +44,16 @@ const SignUp = ({ navigation }) => {
     phototype: "",
   });
 
+  const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
+
+  const showDatePicker = () => {
+    setDatePickerVisibility(true);
+  };
+
+  const hideDatePicker = () => {
+    setDatePickerVisibility(false);
+  };
+
   const [errormsg, setErrormsg] = useState(null);
 
   const handleInput = (field, value) => {
@@ -51,6 +61,10 @@ const SignUp = ({ navigation }) => {
       ...fdata,
       [field]: value,
     });
+  };
+  const handleConfirm = (date) => {
+    handleInput("dateOfBirth", date);
+    hideDatePicker();
   };
 
   const handleSignUp = async () => {
@@ -122,19 +136,19 @@ const SignUp = ({ navigation }) => {
     navigation.navigate("Login");
   };
 
-  const showDatePicker = async () => {
-    try {
-      const { action, year, month, day } = await DatePickerAndroid.open({
-        date: fdata.dateOfBirth,
-      });
-      if (action !== DatePickerAndroid.dismissedAction) {
-        const selectedDate = new Date(year, month, day);
-        handleInput("dateOfBirth", selectedDate);
-      }
-    } catch ({ code, message }) {
-      console.warn("Cannot open date picker", message);
-    }
-  };
+  // const showDatePicker = async () => {
+  //   try {
+  //     const { action, year, month, day } = await DatePickerAndroid.open({
+  //       date: fdata.dateOfBirth,
+  //     });
+  //     if (action !== DatePickerAndroid.dismissedAction) {
+  //       const selectedDate = new Date(year, month, day);
+  //       handleInput("dateOfBirth", selectedDate);
+  //     }
+  //   } catch ({ code, message }) {
+  //     console.warn("Cannot open date picker", message);
+  //   }
+  // };
 
   return (
     <SafeAreaProvider>
@@ -176,29 +190,44 @@ const SignUp = ({ navigation }) => {
               style={styles.input}
             />
 
-            {/* <Button
-            onPress={() => {
-              DateTimePickerAndroid.open({
-                value: fdata.dateOfBirth,
-                onChange: (event, selectedDate) => {
-                  handleInput("dateOfBirth", selectedDate);
-                },
-                mode: "date",
-              });
-            }}
-            title="Set Date"
-          /> */}
-            {/* <TouchableOpacity
-            onPress={() => {
-              showDatePicker();
-            }}
-          >
-            <TextInput
-              placeholder="Select Date of Birth"
-              value={fdata.dateOfBirth.toDateString()}
-              style={styles.input}
-            />
-          </TouchableOpacity> */}
+            <View
+              style={{
+                flexDirection: "row",
+                marginBottom: 10,
+              }}
+            >
+              <TextInput
+                placeholder="Select Date of Birth"
+                value={fdata.dateOfBirth.toDateString()}
+                style={{
+                  width: "50%",
+                  height: 40,
+                  borderWidth: 1,
+                  borderColor: "#ccc",
+                  padding: 10,
+                  borderRadius: 5,
+                }}
+              />
+              <Button
+                title="Show Date Picker"
+                onPress={showDatePicker}
+                style={{
+                  width: "40%",
+                  height: 30,
+                  borderWidth: 1,
+                  marginRight: 10,
+                  borderColor: "#ccc",
+                  marginBottom: 15,
+                  borderRadius: 5,
+                }}
+              />
+              <DateTimePickerModal
+                isVisible={isDatePickerVisible}
+                mode="date"
+                onConfirm={handleConfirm}
+                onCancel={hideDatePicker}
+              />
+            </View>
 
             <TextInput
               placeholder="Address"
