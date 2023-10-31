@@ -1,10 +1,12 @@
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import React from "react";
+import "react-native-gesture-handler";
 import Search from "./Search";
-import Login from "./Login";
-import { View } from "react-native";
 const Tab = createBottomTabNavigator();
 import { FontAwesome } from "@expo/vector-icons";
-const General = ({ navigation }) => {
+import Profile from "./LoginSignupTab";
+
+const Main = ({ navigation }) => {
   return (
     <Tab.Navigator
       screenOptions={({ route }) => ({
@@ -29,8 +31,30 @@ const General = ({ navigation }) => {
       })}
     >
       <Tab.Screen name="Search" component={Search} />
-      <Tab.Screen name="Profile" component={Login} />
+      <Tab.Screen name="Profile" component={Profile} />
     </Tab.Navigator>
   );
 };
-export default General;
+export default Main;
+
+{
+  /* <Stack.Navigator>
+      <Stack.Group>
+        <Stack.Screen
+          name="Home"
+          component={Home}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="Login"
+          component={Login}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="SignUp"
+          component={Signup}
+          options={{ headerShown: false }}
+        />
+      </Stack.Group>
+    </Stack.Navigator> */
+}
