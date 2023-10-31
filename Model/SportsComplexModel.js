@@ -18,7 +18,6 @@ const SportsComplexSchema = new mongoose.Schema(
     ],
     manager: { type: mongoose.SchemaTypes.ObjectId, ref: "users" },
     // assignedBy: { type: mongoose.SchemaTypes.ObjectId, ref: "authorities" },
-
     timings: { openingTime: String, closingTime: String },
   },
   { timestamps: true }
