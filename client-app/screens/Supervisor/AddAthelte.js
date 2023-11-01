@@ -93,7 +93,8 @@ const Form = ({ navigation }) => {
       .then((result) => {
         // console.log(result.rcode===200);
         if (result.rcode === 200) {
-          setUserDetail(result.data[0]);
+          console.log(result.data);
+          setUserDetail(result.data);
           setAthleteDetails(result.athleteDetail[0]);
           setUser(true);
         } else {
@@ -173,7 +174,35 @@ const Form = ({ navigation }) => {
   };
 
   const paymenthandler = () => {
-    console.log();
+    var myHeaders = new Headers();
+    myHeaders.append("Content-Type", "application/json");
+
+    var raw = JSON.stringify({
+      sports: selectedOption,
+      athleteId: athleteDetail._id,
+      duration: duration,
+      instructorId: instructoroption,
+      paymentTakenBy: userdata._id,
+      timeSlot: {
+        from: timeoption.split("-")[0],
+        to: timeoption.split("-")[1],
+      },
+      from: date,
+      sportsComplexId: userdata.SportComplexId,
+      supervisorId: userdata._id,
+    });
+
+    var requestOptions = {
+      method: "POST",
+      headers: myHeaders,
+      body: raw,
+      redirect: "follow",
+    };
+
+    fetch(`http://${ip}:9999/paymentdetail`, requestOptions)
+      .then((response) => response.json())
+      .then((result) => console.log(result))
+      .catch((error) => console.log("error", error));
   };
   return (
     <ScrollView contentContainerStyle={styles.container}>
