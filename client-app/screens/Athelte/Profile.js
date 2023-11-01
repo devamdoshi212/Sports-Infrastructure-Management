@@ -106,7 +106,9 @@ function Profile({ navigation }) {
         </TouchableOpacity>
         <TouchableOpacity
           style={styles.actionButton}
-          // onPress={() => navigateToScreen('ViewBookmarksScreen')}
+          onPress={() => {
+            navigation.navigate("AthelteComplaint");
+          }}
         >
           <View style={styles.row}>
             {/* <Ionicons name="bookmarks-outline" size={24} /> */}
