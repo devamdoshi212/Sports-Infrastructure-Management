@@ -65,7 +65,7 @@ function renderCategoryItem(itemData, ip) {
   }
 }
 
-function FlatListScreen({ navigation, optionField }) {
+function FlatListScreen({ navigation, optionField, searchfield }) {
   const [complex, setComplex] = useState([]);
   const ip = ipconfig.ip;
   useEffect(() => {
@@ -74,11 +74,14 @@ function FlatListScreen({ navigation, optionField }) {
       redirect: "follow",
     };
 
-    fetch(`http://${ip}:9999/${optionField}`, requestOptions)
+    fetch(`http://${ip}:9999/${optionField}?q=${searchfield}`, requestOptions)
       .then((response) => response.json())
-      .then((result) => setComplex(result.data))
+      .then((result) => {
+        setComplex(result.data);
+        console.log(result);
+      })
       .catch((error) => console.log("error", error));
-  }, [ip, optionField]);
+  }, [ip, optionField, searchfield]);
 
   return (
     <FlatList
@@ -87,6 +90,7 @@ function FlatListScreen({ navigation, optionField }) {
       renderItem={(itemData) => renderCategoryItem(itemData, ip)}
       numColumns={2}
       extraData={ip}
+      // extraData={searchfield}
     />
   );
 }
