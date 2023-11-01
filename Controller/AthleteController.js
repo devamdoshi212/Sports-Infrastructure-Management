@@ -51,6 +51,24 @@ module.exports.getAthletewithpayments = async function (req, res) {
       res.json({ data: err.msg, msg: "smw", rcode: -9 });
     });
 };
+module.exports.getAthletewithpaymentswithsupervisor = async function (
+  req,
+  res
+) {
+  AthleteModel.find(req.query)
+    .populate("payments")
+    .populate("createdBy")
+    .then((data) => {
+      res.json({
+        data: data,
+        msg: "Athlete Retrived with payments",
+        rcode: 200,
+      });
+    })
+    .catch((err) => {
+      res.json({ data: err.msg, msg: "smw", rcode: -9 });
+    });
+};
 
 module.exports.updateAthlete = async function (req, res) {
   const id = req.params.id;
