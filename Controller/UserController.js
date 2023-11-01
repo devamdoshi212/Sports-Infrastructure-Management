@@ -168,7 +168,7 @@ module.exports.athleteDetail = async function (req, res) {
       };
       res.json(responseData);
     } else {
-      res.json({});
+      res.json({ rcode: -9 });
     }
     // Assuming data is an array or a single object, not a circular structure
 
