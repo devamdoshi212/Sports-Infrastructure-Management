@@ -2,9 +2,9 @@ const ComplaintModel = require('../Model/ComplaintModel')
 
 module.exports.addComplaint = async function (req, res) {
 
-    const BaseUrl = `http://localhost:9999/Complains/${req.file.originalname}`
+   // const BaseUrl = `http://localhost:9999/Complains/${req.file.originalname}`
 
-    req.body.baseUrl = BaseUrl;
+    //req.body.baseUrl = BaseUrl;
 
     let Complaint = new ComplaintModel(req.body)
 
