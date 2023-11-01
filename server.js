@@ -16,6 +16,7 @@ const PaymentController = require("./Controller/PaymentController");
 const RatingController = require("./Controller/RatingController");
 const ComplaintController = require("./Controller/ComplaintController");
 const SessionController = require("./Controller/SessionConroller");
+const SupervisorController = require("./Controller/SupervisorController");
 const {
   filtersportsforcomplex,
 } = require("./Controller/FilterSportsForComplex");
@@ -121,6 +122,11 @@ app.patch("/updateComplaint/:id", ComplaintController.updateComplaint);
 // app.get("/getSession", SessionController.getSession);
 app.post("/addSession/:id", SessionController.addSession);
 app.get("/filtersport/:id", filtersportsforcomplex);
+
+app.get(
+  "/getInstructorForPayment",
+  SupervisorController.getInstructorForPayment
+);
 
 app.listen(9999);
 console.log("server started at 9999");
