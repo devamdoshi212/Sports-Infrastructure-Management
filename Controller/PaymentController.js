@@ -30,7 +30,12 @@ module.exports.getAllPaymentswithsportwithinstructor = async function (
 ) {
   PaymentModel.find(req.query)
     .populate("sports")
-    .populate("instructorId")
+    .populate({
+      path: "instructorId",
+      populate: {
+        path: "userId",
+      },
+    })
     .then((data) => {
       res.json({ data: data, msg: "Payment Retrived", rcode: 200 });
     })
@@ -38,6 +43,9 @@ module.exports.getAllPaymentswithsportwithinstructor = async function (
       res.json({ data: err.msg, msg: "smw", rcode: -9 });
     });
 };
+
+// .populate("instructorId")
+// .populate("instructorId.userId")
 
 module.exports.updatePayment = async function (req, res) {
   const id = req.params.id;
