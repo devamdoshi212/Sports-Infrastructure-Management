@@ -20,7 +20,7 @@ const Main = ({ navigation }) => {
             iconName = "search-outline";
           } else if (route.name === "AthelteProfile") {
             iconName = "person-outline";
-          } else if (route.name === "QR") {
+          } else if (route.name === "Attendance") {
             iconName = "qr-code-outline";
           }
 
@@ -34,7 +34,7 @@ const Main = ({ navigation }) => {
       })}
     >
       <Tab.Screen name="AthelteSearch" component={Search} />
-      <Tab.Screen name="QR" component={QR} />
+      <Tab.Screen name="Attendance" component={QR} />
       <Tab.Screen name="AthelteProfile" component={Profile} />
     </Tab.Navigator>
   );

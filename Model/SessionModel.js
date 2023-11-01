@@ -16,7 +16,7 @@ const sessionSchema = new mongoose.Schema(
         userId: { type: mongoose.SchemaTypes.ObjectId, ref: "users" },
         entry: Date,
         exit: Date,
-      },  
+      },
     ],
   },
   { timestamps: true }
