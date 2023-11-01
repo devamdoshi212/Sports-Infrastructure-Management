@@ -11,16 +11,17 @@ import ipconfig from "../../ipconfig";
 import { Ionicons } from "@expo/vector-icons";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
+import QRCodeGenerator from "./QRCodeUser";
 
 const ProfileDetails = ({ navigation }) => {
   const ip = ipconfig.ip;
   const Userdata = useSelector((state) => state.user.User);
   const Atheltedata = useSelector((state) => state.athelte.Athelte);
+  const supervisorId = Atheltedata[0].createdBy._id;
   const [image, setimage] = useState("./../../assets/icon.png");
 
   useEffect(() => {
     const i = Atheltedata[0].baseUrl.slice(1);
-    console.log(Atheltedata[0].createdBy);
     setimage(i);
   }, [image]);
   return (
@@ -51,10 +52,11 @@ const ProfileDetails = ({ navigation }) => {
               }}
               source={{ uri: `http://${ip}:9999/${image}` }}
             />
-            <Image
+            {/* <Image
               style={{ width: 120, height: 120, marginHorizontal: 15 }}
               source={require("./../../assets/favicon.png")}
-            />
+            /> */}
+            <QRCodeGenerator value={supervisorId} />
           </View>
         </View>
         <View style={styles.profileDetail}>
