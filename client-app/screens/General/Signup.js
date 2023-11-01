@@ -8,6 +8,7 @@ import {
   StyleSheet,
   Button,
   Image,
+  Alert,
   DatePickerAndroid,
 } from "react-native";
 import { Picker } from "@react-native-picker/picker";
@@ -123,6 +124,14 @@ const SignUp = ({ navigation }) => {
           uploadType: FileSystem.FileSystemUploadType.MULTIPART,
         }
       );
+      Alert.alert("Alert Title", "Account Created Successfully", [
+        // {
+        //     text: 'Cancel',
+        //     onPress: () => console.log('Cancel Pressed'),
+        //     style: 'cancel',
+        // },
+        { text: "OK", onPress: () => navigation.navigate("Login") },
+      ]);
     }
   };
 
