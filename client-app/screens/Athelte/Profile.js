@@ -95,11 +95,13 @@ function Profile({ navigation }) {
         </TouchableOpacity>
         <TouchableOpacity
           style={styles.actionButton}
-          // onPress={() => navigateToScreen('ViewCertificatesScreen')}
+          onPress={() => {
+            navigation.navigate("PaymentHistory");
+          }}
         >
           <View style={styles.row}>
             {/* <MaterialCommunityIcons name="certificate-outline" size={24} /> */}
-            <Text style={styles.actionText}>fees_payment_histroy</Text>
+            <Text style={styles.actionText}>Payment History</Text>
           </View>
         </TouchableOpacity>
         <TouchableOpacity
