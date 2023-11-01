@@ -6,11 +6,14 @@ import {
   Text,
   StyleSheet,
   ScrollView,
+  Button,
 } from "react-native";
 import { Picker } from "@react-native-picker/picker";
 import Checkbox from "expo-checkbox";
 import ipconfig from "../../ipconfig";
 import { useSelector } from "react-redux";
+import DateTimePickerModal from "react-native-modal-datetime-picker";
+
 const CheckboxWithLabel = ({
   label,
   value,
@@ -33,6 +36,17 @@ const CheckboxWithLabel = ({
 };
 
 const Form = ({ navigation }) => {
+  const [email, setEmail] = useState("");
+  const [selectedOption, setSelectedOption] = useState("");
+  const [instructor, setinstructor] = useState([]);
+  const [instructoroption, setinstructoroption] = useState("");
+  const [timeoption, settimeoption] = useState("");
+  // const [timeslot, settimeslot] = useState([]);
+  const [date, setdate] = useState(new Date());
+  const [duration, setduration] = useState("");
+  const [user, setUser] = useState(false);
+  const [userDetail, setUserDetail] = useState([]);
+  const [athleteDetail, setAthleteDetails] = useState([]);
   const userdata = useSelector((state) => state.user.User);
   const ip = ipconfig.ip;
   const [sports, setsports] = useState([]);
@@ -41,7 +55,20 @@ const Form = ({ navigation }) => {
       method: "GET",
       redirect: "follow",
     };
-
+    const getinstructor = () => {
+      if (selectedOption) {
+        fetch(
+          `http://${ip}:9999/getInstructorForPayment?sportId=${selectedOption}&sportComplexId=${userdata.SportComplexId}`,
+          requestOptions
+        )
+          .then((response) => response.json())
+          .then((result) => {
+            setinstructor(result.data);
+          })
+          .catch((error) => console.log("error", error));
+      }
+    };
+    getinstructor();
     fetch(
       `http://${ip}:9999/getSportsComplexwithsport?_id=${userdata.SportComplexId}`,
       requestOptions
@@ -49,15 +76,10 @@ const Form = ({ navigation }) => {
       .then((response) => response.json())
       .then((result) => {
         setsports(result.data[0].sports);
-        // console.log(result.data[0].sports);
       })
       .catch((error) => console.log("error", error));
-  }, []);
-  const [email, setEmail] = useState("");
-  const [selectedOption, setSelectedOption] = useState("getSports");
-  const [user, setUser] = useState(false);
-  const [userDetail, setUserDetail] = useState([]);
-  const [athleteDetail, setAthleteDetails] = useState([]);
+  }, [selectedOption]);
+
   const handleLogin = () => {
     // Handle login logic here, e.g., authentication with API
 
@@ -73,7 +95,6 @@ const Form = ({ navigation }) => {
           setUserDetail(result.data[0]);
           setAthleteDetails(result.athleteDetail[0]);
           setUser(true);
-          console.log("Hello");
         }
       })
       .catch((error) => console.log("error", error));
@@ -119,10 +140,37 @@ const Form = ({ navigation }) => {
   //   });
   // };
 
+  const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
+
+  const showDatePicker = () => {
+    setDatePickerVisibility(true);
+  };
+
+  const hideDatePicker = () => {
+    setDatePickerVisibility(false);
+  };
+
   const handleDropdownChange = (itemValue) => {
     setSelectedOption(itemValue);
   };
+  const handleDropdownInstructorChange = (itemValue) => {
+    setinstructoroption(itemValue);
+  };
+  const handleDropdownTimeChange = (itemValue) => {
+    settimeoption(itemValue);
+  };
+  const handleDropdownDurationChange = (itemValue) => {
+    setduration(itemValue);
+  };
+  const handleConfirm = (date) => {
+    // handleInput("DOB", date);
+    setdate(date);
+    hideDatePicker();
+  };
 
+  const paymenthandler = () => {
+    console.log();
+  };
   return (
     <ScrollView contentContainerStyle={styles.container}>
       <View style={styles.header}>
@@ -164,17 +212,122 @@ const Form = ({ navigation }) => {
             <Text style={styles.userInfoText}>
               Emergency Number: {athleteDetail.emergencyNumber}
             </Text>
+            <Picker
+              style={styles.dropdownPicker}
+              selectedValue={selectedOption}
+              onValueChange={handleDropdownChange}
+            >
+              <Picker.Item label="Select Facility" value="" />
+              {sports.map((item, index) => (
+                <Picker.Item
+                  label={
+                    item.sport.SportName + "    (" + item.fees + "  Fees )"
+                  }
+                  value={item.sport._id}
+                  key={index}
+                />
+              ))}
+            </Picker>
+            {selectedOption && (
+              // <View>
+              <Picker
+                style={styles.dropdownPicker}
+                selectedValue={instructoroption}
+                onValueChange={handleDropdownInstructorChange}
+              >
+                <Picker.Item label="Select Instructor" value="" />
+                {instructor.map((item, index) => (
+                  <Picker.Item
+                    label={item.instructorname}
+                    value={item.instructorid}
+                    key={index}
+                  />
+                ))}
+              </Picker>
+              // </View>
+            )}
+            {instructoroption && (
+              <Picker
+                style={styles.dropdownPicker}
+                selectedValue={timeoption}
+                onValueChange={handleDropdownTimeChange}
+              >
+                <Picker.Item label="Select Time Slot" value="" />
+
+                {instructor
+                  .find(({ instructorid }) => instructorid === instructoroption)
+                  .timeslot.map((item, index) => (
+                    <Picker.Item
+                      label={item.from + "  to  " + item.to}
+                      value={item.from + "-" + item.to}
+                      key={index}
+                    />
+                  ))}
+              </Picker>
+            )}
+            {timeoption && (
+              <Picker
+                style={styles.dropdownPicker}
+                selectedValue={duration}
+                onValueChange={handleDropdownDurationChange}
+              >
+                <Picker.Item label="Select Duration" value="" />
+                <Picker.Item label="1 month" value="1" />
+                <Picker.Item label="2 months" value="2" />
+                <Picker.Item label="3 months" value="3" />
+                <Picker.Item label="6 months" value="6" />
+                <Picker.Item label="1 Year" value="12" />
+              </Picker>
+            )}
+            {duration && (
+              <View
+                style={{
+                  flexDirection: "row",
+                  marginBottom: 10,
+                }}
+              >
+                <TextInput
+                  placeholder="Select Date To Start"
+                  value={date.toDateString()}
+                  style={{
+                    width: "65%",
+                    height: 40,
+                    borderWidth: 1,
+                    borderColor: "#ccc",
+                    padding: 10,
+                    borderRadius: 5,
+                  }}
+                />
+                <Button
+                  title="Select Date"
+                  onPress={showDatePicker}
+                  style={{
+                    width: "40%",
+                    height: 30,
+                    borderWidth: 1,
+                    marginRight: 10,
+                    borderColor: "#ccc",
+                    marginBottom: 15,
+                    borderRadius: 5,
+                  }}
+                />
+                <DateTimePickerModal
+                  isVisible={isDatePickerVisible}
+                  mode="date"
+                  onConfirm={handleConfirm}
+                  onCancel={hideDatePicker}
+                />
+              </View>
+            )}
+
+            <TouchableOpacity
+              style={styles.signupButton}
+              onPress={paymenthandler}
+            >
+              <Text style={styles.buttonText}>Add Athlete to Complex</Text>
+            </TouchableOpacity>
           </View>
         )}
-        {/* <View style={styles.checkboxContainer}>{renderCheckboxes()}</View> */}
-        <Picker
-          style={styles.dropdownPicker}
-          selectedValue={selectedOption}
-          onValueChange={handleDropdownChange}
-        >
-          <Picker.Item label="Facilities" value="getSports" />
-          <Picker.Item label="Sports Complex" value="getSportsComplex" />
-        </Picker>
       </View>
     </ScrollView>
   );
@@ -244,6 +397,18 @@ const styles = StyleSheet.create({
     padding: 10,
     borderRadius: 10,
   },
+  signupButton: {
+    backgroundColor: "green",
+    padding: 15,
+    borderRadius: 5,
+    alignItems: "center",
+    marginTop: 15,
+  },
+  buttonText: {
+    color: "white",
+    fontSize: 18,
+  },
+
   checkboxItem: {
     marginBottom: 10,
   },
@@ -259,6 +424,19 @@ const styles = StyleSheet.create({
     borderRadius: 25,
     marginBottom: 10,
     backgroundColor: "#cccc",
+  },
+  loginContainer: {
+    marginTop: 20,
+    flex: 1,
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  loginLink: {
+    fontSize: 16,
+    fontWeight: "bold",
+    alignItems: "center",
+    color: "blue",
   },
 });
 
