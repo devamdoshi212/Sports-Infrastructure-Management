@@ -5,6 +5,7 @@ const Stack = createStackNavigator();
 import Profile from "./Profile";
 import ProfileDetails from "./ProfileDetails";
 import PaymentHistory from "./PaymentHistory";
+import Complaint from "./Complaint";
 const ProfileNavigator = ({ navigation }) => {
   return (
     <Stack.Navigator>
@@ -22,6 +23,11 @@ const ProfileNavigator = ({ navigation }) => {
         <Stack.Screen
           name="PaymentHistory"
           component={PaymentHistory}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="AthelteComplaint"
+          component={Complaint}
           options={{ headerShown: false }}
         />
       </Stack.Group>
