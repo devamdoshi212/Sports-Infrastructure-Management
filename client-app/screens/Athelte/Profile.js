@@ -11,6 +11,7 @@ import {
   StyleSheet,
   Button,
   TouchableOpacity,
+  Pressable,
 } from "react-native";
 import ipconfig from "../../ipconfig";
 async function removeItem() {
@@ -20,12 +21,18 @@ async function removeItem() {
     // Handle the error
   }
 }
-function Profile() {
+function Profile({ navigation }) {
   const dispatch = useDispatch();
   const ip = ipconfig.ip;
   const Userdata = useSelector((state) => state.user.User);
   const Atheltedata = useSelector((state) => state.athelte.Athelte);
   const [image, setimage] = useState("./../../assets/icon.png");
+
+  const ProfileDetailHandler = () => {
+    console.log("hello");
+    navigation.navigate("DetailProfile");
+  };
+
   useEffect(() => {
     // console.log(Atheltedata[0].baseUrl);
     const i = Atheltedata[0].baseUrl.slice(1);
@@ -40,19 +47,26 @@ function Profile() {
   };
   return (
     <View style={styles.container}>
-      <View style={styles.profileInfo}>
-        <View style={styles.leftColumn}>
-          <Image
-            style={{ width: 100, height: 100, borderRadius: 50, marginLeft: 1 }}
-            source={{ uri: `http://${ip}:9999/${image}` }}
-          />
+      <Pressable onPress={ProfileDetailHandler}>
+        <View style={styles.profileInfo}>
+          <View style={styles.leftColumn}>
+            <Image
+              style={{
+                width: 100,
+                height: 100,
+                borderRadius: 50,
+                marginLeft: 1,
+              }}
+              source={{ uri: `http://${ip}:9999/${image}` }}
+            />
+          </View>
+          <View style={styles.rightColumn}>
+            <Text style={styles.name}>Name : {Userdata.Name}</Text>
+            <Text style={styles.name}>Email : {Userdata.Email}</Text>
+            <Text style={styles.name}>ContactNo : {Userdata.ContactNum}</Text>
+          </View>
         </View>
-        <View style={styles.rightColumn}>
-          <Text style={styles.name}>Name : {Userdata.Name}</Text>
-          <Text style={styles.name}>Email : {Userdata.Email}</Text>
-          <Text style={styles.name}>ContactNo : {Userdata.ContactNum}</Text>
-        </View>
-      </View>
+      </Pressable>
 
       <View style={styles.actions}>
         <TouchableOpacity style={styles.actionButton}>
