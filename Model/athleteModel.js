@@ -3,7 +3,7 @@ const mongoose = require("mongoose");
 const athleteSchema = new mongoose.Schema(
   {
     userId: { type: mongoose.SchemaTypes.ObjectId, ref: "users" },
-    createdBy: { type: mongoose.SchemaTypes.ObjectId, ref: "supervisors" },
+    createdBy: { type: mongoose.SchemaTypes.ObjectId, ref: "users" },
     bloodGroup: String,
     disability: Number,
     healthIssue: String,
