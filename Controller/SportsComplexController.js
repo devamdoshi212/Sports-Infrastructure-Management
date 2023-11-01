@@ -98,9 +98,12 @@ module.exports.SearchComplex = async function (req, res) {
     const query = req.query.q;
     var data = [];
     if (!query) {
+      let data1 = await SportsComplex.find();
       return res.status(200).json({
+        results: data1.length,
+        data: data1,
         status: "Success",
-        data: data,
+        // data: data,ś
       });
     }
 

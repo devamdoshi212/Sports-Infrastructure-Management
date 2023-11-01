@@ -30,7 +30,7 @@ module.exports.addSession = async function (req, res) {
     const currentUser = req.body.userId;
 
     const currentUserEnroll = existingSession.enrolls.filter(
-      (enroll) => enroll.userId.toString() == req.body.userId
+      (enroll) => enroll.userId == req.body.userId
     );
 
     console.log(currentUserEnroll);

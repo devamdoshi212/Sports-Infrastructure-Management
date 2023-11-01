@@ -65,11 +65,11 @@ const Search = () => {
             onValueChange={handleDropdownChange}
           >
             <Picker.Item label="Facilities" value="getSports" />
-            <Picker.Item label="Sports Complex" value="getSportsComplex" />
+            <Picker.Item label="Sports Complex" value="searchSportsComplex" />
           </Picker>
         </View>
       </View>
-      <FlatListScreen optionField={selectedOption} />
+      <FlatListScreen optionField={selectedOption} searchfield={searchQuery} />
     </View>
     //
   );
