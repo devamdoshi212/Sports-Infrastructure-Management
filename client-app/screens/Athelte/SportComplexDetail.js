@@ -9,11 +9,32 @@ import {
   Pressable,
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Modal from "./Modal";
 import { useNavigation } from "@react-navigation/native";
+import { useSelector } from "react-redux";
+import ipconfig from "../../ipconfig";
 const SportComplexDetail = () => {
   const navigate = useNavigation();
+  const ip = ipconfig.ip;
+  const Atheltedata = useSelector((state) => state.athelte.Athelte);
+  const complexId = Atheltedata[0].createdBy.SportComplexId;
+  const [details, setDetails] = useState([]);
+  useEffect(() => {
+    var requestOptions = {
+      method: "GET",
+      redirect: "follow",
+    };
+
+    fetch(`http://${ip}:9999/getSportsComplex?_id=${complexId}`, requestOptions)
+      .then((response) => response.json())
+      .then((result) => {
+        setDetails(result.data[0]);
+        console.log(result);
+      })
+      .catch((error) => console.log("error", error));
+  }, []);
+
   return (
     <>
       <View style={styles.container}>
@@ -46,16 +67,24 @@ const SportComplexDetail = () => {
             >
               {/* <View style={styles.card}> */}
               <View style={styles.row}>
-                <Text style={styles.label}>Sport Complex name: </Text>
-                <Text style={styles.input}>NCR</Text>
+                <Text style={styles.label}>Sport Complex Name: </Text>
+                <Text style={styles.input}>{details.name}</Text>
               </View>
               <View style={styles.row}>
                 <Text style={styles.label}>Address:</Text>
-                <Text style={styles.input}>Near Naroda Ahmedabad</Text>
+                <Text style={styles.input}>{details.location}</Text>
+              </View>
+              <View style={styles.row}>
+                <Text style={styles.label}>Taluka:</Text>
+                <Text style={styles.input}>{details.taluka}</Text>
               </View>
               <View style={styles.row}>
                 <Text style={styles.label}>Since :</Text>
-                <Text style={styles.input}>1995</Text>
+                <Text style={styles.input}>{details.operationalSince}</Text>
+              </View>
+              <View style={styles.row}>
+                <Text style={styles.label}>Area :</Text>
+                <Text style={styles.input}>{details.area}</Text>
               </View>
             </Pressable>
           </View>
