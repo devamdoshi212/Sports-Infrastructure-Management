@@ -156,9 +156,10 @@ module.exports.uploadPhoto = async (req, res) => {
 
 module.exports.athleteDetail = async function (req, res) {
   try {
-    const data = await UserModel.find(req.query);
-    console.log(data._id);
-    if (data._id) {
+    const data = await UserModel.findOne(req.query);
+
+    if (data != null) {
+      console.log(data._id);
       let athleteDetail = await athleteModel.find({ userId: data._id });
       const responseData = {
         data: data,
@@ -166,6 +167,8 @@ module.exports.athleteDetail = async function (req, res) {
         msg: "User Retrieved",
         rcode: 200,
       };
+      console.log(data.Name);
+      console.log(responseData);
       res.json(responseData);
     } else {
       res.json({ rcode: -9 });
