@@ -6,6 +6,8 @@ import Profile from "./Profile";
 import ProfileDetails from "./ProfileDetails";
 import PaymentHistory from "./PaymentHistory";
 import Complaint from "./Complaint";
+import SportComplexDetail from "./SportComplexDetail";
+import SportEnroll from "./SportEnroll";
 const ProfileNavigator = ({ navigation }) => {
   return (
     <Stack.Navigator>
@@ -28,6 +30,16 @@ const ProfileNavigator = ({ navigation }) => {
         <Stack.Screen
           name="AthelteComplaint"
           component={Complaint}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="SportsComplexDetails"
+          component={SportComplexDetail}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="SportEnroll"
+          component={SportEnroll}
           options={{ headerShown: false }}
         />
       </Stack.Group>
