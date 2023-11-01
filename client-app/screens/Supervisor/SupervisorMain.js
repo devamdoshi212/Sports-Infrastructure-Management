@@ -6,6 +6,7 @@ import AddAthelte from "./AddAthelte";
 import ComplexDetails from "./ComplexDetails";
 import SupervisorProfile from "./SupervisorProfile";
 import Ionicons from "@expo/vector-icons/Ionicons";
+import SupervisorNavigator from "./SupervisorNavigator";
 const SupervisorMain = ({ navigation }) => {
   return (
     <Tab.Navigator
@@ -34,7 +35,7 @@ const SupervisorMain = ({ navigation }) => {
     >
       <Tab.Screen name="AddAthelte" component={AddAthelte} />
       <Tab.Screen name="ComplexDetails" component={ComplexDetails} />
-      <Tab.Screen name="SupervisorProfile" component={SupervisorProfile} />
+      <Tab.Screen name="SupervisorProfile" component={SupervisorNavigator} />
     </Tab.Navigator>
   );
 };
