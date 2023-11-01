@@ -11,20 +11,16 @@ import {
 import { Ionicons } from "@expo/vector-icons";
 import { useState } from "react";
 import Modal from "./Modal";
-
-const PaymentHistory = ({ navigation }) => {
-  const [show, setShow] = useState(false);
-  const showHandler = () => {
-    setShow(!show);
-  };
+import { useNavigation } from "@react-navigation/native";
+const SportEnroll = () => {
+  const navigate = useNavigation();
   return (
     <>
-      <View>{show && <Modal show={show} navigation={navigation}></Modal>}</View>
       <View style={styles.container}>
         <View style={styles.header}>
           <Pressable
             onPress={() => {
-              navigation.goBack();
+              navigate.goBack();
             }}
           >
             <View style={styles.back}>
@@ -33,11 +29,10 @@ const PaymentHistory = ({ navigation }) => {
           </Pressable>
           <View style={styles.heading}>
             <Text style={{ fontWeight: "bold", fontSize: 25 }}>
-              Payment History
+              Enrolled Sports List
             </Text>
           </View>
         </View>
-        {/* {show && <Modal} */}
         <ScrollView contentContainerStyle={styles.scrollContainer}>
           <View style={styles.card}>
             <Pressable
@@ -47,18 +42,16 @@ const PaymentHistory = ({ navigation }) => {
                   padding: 20,
                   borderRadius: 10,
                 },
-                // styles.wrapperCustom
               ]}
-              onPress={showHandler}
             >
               {/* <View style={styles.card}> */}
               <View style={styles.row}>
-                <Text style={styles.label}>Amount :</Text>
-                <Text style={styles.input}>1000</Text>
+                <Text style={styles.label}>Sport name: </Text>
+                <Text style={styles.input}>Cricket</Text>
               </View>
               <View style={styles.row}>
-                <Text style={styles.label}>Sport:</Text>
-                <Text style={styles.input}>abc@gmail.com</Text>
+                <Text style={styles.label}>Instructor:</Text>
+                <Text style={styles.input}>Santosh Sinha</Text>
               </View>
               <View style={styles.row}>
                 <Text style={styles.label}>From :</Text>
@@ -67,6 +60,10 @@ const PaymentHistory = ({ navigation }) => {
               <View style={styles.row}>
                 <Text style={styles.label}>To :</Text>
                 <Text style={styles.input}>12/34/5678</Text>
+              </View>
+              <View style={styles.row}>
+                <Text style={styles.label}>Sport Complex Name:</Text>
+                <Text style={styles.input}>NCR</Text>
               </View>
               {/* </View> */}
             </Pressable>
@@ -133,4 +130,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default PaymentHistory;
+export default SportEnroll;

@@ -69,30 +69,38 @@ function Profile({ navigation }) {
       </Pressable>
 
       <View style={styles.actions}>
-        <TouchableOpacity style={styles.actionButton}>
-          <View style={styles.row}>
-            {/* <FontAwesome5 name="user" size={24} /> */}
-            <Text style={styles.actionText}>Sport ComplexName</Text>
-          </View>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={styles.actionButton}
-          // onPress={() => navigateToScreen('QuizHistroyScreen')}
-        >
-          <View style={styles.row}>
-            {/* <MaterialCommunityIcons name="history" size={24} /> */}
-            <Text style={styles.actionText}>Sports_enrolled</Text>
-          </View>
-        </TouchableOpacity>
         <TouchableOpacity
           style={styles.actionButton}
           // onPress={() => navigateToScreen('MySubjectsScreen')}
         >
           <View style={styles.row}>
             {/* <Ionicons name="repeat-outline" size={24} /> */}
-            <Text style={styles.actionText}>ID_card</Text>
+            <Text style={styles.actionText}>ID card</Text>
           </View>
         </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.actionButton}
+          onPress={() => {
+            navigation.navigate("SportsComplexDetails");
+          }}
+        >
+          <View style={styles.row}>
+            {/* <FontAwesome5 name="user" size={24} /> */}
+            <Text style={styles.actionText}>Sport Complex Details</Text>
+          </View>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.actionButton}
+          onPress={() => {
+            navigation.navigate("SportEnroll");
+          }}
+        >
+          <View style={styles.row}>
+            {/* <MaterialCommunityIcons name="history" size={24} /> */}
+            <Text style={styles.actionText}>Enrolled Sports</Text>
+          </View>
+        </TouchableOpacity>
+
         <TouchableOpacity
           style={styles.actionButton}
           onPress={() => {
