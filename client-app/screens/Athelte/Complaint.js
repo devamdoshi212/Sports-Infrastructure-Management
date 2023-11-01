@@ -21,7 +21,7 @@ const Complaint = ({ navigation }) => {
   const Atheltedata = useSelector((state) => state.athelte.Athelte);
 
   const complaintList = ["Maintenance", "Behaviour", "Refund", "Inquiry"];
-  const [value, onChangeText] = React.useState("Useless Multiline Placeholder");
+  const [value, onChangeText] = React.useState("");
   const [complaint, setCompalint] = useState();
   const ip = ipconfig.ip;
 
@@ -84,9 +84,9 @@ const Complaint = ({ navigation }) => {
         </Picker>
         <View>
           <TextInput
-            editable
-            multiline
-            numberOfLines={40}
+            // editable
+            multiline={true}
+            numberOfLines={20}
             maxLength={4000}
             placeholder="Type here..."
             onChangeText={(text) => onChangeText(text)}
@@ -168,7 +168,7 @@ const styles = StyleSheet.create({
     width: "90%",
     backgroundColor: "white",
     borderRadius: 5,
-    height: "60%",
+    height: 200,
   },
 });
 
