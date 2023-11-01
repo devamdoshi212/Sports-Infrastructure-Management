@@ -91,10 +91,14 @@ const Form = ({ navigation }) => {
     fetch(`http://${ip}:9999/getuserwithathelte?Email=${email}`, requestOptions)
       .then((response) => response.json())
       .then((result) => {
+        // console.log(result.rcode===200);
         if (result.rcode === 200) {
           setUserDetail(result.data[0]);
           setAthleteDetails(result.athleteDetail[0]);
           setUser(true);
+        } else {
+          alert("No User Found");
+          setUser(false);
         }
       })
       .catch((error) => console.log("error", error));

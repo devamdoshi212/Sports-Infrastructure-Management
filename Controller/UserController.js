@@ -157,21 +157,23 @@ module.exports.uploadPhoto = async (req, res) => {
 module.exports.athleteDetail = async function (req, res) {
   try {
     const data = await UserModel.find(req.query);
-
+    console.log(data._id);
+    if (data._id) {
+      let athleteDetail = await athleteModel.find({ userId: data._id });
+      const responseData = {
+        data: data,
+        athleteDetail: athleteDetail,
+        msg: "User Retrieved",
+        rcode: 200,
+      };
+      res.json(responseData);
+    } else {
+      res.json({});
+    }
     // Assuming data is an array or a single object, not a circular structure
-    let athleteDetail = await athleteModel.find({ userId: data._id });
 
     // Extract only the necessary data from data, excluding circular references
-    const responseData = {
-      data: data,
-      athleteDetail: athleteDetail,
-      msg: "User Retrieved",
-      rcode: 200,
-    };
-
-    res.json(responseData);
   } catch (err) {
-    console.log(err);
     res.json({ data: err.message, msg: "Error occurred", rcode: -9 });
   }
 };
