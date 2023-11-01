@@ -9,10 +9,33 @@ import {
   Pressable,
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
-import { useState } from "react";
-import Modal from "./Modal";
+import { useEffect, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
+import ipconfig from "../../ipconfig";
+import { useSelector } from "react-redux";
 const SportEnroll = () => {
+  const Atheltedata = useSelector((state) => state.athelte.Athelte);
+  const id = Atheltedata[0]._id;
+  const [payments, setPayment] = useState([]);
+  const ip = ipconfig.ip;
+  useEffect(() => {
+    var requestOptions = {
+      method: "GET",
+      redirect: "follow",
+    };
+
+    fetch(
+      `http://${ip}:9999/getPaymentDetailswithsportwithinstructor?athleteId=${id}`,
+      requestOptions
+    )
+      .then((response) => response.json())
+      .then((result) => {
+        setPayment(result.data);
+        console.log(result);
+      })
+      .catch((error) => console.log("error", error));
+  }, []);
+
   const navigate = useNavigation();
   return (
     <>
@@ -45,26 +68,32 @@ const SportEnroll = () => {
               ]}
             >
               {/* <View style={styles.card}> */}
-              <View style={styles.row}>
-                <Text style={styles.label}>Sport name: </Text>
-                <Text style={styles.input}>Cricket</Text>
-              </View>
-              <View style={styles.row}>
-                <Text style={styles.label}>Instructor:</Text>
-                <Text style={styles.input}>Santosh Sinha</Text>
-              </View>
-              <View style={styles.row}>
-                <Text style={styles.label}>From :</Text>
-                <Text style={styles.input}>12/34/5678</Text>
-              </View>
-              <View style={styles.row}>
-                <Text style={styles.label}>To :</Text>
-                <Text style={styles.input}>12/34/5678</Text>
-              </View>
-              <View style={styles.row}>
-                <Text style={styles.label}>Sport Complex Name:</Text>
-                <Text style={styles.input}>NCR</Text>
-              </View>
+              {payments.map((item, index) => (
+                <View key={index}>
+                  <View style={styles.row}>
+                    <Text style={styles.label}>Sport Name:</Text>
+                    <Text style={styles.input}>{item.sports.SportName}</Text>
+                  </View>
+                  <View style={styles.row}>
+                    <Text style={styles.label}>Sport Category:</Text>
+                    <Text style={styles.input}>{item.sports.Category}</Text>
+                  </View>
+                  <View style={styles.row}>
+                    <Text style={styles.label}>Instructor:</Text>
+                    <Text style={styles.input}>
+                      {item.instructorId.userId.Name}
+                    </Text>
+                  </View>
+                  <View style={styles.row}>
+                    <Text style={styles.label}>From :</Text>
+                    <Text style={styles.input}>{item.timeSlot.from}</Text>
+                  </View>
+                  <View style={styles.row}>
+                    <Text style={styles.label}>To :</Text>
+                    <Text style={styles.input}>{item.timeSlot.to}</Text>
+                  </View>
+                </View>
+              ))}
               {/* </View> */}
             </Pressable>
           </View>
