@@ -88,6 +88,10 @@ app.post(
   AthleteController.addAthlete
 );
 app.get("/getAthletes", AthleteController.getAthlete);
+app.get(
+  "/getAthleteswithsupervisor",
+  AthleteController.getAthletewithsupervisor
+);
 app.patch("/updateAthlete/:id", AthleteController.updateAthlete);
 
 //Instructor routes
