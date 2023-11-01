@@ -32,6 +32,9 @@ const LoginVerify = async () => {
       } else {
         return redirect("/");
       }
+    } else {
+      localStorage.removeItem("token");
+      return redirect("/");
     }
   }
 };
