@@ -24,6 +24,21 @@ module.exports.getAllPayments = async function (req, res) {
     });
 };
 
+module.exports.getAllPaymentswithsportwithinstructor = async function (
+  req,
+  res
+) {
+  PaymentModel.find(req.query)
+    .populate("sports")
+    .populate("instructorId")
+    .then((data) => {
+      res.json({ data: data, msg: "Payment Retrived", rcode: 200 });
+    })
+    .catch((err) => {
+      res.json({ data: err.msg, msg: "smw", rcode: -9 });
+    });
+};
+
 module.exports.updatePayment = async function (req, res) {
   const id = req.params.id;
   let Payment = await PaymentModel.findOne({ _id: id });

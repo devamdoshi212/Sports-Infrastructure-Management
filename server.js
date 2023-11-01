@@ -116,6 +116,10 @@ app.patch("/updateInstructors/:id", InstructorController.updateInstructor);
 //payment routes
 app.post("/paymentdetail", PaymentController.addPayment);
 app.get("/getPaymentDetails", PaymentController.getAllPayments);
+app.get(
+  "/getPaymentDetailswithsportwithinstructor",
+  PaymentController.getAllPaymentswithsportwithinstructor
+);
 app.patch("/updatePaymentDetails/:id", PaymentController.updatePayment);
 
 //Rating routes
