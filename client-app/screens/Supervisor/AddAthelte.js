@@ -10,6 +10,7 @@ import {
 import { Picker } from "@react-native-picker/picker";
 import Checkbox from "expo-checkbox";
 import ipconfig from "../../ipconfig";
+import { useSelector } from "react-redux";
 const CheckboxWithLabel = ({
   label,
   value,
@@ -32,6 +33,7 @@ const CheckboxWithLabel = ({
 };
 
 const Form = ({ navigation }) => {
+  const userdata = useSelector((state) => state.user.User);
   const ip = ipconfig.ip;
   const [sports, setsports] = useState([]);
   useEffect(() => {
@@ -41,7 +43,7 @@ const Form = ({ navigation }) => {
     };
 
     fetch(
-      `http://${ip}:9999/getSportsComplexwithsport?_id=6540e57553d1815b95f1c5c5`,
+      `http://${ip}:9999/getSportsComplexwithsport?_id=${userdata.SportComplexId}`,
       requestOptions
     )
       .then((response) => response.json())
