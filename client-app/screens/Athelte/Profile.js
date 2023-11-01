@@ -27,9 +27,10 @@ function Profile() {
   const Atheltedata = useSelector((state) => state.athelte.Athelte);
   const [image, setimage] = useState("./../../assets/icon.png");
   useEffect(() => {
-    console.log(Atheltedata[0].baseUrl);
-    // const i = Atheltedata.baseUrl.replace("localhost", ip);
-    setimage(Atheltedata[0].baseUrl);
+    // console.log(Atheltedata[0].baseUrl);
+    const i = Atheltedata[0].baseUrl.slice(1);
+    console.log(i);
+    setimage(i);
   }, [image]);
   // console.log(Userdata.base)
   const handleLogout = () => {
@@ -43,13 +44,13 @@ function Profile() {
         <View style={styles.leftColumn}>
           <Image
             style={{ width: 100, height: 100, borderRadius: 50, marginLeft: 1 }}
-            source={image}
+            source={{ uri: `http://${ip}:9999/${image}` }}
           />
         </View>
         <View style={styles.rightColumn}>
-          <Text style={styles.name}>name</Text>
-          <Text style={styles.name}>Email</Text>
-          <Text style={styles.name}>ContactNo</Text>
+          <Text style={styles.name}>Name : {Userdata.Name}</Text>
+          <Text style={styles.name}>Email : {Userdata.Email}</Text>
+          <Text style={styles.name}>ContactNo : {Userdata.ContactNum}</Text>
         </View>
       </View>
 
