@@ -2,7 +2,7 @@ const { default: mongoose } = require("mongoose");
 
 const complaintSchema = new mongoose.Schema(
     {
-        type: String,//Resource Request, Maintenance Requirement
+        type: String,// , Maintenance Requirement
         Description: String, 
         userId: { type: mongoose.SchemaTypes.ObjectId, ref: "users" },
         sportsComplex: {
