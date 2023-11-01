@@ -78,7 +78,6 @@ function FlatListScreen({ navigation, optionField, searchfield }) {
       .then((response) => response.json())
       .then((result) => {
         setComplex(result.data);
-        console.log(result);
       })
       .catch((error) => console.log("error", error));
   }, [ip, optionField, searchfield]);
