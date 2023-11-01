@@ -7,8 +7,21 @@ import {
   TouchableOpacity,
   Pressable,
 } from "react-native";
+import ipconfig from "../../ipconfig";
 import { Ionicons } from "@expo/vector-icons";
+import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
+
 const ProfileDetails = ({ navigation }) => {
+  const ip = ipconfig.ip;
+  const Userdata = useSelector((state) => state.user.User);
+  const Atheltedata = useSelector((state) => state.athelte.Athelte);
+  const [image, setimage] = useState("./../../assets/icon.png");
+
+  useEffect(() => {
+    const i = Atheltedata[0].baseUrl.slice(1);
+    setimage(i);
+  }, [image]);
   return (
     <View style={styles.container}>
       <View style={styles.header}>
@@ -35,7 +48,7 @@ const ProfileDetails = ({ navigation }) => {
                 borderRadius: 60,
                 marginHorizontal: 15,
               }}
-              source={require("./../../assets/icon.png")}
+              source={{ uri: `http://${ip}:9999/${image}` }}
             />
             <Image
               style={{ width: 120, height: 120, marginHorizontal: 15 }}
@@ -46,27 +59,27 @@ const ProfileDetails = ({ navigation }) => {
         <View style={styles.profileDetail}>
           <View style={styles.row}>
             <Text style={styles.label}>Name :</Text>
-            <Text style={styles.input}>Khushi Patel</Text>
+            <Text style={styles.input}>{Userdata.Name}</Text>
           </View>
           <View style={styles.row}>
             <Text style={styles.label}>Email :</Text>
-            <Text style={styles.input}>abc@gmail.com</Text>
+            <Text style={styles.input}>{Userdata.Email}</Text>
           </View>
           <View style={styles.row}>
             <Text style={styles.label}>Contact No :</Text>
-            <Text style={styles.input}>1231231231</Text>
+            <Text style={styles.input}>{Userdata.ContactNum}</Text>
           </View>
           <View style={styles.row}>
             <Text style={styles.label}>Blood Group :</Text>
-            <Text style={styles.input}>A+</Text>
+            <Text style={styles.input}>{Atheltedata[0].bloodGroup}</Text>
           </View>
           <View style={styles.row}>
             <Text style={styles.label}>Address :</Text>
-            <Text style={styles.input}>Krishna bunglows, Gandhinagar</Text>
+            <Text style={styles.input}>{Atheltedata[0].address}</Text>
           </View>
           <View style={styles.row}>
             <Text style={styles.label}>Emergency No :</Text>
-            <Text style={styles.input}>1231231</Text>
+            <Text style={styles.input}>{Atheltedata[0].emergencyNumber}</Text>
           </View>
           <View style={{ alignSelf: "center", marginTop: 10 }}>
             {/* <Image
