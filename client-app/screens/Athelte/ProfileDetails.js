@@ -28,7 +28,7 @@ const ProfileDetails = ({ navigation }) => {
       <View style={styles.header}>
         <Pressable
           onPress={() => {
-            navigation.navigate("MainProfile");
+            navigation.goBack();
           }}
         >
           <View style={styles.back}>
