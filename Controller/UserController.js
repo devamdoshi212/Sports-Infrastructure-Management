@@ -43,6 +43,7 @@ module.exports.signup = async function (req, res) {
     let data = await User.save();
 
     let instructordata = {
+      SportComplexId: req.body.SportComplexId,
       userId: data._id,
       createdBy: req.body.createdBy,
       sports: req.body.sports,
