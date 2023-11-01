@@ -9,15 +9,49 @@ import {
   ScrollView,
   Pressable,
 } from "react-native";
-import React from "react";
+import React, { useEffect } from "react";
 import { Picker } from "@react-native-picker/picker";
 import { Ionicons } from "@expo/vector-icons";
 import { useState } from "react";
+import { useSelector } from "react-redux";
+import ipconfig from "../../ipconfig";
 
 const Complaint = ({ navigation }) => {
+  const Userdata = useSelector((state) => state.user.User);
+  const Atheltedata = useSelector((state) => state.athelte.Athelte);
+
   const complaintList = ["Maintenance", "Behaviour", "Refund", "Inquiry"];
   const [value, onChangeText] = React.useState("Useless Multiline Placeholder");
   const [complaint, setCompalint] = useState();
+  const ip = ipconfig.ip;
+
+  const complexId = Atheltedata[0].createdBy.SportComplexId;
+
+  const handleSubmit = () => {
+    var myHeaders = new Headers();
+    myHeaders.append("Content-Type", "application/json");
+    var raw = JSON.stringify({
+      type: complaint,
+      Description: value,
+      userId: Userdata._id,
+      sportsComplex: complexId,
+      level: 0,
+      status: 0,
+    });
+    var requestOptions = {
+      method: "POST",
+      headers: myHeaders,
+      body: raw,
+      redirect: "follow",
+    };
+    fetch(`http://${ip}:9999/addComplaint`, requestOptions)
+      .then((response) => response.text())
+      .then((result) => {
+        alert("Complaint Added Succesfully");
+        navigation.goBack();
+      })
+      .catch((error) => console.log("error", error));
+  };
   return (
     <>
       <View style={styles.container}>
@@ -62,7 +96,7 @@ const Complaint = ({ navigation }) => {
         </View>
         <TouchableOpacity style={styles.actionButton}>
           <View style={{ width: "40%", alignSelf: "center", marginTop: "5%" }}>
-            <Button title="Submit" />
+            <Button title="Submit" onPress={handleSubmit} />
           </View>
         </TouchableOpacity>
       </View>
