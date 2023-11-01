@@ -79,45 +79,45 @@ const Form = ({ navigation }) => {
       .catch((error) => console.log("error", error));
   };
 
-  const [isChecked, setIsChecked] = React.useState(() => {
-    // Create an initial state object based on the Sports data
-    const initialState = {};
+  // const [isChecked, setIsChecked] = React.useState(() => {
+  //   // Create an initial state object based on the Sports data
+  //   const initialState = {};
 
-    // Assuming Sports is an array with SportName property
-    sports.forEach((sport) => {
-      initialState[sport.SportName] = false;
-    });
+  //   // Assuming Sports is an array with SportName property
+  //   sports.forEach((sport) => {
+  //     initialState[sport.SportName] = false;
+  //   });
 
-    return initialState;
-  });
+  //   return initialState;
+  // });
 
-  const handleChange = (option) => {
-    setIsChecked({ ...isChecked, [option]: !isChecked[option] });
-    if (!isChecked[option]) {
-      console.log(`${option} is checked.`);
-    }
-  };
+  // const handleChange = (option) => {
+  //   setIsChecked({ ...isChecked, [option]: !isChecked[option] });
+  //   if (!isChecked[option]) {
+  //     console.log(`${option} is checked.`);
+  //   }
+  // };
 
-  const checkboxOptions = [
-    { label: "Option 1", value: "option1" },
-    { label: "Option 2", value: "option2" },
-    { label: "Option 3", value: "option3" },
-  ];
+  // const checkboxOptions = [
+  //   { label: "Option 1", value: "option1" },
+  //   { label: "Option 2", value: "option2" },
+  //   { label: "Option 3", value: "option3" },
+  // ];
 
-  const renderCheckboxes = () => {
-    return sports.map((sports, index) => {
-      return (
-        <CheckboxWithLabel
-          key={index}
-          label={sports.sport.SportName}
-          value={isChecked[sports.sport._id]}
-          onValueChange={() => handleChange(sports.sport._id)}
-          disabled={false}
-          style={styles.checkboxItem}
-        />
-      );
-    });
-  };
+  // const renderCheckboxes = () => {
+  //   return sports.map((sports, index) => {
+  //     return (
+  //       <CheckboxWithLabel
+  //         key={index}
+  //         label={sports.sport.SportName}
+  //         value={isChecked[sports.sport._id]}
+  //         onValueChange={() => handleChange(sports.sport._id)}
+  //         disabled={false}
+  //         style={styles.checkboxItem}
+  //       />
+  //     );
+  //   });
+  // };
 
   const handleDropdownChange = (itemValue) => {
     setSelectedOption(itemValue);
@@ -166,7 +166,7 @@ const Form = ({ navigation }) => {
             </Text>
           </View>
         )}
-        <View style={styles.checkboxContainer}>{renderCheckboxes()}</View>
+        {/* <View style={styles.checkboxContainer}>{renderCheckboxes()}</View> */}
         <Picker
           style={styles.dropdownPicker}
           selectedValue={selectedOption}
