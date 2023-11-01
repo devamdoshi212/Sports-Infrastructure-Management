@@ -57,46 +57,46 @@ const SportEnroll = () => {
           </View>
         </View>
         <ScrollView contentContainerStyle={styles.scrollContainer}>
-          <View style={styles.card}>
-            <Pressable
-              style={({ pressed }) => [
-                {
-                  backgroundColor: pressed ? "#f0f0f0" : "white",
-                  padding: 20,
-                  borderRadius: 10,
-                },
-              ]}
-            >
-              {/* <View style={styles.card}> */}
-              {payments.map((item, index) => (
-                <View key={index}>
-                  <View style={styles.row}>
-                    <Text style={styles.label}>Sport Name:</Text>
-                    <Text style={styles.input}>{item.sports.SportName}</Text>
-                  </View>
-                  <View style={styles.row}>
-                    <Text style={styles.label}>Sport Category:</Text>
-                    <Text style={styles.input}>{item.sports.Category}</Text>
-                  </View>
-                  <View style={styles.row}>
-                    <Text style={styles.label}>Instructor:</Text>
-                    <Text style={styles.input}>
-                      {item.instructorId.userId.Name}
-                    </Text>
-                  </View>
-                  <View style={styles.row}>
-                    <Text style={styles.label}>From :</Text>
-                    <Text style={styles.input}>{item.timeSlot.from}</Text>
-                  </View>
-                  <View style={styles.row}>
-                    <Text style={styles.label}>To :</Text>
-                    <Text style={styles.input}>{item.timeSlot.to}</Text>
-                  </View>
+          {payments.map((item, index) => (
+            <View style={styles.card} key={index}>
+              <Pressable
+                style={({ pressed }) => [
+                  {
+                    backgroundColor: pressed ? "#f0f0f0" : "white",
+                    padding: 20,
+                    borderRadius: 10,
+                  },
+                ]}
+              >
+                {/* <View style={styles.card}> */}
+
+                <View style={styles.row}>
+                  <Text style={styles.label}>Sport Name:</Text>
+                  <Text style={styles.input}>{item.sports.SportName}</Text>
                 </View>
-              ))}
-              {/* </View> */}
-            </Pressable>
-          </View>
+                <View style={styles.row}>
+                  <Text style={styles.label}>Sport Category:</Text>
+                  <Text style={styles.input}>{item.sports.Category}</Text>
+                </View>
+                <View style={styles.row}>
+                  <Text style={styles.label}>Instructor:</Text>
+                  <Text style={styles.input}>
+                    {item.instructorId.userId.Name}
+                  </Text>
+                </View>
+                <View style={styles.row}>
+                  <Text style={styles.label}>From :</Text>
+                  <Text style={styles.input}>{item.timeSlot.from}</Text>
+                </View>
+                <View style={styles.row}>
+                  <Text style={styles.label}>To :</Text>
+                  <Text style={styles.input}>{item.timeSlot.to}</Text>
+                </View>
+
+                {/* </View> */}
+              </Pressable>
+            </View>
+          ))}
         </ScrollView>
       </View>
     </>
