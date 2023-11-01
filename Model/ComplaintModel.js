@@ -2,7 +2,8 @@ const { default: mongoose } = require("mongoose");
 
 const complaintSchema = new mongoose.Schema(
     {
-        type: String, //Resource Request, Maintenance Requirement
+        type: String,//Resource Request, Maintenance Requirement
+        Description: String, 
         userId: { type: mongoose.SchemaTypes.ObjectId, ref: "users" },
         sportsComplex: {
             type: mongoose.SchemaTypes.ObjectId,
@@ -10,7 +11,11 @@ const complaintSchema = new mongoose.Schema(
         },
         level: Number, //0 - Supervisor, 1 - Manager, 2 - Authority, 3 - Admin
         status: Number, //0 - Active(Not Solved), 1 - Solved
+        // baseUrl: {
+        //     type: String,
+        //   }
     },
+    
     { timestamps: true }
 );
 
