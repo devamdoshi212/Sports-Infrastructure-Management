@@ -20,6 +20,7 @@ const ProfileDetails = ({ navigation }) => {
 
   useEffect(() => {
     const i = Atheltedata[0].baseUrl.slice(1);
+    console.log(Atheltedata[0].createdBy);
     setimage(i);
   }, [image]);
   return (
