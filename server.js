@@ -93,6 +93,10 @@ app.get(
   AthleteController.getAthletewithsupervisor
 );
 app.get("/getAthleteswithpayments", AthleteController.getAthletewithpayments);
+app.get(
+  "/getAthleteswithpaymentswithsupervisor",
+  AthleteController.getAthletewithpaymentswithsupervisor
+);
 app.patch("/updateAthlete/:id", AthleteController.updateAthlete);
 
 //Instructor routes
