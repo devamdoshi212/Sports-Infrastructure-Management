@@ -8,13 +8,75 @@ import {
   ScrollView,
   TextInput,
   Pressable,
+  Alert,
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { useState } from "react";
 import { useNavigation } from "@react-navigation/native";
-function ViewComplaint() {
+import ipconfig from "../../ipconfig";
+function ViewComplaint({ route, navigation }) {
   const navigate = useNavigation();
-  const [value, setValue] = useState();
+  const data = route.params.data;
+  const ip = ipconfig.ip;
+  const resolveHandler = () => {
+    var myHeaders = new Headers();
+    myHeaders.append("Content-Type", "application/json");
+
+    var raw = JSON.stringify({
+      status: 1,
+    });
+
+    var requestOptions = {
+      method: "PATCH",
+      headers: myHeaders,
+      body: raw,
+      redirect: "follow",
+    };
+
+    fetch(`http://${ip}:9999/updateComplaint/${data._id}`, requestOptions)
+      .then((response) => response.json())
+      .then((result) => {
+        Alert.alert("Complaint Solved Successfully !", "Done!!!", [
+          // {
+          //     text: 'Cancel',
+          //     onPress: () => console.log('Cancel Pressed'),
+          //     style: 'cancel',
+          // },
+          { text: "OK", onPress: () => navigation.goBack() },
+        ]);
+      })
+      .catch((error) => console.log("error", error));
+  };
+
+  const forwardHandler = () => {
+    var myHeaders = new Headers();
+    myHeaders.append("Content-Type", "application/json");
+
+    var raw = JSON.stringify({
+      level: 1,
+    });
+
+    var requestOptions = {
+      method: "PATCH",
+      headers: myHeaders,
+      body: raw,
+      redirect: "follow",
+    };
+
+    fetch(`http://${ip}:9999/updateComplaint/${data._id}`, requestOptions)
+      .then((response) => response.json())
+      .then((result) => {
+        Alert.alert("Complaint Pass to Manager", "Done!!", [
+          // {
+          //     text: 'Cancel',
+          //     onPress: () => console.log('Cancel Pressed'),
+          //     style: 'cancel',
+          // },
+          { text: "OK", onPress: () => navigation.goBack() },
+        ]);
+      })
+      .catch((error) => console.log("error", error));
+  };
   return (
     <View style={styles.container}>
       <View style={styles.header}>
@@ -47,7 +109,9 @@ function ViewComplaint() {
         <Text style={{ fontWeight: "bold", fontSize: 15, alignSelf: "center" }}>
           Name :
         </Text>
-        <Text style={{ alignSelf: "center", paddingLeft: 10 }}>John Doe</Text>
+        <Text style={{ alignSelf: "center", paddingLeft: 10 }}>
+          {data.userId.Name}
+        </Text>
       </View>
       <ScrollView>
         <View
@@ -66,10 +130,10 @@ function ViewComplaint() {
             <Text style={{ fontWeight: "bold", paddingBottom: 7 }}>
               Complaint:
             </Text>
-            <Text> folder\AwesomeProject\node_modules\@babel\parser\li</Text>
+            <Text>{data.Description}</Text>
           </ScrollView>
         </View>
-        <View
+        {/* <View
           style={{
             flexDirection: "row",
             paddingVertical: 15,
@@ -81,9 +145,13 @@ function ViewComplaint() {
           }}
         >
           <ScrollView>
-            <TextInput multiline editable placeholder="Type here"></TextInput>
+            <TextInput
+              multiline
+              editable
+              placeholder="Remarks here"
+            ></TextInput>
           </ScrollView>
-        </View>
+        </View> */}
         <View
           style={{
             justifyContent: "space-evenly",
@@ -91,8 +159,8 @@ function ViewComplaint() {
             marginTop: 25,
           }}
         >
-          <Button title="Response"></Button>
-          <Button title="Forward"></Button>
+          <Button title="Resolve" onPress={resolveHandler}></Button>
+          <Button title="Forward" onPress={forwardHandler}></Button>
         </View>
       </ScrollView>
     </View>
