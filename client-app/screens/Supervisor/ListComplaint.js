@@ -9,9 +9,31 @@ import {
   Pressable,
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
+import ipconfig from "../../ipconfig";
+import { useSelector } from "react-redux";
+
 const ListComplaint = () => {
+  const [Complaint, setcomplain] = useState([]);
+  const ip = ipconfig.ip;
+  const Userdata = useSelector((state) => state.user.User);
+  const sid = Userdata.SportComplexId;
+  useEffect(() => {
+    var requestOptions = {
+      method: "GET",
+      redirect: "follow",
+    };
+    fetch(
+      `http://${ip}:9999/getAllComplaints?sportsComplex=${sid}&level=0`,
+      requestOptions
+    )
+      .then((response) => response.json())
+      .then((result) => {
+        setcomplain(result.data);
+      })
+      .catch((error) => console.log("error", error));
+  }, []);
   const navigate = useNavigation();
   return (
     <>
@@ -33,30 +55,33 @@ const ListComplaint = () => {
           </View>
         </View>
         <ScrollView contentContainerStyle={styles.scrollContainer}>
-          <View style={styles.card}>
-            <Pressable
-              onPress={() => {
-                navigate.navigate("ViewComplaint");
-              }}
-              style={({ pressed }) => [
-                {
-                  backgroundColor: pressed ? "#f0f0f0" : "white",
-                  padding: 20,
-                  borderRadius: 10,
-                },
-              ]}
-            >
-              {/* <View style={styles.card}> */}
-              <View style={styles.row}>
-                <View style={styles.column1}>
-                  <Text style={styles.label}>Suraj Joshi</Text>
+          {Complaint.map((item, index) => (
+            <View style={styles.card} key={index}>
+              <Pressable
+                onPress={() => {
+                  navigate.navigate("ViewComplaint", { data: item });
+                }}
+                style={({ pressed }) => [
+                  {
+                    backgroundColor: pressed ? "#f0f0f0" : "white",
+                    padding: 20,
+                    borderRadius: 10,
+                  },
+                ]}
+              >
+                {/* <View style={styles.card}> */}
+
+                <View style={styles.row}>
+                  <View style={styles.column1}>
+                    <Text style={styles.label}>{item.userId.Name}</Text>
+                  </View>
+                  <View style={styles.column2}>
+                    <Text style={styles.input}>{item.createdAt}</Text>
+                  </View>
                 </View>
-                <View style={styles.column2}>
-                  <Text style={styles.input}>DD/MM/YY</Text>
-                </View>
-              </View>
-            </Pressable>
-          </View>
+              </Pressable>
+            </View>
+          ))}
         </ScrollView>
       </View>
     </>
