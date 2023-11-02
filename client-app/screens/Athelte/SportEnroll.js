@@ -33,7 +33,6 @@ const SportEnroll = () => {
       .then((response) => response.json())
       .then((result) => {
         setPayment(result.data);
-        console.log(result);
       })
       .catch((error) => console.log("error", error));
   }, []);
@@ -132,7 +131,7 @@ const styles = StyleSheet.create({
     width: "100%",
     height: 50,
     backgroundColor: "#f0f0f0",
-    alignItems:"center"
+    alignItems: "center",
   },
   back: {
     marginHorizontal: 4,

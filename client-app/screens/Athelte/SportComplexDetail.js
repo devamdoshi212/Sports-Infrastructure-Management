@@ -30,7 +30,6 @@ const SportComplexDetail = () => {
       .then((response) => response.json())
       .then((result) => {
         setDetails(result.data[0]);
-        console.log(result);
       })
       .catch((error) => console.log("error", error));
   }, []);
@@ -107,8 +106,8 @@ const styles = StyleSheet.create({
     width: "100%",
     height: 50,
     backgroundColor: "#f0f0f0",
-    justifyContent:"center",
-    alignItems:"center"
+    justifyContent: "center",
+    alignItems: "center",
   },
   back: {
     marginHorizontal: 4,
@@ -136,13 +135,12 @@ const styles = StyleSheet.create({
   },
   row: {
     marginBottom: 20,
-    
   },
   label: {
     fontWeight: "bold",
     fontSize: 17,
     marginLeft: 6,
-    marginBottom:1,
+    marginBottom: 1,
   },
   input: {
     marginLeft: 6,

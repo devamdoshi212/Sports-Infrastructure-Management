@@ -39,31 +39,27 @@ const ModalView = (props) => {
           <View style={styles.profileDetail}>
             <View style={styles.row}>
               <Text style={styles.label}>Name :</Text>
-              <Text style={styles.input}>Khushi Patel</Text>
+              <Text style={styles.input}>{props.data.athleteName}</Text>
             </View>
             <View style={styles.row}>
               <Text style={styles.label}>Amount :</Text>
-              <Text style={styles.input}>4500</Text>
+              <Text style={styles.input}>{props.data.amount}</Text>
             </View>
             <View style={styles.row}>
               <Text style={styles.label}>Sport :</Text>
-              <Text style={styles.input}>Cricket</Text>
+              <Text style={styles.input}>{props.data.sportName}</Text>
             </View>
             <View style={styles.row}>
               <Text style={styles.label}>Complex_Name :</Text>
-              <Text style={styles.input}>Sai Sports</Text>
-            </View>
-            <View style={styles.row}>
-              <Text style={styles.label}>duration :</Text>
-              <Text style={styles.input}>3 hours</Text>
+              <Text style={styles.input}>{props.data.sportComplexName}</Text>
             </View>
             <View style={styles.row}>
               <Text style={styles.label}>From :</Text>
-              <Text style={styles.input}>12/31/231</Text>
+              <Text style={styles.input}>{props.data.from}</Text>
             </View>
             <View style={styles.row}>
               <Text style={styles.label}>To :</Text>
-              <Text style={styles.input}>12/31/231</Text>
+              <Text style={styles.input}>{props.data.to}</Text>
             </View>
 
             <TouchableOpacity style={styles.actionButton}>
