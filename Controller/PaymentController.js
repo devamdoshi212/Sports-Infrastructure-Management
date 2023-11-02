@@ -82,7 +82,7 @@ module.exports.CountOFAllPaymentswithsportwithinstructor = async function (
       {
         $match: {
           sportsComplexId: new mongoose.Types.ObjectId(
-            req.body.sportsComplexId
+            req.query.sportsComplexId
           ), // Replace with the sports complex ID you want to match
         },
       },

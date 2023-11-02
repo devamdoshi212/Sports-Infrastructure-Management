@@ -9,7 +9,17 @@ import {
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
-const AtheleteProfile = () => {
+import { useEffect, useState } from "react";
+import ipconfig from "../../ipconfig";
+const AtheleteProfile = ({ route, navigation }) => {
+  const ip = ipconfig.ip;
+  const [image, setimage] = useState("./../../assets/icon.png");
+  const data = route.params.data;
+
+  useEffect(() => {
+    const i = data.athlete[0].baseUrl.slice(1);
+    setimage(i);
+  }, [image]);
   const navigate = useNavigation();
   return (
     <View style={styles.container}>
@@ -37,34 +47,34 @@ const AtheleteProfile = () => {
                 borderRadius: 60,
                 marginHorizontal: 15,
               }}
-              source={require("./../../assets/icon.png")}
+              source={{ uri: `http://${ip}:9999/${image}` }}
             />
           </View>
         </View>
         <View style={styles.profileDetail}>
           <View style={styles.row}>
             <Text style={styles.label}>Name :</Text>
-            <Text style={styles.input}>Khushi Patel</Text>
+            <Text style={styles.input}>{data.user[0].Name}</Text>
           </View>
           <View style={styles.row}>
             <Text style={styles.label}>Email :</Text>
-            <Text style={styles.input}>abc@gmail.com</Text>
+            <Text style={styles.input}>{data.user[0].Email}</Text>
           </View>
           <View style={styles.row}>
             <Text style={styles.label}>Contact No :</Text>
-            <Text style={styles.input}>1231231231</Text>
+            <Text style={styles.input}>{data.user[0].ContactNum}</Text>
           </View>
           <View style={styles.row}>
             <Text style={styles.label}>Blood Group :</Text>
-            <Text style={styles.input}>A+</Text>
+            <Text style={styles.input}>{data.athlete[0].bloodGroup}</Text>
           </View>
           <View style={styles.row}>
             <Text style={styles.label}>Address :</Text>
-            <Text style={styles.input}>Krishna bunglows, Gandhinagar</Text>
+            <Text style={styles.input}>{data.athlete[0].address}</Text>
           </View>
           <View style={styles.row}>
             <Text style={styles.label}>Emergency No :</Text>
-            <Text style={styles.input}>1231231</Text>
+            <Text style={styles.input}>{data.athlete[0].emergencyNumber}</Text>
           </View>
           <View style={{ alignSelf: "center", marginTop: 10 }}>
             {/* <Image

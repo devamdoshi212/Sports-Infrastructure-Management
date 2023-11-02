@@ -10,12 +10,36 @@ import {
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { Feather } from "@expo/vector-icons";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Modal from "./ModalView";
 import { useNavigation } from "@react-navigation/native";
+import ipconfig from "../../ipconfig";
+import { useSelector } from "react-redux";
 const AthleteDetails = () => {
   const [show, setShow] = useState(false);
   const navigate = useNavigation();
+  const [athelteList, setAthelteList] = useState([]);
+  const Userdata = useSelector((state) => state.user.User);
+  const sid = Userdata.SportComplexId;
+
+  const ip = ipconfig.ip;
+  useEffect(() => {
+    var requestOptions = {
+      method: "GET",
+      redirect: "follow",
+    };
+
+    fetch(
+      `http://${ip}:9999/countOfPayment?sportsComplexId=${sid}`,
+      requestOptions
+    )
+      .then((response) => response.json())
+      .then((result) => {
+        setAthelteList(result.data);
+      })
+      .catch((error) => console.log("error", error));
+  }, []);
+
   return (
     <>
       {show && <Modal />}
@@ -51,38 +75,48 @@ const AthleteDetails = () => {
           </View>
         </View>
         <ScrollView contentContainerStyle={styles.scrollContainer}>
-          <View style={styles.card}>
-            <Pressable
-              style={({ pressed }) => [
-                {
-                  backgroundColor: pressed ? "#f0f0f0" : "white",
-                  padding: 20,
-                  borderRadius: 10,
-                },
-              ]}
-              onPress={() => {
-                navigate.navigate("AthleteProfile");
-              }}
-            >
-              <View style={styles.StudentsDetail}>
-                <View style={styles.leftColumn}>
-                  <Image
-                    style={{
-                      width: 100,
-                      height: 100,
-                      borderRadius: 50,
-                      marginLeft: 1,
-                    }}
-                    source={require("./../../assets/icon.png")}
-                  />
+          {athelteList.map((item, index) => (
+            <View style={styles.card} key={index}>
+              <Pressable
+                style={({ pressed }) => [
+                  {
+                    backgroundColor: pressed ? "#f0f0f0" : "white",
+                    padding: 20,
+                    borderRadius: 10,
+                  },
+                ]}
+                onPress={() => {
+                  navigate.navigate("AthleteProfile", { data: item });
+                }}
+              >
+                <View style={styles.StudentsDetail}>
+                  <View style={styles.leftColumn}>
+                    <Image
+                      style={{
+                        width: 100,
+                        height: 100,
+                        borderRadius: 50,
+                        marginLeft: 1,
+                      }}
+                      source={{
+                        uri: `http://${ip}:9999/${item.athlete[0].baseUrl.slice(
+                          1
+                        )}`,
+                      }}
+                    />
+                  </View>
+                  <View style={styles.rightColumn}>
+                    <Text style={styles.name}>{item.user[0].Name}</Text>
+                    {item.sports.map((item, index) => (
+                      <Text style={styles.name} key={index}>
+                        {item.SportName}
+                      </Text>
+                    ))}
+                  </View>
                 </View>
-                <View style={styles.rightColumn}>
-                  <Text style={styles.name}>Devam</Text>
-                  <Text style={styles.name}>Cricket</Text>
-                </View>
-              </View>
-            </Pressable>
-          </View>
+              </Pressable>
+            </View>
+          ))}
         </ScrollView>
       </View>
     </>
