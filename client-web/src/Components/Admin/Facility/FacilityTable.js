@@ -219,7 +219,7 @@ export default function FacilityTable() {
           field="baseUrl"
           filterField="baseUrl"
           body={(rowdata) => {
-            return <img src={rowdata.baseUrl} alt="Sport Facility Pic" />;
+            return <img className="w-full h-96"src={rowdata.baseUrl} alt="Sport Facility Pic" />;
           }}
           style={{ minWidth: "12rem" }}
         />

@@ -173,7 +173,7 @@ const Layout = () => {
             {/* <NavLink to={""}> */}
             <button
               onClick={LogoutHandler}
-              className="realtive z-10 w-20 rounded-lg h-12 bg-white overflow-hidden border-4 hover:border-gray-300 focus:border-gray-300 focus:outline-none"
+              className="realtive z-10 w-20 rounded-lg h-12 hover:shadow-md hover:shadow-gray-800 bg-white overflow-hidden hover:bg-gray-200 hover:border-gray-300 focus:border-gray-300 focus:outline-none "
             >
               Logout
             </button>
