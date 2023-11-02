@@ -8,7 +8,7 @@ import {
   Pressable,
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
-const SportComplexDetails = ({ navigation, route }) => {
+const GeneralComplexDetailsScreen = ({ navigation, route }) => {
   const { data } = route.params;
   // console.log(data);
   console.log(data.item.sports);
@@ -144,4 +144,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default SportComplexDetails;
+export default GeneralComplexDetailsScreen;
