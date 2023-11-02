@@ -12,11 +12,14 @@ import { Ionicons } from "@expo/vector-icons";
 import { useEffect, useState } from "react";
 import Modal from "./Modal";
 import ipconfig from "../../ipconfig";
+import { useSelector } from "react-redux";
 
 const PaymentHistory = ({ navigation }) => {
   const ip = ipconfig.ip;
+  const Atheltedata = useSelector((state) => state.athelte.Athelte);
   const [show, setShow] = useState(false);
   const [payments, setpayments] = useState([]);
+  const [data, setdata] = useState([]);
   useEffect(() => {
     var requestOptions = {
       method: "GET",
@@ -24,23 +27,28 @@ const PaymentHistory = ({ navigation }) => {
     };
 
     fetch(
-      `http://${ip}:9999/getPaymentDetailswithsportwithinstructor?athleteId=6542381bcb90e13d13f4f28b`,
+      `http://${ip}:9999/paymentHistoryAthlete?athleteId=${Atheltedata[0]._id}`,
       requestOptions
     )
       .then((response) => response.json())
       .then((result) => {
-        console.log(result);
-        setpayments(result);
+        setpayments(result.payments);
       })
       .catch((error) => console.log("error", error));
   }, []);
 
-  const showHandler = () => {
+  const showHandler = (item) => {
+    // console.log(item);
+    setdata(item);
     setShow(!show);
   };
   return (
     <>
-      <View>{show && <Modal show={show} navigation={navigation}></Modal>}</View>
+      <View>
+        {show && (
+          <Modal show={show} data={data} navigation={navigation}></Modal>
+        )}
+      </View>
       <View style={styles.container}>
         <View style={styles.header}>
           <Pressable
@@ -60,38 +68,40 @@ const PaymentHistory = ({ navigation }) => {
         </View>
         {/* {show && <Modal} */}
         <ScrollView contentContainerStyle={styles.scrollContainer}>
-          <View style={styles.card}>
-            <Pressable
-              style={({ pressed }) => [
-                {
-                  backgroundColor: pressed ? "#f0f0f0" : "white",
-                  padding: 20,
-                  borderRadius: 10,
-                },
-                // styles.wrapperCustom
-              ]}
-              onPress={showHandler}
-            >
-              {/* <View style={styles.card}> */}
-              <View style={styles.row}>
-                <Text style={styles.label}>Amount :</Text>
-                <Text style={styles.input}>1000</Text>
+          {payments &&
+            payments.map((item, index) => (
+              <View style={styles.card} key={index}>
+                <Pressable
+                  style={({ pressed }) => [
+                    {
+                      backgroundColor: pressed ? "#f0f0f0" : "white",
+                      padding: 20,
+                      borderRadius: 10,
+                    },
+                    // styles.wrapperCustom
+                  ]}
+                  onPress={showHandler.bind(this, item)}
+                >
+                  {/* <View style={styles.card}> */}
+                  <View style={styles.row}>
+                    <Text style={styles.label}>Amount :</Text>
+                    <Text style={styles.input}>{item.amount}</Text>
+                  </View>
+                  <View style={styles.row}>
+                    <Text style={styles.label}>Sport:</Text>
+                    <Text style={styles.input}>{item.sportName}</Text>
+                  </View>
+                  <View style={styles.row}>
+                    <Text style={styles.label}>From :</Text>
+                    <Text style={styles.input}>{item.from}</Text>
+                  </View>
+                  <View style={styles.row}>
+                    <Text style={styles.label}>To :</Text>
+                    <Text style={styles.input}>{item.to}</Text>
+                  </View>
+                </Pressable>
               </View>
-              <View style={styles.row}>
-                <Text style={styles.label}>Sport:</Text>
-                <Text style={styles.input}>abc@gmail.com</Text>
-              </View>
-              <View style={styles.row}>
-                <Text style={styles.label}>From :</Text>
-                <Text style={styles.input}>12/34/5678</Text>
-              </View>
-              <View style={styles.row}>
-                <Text style={styles.label}>To :</Text>
-                <Text style={styles.input}>12/34/5678</Text>
-              </View>
-              {/* </View> */}
-            </Pressable>
-          </View>
+            ))}
         </ScrollView>
       </View>
     </>
@@ -111,8 +121,8 @@ const styles = StyleSheet.create({
     width: "100%",
     height: 50,
     backgroundColor: "#f0f0f0",
-    justifyContent:"center",
-    alignItems:"center"
+    justifyContent: "center",
+    alignItems: "center",
   },
   back: {
     marginHorizontal: 4,

@@ -19,11 +19,6 @@ const Profile = ({ navigation }) => {
           component={Signup}
           options={{ headerShown: false }}
         />
-        <Stack.Screen
-          name="ComplexFullDetails"
-          component={GeneralComplexDetailsScreen}
-          options={{ headerShown: false }}
-        />
       </Stack.Group>
     </Stack.Navigator>
   );
