@@ -8,7 +8,10 @@ import {
   Pressable,
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
-const ComplexDetails = ({ navigation }) => {
+const SportComplexDetails = ({ navigation, route }) => {
+  const { data } = route.params;
+  // console.log(data);
+  console.log(data.item.sports);
   return (
     <View style={styles.container}>
       <View style={styles.header}>
@@ -33,30 +36,31 @@ const ComplexDetails = ({ navigation }) => {
         <View style={styles.ComplexDetail}>
           <View style={styles.row}>
             <Text style={styles.label}>Complex Name :</Text>
-            <Text style={styles.input}>NRC</Text>
+            <Text style={styles.input}>{data.item.name}</Text>
+          </View>
+
+          <View style={styles.row}>
+            <Text style={styles.label}>Area :</Text>
+            <Text style={styles.input}>{data.item.area}</Text>
           </View>
           <View style={styles.row}>
-            <Text style={styles.label}>Email :</Text>
-            <Text style={styles.input}>abc@gmail.com</Text>
-          </View>
-          <View style={styles.row}>
-            <Text style={styles.label}>Contact No :</Text>
-            <Text style={styles.input}>1231231231</Text>
-          </View>
-          <View style={styles.row}>
-            <Text style={styles.label}>Address :</Text>
-            <Text style={styles.input}>Krishna bungalows, Gandhinagar</Text>
+            <Text style={styles.label}>Location :</Text>
+            <Text style={styles.input}>{data.item.location}</Text>
           </View>
           <View style={styles.row}>
             <Text style={styles.label}>Since :</Text>
-            <Text style={styles.input}>1996</Text>
+            <Text style={styles.input}>{data.item.operationalSince}</Text>
           </View>
           <View style={styles.row}>
             <Text style={styles.label}>Available Sports :</Text>
           </View>
-          <View>
-            <Text style={styles.input}>Cricket, Basketball, Volleyball</Text>
-          </View>
+          {/* <View>
+            {data.item.sports.map((item, index) => (
+              <Text style={styles.input} key={index}>
+                {item._id}
+              </Text>
+            ))}
+          </View> */}
           <View style={styles.row}>
             <Text style={styles.label}>Total number of Instructor :</Text>
             <Text style={styles.input}>7</Text>
@@ -140,4 +144,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ComplexDetails;
+export default SportComplexDetails;

@@ -10,7 +10,8 @@ import {
   ImageBackground,
 } from "react-native";
 import ipconfig from "../../ipconfig";
-function renderCategoryItem(itemData, ip) {
+import { useNavigation } from "@react-navigation/native";
+function renderCategoryItem(itemData, ip, navigate) {
   if (itemData.item.baseUrl) {
     const image = itemData.item.baseUrl;
     const updatedImage = image.replace("localhost", ip); // Replace "localhost" with the IP address
@@ -54,7 +55,9 @@ function renderCategoryItem(itemData, ip) {
             styles.button,
             pressed ? styles.buttonPressed : null,
           ]}
-          // onPress={onPress}
+          onPress={() => {
+            navigate.navigate("ComplexDetails", { data: itemData });
+          }}
         >
           <View style={[styles.innerContainer, { backgroundColor: "gray" }]}>
             <Text style={styles.title}>{itemData.item.name}</Text>
@@ -65,7 +68,9 @@ function renderCategoryItem(itemData, ip) {
   }
 }
 
-function FlatListScreen({ navigation, optionField, searchfield }) {
+function FlatListScreen({ optionField, searchfield }) {
+  const navigate = useNavigation();
+
   const [complex, setComplex] = useState([]);
   const ip = ipconfig.ip;
   useEffect(() => {
@@ -86,9 +91,9 @@ function FlatListScreen({ navigation, optionField, searchfield }) {
     <FlatList
       data={complex}
       keyExtractor={(item) => item._id}
-      renderItem={(itemData) => renderCategoryItem(itemData, ip)}
+      renderItem={(itemData) => renderCategoryItem(itemData, ip, navigate)}
       numColumns={2}
-      extraData={ip}
+      extraData={{ ip, navigate }}
       // extraData={searchfield}
     />
   );
