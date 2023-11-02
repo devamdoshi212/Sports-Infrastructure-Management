@@ -2,6 +2,8 @@ const { default: mongoose } = require("mongoose");
 const SportsComplex = require("../Model/SportsComplexModel");
 const sportModel = require("../Model/SportModel");
 // const SportsComplexModel = require("../Model/SportsComplexModel");
+const instructerModel = require("../Model/instructorModel");
+const paymentModel = require("../Model/PaymentModel");
 
 module.exports.AddSportsComplex = async function (req, res) {
   let SportComplex = new SportsComplex({
@@ -166,5 +168,57 @@ module.exports.sportsComplexOfSport = async function (req, res) {
       err: err.msg,
       rcode: -9,
     });
+  }
+};
+
+module.exports.SportsComplexDetail = async function (req, res) {
+  try {
+    const instructerData = await instructerModel
+      .find({
+        SportComplexId: req.query.sportsComplex,
+      })
+      .populate("userId");
+    const insName = instructerData.map((doc) => doc.userId.Name);
+
+    const SportsData = await SportsComplex.find({
+      _id: req.query.sportsComplex,
+    }).populate("sports.sport");
+
+    let SportsNames = [];
+    for (let i = 0; i <= SportsData.length; i++) {
+      const sportsName = SportsData.map(
+        (item) => item.sports[i].sport.SportName
+      );
+      SportsNames = SportsNames.concat(sportsName);
+    }
+    // console.log(SportNames)
+
+    const athleteCount = await paymentModel.aggregate([
+      {
+        $match: {
+          sportsComplexId: new mongoose.Types.ObjectId(req.query.sportsComplex),
+        },
+      },
+      {
+        $group: {
+          _id: "$athleteId",
+          Paymentcount: { $sum: 1 },
+        },
+      },
+      // {
+      //   $project: {
+      //     // Paymentcount: 1,
+      //   },
+      // },
+    ]);
+    res.json({
+      athleteCount: athleteCount.length,
+      athletePaymentCount: athleteCount,
+      instructerData: insName,
+      availableSports: SportsNames,
+      rcode: 200,
+    });
+  } catch (err) {
+    console.log(err);
   }
 };
