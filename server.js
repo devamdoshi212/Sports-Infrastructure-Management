@@ -131,6 +131,21 @@ app.post("/addRating", RatingController.addRating);
 app.get("/getAllRatings", RatingController.getAllRatings);
 
 //Complaint routes
+const photoStorage = multer.diskStorage({
+  destination: "./public/complaints",
+  filename: (req, file, cb) => {
+    console.log(file.originalname);
+    cb(null, file.originalname);
+  },
+});
+
+const uploadPhoto = multer({
+  storage: photoStorage,
+  limits: { fileSize: 15000000 },
+});
+app.post("/complaintPhoto", uploadPhoto.single("photo"), (req, res) => {
+  res.json({ rcode: 200 });
+});
 app.post("/addComplaint", ComplaintController.addComplaint);
 app.get("/getAllComplaints", ComplaintController.getAllComplaints);
 app.patch("/updateComplaint/:id", ComplaintController.updateComplaint);
