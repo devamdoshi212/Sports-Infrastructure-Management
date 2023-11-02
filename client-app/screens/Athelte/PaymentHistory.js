@@ -9,11 +9,32 @@ import {
   Pressable,
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Modal from "./Modal";
+import ipconfig from "../../ipconfig";
 
 const PaymentHistory = ({ navigation }) => {
+  const ip = ipconfig.ip;
   const [show, setShow] = useState(false);
+  const [payments, setpayments] = useState([]);
+  useEffect(() => {
+    var requestOptions = {
+      method: "GET",
+      redirect: "follow",
+    };
+
+    fetch(
+      `http://${ip}:9999/getPaymentDetailswithsportwithinstructor?athleteId=6542381bcb90e13d13f4f28b`,
+      requestOptions
+    )
+      .then((response) => response.json())
+      .then((result) => {
+        console.log(result);
+        setpayments(result);
+      })
+      .catch((error) => console.log("error", error));
+  }, []);
+
   const showHandler = () => {
     setShow(!show);
   };

@@ -8,7 +8,7 @@ export default function QR({ navigation }) {
   const userdata = useSelector((state) => state.user.User);
   const ip = ipconfig.ip;
   const [hasPermission, setHasPermission] = useState(false);
-  const [scanData, setScanData] = useState();
+  const [scanData, setScanData] = useState(undefined);
   const [complexid, setcomplexid] = useState("");
   const [athleteid, setathleteid] = useState("");
   useEffect(() => {
@@ -35,7 +35,7 @@ export default function QR({ navigation }) {
         })
         .catch((error) => console.log("error", error));
     })();
-  }, []);
+  }, [scanData]);
 
   if (!hasPermission) {
     return (
