@@ -8,10 +8,35 @@ import {
   Pressable,
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
+import { useEffect, useState } from "react";
+import ipconfig from "../../ipconfig";
 const GeneralComplexDetailsScreen = ({ navigation, route }) => {
   const { data } = route.params;
+  const [details, setDetails] = useState({});
+  const [visible, setvisible] = useState(false);
   // console.log(data);
-  console.log(data.item.sports);
+  // console.log(data.item._id);
+  const ip = ipconfig.ip;
+
+  useEffect(() => {
+    var requestOptions = {
+      method: "GET",
+      redirect: "follow",
+    };
+
+    fetch(
+      `http://${ip}:9999/sportsComplexDetail?sportsComplex=${data.item._id}`,
+      requestOptions
+    )
+      .then((response) => response.json())
+      .then((result) => {
+        setDetails(result);
+        setvisible(true);
+        // console.log(result);
+      })
+      .catch((error) => console.log("error", error));
+  }, []);
+  // console.log(details.availableSports[0]);
   return (
     <View style={styles.container}>
       <View style={styles.header}>
@@ -54,20 +79,23 @@ const GeneralComplexDetailsScreen = ({ navigation, route }) => {
           <View style={styles.row}>
             <Text style={styles.label}>Available Sports :</Text>
           </View>
-          {/* <View>
-            {data.item.sports.map((item, index) => (
-              <Text style={styles.input} key={index}>
-                {item._id}
-              </Text>
-            ))}
-          </View> */}
+          <View>
+            {visible &&
+              details.availableSports.map((item, index) => (
+                <Text style={styles.input} key={index}>
+                  {item}
+                </Text>
+              ))}
+          </View>
           <View style={styles.row}>
             <Text style={styles.label}>Total number of Instructor :</Text>
-            <Text style={styles.input}>7</Text>
+            <Text style={styles.input}>
+              {visible && details.instructerData.length}
+            </Text>
           </View>
           <View style={styles.row}>
             <Text style={styles.label}>Total number of Enroll Student :</Text>
-            <Text style={styles.input}>7</Text>
+            <Text style={styles.input}>{visible && details.athleteCount}</Text>
           </View>
           <View style={{ alignSelf: "center", marginTop: 10 }}></View>
           <TouchableOpacity style={styles.actionButton}>
