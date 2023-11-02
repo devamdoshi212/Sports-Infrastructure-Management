@@ -128,7 +128,7 @@ function Profile({ navigation }) {
             <TouchableOpacity
               style={styles.actionButton}
               onPress={() => {
-                // navigation.navigate("AthelteComplaint");
+                navigation.navigate("ComplaintList");
               }}
             >
               <View style={styles.row}>
