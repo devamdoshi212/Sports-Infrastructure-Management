@@ -102,9 +102,13 @@ const Profile = () => {
         {qr && (
           <>
             <img className="w-1/2" src={qr} alt="qrcode" />
+            <button
+                className="realtive z-10  rounded-lg h-12 p-2 m-4 bg-black text-white overflow-hidden hover:shadow-md hover:shadow-gray-800 hover:border-gray-300"
+              >
             <a href={qr} download="qrcode.png">
               Download
             </a>
+            </button>
           </>
         )}
       </div>

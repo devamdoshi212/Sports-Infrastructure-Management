@@ -35,7 +35,7 @@ const Layout = () => {
 
   return (
     <div className="bg-gray-100 font-family-karla flex">
-      <aside className="relative bg-[#13459c] h-screen w-64 hidden sm:block shadow-xl">
+      <aside className="relative bg-[#13459c] h-screen w-64 hidden sm:block shadow-xl shadow-gray-900">
         <div className="p-6">
           <a
             href="index.html"
@@ -174,7 +174,7 @@ const Layout = () => {
       </aside>
 
       <div className="w-full flex flex-col h-screen overflow-y-hidden">
-        <header className="w-full items-center  bg-[#196bde]  py-2 px-6 hidden sm:flex">
+        <header className="w-full items-center  bg-[#196bde] shadow-gray-900 shadow-md py-2 px-6 hidden sm:flex">
           <div className="w-1/2"></div>
           <div
             x-data="{ isOpen: false }"
@@ -183,7 +183,7 @@ const Layout = () => {
             <NavLink to={""}>
               <button
                 onClick={handleLogout}
-                className="realtive z-10 w-20 rounded-lg h-12 bg-white overflow-hidden border-4 hover:border-gray-300 focus:border-gray-300 focus:outline-none"
+                className="realtive z-10 w-20 rounded-lg h-12 bg-white overflow-hidden hover:shadow-md hover:shadow-gray-800 hover:border-gray-300 focus:border-gray-300 focus:outline-none"
               >
                 Logout
               </button>
