@@ -1,9 +1,197 @@
-import React, { useEffect, useState } from "react";
-// import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
-import { Ionicons } from "@expo/vector-icons"; // Import Ionicons from @expo/vector-icons
+// import React, { useEffect, useState } from "react";
+// // import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
+// import { Ionicons } from "@expo/vector-icons"; // Import Ionicons from @expo/vector-icons
+// import AsyncStorage from "@react-native-async-storage/async-storage";
+// import { useDispatch, useSelector } from "react-redux";
+// import { UserActions } from "../../store/User";
+// import {
+//   View,
+//   Text,
+//   Image,
+//   StyleSheet,
+//   Button,
+//   TouchableOpacity,
+//   Pressable,
+// } from "react-native";
+// import ipconfig from "../../ipconfig";
+// async function removeItem() {
+//   try {
+//     await AsyncStorage.removeItem("token");
+//   } catch (error) {
+//     // Handle the error
+//   }
+// }
+// function SupervisorProfile({ navigation }) {
+//   const dispatch = useDispatch();
+//   const ip = ipconfig.ip;
+//   const Userdata = useSelector((state) => state.user.User);
+//   // const Atheltedata = useSelector((state) => state.athelte.Athelte);
+//   const [image, setimage] = useState("./../../assets/icon.png");
+
+//   useEffect(() => {
+//     // console.log(Atheltedata[0].baseUrl);
+//     // const i = Atheltedata[0].baseUrl.slice(1);
+//     // console.log(i);
+//     // setimage(i);
+//   }, [image]);
+//   // console.log(Userdata.base)
+//   const handleLogout = () => {
+//     dispatch(UserActions.getuserRole({ Role: "" }));
+//     removeItem();
+//     // Implement your logout logic here
+//   };
+//   return (
+//     <View style={styles.container}>
+//       <View style={styles.profileInfo}>
+//         <View style={styles.leftColumn}>
+//           <Image
+//             style={{
+//               width: 100,
+//               height: 100,
+//               borderRadius: 50,
+//               marginLeft: 1,
+//             }}
+//             source={require("./../../assets/icon.png")}
+//             // source={{ uri: `http://${ip}:9999/${image}` }}
+//           />
+//         </View>
+//         <View style={styles.rightColumn}>
+//           <Text style={styles.name}>Name : {Userdata.Name}</Text>
+//           <Text style={styles.name}>Email : {Userdata.Email}</Text>
+//           <Text style={styles.name}>ContactNo : {Userdata.ContactNum}</Text>
+//         </View>
+//       </View>
+
+//       <View style={styles.actions}>
+//         <TouchableOpacity style={styles.actionButton}>
+//           <View style={styles.row}>
+//             {/* <FontAwesome5 name="user" size={24} /> */}
+//             <Text style={styles.actionText}>Sport ComplexName</Text>
+//           </View>
+//         </TouchableOpacity>
+//         <TouchableOpacity
+//           style={styles.actionButton}
+//           // onPress={() => navigateToScreen('QuizHistroyScreen')}
+//         >
+//           <View style={styles.row}>
+//             {/* <MaterialCommunityIcons name="history" size={24} /> */}
+//             <Text style={styles.actionText}>Sports_enrolled</Text>
+//           </View>
+//         </TouchableOpacity>
+//         <TouchableOpacity
+//           style={styles.actionButton}
+//           // onPress={() => navigateToScreen('MySubjectsScreen')}
+//         >
+//           <View style={styles.row}>
+//             {/* <Ionicons name="repeat-outline" size={24} /> */}
+//             <Text style={styles.actionText}>ID_card</Text>
+//           </View>
+//         </TouchableOpacity>
+//         <TouchableOpacity
+//           style={styles.actionButton}
+//           // onPress={() => navigateToScreen('ViewCertificatesScreen')}
+//         >
+//           <View style={styles.row}>
+//             {/* <MaterialCommunityIcons name="certificate-outline" size={24} /> */}
+//             <Text style={styles.actionText}>fees_payment_histroy</Text>
+//           </View>
+//         </TouchableOpacity>
+//         <TouchableOpacity
+//           style={styles.actionButton}
+//           // onPress={() => navigateToScreen('ViewBookmarksScreen')}
+//         >
+//           <View style={styles.row}>
+//             {/* <Ionicons name="bookmarks-outline" size={24} /> */}
+//             <Text style={styles.actionText}>Complaint</Text>
+//           </View>
+//         </TouchableOpacity>
+//         <TouchableOpacity style={styles.actionButton}>
+//           <View style={{ width: "50%", alignSelf: "center", marginTop: "5%" }}>
+//             <Button color="#FF3D3D" title="Logout" onPress={handleLogout} />
+//             {/* <MaterialCommunityIcons name="logout" size={24} /> */}
+//             {/* <Button title="Logout" style={styles.actionText}/> */}
+//           </View>
+//         </TouchableOpacity>
+//       </View>
+//     </View>
+//   );
+// }
+
+// const styles = StyleSheet.create({
+//   container: {
+//     flex: 1,
+//     backgroundColor: "#f0f0f0",
+//     marginTop: 25,
+//   },
+//   profileInfo: {
+//     backgroundColor: "white",
+//     padding: 20,
+//     borderRadius: 10,
+//     shadowColor: "black",
+//     shadowOffset: { width: 0, height: 2 },
+//     shadowOpacity: 0.2,
+//     shadowRadius: 4,
+//     elevation: 5,
+//     width: "95%",
+//     flexDirection: "row",
+//     alignSelf: "center",
+//     marginTop: "8%",
+//     justifyContent: "space-between",
+//   },
+//   leftColumn: {
+//     flex: 1,
+//   },
+//   rightColumn: {
+//     flex: 2,
+//     paddingLeft: 20,
+//     paddingBottom: 8,
+//     marginLeft: 6,
+//   },
+//   profileImage: {
+//     width: 80,
+//     height: 80,
+//     borderRadius: 60,
+//   },
+
+//   name: {
+//     fontSize: 16,
+//     color: "grey",
+//     marginTop: 5,
+//   },
+//   row: {
+//     backgroundColor: "white",
+//     padding: 20,
+//     borderRadius: 10,
+//     shadowColor: "black",
+//     shadowOffset: { width: 0, height: 2 },
+//     shadowOpacity: 0.2,
+//     shadowRadius: 4,
+//     elevation: 5,
+//     width: "100%",
+//     flexDirection: "row",
+//   },
+//   actions: {
+//     marginTop: 5,
+//     width: "95%",
+//     alignSelf: "center",
+//   },
+//   actionButton: {
+//     paddingVertical: 10,
+//   },
+//   actionText: {
+//     width: "80%",
+
+//     fontWeight: "bold",
+//     fontSize: 15,
+//   },
+// });
+
+// export default SupervisorProfile;
+
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useDispatch, useSelector } from "react-redux";
 import { UserActions } from "../../store/User";
+import React, { useEffect, useState } from "react";
 import {
   View,
   Text,
@@ -13,6 +201,7 @@ import {
   TouchableOpacity,
   Pressable,
 } from "react-native";
+import { Ionicons } from "@expo/vector-icons";
 import ipconfig from "../../ipconfig";
 async function removeItem() {
   try {
@@ -25,88 +214,101 @@ function SupervisorProfile({ navigation }) {
   const dispatch = useDispatch();
   const ip = ipconfig.ip;
   const Userdata = useSelector((state) => state.user.User);
-  // const Atheltedata = useSelector((state) => state.athelte.Athelte);
   const [image, setimage] = useState("./../../assets/icon.png");
 
-  useEffect(() => {
-    // console.log(Atheltedata[0].baseUrl);
-    // const i = Atheltedata[0].baseUrl.slice(1);
-    // console.log(i);
-    // setimage(i);
-  }, [image]);
-  // console.log(Userdata.base)
+  useEffect(() => {}, [image]);
   const handleLogout = () => {
     dispatch(UserActions.getuserRole({ Role: "" }));
     removeItem();
-    // Implement your logout logic here
   };
   return (
     <View style={styles.container}>
-      <View style={styles.profileInfo}>
-        <View style={styles.leftColumn}>
-          <Image
-            style={{
-              width: 100,
-              height: 100,
-              borderRadius: 50,
-              marginLeft: 1,
-            }}
-            source={require("./../../assets/icon.png")}
-            // source={{ uri: `http://${ip}:9999/${image}` }}
-          />
-        </View>
-        <View style={styles.rightColumn}>
-          <Text style={styles.name}>Name : {Userdata.Name}</Text>
-          <Text style={styles.name}>Email : {Userdata.Email}</Text>
-          <Text style={styles.name}>ContactNo : {Userdata.ContactNum}</Text>
+      <View style={styles.header}>
+        {/* <View style={styles.back}>
+          <Ionicons name="arrow-back" size={24} />
+        </View> */}
+        <View style={styles.heading}>
+          <Text style={{ fontWeight: "bold", fontSize: 25 }}>My Profile</Text>
         </View>
       </View>
+      <Pressable
+        onPress={() => {
+          navigation.navigate("DetailProfile");
+        }}
+      >
+        <View style={styles.SupervisorInfo}>
+          <View style={styles.leftColumn}>
+            <Image
+              style={{
+                width: 100,
+                height: 100,
+                borderRadius: 50,
+                marginLeft: 1,
+              }}
+              source={require("./../../assets/icon.png")}
+            />
+          </View>
+          <View style={styles.rightColumn}>
+            <Text style={styles.name}>Name : {Userdata.Name}</Text>
+            <Text style={styles.name}>Email : {Userdata.Email}</Text>
+            <Text style={styles.name}>ContactNo : {Userdata.ContactNum}</Text>
+          </View>
+        </View>
+      </Pressable>
 
       <View style={styles.actions}>
-        <TouchableOpacity style={styles.actionButton}>
+        {/* <TouchableOpacity style={styles.actionButton}>
           <View style={styles.row}>
-            {/* <FontAwesome5 name="user" size={24} /> */}
-            <Text style={styles.actionText}>Sport ComplexName</Text>
+            <Text style={styles.actionText}>Sport Complex Details</Text>
           </View>
-        </TouchableOpacity>
+        </TouchableOpacity> */}
         <TouchableOpacity
           style={styles.actionButton}
-          // onPress={() => navigateToScreen('QuizHistroyScreen')}
+          onPress={() => {
+            navigation.navigate("AthleteDetails");
+          }}
         >
           <View style={styles.row}>
             {/* <MaterialCommunityIcons name="history" size={24} /> */}
-            <Text style={styles.actionText}>Sports_enrolled</Text>
+            <Text style={styles.actionText}>Athlete Details</Text>
           </View>
         </TouchableOpacity>
         <TouchableOpacity
           style={styles.actionButton}
-          // onPress={() => navigateToScreen('MySubjectsScreen')}
+          onPress={() => {
+            navigation.navigate("Attendance");
+          }}
         >
           <View style={styles.row}>
             {/* <Ionicons name="repeat-outline" size={24} /> */}
-            <Text style={styles.actionText}>ID_card</Text>
+            <Text style={styles.actionText}>Attendance</Text>
           </View>
         </TouchableOpacity>
         <TouchableOpacity
           style={styles.actionButton}
-          // onPress={() => navigateToScreen('ViewCertificatesScreen')}
+          onPress={() => {
+            navigation.navigate("ListComplaint");
+          }}
         >
           <View style={styles.row}>
             {/* <MaterialCommunityIcons name="certificate-outline" size={24} /> */}
-            <Text style={styles.actionText}>fees_payment_histroy</Text>
+            <Text style={styles.actionText}>View Complaint</Text>
           </View>
         </TouchableOpacity>
         <TouchableOpacity
           style={styles.actionButton}
-          // onPress={() => navigateToScreen('ViewBookmarksScreen')}
+          onPress={() => {
+            navigation.navigate("RaiseComplaint");
+          }}
         >
           <View style={styles.row}>
-            {/* <Ionicons name="bookmarks-outline" size={24} /> */}
-            <Text style={styles.actionText}>Complaint</Text>
+            {/* <MaterialCommunityIcons name="certificate-outline" size={24} /> */}
+            <Text style={styles.actionText}>Raise Complaint</Text>
           </View>
         </TouchableOpacity>
+
         <TouchableOpacity style={styles.actionButton}>
-          <View style={{ width: "50%", alignSelf: "center", marginTop: "5%" }}>
+          <View style={{ width: "40%", alignSelf: "center", marginTop: "15%" }}>
             <Button color="#FF3D3D" title="Logout" onPress={handleLogout} />
             {/* <MaterialCommunityIcons name="logout" size={24} /> */}
             {/* <Button title="Logout" style={styles.actionText}/> */}
@@ -123,7 +325,21 @@ const styles = StyleSheet.create({
     backgroundColor: "#f0f0f0",
     marginTop: 25,
   },
-  profileInfo: {
+  header: {
+    margin: 20,
+    flexDirection: "row",
+    marginBottom: 10,
+    width: "100%",
+    height: 50,
+    backgroundColor: "#f0f0f0",
+    alignItems: "center",
+  },
+  heading: {
+    justifyContent: "center",
+    alignItems: "center",
+    width: "70%",
+  },
+  SupervisorInfo: {
     backgroundColor: "white",
     padding: 20,
     borderRadius: 10,
@@ -135,7 +351,7 @@ const styles = StyleSheet.create({
     width: "95%",
     flexDirection: "row",
     alignSelf: "center",
-    marginTop: "8%",
+    marginTop: "5%",
     justifyContent: "space-between",
   },
   leftColumn: {
@@ -147,12 +363,11 @@ const styles = StyleSheet.create({
     paddingBottom: 8,
     marginLeft: 6,
   },
-  profileImage: {
+  SupervisorImage: {
     width: 80,
     height: 80,
     borderRadius: 60,
   },
-
   name: {
     fontSize: 16,
     color: "grey",
@@ -177,6 +392,12 @@ const styles = StyleSheet.create({
   },
   actionButton: {
     paddingVertical: 10,
+  },
+  scrollContainer: {
+    // flexGrow: 1,
+    width: "90%",
+    padding: 10,
+    borderWidth: 1,
   },
   actionText: {
     width: "80%",

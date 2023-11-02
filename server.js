@@ -121,6 +121,10 @@ app.get(
   PaymentController.getAllPaymentswithsportwithinstructor
 );
 app.patch("/updatePaymentDetails/:id", PaymentController.updatePayment);
+app.get(
+  "/countOfPayment",
+  PaymentController.CountOFAllPaymentswithsportwithinstructor
+);
 
 //Rating routes
 app.post("/addRating", RatingController.addRating);

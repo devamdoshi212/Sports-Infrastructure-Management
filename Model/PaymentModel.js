@@ -8,7 +8,7 @@ const paymentSchema = new mongoose.Schema(
     instructorId: { type: mongoose.Schema.ObjectId, ref: "instructors" },
     paymentTakenBy: { type: mongoose.Schema.ObjectId, ref: "users" },
     timeSlot: { from: String, to: String },
-    from: String,
+    from: Date,
     sportsComplexId: {
       type: mongoose.SchemaTypes.ObjectId,
       ref: "sportscomplexes",

@@ -242,7 +242,14 @@ export default function SportComplexDataTable() {
           style={{ minWidth: "12rem" }}
         />
         <Column
-          header="location"
+          header="Manager"
+          field="manager.Name" // Replace 'districtName' with the actual field name
+          filterField="createdAt" // Make sure this matches the actual field name
+          style={{ minWidth: "12rem" }}
+          //   body={dateBodyTemplate}
+        />
+        <Column
+          header="Location"
           field="location"
           filterField="location"
           style={{ minWidth: "12rem" }}
@@ -254,13 +261,13 @@ export default function SportComplexDataTable() {
           style={{ minWidth: "12rem" }}
         />
         <Column
-          header="area"
+          header="Area"
           field="area"
           filterField="area"
           style={{ minWidth: "12rem" }}
         />
         <Column
-          header="taluka"
+          header="Taluka"
           field="taluka"
           filterField="taluka"
           style={{ minWidth: "12rem" }}
@@ -275,18 +282,11 @@ export default function SportComplexDataTable() {
           filterValue={globalFilterValues.district}
         />
         <Column
-          header="createdAt"
+          header="Created At"
           field="createdAt" // Replace 'districtName' with the actual field name
           filterField="createdAt" // Make sure this matches the actual field name
           style={{ minWidth: "12rem" }}
           body={dateBodyTemplate}
-        />
-        <Column
-          header="Manager"
-          field="manager.Name" // Replace 'districtName' with the actual field name
-          filterField="createdAt" // Make sure this matches the actual field name
-          style={{ minWidth: "12rem" }}
-          //   body={dateBodyTemplate}
         />
       </DataTable>
     </div>
