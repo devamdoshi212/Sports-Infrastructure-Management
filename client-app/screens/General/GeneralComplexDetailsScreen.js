@@ -6,6 +6,7 @@ import {
   Button,
   TouchableOpacity,
   Pressable,
+  Linking,
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { useEffect, useState } from "react";
@@ -36,6 +37,13 @@ const GeneralComplexDetailsScreen = ({ navigation, route }) => {
       })
       .catch((error) => console.log("error", error));
   }, []);
+  const openGoogleMaps = () => {
+    const mapUrl = "https://maps.app.goo.gl/QMpF8LiY8ohdbdNGA"; // Replace with the actual latitude and longitude or address you want to open
+
+    Linking.openURL(mapUrl).catch((err) =>
+      console.error("An error occurred: ", err)
+    );
+  };
   // console.log(details.availableSports[0]);
   return (
     <View style={styles.container}>
@@ -100,7 +108,7 @@ const GeneralComplexDetailsScreen = ({ navigation, route }) => {
           <View style={{ alignSelf: "center", marginTop: 10 }}></View>
           <TouchableOpacity style={styles.actionButton}>
             <View style={{ width: "50%", alignSelf: "center" }}>
-              <Button title="Edit" />
+              <Button title="View in Maps" onPress={openGoogleMaps} />
             </View>
           </TouchableOpacity>
         </View>

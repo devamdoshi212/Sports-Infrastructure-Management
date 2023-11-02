@@ -15,7 +15,7 @@ const AthelteSearchNavigator = ({ navigation }) => {
           options={{ headerShown: false }}
         />
         <Stack.Screen
-          name="ComplexFullDetailsinAthelte"
+          name="ComplexFullDetails"
           component={GeneralComplexDetailsScreen}
           options={{ headerShown: false }}
         />

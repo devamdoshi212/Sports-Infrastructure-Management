@@ -20,7 +20,7 @@ function renderCategoryItem(itemData, ip, navigation) {
           pressed ? styles.buttonPressed : null,
         ]}
         onPress={() => {
-          navigation.navigate("ComplexFullDetailsinAthelte", {
+          navigation.navigate("ComplexFullDetails", {
             data: itemData,
           });
         }}
