@@ -15,9 +15,11 @@ import ipconfig from "../../ipconfig";
 import { useSelector } from "react-redux";
 const SportEnroll = () => {
   const Atheltedata = useSelector((state) => state.athelte.Athelte);
+  console.log(Atheltedata[0]);
   const id = Atheltedata[0]._id;
   const [payments, setPayment] = useState([]);
   const ip = ipconfig.ip;
+  // const fromdate=new Date(item.from)
   useEffect(() => {
     var requestOptions = {
       method: "GET",
@@ -85,10 +87,25 @@ const SportEnroll = () => {
                   </Text>
                 </View>
                 <View style={styles.row}>
-                  <Text style={styles.label}>From :</Text>
-                  <Text style={styles.input}>{item.timeSlot.from}</Text>
+                  <Text style={styles.label}>Start Date :</Text>
+                  <Text style={styles.input}>
+                    {new Date(item.from).getDate() +
+                      "/" +
+                      (new Date(item.from).getMonth() + 1) +
+                      "/" +
+                      new Date(item.from).getFullYear()}
+                  </Text>
                 </View>
                 <View style={styles.row}>
+                  <Text style={styles.label}>Duration:</Text>
+                  <Text style={styles.input}>
+                    {parseInt((new Date(item.from) - new Date()) / 86400000)}
+                  </Text>
+                </View>
+                <View style={styles.row}>
+                  <Text style={styles.label}>Time Slot : </Text>
+                  <Text style={styles.label}>From :</Text>
+                  <Text style={styles.input}>{item.timeSlot.from} </Text>
                   <Text style={styles.label}>To :</Text>
                   <Text style={styles.input}>{item.timeSlot.to}</Text>
                 </View>

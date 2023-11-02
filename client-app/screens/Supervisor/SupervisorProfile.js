@@ -25,14 +25,14 @@ function SupervisorProfile({ navigation }) {
   const dispatch = useDispatch();
   const ip = ipconfig.ip;
   const Userdata = useSelector((state) => state.user.User);
-  const Atheltedata = useSelector((state) => state.athelte.Athelte);
+  // const Atheltedata = useSelector((state) => state.athelte.Athelte);
   const [image, setimage] = useState("./../../assets/icon.png");
 
   useEffect(() => {
     // console.log(Atheltedata[0].baseUrl);
-    const i = Atheltedata[0].baseUrl.slice(1);
-    console.log(i);
-    setimage(i);
+    // const i = Atheltedata[0].baseUrl.slice(1);
+    // console.log(i);
+    // setimage(i);
   }, [image]);
   // console.log(Userdata.base)
   const handleLogout = () => {
