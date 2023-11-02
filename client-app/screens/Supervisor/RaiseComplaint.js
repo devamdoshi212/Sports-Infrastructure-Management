@@ -16,16 +16,14 @@ import { useState } from "react";
 import { useSelector } from "react-redux";
 import ipconfig from "../../ipconfig";
 
-const Complaint = ({ navigation }) => {
+const RaiseComplaint = ({ navigation }) => {
   const Userdata = useSelector((state) => state.user.User);
-  const Atheltedata = useSelector((state) => state.athelte.Athelte);
-
   const complaintList = ["Maintenance", "Behaviour", "Refund", "Inquiry"];
   const [value, onChangeText] = React.useState("");
   const [complaint, setCompalint] = useState();
   const ip = ipconfig.ip;
 
-  const complexId = Atheltedata[0].createdBy.SportComplexId;
+  //   const complexId = Atheltedata[0].createdBy.SportComplexId;
 
   const handleSubmit = () => {
     var myHeaders = new Headers();
@@ -34,8 +32,8 @@ const Complaint = ({ navigation }) => {
       type: complaint,
       Description: value,
       userId: Userdata._id,
-      sportsComplex: complexId,
-      level: 0,
+      sportsComplex: Userdata.SportComplexId,
+      level: 1,
       status: 0,
     });
     var requestOptions = {
@@ -82,29 +80,22 @@ const Complaint = ({ navigation }) => {
             return <Picker.Item label={item} value={index} key={index} />;
           })}
         </Picker>
-        <View
-          style={{
-            flexDirection: "row",
-            paddingVertical: 15,
-            paddingHorizontal: 10,
-            backgroundColor: "white",
-            marginHorizontal: 15,
-            borderRadius: 8,
-            height: 250,
-          }}
-        >
-          <ScrollView>
-            <TextInput
-              onChangeText={(text) => onChangeText(text)}
-              value={value}
-              multiline
-              editable
-              placeholder="Type here"
-            ></TextInput>
-          </ScrollView>
+        <View>
+          <TextInput
+            // editable
+            multiline={true}
+            numberOfLines={20}
+            maxLength={4000}
+            placeholder="Type here..."
+            onChangeText={(text) => onChangeText(text)}
+            value={value}
+            style={styles.multiline}
+          />
         </View>
-        <TouchableOpacity  style={{width:"30%",alignSelf:"center",paddingVertical:"20%"}}>
-            <Button title="Submit" onPress={handleSubmit}  />
+        <TouchableOpacity style={styles.actionButton}>
+          <View style={{ width: "40%", alignSelf: "center", marginTop: "5%" }}>
+            <Button title="Submit" onPress={handleSubmit} />
+          </View>
         </TouchableOpacity>
       </View>
     </>
@@ -179,4 +170,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Complaint;
+export default RaiseComplaint;

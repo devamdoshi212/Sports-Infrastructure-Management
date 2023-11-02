@@ -7,6 +7,7 @@ import {
   StyleSheet,
   ScrollView,
   Button,
+  Alert,
 } from "react-native";
 import { Picker } from "@react-native-picker/picker";
 import Checkbox from "expo-checkbox";
@@ -201,7 +202,19 @@ const Form = ({ navigation }) => {
 
     fetch(`http://${ip}:9999/paymentdetail`, requestOptions)
       .then((response) => response.json())
-      .then((result) => console.log(result))
+      .then((result) => {
+        Alert.alert("Athlete Added ", "Account Created Successfully", [
+          // {
+          //     text: 'Cancel',
+          //     onPress: () => console.log('Cancel Pressed'),
+          //     style: 'cancel',
+          // },
+          {
+            text: "OK",
+            onPress: () => navigation.navigate("SupervisorProfile"),
+          },
+        ]);
+      })
       .catch((error) => console.log("error", error));
   };
   return (

@@ -80,8 +80,8 @@ const Login = () => {
     });
   return (
     <>
-      <div className="min-h-screen rounded-sm border border-stroke bg-gray-200 shadow-default dark:border-strokedark dark:bg-boxdark">
-        <div className="flex flex-wrap items-center">
+      <div className="min-h-screen rounded-sm border border-stroke bg-[#EEEEEE] shadow-default dark:border-strokedark dark:bg-boxdark">
+        <div className="flex flex-wrap items-center m-4">
           <div className="hidden w-full xl:block xl:w-1/2 min-h-screen">
             <div className="py-[4.375rem] px-[6.5rem] text-center">
               <Link className="mb-[1.375rem] inline-block" to="">
@@ -220,10 +220,10 @@ const Login = () => {
             </div>
           </div>
 
-          <div className="w-full border-stroke rounded-2xl bg-gray-400 dark:border-strokedark xl:w-1/2 xl:border-l-2">
+          <div className="w-full border-stroke rounded-2xl bg-[#d1d1d1]  dark:border-strokedark xl:w-1/2 xl:border-l-2">
             <div className="w-full p-4 sm:p-[3.125rem] xl:p-[4.375rem]">
               {/* <span className="mb-1.5 block font-medium">Start for free</span> */}
-              <h1 className="mb-9 text-2xl font-bold text-black dark:text-white sm:text-title-xl2 uppercase">
+              <h1 className="mb-9 text-center text-2xl font-bold text-black dark:text-white sm:text-title-xl2 uppercase">
                 Sign In to Sports Authority of Gujarat
               </h1>
 
@@ -238,7 +238,7 @@ const Login = () => {
                       name="Email"
                       type="email"
                       placeholder="Enter your email"
-                      className="w-full rounded-lg  py-4 pl-6 pr-10 border border-black"
+                      className="w-full rounded-lg  py-3 pl-6 pr-10 border border-black"
                       value={values.Email}
                       onChange={handleChange}
                       onBlur={handleBlur}
@@ -279,7 +279,7 @@ const Login = () => {
                       name="Password"
                       type="password"
                       placeholder="6+ Characters, 1 Capital letter"
-                      className="w-full rounded-lg  py-4 pl-6 pr-10 border border-black"
+                      className="w-full rounded-lg  py-3 pl-6 pr-10 border border-black"
                       value={values.Password}
                       onChange={handleChange}
                       onBlur={handleBlur}
@@ -317,7 +317,7 @@ const Login = () => {
                 <div className="mb-5 ">
                   {/* <NavLink to={"/admin/dashboard"}> */}
                   <Button
-                    className="w-full py-4 pl-6 pr-10 text-md"
+                    className="w-full tracking-widest py-3 pl-6 pr-10 text-md"
                     type="submit"
                   >
                     Submit

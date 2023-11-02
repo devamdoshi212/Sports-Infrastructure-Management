@@ -66,19 +66,49 @@ const Profile = () => {
   }, []);
 
   return (
-    <div className="text-3xl">
-      <div>Manager Name : {lodaer && Profile.Name}</div>
-      <div>Sports Complex Name : {lodaer && Profile.SportComplexId.name}</div>
+    <div className="text-lg px-7 py-7 flex ">
+    <div className="w-4/5 space-y-2">
+    <div className="flex">
+      <div className="w-1/3">Manager Name </div> <div className="text-gray-700">:  {lodaer && Profile.Name}</div> 
+    </div>
+    <div className="flex">
+      <div className="w-1/3">Sports Complex Name </div> <div className="text-gray-700">:  {lodaer && Profile.SportComplexId.name}</div> 
+    </div>
+    <div className="flex">
+      <div className="w-1/3">E-mail</div> <div className="text-gray-700">:</div> 
+    </div>
+    <div className="flex">
+      <div className="w-1/3">Contact Number </div> <div className="text-gray-700">:</div> 
+    </div>
+    <div className="flex">
+      <div className="w-1/3">Data of Birth </div> <div className="text-gray-700">:</div> 
+    </div>
+    <div className="flex">
+      <div className="w-1/3">Area </div> <div className="text-gray-700">:</div> 
+    </div>
+    <div className="flex">
+      <div className="w-1/3">Taluka </div> <div className="text-gray-700">:</div> 
+    </div>
+    <div className="flex">
+      <div className="w-1/3">Operational Since </div> <div className="text-gray-700">:</div> 
+    </div>
+    </div>
+
+    
       <div className="">
-        <button onClick={GenerateQRCode} className="bg-black text-white">
+        <button onClick={GenerateQRCode} className="mt-2 p-2 bg-black text-white">
           Generate QR code for your Complex
         </button>
         {qr && (
           <>
-            <img src={qr} alt="qrcode" />
+            <img className="w-1/2" src={qr} alt="qrcode" />
+            <button
+                className="realtive z-10  rounded-lg h-12 p-2 m-4 bg-[#196bde] text-white overflow-hidden hover:shadow-md hover:shadow-gray-800 hover:border-gray-300"
+              >
             <a href={qr} download="qrcode.png">
               Download
             </a>
+            </button>
           </>
         )}
       </div>

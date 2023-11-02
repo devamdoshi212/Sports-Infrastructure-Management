@@ -8,32 +8,43 @@ import {
   Pressable,
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
-const ComplexDetails = ({ navigation }) => {
+import { useNavigation } from "@react-navigation/native";
+const AtheleteProfile = () => {
+  const navigate = useNavigation();
   return (
     <View style={styles.container}>
       <View style={styles.header}>
-        {/* <Pressable
+        <Pressable
           onPress={() => {
-            navigation.navigate("SupervisorProfile");
+            navigate.goBack();
           }}
         >
           <View style={styles.back}>
             <Ionicons name="arrow-back" size={24} />
           </View>
-        </Pressable> */}
+        </Pressable>
         <View style={styles.heading}>
-          <Text
-            style={{ fontWeight: "bold", fontSize: 25, textAlign: "center" }}
-          >
-            Your Complex
-          </Text>
+          <Text style={{ fontWeight: "bold", fontSize: 25 }}>Your Profile</Text>
         </View>
       </View>
       <View style={styles.card}>
-        <View style={styles.ComplexDetail}>
+        <View style={styles.photo}>
+          <View style={{ flexDirection: "row", padding: 20 }}>
+            <Image
+              style={{
+                width: 120,
+                height: 120,
+                borderRadius: 60,
+                marginHorizontal: 15,
+              }}
+              source={require("./../../assets/icon.png")}
+            />
+          </View>
+        </View>
+        <View style={styles.profileDetail}>
           <View style={styles.row}>
-            <Text style={styles.label}>Complex Name :</Text>
-            <Text style={styles.input}>NRC</Text>
+            <Text style={styles.label}>Name :</Text>
+            <Text style={styles.input}>Khushi Patel</Text>
           </View>
           <View style={styles.row}>
             <Text style={styles.label}>Email :</Text>
@@ -44,28 +55,23 @@ const ComplexDetails = ({ navigation }) => {
             <Text style={styles.input}>1231231231</Text>
           </View>
           <View style={styles.row}>
+            <Text style={styles.label}>Blood Group :</Text>
+            <Text style={styles.input}>A+</Text>
+          </View>
+          <View style={styles.row}>
             <Text style={styles.label}>Address :</Text>
-            <Text style={styles.input}>Krishna bungalows, Gandhinagar</Text>
+            <Text style={styles.input}>Krishna bunglows, Gandhinagar</Text>
           </View>
           <View style={styles.row}>
-            <Text style={styles.label}>Since :</Text>
-            <Text style={styles.input}>1996</Text>
+            <Text style={styles.label}>Emergency No :</Text>
+            <Text style={styles.input}>1231231</Text>
           </View>
-          <View style={styles.row}>
-            <Text style={styles.label}>Available Sports :</Text>
+          <View style={{ alignSelf: "center", marginTop: 10 }}>
+            {/* <Image
+                style={{ width: 120, height: 120 }}
+                source={require("../assets/icon.png")}
+              /> */}
           </View>
-          <View>
-            <Text style={styles.input}>Cricket, Basketball, Volleyball</Text>
-          </View>
-          <View style={styles.row}>
-            <Text style={styles.label}>Total number of Instructor :</Text>
-            <Text style={styles.input}>7</Text>
-          </View>
-          <View style={styles.row}>
-            <Text style={styles.label}>Total number of Enroll Student :</Text>
-            <Text style={styles.input}>7</Text>
-          </View>
-          <View style={{ alignSelf: "center", marginTop: 10 }}></View>
           <TouchableOpacity style={styles.actionButton}>
             <View style={{ width: "50%", alignSelf: "center" }}>
               <Button title="Edit" />
@@ -140,4 +146,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ComplexDetails;
+export default AtheleteProfile;
