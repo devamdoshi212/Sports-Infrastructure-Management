@@ -66,7 +66,6 @@ function ViewComplaint({ route, navigation }) {
     fetch(`http://${ip}:9999/updateComplaint/${data._id}`, requestOptions)
       .then((response) => response.json())
       .then((result) => {
-        console.log(result);
         Alert.alert("Complaint Pass to Manager", "Done!!", [
           // {
           //     text: 'Cancel',
