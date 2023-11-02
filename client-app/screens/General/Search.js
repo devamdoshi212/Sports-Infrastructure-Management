@@ -36,29 +36,15 @@ const Search = () => {
     >
       <View style={styles.container}>
         <View style={styles.header}>
-          {isSearchVisible ? (
-            <View style={styles.searchContainer}>
-              <TextInput
-                style={styles.input}
-                placeholder="Search..."
-                onChangeText={(text) => setSearchQuery(text)}
-                value={searchQuery}
-              />
-              <TouchableOpacity
-                style={styles.searchButton}
-                onPress={handleSearch}
-              >
-                <FontAwesome name="search" size={24} color="black" />
-              </TouchableOpacity>
-            </View>
-          ) : (
-            <TouchableOpacity
-              style={styles.searchButton}
-              onPress={() => setSearchVisible(true)}
-            >
-              <FontAwesome name="search" size={24} color="black" />
-            </TouchableOpacity>
-          )}
+          <View style={styles.searchContainer}>
+            <TextInput
+              style={styles.input}
+              placeholder="Search..."
+              onChangeText={(text) => setSearchQuery(text)}
+              value={searchQuery}
+            />
+          </View>
+
           <Picker
             style={styles.dropdownPicker}
             selectedValue={selectedOption}
@@ -71,7 +57,7 @@ const Search = () => {
       </View>
       <FlatListScreen optionField={selectedOption} searchfield={searchQuery} />
     </View>
-    //
+    
   );
 };
 
@@ -81,6 +67,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     marginTop: 20,
+    paddingVertical:"5%",
   },
   header: {
     flexDirection: "row",
@@ -92,27 +79,22 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     flex: 1,
+    padding:10,
+    marginLeft:"-8%",
+    
   },
   input: {
-    flex: 4, // 80% width
+    flex: 4, 
     height: 40,
     backgroundColor: "white",
     borderColor: "lightgray",
     borderWidth: 1,
     borderRadius: 10,
     paddingHorizontal: 12,
-    marginRight: 8, // Add some margin to separate it from the search button
   },
-  searchButton: {
-    flex: 1, // 20% width
-    marginVertical: 8,
-    height: 40,
-    alignItems: "center",
-    justifyContent: "center",
-  },
+
   dropdownPicker: {
     flex: 1,
-    width: 120,
     height: 40,
     borderColor: "lightgray",
   },
