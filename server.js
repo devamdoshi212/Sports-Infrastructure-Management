@@ -159,6 +159,6 @@ app.get(
   "/getInstructorForPayment",
   SupervisorController.getInstructorForPayment
 );
-
+app.get("/paymentHistoryAthlete", PaymentController.getAthletePayments);
 app.listen(9999);
 console.log("server started at 9999");
