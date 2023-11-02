@@ -81,6 +81,7 @@ app.patch(
   SportsComplexController.updateSportsComplex
 );
 app.get("/getComplexFromSport", SportsComplexController.sportsComplexOfSport);
+app.get("/sportsComplexDetail", SportsComplexController.SportsComplexDetail);
 
 //athlete routes
 app.post(
