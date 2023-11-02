@@ -122,15 +122,26 @@ function Profile({ navigation }) {
             >
               <View style={styles.row}>
                 {/* <Ionicons name="bookmarks-outline" size={24} /> */}
-                <Text style={styles.actionText}>Complaint</Text>
+                <Text style={styles.actionText}>Raise Complaint</Text>
+              </View>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={styles.actionButton}
+              onPress={() => {
+                // navigation.navigate("AthelteComplaint");
+              }}
+            >
+              <View style={styles.row}>
+                {/* <Ionicons name="bookmarks-outline" size={24} /> */}
+                <Text style={styles.actionText}>Complaint History</Text>
               </View>
             </TouchableOpacity>
           </>
         )}
         <TouchableOpacity style={styles.logout}>
-            <Button color="#FF3D3D" title="Logout" onPress={handleLogout} />
-            {/* <MaterialCommunityIcons name="logout" size={24} /> */}
-            {/* <Button title="Logout" style={styles.actionText}/> */}
+          <Button color="#FF3D3D" title="Logout" onPress={handleLogout} />
+          {/* <MaterialCommunityIcons name="logout" size={24} /> */}
+          {/* <Button title="Logout" style={styles.actionText}/> */}
         </TouchableOpacity>
       </View>
     </View>
@@ -188,7 +199,7 @@ const styles = StyleSheet.create({
     shadowRadius: 4,
     elevation: 5,
     width: "92%",
-    alignSelf:"center",
+    alignSelf: "center",
     flexDirection: "row",
   },
   actions: {
@@ -205,11 +216,11 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     fontSize: 15,
   },
-  logout:{
-    width:"40%",
-    alignSelf:"center",
-    marginTop:"15%"
-  }
+  logout: {
+    width: "40%",
+    alignSelf: "center",
+    marginTop: "15%",
+  },
 });
 
 export default Profile;
