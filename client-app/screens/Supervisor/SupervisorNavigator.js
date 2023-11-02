@@ -10,6 +10,8 @@ import AtheleteProfile from "./AtheleteProfile";
 import ViewComplaint from "./ViewComplaint";
 import ListComplaint from "./ListComplaint";
 import RaiseComplaint from "./RaiseComplaint";
+import Attendance from "./Attendance";
+import SportAttendance from "./SportAttendance";
 const SupervisorNavigator = ({ navigation }) => {
   return (
     <Stack.Navigator>
@@ -47,6 +49,16 @@ const SupervisorNavigator = ({ navigation }) => {
         <Stack.Screen
           name="RaiseComplaint"
           component={RaiseComplaint}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="Attendance"
+          component={Attendance}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="SportAttendance"
+          component={SportAttendance}
           options={{ headerShown: false }}
         />
       </Stack.Group>
