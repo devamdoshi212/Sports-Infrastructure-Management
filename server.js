@@ -80,6 +80,7 @@ app.patch(
   SportController.upload.array("images"),
   SportsComplexController.updateSportsComplex
 );
+app.get("/getComplexFromSport", SportsComplexController.sportsComplexOfSport);
 
 //athlete routes
 app.post(

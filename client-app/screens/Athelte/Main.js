@@ -1,13 +1,11 @@
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import React from "react";
 import "react-native-gesture-handler";
-import Search from "./../General/Search";
 const Tab = createBottomTabNavigator();
 import Ionicons from "@expo/vector-icons/Ionicons";
-
 import QR from "./QR";
-import Profile from "./Profile";
 import ProfileNavigator from "./ProfileNavigator";
+import AthelteSearchNavigator from "./AthelteSearchNavigator";
 const Main = ({ navigation }) => {
   return (
     <Tab.Navigator
@@ -34,7 +32,7 @@ const Main = ({ navigation }) => {
         // showLabel: false,
       })}
     >
-      <Tab.Screen name="AthelteSearch" component={Search} />
+      <Tab.Screen name="AthelteSearch" component={AthelteSearchNavigator} />
       <Tab.Screen name="Attendance" component={QR} />
       <Tab.Screen name="AthelteProfile" component={ProfileNavigator} />
     </Tab.Navigator>
