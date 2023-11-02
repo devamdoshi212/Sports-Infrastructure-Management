@@ -1,5 +1,6 @@
 const { default: mongoose } = require("mongoose");
 const SportsComplex = require("../Model/SportsComplexModel");
+const sportModel = require("../Model/SportModel");
 // const SportsComplexModel = require("../Model/SportsComplexModel");
 
 module.exports.AddSportsComplex = async function (req, res) {
@@ -144,6 +145,25 @@ module.exports.SearchComplex = async function (req, res) {
     console.log(err);
     res.json({
       error: err.msg,
+      rcode: -9,
+    });
+  }
+};
+
+module.exports.sportsComplexOfSport = async function (req, res) {
+  //  let data=sportModel.find({_id:req.query.sportId})
+  try {
+    let Complex = await SportsComplex.find({
+      "sports.sport": req.query.sportId,
+    });
+    res.json({
+      data: Complex,
+      rcode: 200,
+    });
+  } catch (err) {
+    console.log(err);
+    res.json({
+      err: err.msg,
       rcode: -9,
     });
   }
