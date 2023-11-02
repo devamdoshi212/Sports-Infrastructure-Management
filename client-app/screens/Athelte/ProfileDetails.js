@@ -17,10 +17,13 @@ const ProfileDetails = ({ navigation }) => {
   const ip = ipconfig.ip;
   const Userdata = useSelector((state) => state.user.User);
   const Atheltedata = useSelector((state) => state.athelte.Athelte);
-  const supervisorId = Atheltedata[0].createdBy._id;
+  const [supervisorId, setsupervisorId] = useState("");
   const [image, setimage] = useState("./../../assets/icon.png");
 
   useEffect(() => {
+    if (Atheltedata[0].createdBy) {
+      setsupervisorId(Atheltedata[0].createdBy._id);
+    }
     const i = Atheltedata[0].baseUrl.slice(1);
     setimage(i);
   }, [image]);
@@ -56,7 +59,7 @@ const ProfileDetails = ({ navigation }) => {
               style={{ width: 120, height: 120, marginHorizontal: 15 }}
               source={require("./../../assets/favicon.png")}
             /> */}
-            <QRCodeGenerator value={supervisorId} />
+            {supervisorId && <QRCodeGenerator value={supervisorId} />}
           </View>
         </View>
         <View style={styles.profileDetail}>
