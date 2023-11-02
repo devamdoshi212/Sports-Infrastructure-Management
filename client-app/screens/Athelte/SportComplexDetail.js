@@ -107,6 +107,8 @@ const styles = StyleSheet.create({
     width: "100%",
     height: 50,
     backgroundColor: "#f0f0f0",
+    justifyContent:"center",
+    alignItems:"center"
   },
   back: {
     marginHorizontal: 4,
@@ -133,13 +135,14 @@ const styles = StyleSheet.create({
     marginVertical: 10,
   },
   row: {
-    flexDirection: "row",
-    alignItems: "center",
-    marginBottom: 10,
+    marginBottom: 20,
+    
   },
   label: {
     fontWeight: "bold",
     fontSize: 17,
+    marginLeft: 6,
+    marginBottom:1,
   },
   input: {
     marginLeft: 6,

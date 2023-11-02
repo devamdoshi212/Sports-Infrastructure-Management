@@ -8,7 +8,7 @@ import {
   Pressable,
 } from "react-native";
 import ipconfig from "../../ipconfig";
-import { Ionicons } from "@expo/vector-icons";
+import { MaterialCommunityIcons,Ionicons } from "@expo/vector-icons";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import QRCodeGenerator from "./QRCodeUser";
@@ -45,13 +45,14 @@ const ProfileDetails = ({ navigation }) => {
       </View>
       <View style={styles.card}>
         <View style={styles.photo}>
-          <View style={{ flexDirection: "row", padding: 20 }}>
+          <View style={{ flexDirection: "row", padding: 20,alignItems:"center" }}>
             <Image
               style={{
                 width: 120,
                 height: 120,
                 borderRadius: 60,
                 marginHorizontal: 15,
+                marginTop: -10
               }}
               source={{ uri: `http://${ip}:9999/${image}` }}
             />
@@ -59,7 +60,7 @@ const ProfileDetails = ({ navigation }) => {
               style={{ width: 120, height: 120, marginHorizontal: 15 }}
               source={require("./../../assets/favicon.png")}
             /> */}
-            {supervisorId && <QRCodeGenerator value={supervisorId} />}
+            {supervisorId && <QRCodeGenerator   value={supervisorId} />}
           </View>
         </View>
         <View style={styles.profileDetail}>
@@ -93,8 +94,8 @@ const ProfileDetails = ({ navigation }) => {
                 source={require("../assets/icon.png")}
               /> */}
           </View>
-          <TouchableOpacity style={styles.actionButton}>
-            <View style={{ width: "50%", alignSelf: "center" }}>
+          <TouchableOpacity style={styles.logout}>
+            <View >
               <Button title="Edit" />
             </View>
           </TouchableOpacity>
@@ -112,11 +113,12 @@ const styles = StyleSheet.create({
   },
   photo: {
     height: "20%",
-    justifyContent: "center",
+    justifyContent: "space-evenly",
     alignItems: "center",
     marginVertical: 20,
     marginTop: 50,
     marginBottom: 60,
+
   },
   heading: {
     justifyContent: "center",
@@ -165,6 +167,10 @@ const styles = StyleSheet.create({
     width: "95%",
     alignSelf: "center",
   },
+  logout:{
+    width:"40%",
+    alignSelf:"center"
+  }
 });
 
 export default ProfileDetails;

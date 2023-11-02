@@ -104,9 +104,8 @@ const SportEnroll = () => {
                 </View>
                 <View style={styles.row}>
                   <Text style={styles.label}>Time Slot : </Text>
-                  <Text style={styles.label}>From :</Text>
                   <Text style={styles.input}>{item.timeSlot.from} </Text>
-                  <Text style={styles.label}>To :</Text>
+                  <Text style={styles.input}>to</Text>
                   <Text style={styles.input}>{item.timeSlot.to}</Text>
                 </View>
 
@@ -133,6 +132,7 @@ const styles = StyleSheet.create({
     width: "100%",
     height: 50,
     backgroundColor: "#f0f0f0",
+    alignItems:"center"
   },
   back: {
     marginHorizontal: 4,

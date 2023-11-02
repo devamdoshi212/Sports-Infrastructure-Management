@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import {
   View,
@@ -18,6 +18,7 @@ import * as FileSystem from "expo-file-system";
 import * as ImagePicker from "expo-image-picker";
 import mime from "mime";
 import ipconfig from "../../ipconfig";
+import Icon from "react-native-vector-icons/FontAwesome";
 
 const SignUp = ({ navigation }) => {
   const ip = ipconfig.ip;
@@ -211,7 +212,7 @@ const SignUp = ({ navigation }) => {
               style={styles.input}
             />
 
-            <View
+            {/* <View
               style={{
                 flexDirection: "row",
                 marginBottom: 10,
@@ -227,10 +228,11 @@ const SignUp = ({ navigation }) => {
                   borderColor: "#ccc",
                   padding: 10,
                   borderRadius: 5,
+                  marginRight:12
                 }}
               />
               <Button
-                title="Show Date Picker"
+                title="Pick your DOB"
                 onPress={showDatePicker}
                 style={{
                   width: "40%",
@@ -248,7 +250,30 @@ const SignUp = ({ navigation }) => {
                 onConfirm={handleConfirm}
                 onCancel={hideDatePicker}
               />
-            </View>
+            </View> */}
+
+            <TouchableOpacity onPress={showDatePicker}>
+              <DateTimePickerModal
+                isVisible={isDatePickerVisible}
+                mode="date"
+                onConfirm={handleConfirm}
+                onCancel={hideDatePicker}
+              />
+              <View style={styles.dobContainer}>
+                <TextInput
+                  placeholder="Select Your BirthDate"
+                  editable={false}
+                  style={{color:"black"}}
+                  value={fdata.DOB.toDateString()}
+                ></TextInput>
+                <Icon
+                  name="calendar"
+                  size={24}
+                  color="#3498db"
+                  style={styles.calendaricon}
+                />
+              </View>
+            </TouchableOpacity>
 
             <TextInput
               placeholder="Address"
@@ -371,12 +396,25 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.2,
     shadowRadius: 4,
     elevation: 5,
-    width: "80%",
+    width: "88%",
   },
   heading: {
     fontSize: 24,
     marginBottom: 20,
     textAlign: "center",
+  },
+  dobContainer: {
+      flexDirection: "row",
+      alignItems: "center",
+      justifyContent: "space-between",
+      width: "100%",
+      height: 46,
+      borderWidth: 1,
+      borderColor: "#ccc",
+      marginBottom: 15,
+      padding: 10,
+      borderRadius: 5,
+    
   },
   input: {
     width: "100%",
@@ -400,7 +438,7 @@ const styles = StyleSheet.create({
   },
   signupButton: {
     backgroundColor: "green",
-    padding: 15,
+    paddingVertical: 10,
     borderRadius: 5,
     alignItems: "center",
     marginTop: 15,
