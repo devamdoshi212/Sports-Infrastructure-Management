@@ -12,7 +12,12 @@ module.exports.addPayment = async function (req, res) {
   let data1 = await athlete.save();
   console.log(data1);
 
-  res.json({ data: data, data1: data1, msg: "Payment Generated", rcode: 200 });
+  res.json({
+    data: data,
+    data1: data1,
+    msg: "Payment Generated",
+    rcode: 200,
+  });
 };
 
 module.exports.getAllPayments = async function (req, res) {
@@ -149,4 +154,37 @@ module.exports.CountOFAllPaymentswithsportwithinstructor = async function (
       rcode: -9,
     });
   }
+};
+
+module.exports.getAthletePayments = async (req, res) => {
+  let athleteId = req.query.athleteId;
+  let payment = await PaymentModel.find({ athleteId: athleteId })
+    .populate("sportsComplexId")
+    .populate("sports")
+    .populate({
+      path: "athleteId",
+      populate: { path: "userId", model: "users", select: { Name: 1 } },
+    });
+  let myObj = [];
+  payment.forEach((ele) => {
+    let to = new Date(
+      new Date(ele.from).setMilliseconds(1000) + ele.duration * 2629746000
+    );
+    let amount = 0;
+    ele.sportsComplexId.sports.forEach((sp) => {
+      if (sp.sport.toString() == ele.sports._id.toString()) {
+        amount = ele.duration * sp.fees;
+        return;
+      }
+    });
+    myObj.push({
+      sportName: ele.sports.SportName,
+      sportComplexName: ele.sportsComplexId.name,
+      from: ele.from,
+      to,
+      athleteName: ele.athleteId.userId.Name,
+      amount,
+    });
+  });
+  res.json({ rcode: 200, payments: myObj });
 };
