@@ -24,7 +24,9 @@ function renderCategoryItem(itemData, ip, navigate) {
             styles.button,
             pressed ? styles.buttonPressed : null,
           ]}
-          // onPress={onPress}
+          onPress={() => {
+            navigate.navigate("SportComplexName", { data: itemData });
+          }}
         >
           {/* <View style={[styles.innerContainer, { backgroundColor: "gray" }]}> */}
           <ImageBackground

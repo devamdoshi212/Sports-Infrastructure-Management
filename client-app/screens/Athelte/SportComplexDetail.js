@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
   ScrollView,
   Pressable,
+  Linking,
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { useEffect, useState } from "react";
@@ -20,19 +21,36 @@ const SportComplexDetail = () => {
   const Atheltedata = useSelector((state) => state.athelte.Athelte);
   const complexId = Atheltedata[0].createdBy.SportComplexId;
   const [details, setDetails] = useState([]);
+  const [detailsInstructor, setDetailsInstrutor] = useState({});
+  const [visible, setvisible] = useState(false);
+  // console.log(data);
+  // console.log(data.item._id);
+
   useEffect(() => {
     var requestOptions = {
       method: "GET",
       redirect: "follow",
     };
 
-    fetch(`http://${ip}:9999/getSportsComplex?_id=${complexId}`, requestOptions)
+    fetch(
+      `http://${ip}:9999/sportsComplexDetail?sportsComplex=${complexId}`,
+      requestOptions
+    )
       .then((response) => response.json())
       .then((result) => {
-        setDetails(result.data[0]);
+        setDetailsInstrutor(result);
+        setvisible(true);
+        // console.log(result);
       })
       .catch((error) => console.log("error", error));
   }, []);
+  const openGoogleMaps = () => {
+    const mapUrl = "https://maps.google.com/?q=latitude,longitude"; // Replace with the actual latitude and longitude or address you want to open
+
+    Linking.openURL(mapUrl).catch((err) =>
+      console.error("An error occurred: ", err)
+    );
+  };
 
   return (
     <>
@@ -85,6 +103,37 @@ const SportComplexDetail = () => {
                 <Text style={styles.label}>Area :</Text>
                 <Text style={styles.input}>{details.area}</Text>
               </View>
+              <View style={styles.row}>
+                <Text style={styles.label}>Available Sports :</Text>
+              </View>
+              <View>
+                {visible &&
+                  detailsInstructor.availableSports.map((item, index) => (
+                    <Text style={styles.input} key={index}>
+                      {item}
+                    </Text>
+                  ))}
+              </View>
+              <View style={styles.row}>
+                <Text style={styles.label}>Total number of Instructor :</Text>
+                <Text style={styles.input}>
+                  {visible && detailsInstructor.instructerData.length}
+                </Text>
+              </View>
+              <View style={styles.row}>
+                <Text style={styles.label}>
+                  Total number of Enroll Student :
+                </Text>
+                <Text style={styles.input}>
+                  {visible && detailsInstructor.athleteCount}
+                </Text>
+              </View>
+              <View style={{ alignSelf: "center", marginTop: 10 }}></View>
+              <TouchableOpacity style={styles.actionButton}>
+                <View style={{ width: "50%", alignSelf: "center" }}>
+                  <Button title="View on Map" onPress={openGoogleMaps} />
+                </View>
+              </TouchableOpacity>
             </Pressable>
           </View>
         </ScrollView>
