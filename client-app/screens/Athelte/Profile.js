@@ -67,7 +67,6 @@ function Profile({ navigation }) {
           </View>
         </View>
       </Pressable>
-
       <View style={styles.actions}>
         {Atheltedata[0].createdBy && (
           <>
@@ -128,12 +127,10 @@ function Profile({ navigation }) {
             </TouchableOpacity>
           </>
         )}
-        <TouchableOpacity style={styles.actionButton}>
-          <View style={{ width: "50%", alignSelf: "center", marginTop: "5%" }}>
+        <TouchableOpacity style={styles.logout}>
             <Button color="#FF3D3D" title="Logout" onPress={handleLogout} />
             {/* <MaterialCommunityIcons name="logout" size={24} /> */}
             {/* <Button title="Logout" style={styles.actionText}/> */}
-          </View>
         </TouchableOpacity>
       </View>
     </View>
@@ -190,7 +187,8 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.2,
     shadowRadius: 4,
     elevation: 5,
-    width: "100%",
+    width: "92%",
+    alignSelf:"center",
     flexDirection: "row",
   },
   actions: {
@@ -207,6 +205,11 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     fontSize: 15,
   },
+  logout:{
+    width:"40%",
+    alignSelf:"center",
+    marginTop:"15%"
+  }
 });
 
 export default Profile;

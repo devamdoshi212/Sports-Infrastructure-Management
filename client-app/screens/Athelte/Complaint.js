@@ -77,27 +77,34 @@ const Complaint = ({ navigation }) => {
           mode="dropdown" // Android only
           style={styles.picker}
         >
-          <Picker.Item label="Please select your country" value="Unknown" />
+          <Picker.Item label="Please select type" value="Unknown" />
           {complaintList.map((item, index) => {
             return <Picker.Item label={item} value={index} key={index} />;
           })}
         </Picker>
-        <View>
-          <TextInput
-            // editable
-            multiline={true}
-            numberOfLines={20}
-            maxLength={4000}
-            placeholder="Type here..."
-            onChangeText={(text) => onChangeText(text)}
-            value={value}
-            style={styles.multiline}
-          />
+        <View
+          style={{
+            flexDirection: "row",
+            paddingVertical: 15,
+            paddingHorizontal: 10,
+            backgroundColor: "white",
+            marginHorizontal: 15,
+            borderRadius: 8,
+            height: 250,
+          }}
+        >
+          <ScrollView>
+            <TextInput
+              onChangeText={(text) => onChangeText(text)}
+              value={value}
+              multiline
+              editable
+              placeholder="Type here"
+            ></TextInput>
+          </ScrollView>
         </View>
-        <TouchableOpacity style={styles.actionButton}>
-          <View style={{ width: "40%", alignSelf: "center", marginTop: "5%" }}>
-            <Button title="Submit" onPress={handleSubmit} />
-          </View>
+        <TouchableOpacity  style={{width:"30%",alignSelf:"center",paddingVertical:"20%"}}>
+            <Button title="Submit" onPress={handleSubmit}  />
         </TouchableOpacity>
       </View>
     </>

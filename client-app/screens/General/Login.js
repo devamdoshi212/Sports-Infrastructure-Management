@@ -5,6 +5,7 @@ import {
   TouchableOpacity,
   Text,
   StyleSheet,
+  Image
 } from "react-native";
 
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -58,73 +59,94 @@ const Login = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Sports Authority of Gujarat</Text>
-      <TextInput
-        style={styles.input}
-        placeholder="Email"
-        onChangeText={setEmail}
-        value={email}
-        keyboardType="email-address"
-      />
-      <TextInput
-        style={styles.input}
-        placeholder="Password"
-        onChangeText={setPassword}
-        value={password}
-        secureTextEntry
-      />
-      <View style={styles.loginContainer}>
-        <Text style={styles.loginText}>Create new account?</Text>
-        <TouchableOpacity
-          onPress={() => {
-            navigation.navigate("SignUp");
-          }}
-        >
-          <Text style={styles.loginLink}>Register Here</Text>
+        <Image style={{width:150,height:150,marginBottom:20}} source={require("../../assets/Logo.png")} />
+      <View style={styles.loginBox}>
+
+        <Text style={styles.title}>Sports Authority of Gujarat</Text>
+        <TextInput
+          style={styles.input}
+          placeholder="Email"
+          onChangeText={setEmail}
+          value={email}
+          keyboardType="email-address"
+        />
+        <TextInput
+          style={styles.input}
+          placeholder="Password"
+          onChangeText={setPassword}
+          value={password}
+          secureTextEntry
+        />
+        <View style={styles.loginContainer}>
+          <Text style={styles.loginText}>Create new account?</Text>
+          <TouchableOpacity
+            onPress={() => {
+              navigation.navigate("SignUp");
+            }}
+          >
+            <Text style={styles.loginLink}>Sign Up</Text>
+          </TouchableOpacity>
+        </View>
+        <TouchableOpacity style={styles.loginButton} onPress={handleLogin}>
+          <Text style={styles.buttonText}>Login</Text>
         </TouchableOpacity>
       </View>
-      <TouchableOpacity style={styles.loginButton} onPress={handleLogin}>
-        <Text style={styles.buttonText}>Login</Text>
-      </TouchableOpacity>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "#f0f0f0",
+  },
+  loginBox: {
+
+    paddingVertical: "8%",
+    paddingHorizontal: "6%",
+    borderRadius: 8,
+    backgroundColor: "white",
+    shadowColor: "black",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.2,
+    shadowRadius: 4,
+    elevation: 5,
+  },
+
   background: {
     flex: 1,
     resizeMode: "cover",
     justifyContent: "center",
   },
-  container: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    padding: 20,
-    backgroundColor: "rgba(255, 255, 255, 0.8)",
-  },
   title: {
-    fontSize: 24,
+    fontSize: 20,
     fontWeight: "bold",
     marginBottom: 20,
   },
   input: {
-    width: "100%",
+    shadowColor: "black",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.2,
+    shadowRadius: 4,
+    elevation: 5,
+    color: "black",
     height: 50,
     marginVertical: 10,
-    borderWidth: 1,
     paddingHorizontal: 15,
-    borderRadius: 25,
+    borderRadius: 8,
     backgroundColor: "white",
   },
   loginButton: {
-    width: "100%",
     height: 50,
     backgroundColor: "#007bff",
     justifyContent: "center",
     alignItems: "center",
-    borderRadius: 25,
+    borderRadius: 8,
     marginTop: 20,
+    width:100,
+    alignSelf:"center"
   },
   buttonText: {
     color: "white",
@@ -143,6 +165,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: "bold",
     color: "blue",
+    
   },
 });
 
