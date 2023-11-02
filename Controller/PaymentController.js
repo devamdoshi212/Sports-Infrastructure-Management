@@ -1,5 +1,6 @@
 const PaymentModel = require("../Model/PaymentModel");
 const athleteModel = require("./../Model/athleteModel");
+const mongoose = require("mongoose");
 module.exports.addPayment = async function (req, res) {
   let Payment = new PaymentModel(req.body);
 
@@ -69,5 +70,83 @@ module.exports.updatePayment = async function (req, res) {
   } catch (error) {
     console.error(error);
     res.json({ data: error.msg, msg: "smw", rcode: -9 });
+  }
+};
+
+module.exports.CountOFAllPaymentswithsportwithinstructor = async function (
+  req,
+  res
+) {
+  try {
+    let data = await PaymentModel.aggregate([
+      {
+        $match: {
+          sportsComplexId: new mongoose.Types.ObjectId(
+            req.body.sportsComplexId
+          ), // Replace with the sports complex ID you want to match
+        },
+      },
+      {
+        $group: {
+          _id: "$athleteId", // Group by userId (athleteId)
+          paymentCount: { $sum: 1 },
+          payments: { $push: "$$ROOT" }, // Store the original payment documents in an array
+        },
+      },
+      {
+        $lookup: {
+          from: "athletes", // The name of the "sports" collection
+          localField: "payments.athleteId", // Field in the "payments" array
+          foreignField: "_id", // Field in the "sports" collection
+          as: "athleteData",
+        },
+      },
+      {
+        $lookup: {
+          from: "users", // The name of the "sports" collection
+          localField: "athleteData.userId", // Field in the "payments" array
+          foreignField: "_id", // Field in the "sports" collection
+          as: "userData",
+        },
+      },
+      {
+        $lookup: {
+          from: "sports", // The name of the "sports" collection
+          localField: "payments.sports", // Field in the "payments" array
+          foreignField: "_id", // Field in the "sports" collection
+          as: "sportsData",
+        },
+      },
+      {
+        $lookup: {
+          from: "instructors", // The name of the "instructors" collection
+          localField: "payments.instructorId", // Field in the "payments" array
+          foreignField: "_id", // Field in the "instructors" collection
+          as: "instructorData",
+        },
+      },
+      {
+        $project: {
+          _id: 0, // Keep the original _id field
+          athleteId: "$_id", // Create a new field named athleteId and assign the value of _id to it
+          paymentCount: 1,
+          sports: "$sportsData", // Include the sports data
+          instructor: "$instructorData", // Include the instructor data
+          athlete: "$athleteData",
+          user: "$userData",
+        },
+      },
+    ]);
+    res.json({
+      results: data.length,
+      data: data,
+      rcode: 200,
+    });
+  } catch (err) {
+    console.log(err);
+    res.json({
+      err: err.msg,
+      rcode: -9,
+    });
   }
 };
