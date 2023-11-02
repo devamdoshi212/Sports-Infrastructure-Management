@@ -21,7 +21,7 @@ const Profile = ({ navigation }) => {
           options={{ headerShown: false }}
         />
         <Stack.Screen
-          name="ComplexDetails"
+          name="GeneralComplexDetails"
           component={SportComplexDetails}
           options={{ headerShown: false }}
         />
