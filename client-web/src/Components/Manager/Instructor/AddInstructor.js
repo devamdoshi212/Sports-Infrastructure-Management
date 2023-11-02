@@ -382,7 +382,7 @@ const AddInstructor = () => {
                           />
                           <button
                             type="button"
-                            className="bg-gray-400 text-white rounded-md py-2 h-10"
+                            className="bg-gray-900 text-white rounded-md py-2  h-10"
                             onClick={() =>
                               handleRemoveField(checkboxIndex, fieldIndex)
                             }
@@ -394,7 +394,7 @@ const AddInstructor = () => {
                       <button
                         type="button"
                         onClick={() => handleAddField(checkboxIndex)}
-                        className="bg-gray-400 text-white rounded-md py-2 h-10"
+                        className="bg-gray-900 text-white rounded-md py-2 px-2 h-10"
                       >
                         Add Field
                       </button>
@@ -406,7 +406,7 @@ const AddInstructor = () => {
 
             <div className="flex items-center justify-center">
               <button
-                className="bg-blue-500 uppercase hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                className="bg-black uppercase hover:bg-gray-900 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
                 type="submit"
                 // onClick={console.log("Hello")}
               >

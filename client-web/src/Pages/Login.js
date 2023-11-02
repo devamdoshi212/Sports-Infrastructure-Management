@@ -80,7 +80,7 @@ const Login = () => {
     });
   return (
     <>
-      <div className="min-h-screen rounded-sm border border-stroke bg-gray-400 shadow-default dark:border-strokedark dark:bg-boxdark">
+      <div className="min-h-screen rounded-sm border border-stroke bg-gray-200 shadow-default dark:border-strokedark dark:bg-boxdark">
         <div className="flex flex-wrap items-center">
           <div className="hidden w-full xl:block xl:w-1/2 min-h-screen">
             <div className="py-[4.375rem] px-[6.5rem] text-center">
@@ -95,7 +95,8 @@ const Login = () => {
               </p> */}
 
               <span className="mt-[3.75rem] inline-block">
-                <svg
+                <img src = "symbol.png" alt="symbol"/>
+                {/* <svg
                   width="350"
                   height="350"
                   viewBox="0 0 350 350"
@@ -214,12 +215,12 @@ const Login = () => {
                     d="M310.566 183.213C309.132 182.066 307.174 184.151 307.174 184.151L306.026 173.828C306.026 173.828 298.853 174.687 294.261 173.542C289.67 172.396 288.953 177.7 288.953 177.7C288.716 175.557 288.668 173.399 288.81 171.248C289.096 168.667 292.827 166.087 299.427 164.366C306.026 162.646 309.47 170.101 309.47 170.101C314.061 172.395 312.001 184.36 310.566 183.213Z"
                     fill="#1C2434"
                   />
-                </svg>
+                </svg> */}
               </span>
             </div>
           </div>
 
-          <div className="w-full border-stroke bg-gray-400 dark:border-strokedark xl:w-1/2 xl:border-l-2">
+          <div className="w-full border-stroke rounded-2xl bg-gray-400 dark:border-strokedark xl:w-1/2 xl:border-l-2">
             <div className="w-full p-4 sm:p-[3.125rem] xl:p-[4.375rem]">
               {/* <span className="mb-1.5 block font-medium">Start for free</span> */}
               <h1 className="mb-9 text-2xl font-bold text-black dark:text-white sm:text-title-xl2 uppercase">
