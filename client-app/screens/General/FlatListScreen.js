@@ -56,7 +56,7 @@ function renderCategoryItem(itemData, ip, navigate) {
             pressed ? styles.buttonPressed : null,
           ]}
           onPress={() => {
-            navigate.navigate("ComplexDetails", { data: itemData });
+            navigate.navigate("GeneralComplexDetails", { data: itemData });
           }}
         >
           <View style={[styles.innerContainer, { backgroundColor: "gray" }]}>
@@ -68,9 +68,7 @@ function renderCategoryItem(itemData, ip, navigate) {
   }
 }
 
-function FlatListScreen({ optionField, searchfield }) {
-  const navigate = useNavigation();
-
+function FlatListScreen({ optionField, searchfield, navigate }) {
   const [complex, setComplex] = useState([]);
   const ip = ipconfig.ip;
   useEffect(() => {

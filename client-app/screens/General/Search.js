@@ -10,7 +10,7 @@ import { FontAwesome } from "@expo/vector-icons";
 import { Picker } from "@react-native-picker/picker";
 import FlatListScreen from "./FlatListScreen";
 
-const Search = () => {
+const Search = ({ navigation }) => {
   const [isSearchVisible, setSearchVisible] = useState(true);
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedOption, setSelectedOption] = useState("getSports");
@@ -55,9 +55,12 @@ const Search = () => {
           </Picker>
         </View>
       </View>
-      <FlatListScreen optionField={selectedOption} searchfield={searchQuery} />
+      <FlatListScreen
+        optionField={selectedOption}
+        searchfield={searchQuery}
+        navigate={navigation}
+      />
     </View>
-    
   );
 };
 
@@ -67,7 +70,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     marginTop: 20,
-    paddingVertical:"5%",
+    paddingVertical: "5%",
   },
   header: {
     flexDirection: "row",
@@ -79,12 +82,11 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     flex: 1,
-    padding:10,
-    marginLeft:"-8%",
-    
+    padding: 10,
+    marginLeft: "-8%",
   },
   input: {
-    flex: 4, 
+    flex: 4,
     height: 40,
     backgroundColor: "white",
     borderColor: "lightgray",
