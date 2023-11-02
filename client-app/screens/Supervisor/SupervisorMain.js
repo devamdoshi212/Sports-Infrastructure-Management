@@ -7,6 +7,7 @@ import ComplexDetails from "./ComplexDetails";
 import SupervisorProfile from "./SupervisorProfile";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import SupervisorNavigator from "./SupervisorNavigator";
+import QR from "./QR";
 const SupervisorMain = ({ navigation }) => {
   return (
     <Tab.Navigator
@@ -22,6 +23,8 @@ const SupervisorMain = ({ navigation }) => {
             iconName = "home-outline";
           } else if (route.name === "SupervisorProfile") {
             iconName = "person-outline";
+          } else if (route.name === "SupervisorQR") {
+            iconName = "qr-code-outline";
           }
 
           // Return icon component
@@ -35,6 +38,7 @@ const SupervisorMain = ({ navigation }) => {
     >
       <Tab.Screen name="AddAthelte" component={AddAthelte} />
       <Tab.Screen name="ComplexDetails" component={ComplexDetails} />
+      <Tab.Screen name="SupervisorQR" component={QR} />
       <Tab.Screen name="SupervisorProfile" component={SupervisorNavigator} />
     </Tab.Navigator>
   );
