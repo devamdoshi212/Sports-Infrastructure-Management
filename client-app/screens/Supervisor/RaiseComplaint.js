@@ -16,16 +16,14 @@ import { useState } from "react";
 import { useSelector } from "react-redux";
 import ipconfig from "../../ipconfig";
 
-const Complaint = ({ navigation }) => {
+const RaiseComplaint = ({ navigation }) => {
   const Userdata = useSelector((state) => state.user.User);
-  const Atheltedata = useSelector((state) => state.athelte.Athelte);
-
   const complaintList = ["Maintenance", "Behaviour", "Refund", "Inquiry"];
   const [value, onChangeText] = React.useState("");
   const [complaint, setCompalint] = useState();
   const ip = ipconfig.ip;
 
-  const complexId = Atheltedata[0].createdBy.SportComplexId;
+  //   const complexId = Atheltedata[0].createdBy.SportComplexId;
 
   const handleSubmit = () => {
     var myHeaders = new Headers();
@@ -34,8 +32,8 @@ const Complaint = ({ navigation }) => {
       type: complaint,
       Description: value,
       userId: Userdata._id,
-      sportsComplex: complexId,
-      level: 0,
+      sportsComplex: Userdata.SportComplexId,
+      level: 1,
       status: 0,
     });
     var requestOptions = {
@@ -172,4 +170,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Complaint;
+export default RaiseComplaint;

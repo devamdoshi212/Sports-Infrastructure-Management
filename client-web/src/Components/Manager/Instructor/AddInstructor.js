@@ -257,7 +257,7 @@ const AddInstructor = () => {
                 value={values.mobileNumber}
                 onChange={handleChange}
                 onBlur={handleBlur}
-                placeholder="Enter Number"
+                placeholder="Enter Mobile Number"
                 className="shadow appearance-none  rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
               ></input>
               {errors.mobileNumber && touched.mobileNumber ? (
@@ -345,7 +345,7 @@ const AddInstructor = () => {
                         onChange={(e) =>
                           handleExperience(checkboxIndex, e.target.value)
                         }
-                        placeholder="experience"
+                        placeholder="Experience in Sports"
                         className="shadow appearance-none w-full rounded py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
                       />
                       {data.fields.map((field, fieldIndex) => (
@@ -382,7 +382,7 @@ const AddInstructor = () => {
                           />
                           <button
                             type="button"
-                            className="bg-gray-900 text-white rounded-md py-2  h-10"
+                            className="text-blue-500 hover:text-blue-700 rounded-md py-2  h-10"
                             onClick={() =>
                               handleRemoveField(checkboxIndex, fieldIndex)
                             }
@@ -394,7 +394,7 @@ const AddInstructor = () => {
                       <button
                         type="button"
                         onClick={() => handleAddField(checkboxIndex)}
-                        className="bg-gray-900 text-white rounded-md py-2 px-2 h-10"
+                        className="text-blue-500 hover:text-blue-700 rounded-md py-2 px-2 h-10"
                       >
                         Add Field
                       </button>

@@ -233,25 +233,25 @@ export default function SportComplexTable() {
           style={{ minWidth: "12rem" }}
         />
         <Column
-          header="location"
+          header="Location"
           field="location"
           filterField="location"
           style={{ minWidth: "12rem" }}
         />
         <Column
-          header="operationalSince"
+          header="Operational Since"
           field="operationalSince"
           filterField="operationalSince"
           style={{ minWidth: "12rem" }}
         />
         <Column
-          header="area"
+          header="Area"
           field="area"
           filterField="area"
           style={{ minWidth: "12rem" }}
         />
         <Column
-          header="taluka"
+          header="Taluka"
           field="taluka"
           filterField="taluka"
           style={{ minWidth: "12rem" }}
@@ -266,7 +266,7 @@ export default function SportComplexTable() {
           filterValue={globalFilterValues.District}
         />
         <Column
-          header="createdAt"
+          header="Created At"
           field="createdAt" // Replace 'districtName' with the actual field name
           filterField="createdAt" // Make sure this matches the actual field name
           style={{ minWidth: "12rem" }}
