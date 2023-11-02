@@ -56,7 +56,7 @@ function renderCategoryItem(itemData, ip, navigate) {
             pressed ? styles.buttonPressed : null,
           ]}
           onPress={() => {
-            navigate.navigate("GeneralComplexDetails", { data: itemData });
+            navigate.navigate("ComplexFullDetails", { data: itemData });
           }}
         >
           <View style={[styles.innerContainer, { backgroundColor: "gray" }]}>
@@ -91,7 +91,7 @@ function FlatListScreen({ optionField, searchfield, navigate }) {
       keyExtractor={(item) => item._id}
       renderItem={(itemData) => renderCategoryItem(itemData, ip, navigate)}
       numColumns={2}
-      extraData={{ ip, navigate }}
+      extraData={{ ip }}
       // extraData={searchfield}
     />
   );

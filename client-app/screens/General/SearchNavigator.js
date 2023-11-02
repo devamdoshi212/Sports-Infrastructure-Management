@@ -2,21 +2,15 @@ import React from "react";
 import "react-native-gesture-handler";
 import { createStackNavigator } from "@react-navigation/stack";
 const Stack = createStackNavigator();
-import Login from "./Login";
-import Signup from "./Signup";
 import GeneralComplexDetailsScreen from "./GeneralComplexDetailsScreen";
-const Profile = ({ navigation }) => {
+import Search from "./Search";
+const SearchNavigator = ({ navigation }) => {
   return (
     <Stack.Navigator>
       <Stack.Group>
         <Stack.Screen
-          name="Login"
-          component={Login}
-          options={{ headerShown: false }}
-        />
-        <Stack.Screen
-          name="SignUp"
-          component={Signup}
+          name="Search"
+          component={Search}
           options={{ headerShown: false }}
         />
         <Stack.Screen
@@ -29,4 +23,4 @@ const Profile = ({ navigation }) => {
   );
 };
 
-export default Profile;
+export default SearchNavigator;

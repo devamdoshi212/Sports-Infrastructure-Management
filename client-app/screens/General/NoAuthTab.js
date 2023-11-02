@@ -5,6 +5,7 @@ import Search from "./Search";
 const Tab = createBottomTabNavigator();
 import Profile from "./Profile";
 import Ionicons from "@expo/vector-icons/Ionicons";
+import SearchNavigator from "./SearchNavigator";
 
 const NoAuthTab = ({ navigation }) => {
   return (
@@ -15,7 +16,7 @@ const NoAuthTab = ({ navigation }) => {
           let iconName;
 
           // Set icon names based on route names (customize as needed)
-          if (route.name === "Search") {
+          if (route.name === "SearchNavigator") {
             iconName = "search-outline";
           } else if (route.name === "Profile") {
             iconName = "person-outline";
@@ -30,7 +31,7 @@ const NoAuthTab = ({ navigation }) => {
         // showLabel: false,
       })}
     >
-      <Tab.Screen name="Search" component={Search} />
+      <Tab.Screen name="SearchNavigator" component={SearchNavigator} />
       <Tab.Screen name="Profile" component={Profile} />
     </Tab.Navigator>
   );
