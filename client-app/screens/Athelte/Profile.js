@@ -83,7 +83,9 @@ function Profile({ navigation }) {
             </TouchableOpacity>
             <TouchableOpacity
               style={styles.actionButton}
-              // onPress={() => navigateToScreen('MySubjectsScreen')}
+              onPress={() => {
+                navigation.navigate("IDCard");
+              }}
             >
               <View style={styles.row}>
                 {/* <Ionicons name="repeat-outline" size={24} /> */}

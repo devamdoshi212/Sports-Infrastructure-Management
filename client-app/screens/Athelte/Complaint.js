@@ -23,7 +23,13 @@ const Complaint = ({ navigation }) => {
   const Userdata = useSelector((state) => state.user.User);
   const Atheltedata = useSelector((state) => state.athelte.Athelte);
 
-  const complaintList = ["Maintenance", "Behaviour", "Refund", "Inquiry"];
+  const complaintList = [
+    "Maintenance",
+    "Behaviour",
+    "Refund",
+    "Inquiry",
+    "Other",
+  ];
   const [value, onChangeText] = React.useState("");
   const [complaint, setCompalint] = useState();
   const [photo, setphoto] = useState("");
