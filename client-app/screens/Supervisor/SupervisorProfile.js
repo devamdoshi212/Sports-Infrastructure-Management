@@ -275,7 +275,9 @@ function SupervisorProfile({ navigation }) {
         </TouchableOpacity>
         <TouchableOpacity
           style={styles.actionButton}
-          // onPress={() => navigateToScreen('MySubjectsScreen')}
+          onPress={() => {
+            navigation.navigate("Attendance");
+          }}
         >
           <View style={styles.row}>
             {/* <Ionicons name="repeat-outline" size={24} /> */}
