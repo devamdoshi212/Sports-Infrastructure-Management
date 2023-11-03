@@ -55,14 +55,17 @@ function AthelteFlatListScreen({ route, navigation }) {
   }, [ip]);
 
   return (
-    <FlatList
-      data={complex}
-      keyExtractor={(item) => item._id}
-      renderItem={(itemData) => renderCategoryItem(itemData, ip, navigation)}
-      numColumns={2}
-      extraData={{ ip }}
-      // extraData={searchfield}
-    />
+    <View style={{marginTop:"20%"}} >
+
+      <FlatList
+        data={complex}
+        keyExtractor={(item) => item._id}
+        renderItem={(itemData) => renderCategoryItem(itemData, ip, navigation)}
+        numColumns={2}
+        extraData={{ ip }}
+        // extraData={searchfield}
+      />
+    </View>
   );
 }
 
