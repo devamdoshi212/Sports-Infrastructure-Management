@@ -9,7 +9,7 @@ const sessionSchema = new mongoose.Schema(
     },
     sportscomplex: {
       type: mongoose.SchemaTypes.ObjectId,
-      ref: "sportcomplexes",
+      ref: "sportscomplexes",
     },
     enrolls: [
       {
