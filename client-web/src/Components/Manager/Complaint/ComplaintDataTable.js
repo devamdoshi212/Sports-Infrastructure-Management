@@ -8,12 +8,13 @@ import { InputText } from "primereact/inputtext";
 import { Button } from "primereact/button";
 import { Calendar } from "primereact/calendar";
 import { Link } from "react-router-dom";
-import { FacilityService } from "./FacilityService";
 import { useSelector } from "react-redux";
+
+import { ComplaintService } from "./ComplaintServices";
 import { useRef } from "react";
 
-export default function FacilityDataTable() {
-  const { _id } = useSelector((state) => state.user.user);
+export default function ComplaintDataTable() {
+  const { SportComplexId } = useSelector((state) => state.user.user);
   const [deleterefresh, setdeleterefresh] = useState(true);
   const [customers, setCustomers] = useState([]);
   const [filters, setFilters] = useState(null);
@@ -22,6 +23,8 @@ export default function FacilityDataTable() {
     SportName: "",
     Category: "",
   });
+
+  //   console.log(SportComplexId);
 
   //   const DeleteHandler = (rowdata) => {
   //     Swal.fire({
@@ -52,9 +55,8 @@ export default function FacilityDataTable() {
   //       }
   //     });
   //   };
-
   useEffect(() => {
-    FacilityService.getCustomersXLarge(_id).then((data) => {
+    ComplaintService.getCustomersXLarge(SportComplexId).then((data) => {
       setCustomers(getCustomers(data));
       setLoading(false);
     });
@@ -147,28 +149,82 @@ export default function FacilityDataTable() {
       />
     );
   };
+  const resolveHandler = (rowdata) => {
+    var myHeaders = new Headers();
+    myHeaders.append("Content-Type", "application/json");
 
-  //   const actionBodyTemplate = (rowData) => {
-  //     return (
-  //       <div className="flex justify-between">
-  //         <Link to={"/admin/blogsedit"} state={{ data: rowData }}>
-  //           <button
-  //             type="button"
-  //             className="text-blue-500 hover:text-blue-700 p-1"
-  //           >
-  //             {/* Your SVG icon for editing */}
-  //           </button>
-  //         </Link>
-  //         <button
-  //           type="button"
-  //           onClick={() => DeleteHandler(rowData)}
-  //           className="text-red-500 hover:text-red-700 p-1"
-  //         >
-  //           {/* Your SVG icon for deleting */}
-  //         </button>
-  //       </div>
-  //     );
-  //   };
+    var raw = JSON.stringify({
+      status: 0,
+    });
+
+    var requestOptions = {
+      method: "PATCH",
+      headers: myHeaders,
+      body: raw,
+      redirect: "follow",
+    };
+
+    fetch(
+      `http://localhost:9999/updateComplaint/${rowdata._id}`,
+      requestOptions
+    )
+      .then((response) => response.json())
+      .then((result) => {
+        console.log(result);
+        setdeleterefresh(true);
+      })
+      .catch((error) => console.log("error", error));
+  };
+
+  const PassHandler = (rowdata) => {
+    var myHeaders = new Headers();
+    myHeaders.append("Content-Type", "application/json");
+
+    var raw = JSON.stringify({
+      level: 2,
+    });
+
+    var requestOptions = {
+      method: "PATCH",
+      headers: myHeaders,
+      body: raw,
+      redirect: "follow",
+    };
+
+    fetch(
+      `http://localhost:9999/updateComplaint/${rowdata._id}`,
+      requestOptions
+    )
+      .then((response) => response.json())
+      .then((result) => {
+        console.log(result);
+        setdeleterefresh(true);
+      })
+      .catch((error) => console.log("error", error));
+  };
+
+  const actionBodyTemplate = (rowData) => {
+    return (
+      <div className="flex justify-between">
+        <button
+          type="button"
+          className="text-blue-500 hover:text-blue-700 p-1"
+          onClick={() => resolveHandler(rowData)}
+        >
+          Resolve
+          {/* Your SVG icon for editing */}
+        </button>
+        <button
+          type="button"
+          onClick={() => PassHandler(rowData)}
+          className="text-red-500 hover:text-red-700 p-1"
+        >
+          Pass
+          {/* Your SVG icon for deleting */}
+        </button>
+      </div>
+    );
+  };
 
   const header = renderHeader();
   const [first, setFirst] = useState(0);
@@ -176,71 +232,9 @@ export default function FacilityDataTable() {
   const calculateIndex = (currentPage, rowIndex) => {
     return currentPage * 10 + rowIndex + 1;
   };
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [modalImages, setModalImages] = useState([]);
-  const [selectedRowData, setSelectedRowData] = useState(null);
-  const modalOverlayRef = useRef(null);
-
-  const openModal = (rowdata) => {
-    setModalImages(rowdata.images);
-    setSelectedRowData(rowdata);
-    setIsModalOpen(true);
-  };
-
-  const closeModal = () => {
-    setModalImages([]);
-    setSelectedRowData(null);
-    setIsModalOpen(false);
-  };
-
-  useEffect(() => {
-    const handleOutsideClick = (event) => {
-      if (
-        modalOverlayRef.current &&
-        !modalOverlayRef.current.contains(event.target)
-      ) {
-        closeModal();
-      }
-    };
-
-    if (isModalOpen) {
-      document.addEventListener("mousedown", handleOutsideClick);
-    } else {
-      document.removeEventListener("mousedown", handleOutsideClick);
-    }
-
-    return () => {
-      document.removeEventListener("mousedown", handleOutsideClick);
-    };
-  }, [isModalOpen]);
 
   return (
     <div>
-      {isModalOpen && (
-        <div
-          ref={modalOverlayRef}
-          className="fixed inset-0 z-50 flex items-center justify-center modal-overlay bg-gray-900 bg-opacity-80"
-        >
-          <div className="modal-above-screen bg-white rounded-lg p-4 relative">
-            <span
-              className="close absolute top-2 right-2 text-3xl cursor-pointer"
-              onClick={closeModal}
-            >
-              &times;
-            </span>
-            <div className="modal-body p-4 flex justify-center items-center">
-              {modalImages.map((item, index) => (
-                <img
-                  key={index}
-                  src={item}
-                  alt="Sport Facility Pic"
-                  className="w-40 h-40 object-cover mx-2"
-                />
-              ))}
-            </div>
-          </div>
-        </div>
-      )}
       <div className="card">
         <DataTable
           value={customers}
@@ -267,30 +261,53 @@ export default function FacilityDataTable() {
           />
 
           <Column
-            header="Facility Name"
-            field="sport.SportName"
+            header="Complaint Raised By"
+            field="userId.Name"
             filterField="Name"
             style={{ minWidth: "12rem" }}
           />
           <Column
-            header="Category"
-            field="sport.Category"
-            filterField="Category"
-            style={{ minWidth: "12rem" }}
-          />
-          <Column
-            header="Fees"
-            field="fees"
+            header="Description"
+            field="Description"
             filterField="Category"
             style={{ minWidth: "12rem" }}
           />
           <Column
             header="Image"
+            field="photo"
+            filterField="photo"
+            body={(rowdata) => {
+              return (
+                <img
+                  className="w-full h-96"
+                  src={`http://localhost:9999/complaints/${rowdata.photo}`}
+                  alt="Sport Facility Pic"
+                />
+              );
+            }}
             style={{ minWidth: "12rem" }}
-            body={(rowdata) => (
-              <button onClick={() => openModal(rowdata)} className="text-blue-900 hover:underline hover:decoration-black ">View Images</button>
-            )}
           />
+          <Column
+            header="Complaint Type"
+            field="type"
+            filterField="type"
+            body={(rowdata) => {
+              //   console.log(rowdata);
+              if (rowdata.type === "1") {
+                return <span>Maintenance</span>;
+              } else if (rowdata.type === "2") {
+                return <span>Behaviour</span>;
+              } else if (rowdata.type === "3") {
+                return <span>Refund</span>;
+              } else if (rowdata.type === "4") {
+                return <span>Inquiry</span>;
+              } else if (rowdata.type === "5") {
+                return <span>Other</span>;
+              }
+            }}
+            style={{ minWidth: "12rem" }}
+          />
+          <Column header="Action" body={actionBodyTemplate} />
         </DataTable>
       </div>
     </div>
