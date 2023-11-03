@@ -79,3 +79,46 @@ module.exports.sportDetailOfComplex = async function (req, res) {
     });
   }
 };
+
+module.exports.atheleteInSportsComplex = async function (req, res) {
+  try {
+    const data = await paymentModel.aggregate([
+      {
+        $lookup: {
+          from: "sportscomplexes", // Use the actual name of your "sportscomplexes" collection
+          localField: "sportsComplexId",
+          foreignField: "_id",
+          as: "sportsComplexInfo",
+        },
+      },
+      {
+        $unwind: "$sportsComplexInfo",
+      },
+      {
+        $group: {
+          _id: {
+            sportsComplexId: "$sportsComplexInfo.name",
+          },
+          uniqueAthleteIds: { $addToSet: "$athleteId" },
+        },
+      },
+      {
+        $project: {
+          sportsComplexId: "$_id.sportsComplexId",
+          userCount: { $size: "$uniqueAthleteIds" },
+        },
+      },
+    ]);
+
+    res.json({
+      data: data,
+      rcode: 200,
+    });
+  } catch (err) {
+    console.log(err);
+    res.json({
+      error: err.msg,
+      rcode: -9,
+    });
+  }
+};
