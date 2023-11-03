@@ -18,6 +18,8 @@ const ComplaintController = require("./Controller/ComplaintController");
 const SessionController = require("./Controller/SessionConroller");
 const SupervisorController = require("./Controller/SupervisorController");
 const AuthorityController = require("./Controller/AuthorityController");
+const AdminController = require("./Controller/AdminController");
+
 const {
   filtersportsforcomplex,
 } = require("./Controller/FilterSportsForComplex");
@@ -155,8 +157,13 @@ app.patch("/updateComplaint/:id", ComplaintController.updateComplaint);
 
 //Authority details
 app.get("/AuthorityDetails", AuthorityController.getDetails);
+app.get("/getSportsCount", AuthorityController.getSportsCount);
+
+//Admin Routes
+app.get("/AdminViewDetails", AdminController.AdminViewDetails);
 
 //session routes
+
 // app.get("/getSession", SessionController.getSession);
 app.post("/addSession/:id", SessionController.addSession);
 app.get("/getSession", SessionController.getSession);
