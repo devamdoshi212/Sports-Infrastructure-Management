@@ -276,7 +276,7 @@ export default function AthelteDataTable() {
           body={(rowData) => (
             <div>
               {rowData.sports.map((item, index) => (
-                <h1 key={index}>-{item.SportName} </h1>
+                <h1 className="flex" key={index}> - <div className="px-2">{item.SportName}</div> </h1>
               ))}
             </div>
           )}
