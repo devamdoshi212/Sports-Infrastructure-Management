@@ -1,8 +1,6 @@
-export const ComplaintService = {
+export const AthelteServices = {
   getData(id) {
-    return fetch(
-      `http://localhost:9999/getAllComplaints?sportsComplex=${id}&level=1&status=0`
-    )
+    return fetch(`http://localhost:9999/countOfPayment?sportsComplexId=${id}`)
       .then((res) => res.json())
       .then((res) => {
         return res.data;
