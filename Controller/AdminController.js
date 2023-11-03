@@ -40,3 +40,42 @@ module.exports.AdminViewDetails = async function (req, res) {
     });
   }
 };
+
+module.exports.sportDetailOfComplex = async function (req, res) {
+  try {
+    const data = await paymentModel.aggregate([
+      {
+        $match: {
+          sportsComplexId: new mongoose.Types.ObjectId(
+            req.query.sportsComplexId
+          ),
+        },
+      },
+      {
+        $lookup: {
+          from: "sports", // Use the actual name of your "sports" collection
+          localField: "sports",
+          foreignField: "_id",
+          as: "sportInfo",
+        },
+      },
+      {
+        $group: {
+          _id: "$sportInfo.SportName",
+          userCount: { $sum: 1 }, // Count the number of payments for each sport
+        },
+      },
+    ]);
+
+    res.json({
+      data: data,
+      rcode: 200,
+    });
+  } catch (err) {
+    console.log(err);
+    res.json({
+      error: err.msg,
+      rcode: -9,
+    });
+  }
+};
