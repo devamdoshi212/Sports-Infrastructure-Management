@@ -68,11 +68,6 @@ const SupervisorNavigator = ({ navigation }) => {
           component={Attendance}
           options={{ headerShown: false }}
         />
-        <Stack.Screen
-          name="SportAttendance"
-          component={SportAttendance}
-          options={{ headerShown: false }}
-        />
       </Stack.Group>
     </Stack.Navigator>
   );
