@@ -98,66 +98,92 @@ module.exports.getDetails = async function (req, res) {
 
 module.exports.getSportsCount = async function (req, res) {
   try {
-    const sportcomplex = await SportsComplex.find({
-      district: new mongoose.Types.ObjectId(req.query.districtId),
-    });
+    // const sportcomplex = await //SportsComplex.find({
+    //   district: new mongoose.Types.ObjectId(req.query.districtId),
+    // });
 
-    let sports = [];
+    // let sports = [];
 
-    for (let i = 0; i < sportcomplex.length; i++) {
-      const Sportsplayercount = await paymentModel.aggregate([
-        {
-          $match: {
-            sportsComplexId: sportcomplex[i]._id,
-          },
+    const sportcomplex = await SportsComplex.aggregate([
+      {
+        $match: {
+          district: new mongoose.Types.ObjectId(req.query.districtId),
         },
-        {
-          $group: {
-            _id: "$sports",
-            usercount: { $sum: 1 },
-          },
+      },
+      {
+        $unwind: "$sports",
+      },
+      {
+        $lookup: {
+          from: "sports", // Use the actual name of your "sports" collection
+          localField: "sports.sport",
+          foreignField: "_id",
+          as: "sportInfo",
         },
-        {
-          $lookup: {
-            from: "sports", // Replace with the actual name of your "Sports" collection
-            localField: "_id",
-            foreignField: "_id",
-            as: "sportsInfo",
-          },
+      },
+      {
+        $unwind: "$sportInfo",
+      },
+      {
+        $group: {
+          _id: "$sportInfo.SportName", // Group by the sport name
+          sportComplexCount: { $sum: 1 }, // Count the number of sports complexes for each sport
         },
-        {
-          $project: {
-            _id: 1,
-            usercount: 1,
-            sportsInfo: 1,
-          },
-        },
-      ]);
-      // console.log(athleteCount);
-      // let sportsname=[];
+      },
+    ]);
+    // for (let i = 0; i < sportcomplex.length; i++) {
+    //   const Sportsplayercount = await paymentModel.aggregate([
+    //     {
+    //       $match: {
+    //         sportsComplexId: sportcomplex[i]._id,
+    //       },
+    //     },
+    //     {
+    //       $group: {
+    //         _id: "$sports",
+    //         usercount: { $sum: 1 },
+    //       },
+    //     },
+    //     {
+    //       $lookup: {
+    //         from: "sports", // Replace with the actual name of your "Sports" collection
+    //         localField: "_id",
+    //         foreignField: "_id",
+    //         as: "sportsInfo",
+    //       },
+    //     },
+    //     {
+    //       $project: {
+    //         _id: 1,
+    //         usercount: 1,
+    //         sportsInfo: 1,
+    //       },
+    //     },
+    //   ]);
+    // console.log(athleteCount);
+    // let sportsname=[];
 
-      // const sports =  Sportsplayercount.map(
-      //   (item) => item.sportCount[i].sportsInfo.SportName
-      // );
-      // sportsname = sports.concat(sports);
-      // console.log(sportsname);
+    // const sports =  Sportsplayercount.map(
+    //   (item) => item.sportCount[i].sportsInfo.SportName
+    // );
+    // sportsname = sports.concat(sports);
+    // console.log(sportsname);
 
-      const sportsData = Sportsplayercount.map((item) => ({
-        SportName: item.sportsInfo[0].SportName,
-        usercount: item.usercount,
-      }));
+    //   const sportsData = Sportsplayercount.map((item) => ({
+    //     SportName: item.sportsInfo[0].SportName,
+    //     usercount: item.usercount,
+    //   }));
 
-      console.log(sportsData);
+    //   console.log(sportsData);
 
-      sports.push({
-        // sport:,
-        sportComplex: sportcomplex[i].name,
-
-        sportCount: sportsData,
-      });
-    }
+    //   sports.push({
+    //     // sport:,
+    //     // sportComplex: sportcomplex[i].name,
+    //     sportCount: sportsData,
+    //   });
+    // }
     res.json({
-      sportsCount: sports,
+      sportsCount: sportcomplex,
       rcode: 200,
     });
   } catch (err) {
