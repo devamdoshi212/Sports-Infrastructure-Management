@@ -28,9 +28,9 @@ const AuthorityDashboard = () => {
   return (
     <div className="m-5">
       <div className="grid grid-cols-1 gap-4 lg:grid-cols-3 lg:gap-8">
-        <div className="h-32 text-center rounded-lg bg-gray-300 ">
-          <div className=" font-bold p-5 text-lg">Total Atheltes</div>
-          <div className="p-5 ">
+        <div className=" h-48 p-3 text-center rounded-lg bg-gray-300 ">
+          <div className=" font-bold p-5 text-2xl">Total Atheltes</div>
+          <div className="p-5  text-2xl pb-6">
             {visibale &&
               data.athleteCount.reduce(
                 (sum, entry) => sum + entry.athleteCount,
@@ -39,18 +39,18 @@ const AuthorityDashboard = () => {
           </div>
         </div>
         <Link to={"allsportscomplex"}>
-          <div className="h-32 text-center rounded-lg bg-gray-300 ">
-            <div className=" font-bold p-5 text-lg">Total Complexes</div>
-            <div className="p-5 ">{visibale && data.sportComplexCount}</div>
+          <div className=" h-48 p-3 text-center rounded-lg bg-gray-300 ">
+            <div className=" font-bold p-5 text-2xl">Total Complexes</div>
+            <div className="p-5  text-2xl pb-6">{visibale && data.sportComplexCount}</div>
           </div>
         </Link>
 
         <Link to={"allcomplaint"}>
-          <div className="h-32 text-center rounded-lg bg-gray-300 ">
-            <div className=" font-bold p-5 text-lg">
+          <div className="h-48 p-3 text-center rounded-lg bg-gray-300 ">
+            <div className=" font-bold p-5 text-2xl">
               Total Solved Complaints
             </div>
-            <div className="p-5 ">
+            <div className="p-5  text-2xl pb-6">
               {visibale &&
                 data.complaintCount.reduce(
                   (sum, entry) => sum + entry.solvedComplaint,
@@ -61,11 +61,11 @@ const AuthorityDashboard = () => {
         </Link>
 
         <Link to={"allcomplaint"}>
-          <div className="h-32 text-center rounded-lg bg-gray-300 ">
-            <div className=" font-bold p-5 text-lg">
+          <div className="h-48 p-3 text-center rounded-lg bg-gray-300 ">
+            <div className=" font-bold p-5 text-2xl">
               Total Active Complaints
             </div>
-            <div className="p-5 ">
+            <div className="p-5  text-2xl pb-6">
               {visibale &&
                 data.complaintCount.reduce(
                   (sum, entry) => sum + entry.activeComplaint,
@@ -75,11 +75,11 @@ const AuthorityDashboard = () => {
           </div>
         </Link>
         <Link to={"allcomplaint"}>
-          <div className="h-32 text-center rounded-lg bg-gray-300 ">
-            <div className=" font-bold p-5 text-lg">
+          <div className="h-48 p-3 text-center rounded-lg bg-gray-300 ">
+            <div className=" font-bold p-5 text-2xl">
               Total Complaints in Sport Complexes
             </div>
-            <div className="p-5 ">
+            <div className="p-5  text-2xl pb-6">
               {visibale &&
                 data.complaintCount.reduce(
                   (sum, entry) => sum + entry.complaintCount,
