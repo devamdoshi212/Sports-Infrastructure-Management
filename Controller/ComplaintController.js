@@ -28,7 +28,15 @@ module.exports.getAllComplaints = async function (req, res) {
 module.exports.updateComplaint = async function (req, res) {
   const id = req.params.id;
   let Complaint = await ComplaintModel.findOne({ _id: id });
-
+  if (req.body.Sremarks !== undefined) {
+    Complaint.Sremarks = req.body.Sremarks;
+  }
+  if (req.body.Mremarks !== undefined) {
+    Complaint.Mremarks = req.body.Mremarks;
+  }
+  if (req.body.Aremarks !== undefined) {
+    Complaint.Aremarks = req.body.Aremarks;
+  }
   if (req.body.status !== undefined) {
     Complaint.status = req.body.status;
   }
@@ -36,6 +44,7 @@ module.exports.updateComplaint = async function (req, res) {
   if (req.body.level !== undefined) {
     Complaint.level = req.body.level;
   }
+
   try {
     let response = await Complaint.save();
     res.json({

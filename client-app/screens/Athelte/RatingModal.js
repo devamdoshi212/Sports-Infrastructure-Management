@@ -5,13 +5,34 @@ import {
   View,
   TouchableOpacity,
   Button,
+  Alert,
 } from "react-native";
 import { Rating } from "react-native-ratings";
+import ipconfig from "../../ipconfig";
 const RatingModal = (props) => {
+  const ip = ipconfig.ip;
   const [modalVisible, setModalVisible] = useState(props.rateModal);
   const [rating, setRating] = useState(1);
+
+  const ratinghandler = () => {
+    var requestOptions = {
+      method: "GET",
+      redirect: "follow",
+    };
+
+    fetch(
+      `http://${ip}:9999/addRating?athleteId=${props.athelteid}&sportId=${props.sportid}&sportsComplexId=${props.sportcomplex}&rating=${rating}`,
+      requestOptions
+    )
+      .then((response) => response.text())
+      .then((result) => {
+        alert("Done");
+      })
+      .catch((error) => console.log("error", error));
+  };
   function ratingCompleted(rating) {
     setRating(rating);
+    props.setrating(rating);
   }
   return (
     <Modal
@@ -42,13 +63,7 @@ const RatingModal = (props) => {
                 alignSelf: "center",
               }}
             >
-              <Button
-                title="rating"
-                onPress={() => {
-                  console.log(rating);
-                  setModalVisible(false);
-                }}
-              />
+              <Button title="rating" onPress={ratinghandler} />
             </View>
           </TouchableOpacity>
         </View>
