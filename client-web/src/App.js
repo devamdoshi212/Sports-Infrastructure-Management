@@ -49,6 +49,7 @@ import AddInstructor from "./Components/Manager/Instructor/AddInstructor";
 import AllInstructor from "./Components/Manager/Instructor/AllInstructor";
 import SportsComplexDetails from "./Components/Manager/SportsComplexDetails/SportsComplexDetails";
 import EditSportsComplexDetails from "./Components/Manager/SportsComplexDetails/EditSportsComplexDetails";
+import ComplaintDetails from "./Components/Manager/Complaint/ComplainDetails";
 
 const routes = createBrowserRouter([
   {
@@ -185,6 +186,11 @@ const routes = createBrowserRouter([
       {
         path: "addinstructor",
         element: <AddInstructor />,
+        errorElement: <ErrorPage />,
+      },
+      {
+        path: "allcomplaint",
+        element: <ComplaintDetails />,
         errorElement: <ErrorPage />,
       },
     ],
