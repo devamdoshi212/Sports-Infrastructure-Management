@@ -5,6 +5,9 @@ const complaintSchema = new mongoose.Schema(
     type: String, // , Maintenance Requirement
     Description: String,
     photo: String,
+    Sremarks: String,
+    Mremarks: String,
+    Aremarks: String,
     userId: { type: mongoose.SchemaTypes.ObjectId, ref: "users" },
     sportsComplex: {
       type: mongoose.SchemaTypes.ObjectId,
