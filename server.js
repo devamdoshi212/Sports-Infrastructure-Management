@@ -17,6 +17,7 @@ const RatingController = require("./Controller/RatingController");
 const ComplaintController = require("./Controller/ComplaintController");
 const SessionController = require("./Controller/SessionConroller");
 const SupervisorController = require("./Controller/SupervisorController");
+const AuthorityController = require("./Controller/AuthorityController")
 const {
   filtersportsforcomplex,
 } = require("./Controller/FilterSportsForComplex");
@@ -151,6 +152,9 @@ app.post("/complaintPhoto", uploadPhoto.single("photo"), (req, res) => {
 app.post("/addComplaint", ComplaintController.addComplaint);
 app.get("/getAllComplaints", ComplaintController.getAllComplaints);
 app.patch("/updateComplaint/:id", ComplaintController.updateComplaint);
+
+//Authority details
+app.get('/AuthorityDetails',AuthorityController.getDetails)
 
 //session routes
 // app.get("/getSession", SessionController.getSession);
