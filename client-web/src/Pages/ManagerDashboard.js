@@ -54,31 +54,35 @@ const ManagerDashboard = () => {
     <div className="m-5">
       <div className="grid grid-cols-1 gap-4 lg:grid-cols-3 lg:gap-8">
         <div className=" text-center rounded-lg bg-gray-300 ">
-          <div className=" font-bold p-5 text-2xl ">Total Sports</div>
+          <div className=" font-bold p-5 text-2xl ">Total Facilities</div>
           <div className="p-3 text-2xl ">
             {visibale && Instructor.availableSports.length}
           </div>
         </div>
         <div className=" text-center rounded-lg bg-gray-300">
-          <div className=" font-bold p-5 text-2xl ">Total Instructor</div>
+          <div className=" font-bold p-5 text-2xl ">Total Instructors</div>
           <div className="p-3 text-2xl">
             {visibale && Instructor.instructerData.length}
           </div>
         </div>
         <div className=" text-center rounded-lg bg-gray-300 ">
-          <div className=" font-bold p-5 text-2xl">Total Player</div>
-          <div className="p-3 text-2xl">{visibale && Instructor.athleteCount}</div>
+          <div className=" font-bold p-5 text-2xl">Total Atheltes</div>
+          <div className="p-3 text-2xl">
+            {visibale && Instructor.athleteCount}
+          </div>
         </div>
         <div className="text-center rounded-lg bg-gray-300 ">
-          <div className=" font-bold p-5 text-2xl">Total Unsloved Complaint</div>
+          <div className=" font-bold p-5 text-2xl">
+            Total Unsloved Complaints
+          </div>
           <div className="p-3 text-2xl">{visibale && complaint}</div>
         </div>
         <div className=" text-center rounded-lg bg-gray-300 ">
-          <div className=" font-bold p-5 text-2xl">Total Sloved Complaint</div>
+          <div className=" font-bold p-5 text-2xl">Total Sloved Complaints</div>
           <div className="p-3 text-2xl">{visibale && uncomplaint}</div>
         </div>
         <div className=" text-center rounded-lg bg-gray-300 ">
-          <div className=" font-bold p-5 text-2xl">Total UnSloved Complaint</div>
+          <div className=" font-bold p-5 text-2xl">Total Active Complaints</div>
           <div className="p-3 text-2xl ">{visibale && remain}</div>
         </div>
       </div>
