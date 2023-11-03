@@ -26,29 +26,39 @@ const Profile = () => {
   return (
     <div className="text-lg py-6 px-5 space-y-2">
       <div className="flex">
-        <div className="w-1/4">Authority Name </div><div className="text-gray-700">: {lodaer && Profile.Name}</div>
+        <div className="w-1/4">Authority Name </div>
+        <div className="text-gray-700">: {lodaer && Profile.Name}</div>
       </div>
-  
+
       <div className="flex">
-        <div className="w-1/4">District</div> <div className="text-gray-700">: {lodaer && Profile.DistrictId.District} </div>
-      </div>
-      <div className="flex">
-        <div className="w-1/4">E-mail</div><div className="text-gray-700">:</div>
-      </div>
-      <div className="flex">
-        <div className="w-1/4">Contact Number </div><div className="text-gray-700">:</div>
+        <div className="w-1/4">District</div>{" "}
+        <div className="text-gray-700">
+          : {lodaer && Profile.DistrictId.District}{" "}
+        </div>
       </div>
       <div className="flex">
-        <div className="w-1/4">Data of Birth </div> <div className="text-gray-700">:</div>
+        <div className="w-1/4">E-mail</div>
+        <div className="text-gray-700">:</div>
       </div>
       <div className="flex">
-        <div className="w-1/4">Area </div><div className="text-gray-700">:</div>
+        <div className="w-1/4">Contact Number </div>
+        <div className="text-gray-700">:</div>
       </div>
       <div className="flex">
-        <div className="w-1/4">Taluka </div> <div className="text-gray-700">:</div>
+        <div className="w-1/4">Data of Birth </div>{" "}
+        <div className="text-gray-700">:</div>
       </div>
       <div className="flex">
-        <div className="w-1/4">Operational Since </div><div className="text-gray-700">:</div>
+        <div className="w-1/4">Area </div>
+        <div className="text-gray-700">:</div>
+      </div>
+      <div className="flex">
+        <div className="w-1/4">Taluka </div>{" "}
+        <div className="text-gray-700">:</div>
+      </div>
+      <div className="flex">
+        <div className="w-1/4">Operational Since </div>
+        <div className="text-gray-700">:</div>
       </div>
     </div>
   );

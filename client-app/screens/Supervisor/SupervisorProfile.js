@@ -10,6 +10,7 @@ import {
   Button,
   TouchableOpacity,
   Pressable,
+  ScrollView,
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import ipconfig from "../../ipconfig";
@@ -32,111 +33,115 @@ function SupervisorProfile({ navigation }) {
     removeItem();
   };
   return (
-    <View style={styles.container}>
-      <View style={styles.header}>
-        {/* <View style={styles.back}>
+    <ScrollView>
+      <View style={styles.container}>
+        <View style={styles.header}>
+          {/* <View style={styles.back}>
           <Ionicons name="arrow-back" size={24} />
         </View> */}
-        <View style={styles.heading}>
-          <Text style={{ fontWeight: "bold", fontSize: 25 }}>My Profile</Text>
-        </View>
-      </View>
-      <Pressable
-        onPress={() => {
-          navigation.navigate("DetailProfile");
-        }}
-      >
-        <View style={styles.SupervisorInfo}>
-          <View style={styles.leftColumn}>
-            <Image
-              style={{
-                width: 100,
-                height: 100,
-                borderRadius: 50,
-                marginLeft: 1,
-              }}
-              source={require("./../../assets/icon.png")}
-            />
-          </View>
-          <View style={styles.rightColumn}>
-            <Text style={styles.name}>Name : {Userdata.Name}</Text>
-            <Text style={styles.name}>Email : {Userdata.Email}</Text>
-            <Text style={styles.name}>ContactNo : {Userdata.ContactNum}</Text>
+          <View style={styles.heading}>
+            <Text style={{ fontWeight: "bold", fontSize: 25 }}>My Profile</Text>
           </View>
         </View>
-      </Pressable>
+        <Pressable
+          onPress={() => {
+            navigation.navigate("DetailProfile");
+          }}
+        >
+          <View style={styles.SupervisorInfo}>
+            <View style={styles.leftColumn}>
+              <Image
+                style={{
+                  width: 100,
+                  height: 100,
+                  borderRadius: 50,
+                  marginLeft: 1,
+                }}
+                source={require("./../../assets/icon.png")}
+              />
+            </View>
+            <View style={styles.rightColumn}>
+              <Text style={styles.name}>Name : {Userdata.Name}</Text>
+              <Text style={styles.name}>Email : {Userdata.Email}</Text>
+              <Text style={styles.name}>ContactNo : {Userdata.ContactNum}</Text>
+            </View>
+          </View>
+        </Pressable>
 
-      <View style={styles.actions}>
-        {/* <TouchableOpacity style={styles.actionButton}>
+        <View style={styles.actions}>
+          {/* <TouchableOpacity style={styles.actionButton}>
           <View style={styles.row}>
             <Text style={styles.actionText}>Sport Complex Details</Text>
           </View>
         </TouchableOpacity> */}
-        <TouchableOpacity
-          style={styles.actionButton}
-          onPress={() => {
-            navigation.navigate("AthleteDetails");
-          }}
-        >
-          <View style={styles.row}>
-            {/* <MaterialCommunityIcons name="history" size={24} /> */}
-            <Text style={styles.actionText}>Athlete Details</Text>
-          </View>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={styles.actionButton}
-          onPress={() => {
-            navigation.navigate("Attendance");
-          }}
-        >
-          <View style={styles.row}>
-            {/* <Ionicons name="repeat-outline" size={24} /> */}
-            <Text style={styles.actionText}>Attendance</Text>
-          </View>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={styles.actionButton}
-          onPress={() => {
-            navigation.navigate("AthelteListComplaint");
-          }}
-        >
-          <View style={styles.row}>
-            {/* <MaterialCommunityIcons name="certificate-outline" size={24} /> */}
-            <Text style={styles.actionText}>Athelte Coming Complaint</Text>
-          </View>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={styles.actionButton}
-          onPress={() => {
-            navigation.navigate("ListComplaint");
-          }}
-        >
-          <View style={styles.row}>
-            {/* <MaterialCommunityIcons name="certificate-outline" size={24} /> */}
-            <Text style={styles.actionText}>View Complaint</Text>
-          </View>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={styles.actionButton}
-          onPress={() => {
-            navigation.navigate("RaiseComplaint");
-          }}
-        >
-          <View style={styles.row}>
-            {/* <MaterialCommunityIcons name="certificate-outline" size={24} /> */}
-            <Text style={styles.actionText}>Raise Complaint</Text>
-          </View>
-        </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.actionButton}
+            onPress={() => {
+              navigation.navigate("AthleteDetails");
+            }}
+          >
+            <View style={styles.row}>
+              {/* <MaterialCommunityIcons name="history" size={24} /> */}
+              <Text style={styles.actionText}>Athlete Details</Text>
+            </View>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.actionButton}
+            onPress={() => {
+              navigation.navigate("Attendance");
+            }}
+          >
+            <View style={styles.row}>
+              {/* <Ionicons name="repeat-outline" size={24} /> */}
+              <Text style={styles.actionText}>Attendance</Text>
+            </View>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.actionButton}
+            onPress={() => {
+              navigation.navigate("AthelteListComplaint");
+            }}
+          >
+            <View style={styles.row}>
+              {/* <MaterialCommunityIcons name="certificate-outline" size={24} /> */}
+              <Text style={styles.actionText}>Athelte Coming Complaint</Text>
+            </View>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.actionButton}
+            onPress={() => {
+              navigation.navigate("ListComplaint");
+            }}
+          >
+            <View style={styles.row}>
+              {/* <MaterialCommunityIcons name="certificate-outline" size={24} /> */}
+              <Text style={styles.actionText}>View Complaint</Text>
+            </View>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.actionButton}
+            onPress={() => {
+              navigation.navigate("RaiseComplaint");
+            }}
+          >
+            <View style={styles.row}>
+              {/* <MaterialCommunityIcons name="certificate-outline" size={24} /> */}
+              <Text style={styles.actionText}>Raise Complaint</Text>
+            </View>
+          </TouchableOpacity>
 
-        <TouchableOpacity style={styles.actionButton}>
-          <View style={{ width: "40%", alignSelf: "center", marginTop: "15%" }}>
-            <Button color="#FF3D3D" title="Logout" onPress={handleLogout} />
-            {/* <MaterialCommunityIcons name="logout" size={24} /> */}
-            {/* <Button title="Logout" style={styles.actionText}/> */}
-          </View>
-        </TouchableOpacity>
+          <TouchableOpacity style={styles.actionButton}>
+            <View
+              style={{ width: "40%", alignSelf: "center", marginTop: "3%" }}
+            >
+              <Button color="#FF3D3D" title="Logout" onPress={handleLogout} />
+              {/* <MaterialCommunityIcons name="logout" size={24} /> */}
+              {/* <Button title="Logout" style={styles.actionText}/> */}
+            </View>
+          </TouchableOpacity>
+        </View>
       </View>
-    </View>
+    </ScrollView>
   );
 }
 
