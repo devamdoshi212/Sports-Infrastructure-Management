@@ -10,8 +10,7 @@ import { Calendar } from "primereact/calendar";
 import { Link } from "react-router-dom";
 import { useCookies } from "react-cookie";
 import { useSelector } from "react-redux";
-import { AthelteServices } from "./AthelteServices";
-
+import { AthelteServices } from "./AtheltesServices";
 export default function AthelteDataTable() {
   const { SportComplexId } = useSelector((state) => state.user.user);
   const [deleterefresh, setdeleterefresh] = useState(true);
@@ -276,7 +275,7 @@ export default function AthelteDataTable() {
           body={(rowData) => (
             <div>
               {rowData.sports.map((item, index) => (
-                <h1 className="flex" key={index}> - <div className="px-2">{item.SportName}</div> </h1>
+                <h1 key={index}>-{item.SportName} </h1>
               ))}
             </div>
           )}

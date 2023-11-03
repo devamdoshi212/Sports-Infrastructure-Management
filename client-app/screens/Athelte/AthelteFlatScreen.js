@@ -20,7 +20,7 @@ function renderCategoryItem(itemData, ip, navigation) {
           pressed ? styles.buttonPressed : null,
         ]}
         onPress={() => {
-          navigation.navigate("ComplexFullDetails", {
+          navigation.navigate("ComplexFullDetailsinAthelte", {
             data: itemData,
           });
         }}
@@ -55,8 +55,7 @@ function AthelteFlatListScreen({ route, navigation }) {
   }, [ip]);
 
   return (
-    <View style={{marginTop:"20%"}} >
-
+    <View style={{ marginTop: "20%" }}>
       <FlatList
         data={complex}
         keyExtractor={(item) => item._id}

@@ -9,7 +9,7 @@ import {
 import { Rating } from "react-native-ratings";
 const RatingModal = (props) => {
   const [modalVisible, setModalVisible] = useState(props.rateModal);
-  const [rating, setRating] = useState(3);
+  const [rating, setRating] = useState(1);
   function ratingCompleted(rating) {
     setRating(rating);
   }
@@ -33,9 +33,14 @@ const RatingModal = (props) => {
             startingValue={rating}
             minValue={1}
           />
-          <TouchableOpacity style={{width:"50%",alignSelf:"center"}} >
+          <TouchableOpacity style={{ width: "50%", alignSelf: "center" }}>
             <View
-              style={{ marginTop: "21%", marginBottom:"10%",width: "58%", alignSelf: "center" }}
+              style={{
+                marginTop: "21%",
+                marginBottom: "10%",
+                width: "58%",
+                alignSelf: "center",
+              }}
             >
               <Button
                 title="rating"
