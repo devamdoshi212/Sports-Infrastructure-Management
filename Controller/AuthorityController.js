@@ -56,26 +56,35 @@ module.exports.getDetails = async function (req, res) {
       {
         $group: {
           _id: "$status",
-          Paymentcount: { $sum: 1 },
+          Complaintcount: { $sum: 1 },
         },
       },
       //   {
       //     $project: {
       //       _id: 1,
       //       Paymentcount: 1,
+      //       Complaintcount: 1,
 
       //     },
       //   },
     ]);
     complaintCount.sort((a, b) => a._id - b._id);
     console.log(complaintCount);
-
-    sportComlexComplaint.push({
-      sportComplex: sportcomplex[i].name,
-      complaintCount: complaintCount.length,
-      solvedComplaint: complaintCount[1].Paymentcount,
-      activeComplaint: complaintCount[0].Paymentcount,
-    });
+    if (complaintCount.length > 0) {
+      sportComlexComplaint.push({
+        sportComplex: sportcomplex[i].name,
+        complaintCount: complaintCount.length,
+        solvedComplaint: complaintCount[1].Complaintcount,
+        activeComplaint: complaintCount[0].Complaintcount,
+      });
+    } else {
+      sportComlexComplaint.push({
+        sportComplex: sportcomplex[i].name,
+        complaintCount: complaintCount.length,
+        solvedComplaint: 0,
+        activeComplaint: 0,
+      });
+    }
   }
 
   res.json({

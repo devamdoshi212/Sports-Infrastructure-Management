@@ -10,9 +10,9 @@ import { Calendar } from "primereact/calendar";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 
-import { AuthorityComplaintService } from "./ComplaintServices";
+import { AdminComplaintService } from "./ComplaintServices";
 
-export default function AthorityComplaintDataTable() {
+export default function AdminComplaintDataTable() {
   const { SportComplexId } = useSelector((state) => state.user.user);
   const [deleterefresh, setdeleterefresh] = useState(true);
   const [customers, setCustomers] = useState([]);
@@ -24,12 +24,10 @@ export default function AthorityComplaintDataTable() {
   });
 
   useEffect(() => {
-    AuthorityComplaintService.getCustomersXLarge(SportComplexId).then(
-      (data) => {
-        setCustomers(getCustomers(data));
-        setLoading(false);
-      }
-    );
+    AdminComplaintService.getCustomersXLarge(SportComplexId).then((data) => {
+      setCustomers(getCustomers(data));
+      setLoading(false);
+    });
     initFilters();
   }, [deleterefresh]);
 

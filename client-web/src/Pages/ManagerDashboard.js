@@ -53,33 +53,37 @@ const ManagerDashboard = () => {
   return (
     <div className="m-5">
       <div className="grid grid-cols-1 gap-4 lg:grid-cols-3 lg:gap-8">
-        <div className="h-32 text-center rounded-lg bg-gray-300 ">
-          <div className=" font-bold p-5 text-lg">Total Sports</div>
-          <div className="p-5 ">
+        <div className=" text-center rounded-lg bg-gray-300 ">
+          <div className=" font-bold p-5 text-2xl ">Total Facilities</div>
+          <div className="p-3 text-2xl ">
             {visibale && Instructor.availableSports.length}
           </div>
         </div>
-        <div className="h-32 text-center rounded-lg bg-gray-300 ">
-          <div className=" font-bold p-5 text-lg">Total Instructor</div>
-          <div className="p-5 ">
+        <div className=" text-center rounded-lg bg-gray-300">
+          <div className=" font-bold p-5 text-2xl ">Total Instructors</div>
+          <div className="p-3 text-2xl">
             {visibale && Instructor.instructerData.length}
           </div>
         </div>
-        <div className="h-32 text-center rounded-lg bg-gray-300 ">
-          <div className=" font-bold p-5 text-lg">Total Player</div>
-          <div className="p-5 ">{visibale && Instructor.athleteCount}</div>
+        <div className=" text-center rounded-lg bg-gray-300 ">
+          <div className=" font-bold p-5 text-2xl">Total Atheltes</div>
+          <div className="p-3 text-2xl">
+            {visibale && Instructor.athleteCount}
+          </div>
         </div>
-        <div className="h-32 text-center rounded-lg bg-gray-300 ">
-          <div className=" font-bold p-5 text-lg">Total Unsloved Complaint</div>
-          <div className="p-5 ">{visibale && complaint}</div>
+        <div className="text-center rounded-lg bg-gray-300 ">
+          <div className=" font-bold p-5 text-2xl">
+            Total Unsloved Complaints
+          </div>
+          <div className="p-3 text-2xl">{visibale && complaint}</div>
         </div>
-        <div className="h-32 text-center rounded-lg bg-gray-300 ">
-          <div className=" font-bold p-5 text-lg">Total Sloved Complaint</div>
-          <div className="p-5 ">{visibale && uncomplaint}</div>
+        <div className=" text-center rounded-lg bg-gray-300 ">
+          <div className=" font-bold p-5 text-2xl">Total Sloved Complaints</div>
+          <div className="p-3 text-2xl">{visibale && uncomplaint}</div>
         </div>
-        <div className="h-32 text-center rounded-lg bg-gray-300 ">
-          <div className=" font-bold p-5 text-lg">Total UnSloved Complaint</div>
-          <div className="p-5 ">{visibale && remain}</div>
+        <div className=" text-center rounded-lg bg-gray-300 ">
+          <div className=" font-bold p-5 text-2xl">Total Active Complaints</div>
+          <div className="p-3 text-2xl ">{visibale && remain}</div>
         </div>
       </div>
     </div>
