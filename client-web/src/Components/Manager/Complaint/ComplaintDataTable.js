@@ -204,10 +204,10 @@ export default function ComplaintDataTable() {
 
   const actionBodyTemplate = (rowData) => {
     return (
-      <div className="flex justify-between">
+      <div className="flex justify-between space-x-1">
         <button
           type="button"
-          className="text-blue-500 hover:text-blue-700 p-1"
+          className="text-white font-bold rounded-lg bg-blue-700 hover:text-gray-200 hover:bg-blue-500 p-2"
           onClick={() => resolveHandler(rowData)}
         >
           Resolve
@@ -216,7 +216,7 @@ export default function ComplaintDataTable() {
         <button
           type="button"
           onClick={() => PassHandler(rowData)}
-          className="text-red-500 hover:text-red-700 p-1"
+          className="text-white font-bold rounded-lg hover:text-gray-200  hover:bg-red-500 bg-red-700 p-2"
         >
           Forward
           {/* Your SVG icon for deleting */}
