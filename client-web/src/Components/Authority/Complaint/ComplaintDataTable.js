@@ -23,37 +23,6 @@ export default function AthorityComplaintDataTable() {
     Category: "",
   });
 
-  //   console.log(SportComplexId);
-
-  //   const DeleteHandler = (rowdata) => {
-  //     Swal.fire({
-  //       title: "Are you sure?",
-  //       text: "You won't be able to revert this!",
-  //       icon: "warning",
-  //       showCancelButton: true,
-  //       confirmButtonColor: "#3085d6",
-  //       cancelButtonColor: "#d33",
-  //       confirmButtonText: "Yes, Delete it!",
-  //     }).then((result) => {
-  //       if (result.isConfirmed) {
-  //         var myHeaders = new Headers();
-  //         myHeaders.append("token", cookies.token);
-  //         var requestOptions = {
-  //           method: "DELETE",
-  //           headers: myHeaders,
-  //           redirect: "follow",
-  //         };
-  //         fetch(`http://localhost:9999/deleteblog/${rowdata._id}`, requestOptions)
-  //           .then((response) => response.text())
-  //           .then((result) => {
-  //             setdeleterefresh(!deleterefresh);
-  //           })
-  //           .catch((error) => console.log("error", error));
-  //         console.log("Deleted !!");
-  //         Swal.fire("Deleted!", "Your file has been deleted.", "success");
-  //       }
-  //     });
-  //   };
   useEffect(() => {
     AuthorityComplaintService.getCustomersXLarge(SportComplexId).then(
       (data) => {

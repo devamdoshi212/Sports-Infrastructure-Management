@@ -5,6 +5,7 @@ const Profile = () => {
   const AuthorityData = useSelector((state) => state.user.user);
   const [lodaer, setloader] = useState(false);
   const [Profile, setProfile] = useState([{}]);
+  console.log(AuthorityData);
   useEffect(() => {
     var requestOptions = {
       method: "GET",
@@ -23,44 +24,62 @@ const Profile = () => {
       })
       .catch((error) => console.log("error", error));
   }, []);
+
   return (
     <div className="text-lg py-6 px-10 space-y-2">
       <div className="flex">
-        <div className="text-gray-700 font-[Fantasy] text-5xl underline underline-offset-8 decoration-2">{lodaer && Profile.Name}</div>
+        <div className="text-gray-700 font-[Fantasy] text-5xl underline underline-offset-8 decoration-2">
+          {lodaer && Profile.Name}
+        </div>
       </div>
-      
+
       <div className="text-2xl font-bold pt-7 ">General info</div>
 
       <div className="flex">
         <div className="w-1/5">District</div>{" "}
         <div className="flex text-gray-700">
-          :   {lodaer && <div className="px-4">{Profile.DistrictId.District}</div>}{" "}
+          :{" "}
+          {lodaer && <div className="px-4">{Profile.DistrictId.District}</div>}{" "}
         </div>
       </div>
       <div className="flex">
         <div className="w-1/5">E-mail</div>
-        <div className="flex text-gray-700">: {lodaer && <div className="px-4">{Profile.DistrictId.District}</div>}</div>
+        <div className="flex text-gray-700">
+          : {lodaer && <div className="px-4">{AuthorityData.Email}</div>}
+        </div>
       </div>
       <div className="flex">
         <div className="w-1/5">Contact Number </div>
-        <div className="flex text-gray-700">: {lodaer && <div className="px-4">{Profile.DistrictId.District}</div>}</div>
+        <div className="flex text-gray-700">
+          : {lodaer && <div className="px-4">{AuthorityData.ContactNum}</div>}
+        </div>
       </div>
       <div className="flex">
         <div className="w-1/5">Data of Birth </div>{" "}
-        <div className="flex text-gray-700">: {lodaer && <div className="px-4">{Profile.DistrictId.District}</div>}</div>
+        <div className="flex text-gray-700">
+          : {lodaer && <div className="px-4">{AuthorityData.DOB}</div>}
+        </div>
       </div>
-      <div className="flex">
+      {/* <div className="flex">
         <div className="w-1/5">Area </div>
-        <div className="flex text-gray-700">: {lodaer && <div className="px-4">{Profile.DistrictId.District}</div>}</div>
-      </div>
-      <div className="flex">
+        <div className="flex text-gray-700">
+          : {lodaer && <div className="px-4">{}</div>}
+        </div>
+      </div> */}
+      {/* <div className="flex">
         <div className="w-1/5">Taluka </div>{" "}
-        <div className="flex text-gray-700">:  {lodaer && <div className="px-4">{Profile.DistrictId.District}</div>}</div>
+        <div className="flex text-gray-700">
+          :{" "}
+          {lodaer && <div className="px-4">{Profile.DistrictId.District}</div>}
+        </div>
       </div>
       <div className="flex">
         <div className="w-1/5">Operational Since </div>
-        <div className="flex text-gray-700">:  {lodaer && <div className="px-4">{Profile.DistrictId.District}</div>}</div>
-      </div>
+        <div className="flex text-gray-700">
+          :{" "}
+          {lodaer && <div className="px-4">{Profile.DistrictId.District}</div>}
+        </div>
+      </div> */}
     </div>
   );
 };
