@@ -15,8 +15,7 @@ import { useNavigation } from "@react-navigation/native";
 import ipconfig from "../../ipconfig";
 import { useSelector } from "react-redux";
 
-const ListComplaint = () => {
-  const [selectedstatus, setselectedstatus] = useState("0");
+const AthleteListComplaint = () => {
   const [Complaint, setcomplain] = useState([]);
   const ip = ipconfig.ip;
   const Userdata = useSelector((state) => state.user.User);
@@ -28,7 +27,7 @@ const ListComplaint = () => {
       redirect: "follow",
     };
     fetch(
-      `http://${ip}:9999/getAllComplaints?userId=${Userdata._id}&status=${selectedstatus}`,
+      `http://${ip}:9999/getAllComplaints?sportsComplex=${sid}&level=0`,
       requestOptions
     )
       .then((response) => response.json())
@@ -36,7 +35,7 @@ const ListComplaint = () => {
         setcomplain(result.data);
       })
       .catch((error) => console.log("error", error));
-  }, [selectedstatus]);
+  }, []);
   const navigate = useNavigation();
   return (
     <>
@@ -57,27 +56,13 @@ const ListComplaint = () => {
             </Text>
           </View>
         </View>
-        <View style={styles.pickerContainer}>
-          <Picker
-            selectedValue={selectedstatus}
-            onValueChange={(itemValue, itemIndex) => {
-              setselectedstatus(itemValue);
-              //   handleInput("bloodGroup", itemValue);
-            }}
-            style={styles.input}
-            placeholder="Select Complaint Status"
-          >
-            {/* <Picker.Item label={"Select a Blood Group"} /> */}
-            <Picker.Item label="Pending" value="0" />
-            <Picker.Item label="Solved" value="1" />
-          </Picker>
-        </View>
+
         <ScrollView contentContainerStyle={styles.scrollContainer}>
           {Complaint.map((item, index) => (
             <View style={styles.card} key={index}>
               <Pressable
                 onPress={() => {
-                  navigate.navigate("SupervisorViewComplaint", { data: item });
+                  navigate.navigate("AthelteViewComplaint", { data: item });
                 }}
                 style={({ pressed }) => [
                   {
@@ -183,4 +168,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ListComplaint;
+export default AthleteListComplaint;

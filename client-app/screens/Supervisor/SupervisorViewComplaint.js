@@ -14,69 +14,11 @@ import { Ionicons } from "@expo/vector-icons";
 import { useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import ipconfig from "../../ipconfig";
-function ViewComplaint({ route, navigation }) {
+function SupervisorViewComplaint({ route, navigation }) {
   const navigate = useNavigation();
   const data = route.params.data;
   const ip = ipconfig.ip;
-  const resolveHandler = () => {
-    var myHeaders = new Headers();
-    myHeaders.append("Content-Type", "application/json");
 
-    var raw = JSON.stringify({
-      status: 1,
-    });
-
-    var requestOptions = {
-      method: "PATCH",
-      headers: myHeaders,
-      body: raw,
-      redirect: "follow",
-    };
-
-    fetch(`http://${ip}:9999/updateComplaint/${data._id}`, requestOptions)
-      .then((response) => response.json())
-      .then((result) => {
-        Alert.alert("Complaint Solved Successfully !", "Done!!!", [
-          // {
-          //     text: 'Cancel',
-          //     onPress: () => console.log('Cancel Pressed'),
-          //     style: 'cancel',
-          // },
-          { text: "OK", onPress: () => navigation.goBack() },
-        ]);
-      })
-      .catch((error) => console.log("error", error));
-  };
-
-  const forwardHandler = () => {
-    var myHeaders = new Headers();
-    myHeaders.append("Content-Type", "application/json");
-
-    var raw = JSON.stringify({
-      level: 1,
-    });
-
-    var requestOptions = {
-      method: "PATCH",
-      headers: myHeaders,
-      body: raw,
-      redirect: "follow",
-    };
-
-    fetch(`http://${ip}:9999/updateComplaint/${data._id}`, requestOptions)
-      .then((response) => response.json())
-      .then((result) => {
-        Alert.alert("Complaint Pass to Manager", "Done!!", [
-          // {
-          //     text: 'Cancel',
-          //     onPress: () => console.log('Cancel Pressed'),
-          //     style: 'cancel',
-          // },
-          { text: "OK", onPress: () => navigation.goBack() },
-        ]);
-      })
-      .catch((error) => console.log("error", error));
-  };
   return (
     <View style={styles.container}>
       <View style={styles.header}>
@@ -134,34 +76,52 @@ function ViewComplaint({ route, navigation }) {
           </ScrollView>
         </View>
         {/* <View
-          style={{
-            flexDirection: "row",
-            paddingVertical: 15,
-            paddingHorizontal: 10,
-            backgroundColor: "white",
-            marginHorizontal: 15,
-            borderRadius: 8,
-            height: 250,
-          }}
-        >
-          <ScrollView>
-            <TextInput
-              multiline
-              editable
-              placeholder="Remarks here"
-            ></TextInput>
-          </ScrollView>
-        </View> */}
+              style={{
+                flexDirection: "row",
+                paddingVertical: 15,
+                paddingHorizontal: 10,
+                backgroundColor: "white",
+                marginHorizontal: 15,
+                borderRadius: 8,
+                height: 250,
+              }}
+            >
+              <ScrollView>
+                <TextInput
+                  multiline
+                  editable
+                  placeholder="Remarks here"
+                ></TextInput>
+              </ScrollView>
+            </View> */}
         <View
           style={{
             justifyContent: "space-evenly",
             flexDirection: "row",
             marginTop: 25,
           }}
-        >
-          <Button title="Resolve" onPress={resolveHandler}></Button>
-          <Button title="Forward" onPress={forwardHandler}></Button>
+        ></View>
+        <View>
+          <Image
+            style={{
+              width: 120,
+              height: 120,
+              marginHorizontal: 15,
+              marginTop: -10,
+            }}
+            source={{ uri: `http://${ip}:9999/complaints/${data.photo}` }}
+          />
         </View>
+        {data.status == 0 && (
+          <TouchableOpacity style={styles.logout}>
+            <Button color="red" title="Pending" />
+          </TouchableOpacity>
+        )}
+        {data.status == 1 && (
+          <TouchableOpacity style={styles.logout}>
+            <Button color="green" title="Solved" />
+          </TouchableOpacity>
+        )}
       </ScrollView>
     </View>
   );
@@ -174,6 +134,11 @@ const styles = StyleSheet.create({
     marginTop: 0,
     paddingTop: 51,
     paddingBottom: 80,
+  },
+  logout: {
+    width: "40%",
+    alignSelf: "center",
+    marginTop: "15%",
   },
   header: {
     flexDirection: "row",
@@ -193,4 +158,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ViewComplaint;
+export default SupervisorViewComplaint;

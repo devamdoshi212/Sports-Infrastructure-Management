@@ -7,11 +7,13 @@ import SupervisorProfile from "./SupervisorProfile";
 import SupervisorProfileDetail from "./SupervisorProfileDetail";
 import AthleteDetails from "./AthleteDetails";
 import AtheleteProfile from "./AtheleteProfile";
-import ViewComplaint from "./ViewComplaint";
 import ListComplaint from "./ListComplaint";
 import RaiseComplaint from "./RaiseComplaint";
 import Attendance from "./Attendance";
 import SportAttendance from "./SportAttendance";
+import SupervisorViewComplaint from "./SupervisorViewComplaint";
+import AthleteViewComplaint from "./AthleteViewComplaint";
+import AthleteListComplaint from "./AthleteListComplaint";
 const SupervisorNavigator = ({ navigation }) => {
   return (
     <Stack.Navigator>
@@ -42,8 +44,18 @@ const SupervisorNavigator = ({ navigation }) => {
           options={{ headerShown: false }}
         />
         <Stack.Screen
-          name="ViewComplaint"
-          component={ViewComplaint}
+          name="SupervisorViewComplaint"
+          component={SupervisorViewComplaint}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="AthelteListComplaint"
+          component={AthleteListComplaint}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="AthelteViewComplaint"
+          component={AthleteViewComplaint}
           options={{ headerShown: false }}
         />
         <Stack.Screen
