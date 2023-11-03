@@ -25,16 +25,16 @@ const ModalView = (props) => {
       }}
     >
       <View style={styles.container}>
-        <Pressable
+        {/* <Pressable
           onPress={() => {
             // props.navigation.goBack();
             navigate.goBack();
           }}
-        >
-          <View style={styles.back}>
+        > */}
+          {/* <View style={styles.back}>
             <Ionicons name="arrow-back" size={24} />
           </View>
-        </Pressable>
+        </Pressable> */}
         <View style={styles.card}>
           <View style={styles.profileDetail}>
             <View style={styles.row}>
@@ -52,6 +52,7 @@ const ModalView = (props) => {
             <View style={styles.row}>
               <Text style={styles.label}>Complex_Name :</Text>
               <Text style={styles.input}>{props.data.sportComplexName}</Text>
+
             </View>
             <View style={styles.row}>
               <Text style={styles.label}>From :</Text>
@@ -77,7 +78,8 @@ const ModalView = (props) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#f0f0f0",
+    backgroundColor: "rgba(0,0,0,0.5)",
+    justifyContent:"center"
   },
   back: {
     marginTop: "10%",
@@ -103,6 +105,8 @@ const styles = StyleSheet.create({
     elevation: 5,
     marginHorizontal: 30,
     marginVertical: 20,
+    width:"90%",
+    alignSelf:"center",
   },
   label: {
     fontWeight: "bold",
@@ -116,6 +120,7 @@ const styles = StyleSheet.create({
   },
   input: {
     marginLeft: 6,
+    width:"60%"
   },
   actions: {
     marginTop: 5,
