@@ -8,6 +8,7 @@ import {
   ScrollView,
   Pressable,
 } from "react-native";
+import RatingModal from "./RatingModal";
 import { Ionicons } from "@expo/vector-icons";
 import { useEffect, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
@@ -18,6 +19,7 @@ const SportEnroll = () => {
   console.log(Atheltedata[0]);
   const id = Atheltedata[0]._id;
   const [payments, setPayment] = useState([]);
+  const [rateModal, setRateModal] = useState(false);
   const ip = ipconfig.ip;
   // const fromdate=new Date(item.from)
   useEffect(() => {
@@ -37,6 +39,10 @@ const SportEnroll = () => {
       .catch((error) => console.log("error", error));
   }, []);
 
+  const ratingHandler = () => {
+    setRateModal(!rateModal);
+    console.log(rateModal);
+  };
   const navigate = useNavigation();
   return (
     <>
@@ -47,6 +53,7 @@ const SportEnroll = () => {
               navigate.goBack();
             }}
           >
+            {rateModal && <RatingModal rateModal={rateModal}></RatingModal>}
             <View style={styles.back}>
               <Ionicons name="arrow-back" size={24} />
             </View>
@@ -109,6 +116,11 @@ const SportEnroll = () => {
                 </View>
 
                 {/* </View> */}
+                <Pressable onPress={ratingHandler}>
+                  <View style={{ alignSelf: "flex-end",padding:10 } }>
+                    <Text style={{ color: "#0054a8" }}>Rate us</Text>
+                  </View>
+                </Pressable>
               </Pressable>
             </View>
           ))}

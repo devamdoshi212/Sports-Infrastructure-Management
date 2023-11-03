@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import Swal from "sweetalert2";
 import "primereact/resources/themes/lara-light-indigo/theme.css";
 import { FilterMatchMode } from "primereact/api";
 import { DataTable } from "primereact/datatable";
@@ -9,10 +10,9 @@ import { Calendar } from "primereact/calendar";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 
-import { ComplaintService } from "./ComplaintServices";
-import { useRef } from "react";
+import { AuthorityComplaintService } from "./ComplaintServices";
 
-export default function ComplaintDataTable() {
+export default function AthorityComplaintDataTable() {
   const { SportComplexId } = useSelector((state) => state.user.user);
   const [deleterefresh, setdeleterefresh] = useState(true);
   const [customers, setCustomers] = useState([]);
@@ -55,10 +55,12 @@ export default function ComplaintDataTable() {
   //     });
   //   };
   useEffect(() => {
-    ComplaintService.getCustomersXLarge(SportComplexId).then((data) => {
-      setCustomers(getCustomers(data));
-      setLoading(false);
-    });
+    AuthorityComplaintService.getCustomersXLarge(SportComplexId).then(
+      (data) => {
+        setCustomers(getCustomers(data));
+        setLoading(false);
+      }
+    );
     initFilters();
   }, [deleterefresh]);
 
@@ -204,10 +206,10 @@ export default function ComplaintDataTable() {
 
   const actionBodyTemplate = (rowData) => {
     return (
-      <div className="flex justify-between space-x-1">
+      <div className="flex justify-between">
         <button
           type="button"
-          className="text-white font-bold rounded-lg bg-blue-700 hover:text-gray-200 hover:bg-blue-500 p-2"
+          className="text-blue-500 hover:text-blue-700 p-1"
           onClick={() => resolveHandler(rowData)}
         >
           Resolve
@@ -216,7 +218,7 @@ export default function ComplaintDataTable() {
         <button
           type="button"
           onClick={() => PassHandler(rowData)}
-          className="text-white font-bold rounded-lg hover:text-gray-200  hover:bg-red-500 bg-red-700 p-2"
+          className="text-red-500 hover:text-red-700 p-1"
         >
           Forward
           {/* Your SVG icon for deleting */}
