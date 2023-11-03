@@ -8,7 +8,7 @@ import {
   ScrollView,
   Pressable,
 } from "react-native";
-import { Ionicons } from "@expo/vector-icons";
+import { Ionicons, Entypo } from "@expo/vector-icons";
 import { useEffect, useState } from "react";
 import Modal from "./Modal";
 import ipconfig from "../../ipconfig";
@@ -98,6 +98,9 @@ const PaymentHistory = ({ navigation }) => {
                   <View style={styles.row}>
                     <Text style={styles.label}>To :</Text>
                     <Text style={styles.input}>{item.to}</Text>
+                  </View>
+                  <View style={{alignSelf:"flex-end"}}>
+                    <Entypo style={{color:"#0054a8"}}name="eye" size={24} />
                   </View>
                 </Pressable>
               </View>
