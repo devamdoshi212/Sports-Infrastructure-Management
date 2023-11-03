@@ -173,24 +173,43 @@ export default function AdminComplaintDataTable() {
 
   const actionBodyTemplate = (rowData) => {
     return (
-      <div className="flex justify-between space-x-1">
-        <button
-          type="button"
-          className="text-white font-bold rounded-lg bg-blue-700 hover:bg-blue-500 hover:text-gray-200 p-2"
-          onClick={() => resolveHandler(rowData)}
-        >
-          Resolve
-          {/* Your SVG icon for editing */}
-        </button>
-        <button
+      <>
+        <div className="mb-4">
+          <label
+            className="block text-gray-700 text-sm font-bold mb-2"
+            htmlFor="remarks"
+          >
+            Remarks
+          </label>
+          <input
+            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            name="remarks"
+            type="text"
+            placeholder="Type here ..."
+            // value={values.name}
+            // onChange={handleChange}
+            // onBlur={handleBlur}
+          />
+        </div>
+        <div className="flex justify-between space-x-1">
+          <button
+            type="button"
+            className="text-white font-bold rounded-lg bg-blue-700 hover:bg-blue-500 hover:text-gray-200 p-2"
+            onClick={() => resolveHandler(rowData)}
+          >
+            Resolve
+            {/* Your SVG icon for editing */}
+          </button>
+          {/* <button
           type="button"
           onClick={() => PassHandler(rowData)}
           className="text-white font-bold rounded-lg bg-red-700 hover:bg-red-500 hover:text-gray-200 p-2"
         >
           Forward
-          {/* Your SVG icon for deleting */}
-        </button>
-      </div>
+          Your SVG icon for deleting
+        </button> */}
+        </div>
+      </>
     );
   };
 
