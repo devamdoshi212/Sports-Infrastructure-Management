@@ -27,7 +27,7 @@ const AthleteListComplaint = () => {
       redirect: "follow",
     };
     fetch(
-      `http://${ip}:9999/getAllComplaints?sportsComplex=${sid}&level=0`,
+      `http://${ip}:9999/getAllComplaints?sportsComplex=${sid}&level=0&status=0`,
       requestOptions
     )
       .then((response) => response.json())

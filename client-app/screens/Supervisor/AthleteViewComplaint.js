@@ -18,6 +18,7 @@ function AthleteViewComplaint({ route, navigation }) {
   const navigate = useNavigation();
   const data = route.params.data;
   const ip = ipconfig.ip;
+  const [remarks, setremarks] = useState("");
   const resolveHandler = () => {
     var myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/json");
@@ -54,6 +55,7 @@ function AthleteViewComplaint({ route, navigation }) {
 
     var raw = JSON.stringify({
       level: 1,
+      Sremarks: remarks,
     });
 
     var requestOptions = {
@@ -122,18 +124,18 @@ function AthleteViewComplaint({ route, navigation }) {
             backgroundColor: "white",
             marginHorizontal: 15,
             borderRadius: 8,
-            height: 250,
+            height: 200,
             marginBottom: 15,
           }}
         >
           <ScrollView>
-            <Text style={{ fontWeight: "bold", paddingBottom: 7 }}>
+            <Text style={{ fontWeight: "bold", paddingBottom: 5 }}>
               Complaint:
             </Text>
             <Text>{data.Description}</Text>
           </ScrollView>
         </View>
-        {/* <View
+        <View
           style={{
             flexDirection: "row",
             paddingVertical: 15,
@@ -141,18 +143,26 @@ function AthleteViewComplaint({ route, navigation }) {
             backgroundColor: "white",
             marginHorizontal: 15,
             borderRadius: 8,
-            height: 250,
+            height: 150,
           }}
         >
           <ScrollView>
             <TextInput
-              multiline
+              multiline={true}
               editable
               placeholder="Remarks here"
+              value={remarks}
+              onChangeText={(data) => {
+                setremarks(data);
+              }}
             ></TextInput>
           </ScrollView>
-        </View> */}
-        <View>
+        </View>
+        <View
+          style={{
+            marginTop: 20,
+          }}
+        >
           <Image
             style={{
               width: 120,

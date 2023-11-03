@@ -14,10 +14,9 @@ import { Ionicons } from "@expo/vector-icons";
 import * as Sharing from "expo-sharing";
 import * as Print from "expo-print";
 import * as FileSystem from "expo-file-system";
-
+import image from "./../../assets/Logo.png";
 import { useNavigation } from "@react-navigation/native";
 const ModalView = (props) => {
-  console.log(props);
   const handlePrintPDF = async () => {
     try {
       const { data } = props;
@@ -99,6 +98,7 @@ const ModalView = (props) => {
     <div class="container">
       <div class="logo">
         <img
+        src=${image}
           alt="Logo"
         />
       </div>

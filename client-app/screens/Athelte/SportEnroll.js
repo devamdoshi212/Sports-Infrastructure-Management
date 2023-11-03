@@ -16,12 +16,13 @@ import ipconfig from "../../ipconfig";
 import { useSelector } from "react-redux";
 const SportEnroll = () => {
   const Atheltedata = useSelector((state) => state.athelte.Athelte);
-  console.log(Atheltedata[0]);
+  // console.log(Atheltedata[0].payments[0].sports);
   const id = Atheltedata[0]._id;
   const [payments, setPayment] = useState([]);
   const [rateModal, setRateModal] = useState(false);
+  const [rating, setrating] = useState("");
+  const [sportid, setsportid] = useState("");
   const ip = ipconfig.ip;
-  // const fromdate=new Date(item.from)
   useEffect(() => {
     var requestOptions = {
       method: "GET",
@@ -39,6 +40,10 @@ const SportEnroll = () => {
       .catch((error) => console.log("error", error));
   }, []);
 
+  const ratingcountHandler = (id) => {
+    setrating(id);
+    console.log(id);
+  };
   const ratingHandler = () => {
     setRateModal(!rateModal);
     console.log(rateModal);
@@ -53,7 +58,15 @@ const SportEnroll = () => {
               navigate.goBack();
             }}
           >
-            {rateModal && <RatingModal rateModal={rateModal}></RatingModal>}
+            {rateModal && (
+              <RatingModal
+                sportid={sportid}
+                sportcomplex={Atheltedata[0].createdBy.SportComplexId}
+                athelteid={Atheltedata[0]._id}
+                setrating={ratingcountHandler}
+                rateModal={rateModal}
+              ></RatingModal>
+            )}
             <View style={styles.back}>
               <Ionicons name="arrow-back" size={24} />
             </View>
@@ -68,6 +81,9 @@ const SportEnroll = () => {
           {payments.map((item, index) => (
             <View style={styles.card} key={index}>
               <Pressable
+                onPress={() => {
+                  setsportid(item.sports._id);
+                }}
                 style={({ pressed }) => [
                   {
                     backgroundColor: pressed ? "#f0f0f0" : "white",
@@ -117,7 +133,7 @@ const SportEnroll = () => {
 
                 {/* </View> */}
                 <Pressable onPress={ratingHandler}>
-                  <View style={{ alignSelf: "flex-end",padding:10 } }>
+                  <View style={{ alignSelf: "flex-end", padding: 10 }}>
                     <Text style={{ color: "#0054a8" }}>Rate us</Text>
                   </View>
                 </Pressable>
