@@ -288,7 +288,7 @@ export default function FacilityDataTable() {
             header="Image"
             style={{ minWidth: "12rem" }}
             body={(rowdata) => (
-              <button onClick={() => openModal(rowdata)}>View Images</button>
+              <button onClick={() => openModal(rowdata)} className="text-blue-900 hover:underline hover:decoration-black ">View Images</button>
             )}
           />
         </DataTable>
