@@ -69,28 +69,36 @@ const Profile = () => {
     <div className="text-lg px-7 py-7 flex ">
     <div className="w-4/5 space-y-2">
     <div className="flex">
-      <div className="w-1/3">Manager Name </div> <div className="text-gray-700">:  {lodaer && Profile.Name}</div> 
+      <div className="text-gray-700 font-[Fantasy] text-5xl underline underline-offset-8 decoration-2"> {lodaer && Profile.Name}</div> 
+    </div>
+    <div className="text-2xl font-bold pt-7 ">General info</div>
+    <div className="flex">
+      <div className="w-1/3">Sports Complex Name </div> 
+      <div className="text-gray-700 flex">:  {lodaer && <div className="px-4">{Profile.SportComplexId.name}</div>}</div> 
     </div>
     <div className="flex">
-      <div className="w-1/3">Sports Complex Name </div> <div className="text-gray-700">:  {lodaer && Profile.SportComplexId.name}</div> 
+      <div className="w-1/3">E-mail</div> 
+      <div className="text-gray-700 flex">:{lodaer && <div className="px-4">{Profile.SportComplexId.name}</div>}</div> 
     </div>
     <div className="flex">
-      <div className="w-1/3">E-mail</div> <div className="text-gray-700">:</div> 
+      <div className="w-1/3">Contact Number </div> 
+      <div className="text-gray-700 flex">: {lodaer && <div className="px-4">{Profile.SportComplexId.name}</div>}</div> 
     </div>
     <div className="flex">
-      <div className="w-1/3">Contact Number </div> <div className="text-gray-700">:</div> 
+      <div className="w-1/3">Data of Birth </div>
+       <div className="text-gray-700 flex">: {lodaer && <div className="px-4">{Profile.SportComplexId.name}</div>}</div> 
     </div>
     <div className="flex">
-      <div className="w-1/3">Data of Birth </div> <div className="text-gray-700">:</div> 
+      <div className="w-1/3">Area </div>
+       <div className="text-gray-700 flex">: {lodaer && <div className="px-4">{Profile.SportComplexId.name}</div>}</div> 
     </div>
     <div className="flex">
-      <div className="w-1/3">Area </div> <div className="text-gray-700">:</div> 
+      <div className="w-1/3">Taluka </div> 
+      <div className="text-gray-700 flex">: {lodaer && <div className="px-4">{Profile.SportComplexId.name}</div>}</div> 
     </div>
     <div className="flex">
-      <div className="w-1/3">Taluka </div> <div className="text-gray-700">:</div> 
-    </div>
-    <div className="flex">
-      <div className="w-1/3">Operational Since </div> <div className="text-gray-700">:</div> 
+      <div className="w-1/3">Operational Since </div> 
+      <div className="text-gray-700 flex">: {lodaer && <div className="px-4">{Profile.SportComplexId.name}</div>}</div> 
     </div>
     </div>
 
