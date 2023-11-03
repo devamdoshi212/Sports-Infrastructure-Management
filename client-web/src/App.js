@@ -52,6 +52,7 @@ import EditSportsComplexDetails from "./Components/Manager/SportsComplexDetails/
 import ComplaintDetails from "./Components/Manager/Complaint/ComplainDetails";
 import AuthorityComplaintDataTable from "./Components/Authority/Complaint/ComplaintDetails";
 import Athelte from "./Components/Manager/Athelte/Athelte";
+import AdminComplaint from "./Components/Admin/Complaint/Complaint";
 
 const routes = createBrowserRouter([
   {
@@ -105,6 +106,11 @@ const routes = createBrowserRouter([
       {
         path: "addsportscomplex",
         element: <AddSportsComplex />,
+        errorElement: <ErrorPage />,
+      },
+      {
+        path: "allcomplaints",
+        element: <AdminComplaint />,
         errorElement: <ErrorPage />,
       },
     ],
