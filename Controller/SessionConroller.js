@@ -86,3 +86,22 @@ module.exports.addSession = async function (req, res) {
     });
   }
 };
+
+module.exports.getSession = async function (req, res) {
+  try {
+    const data = await sessions
+      .find(req.query)
+      .populate("sportscomplex")
+      .populate("enrolls.userId");
+    res.json({
+      data: data,
+      rcode: 200,
+    });
+  } catch (err) {
+    console.log(err);
+    res.json({
+      error: err.msg,
+      rcode: -9,
+    });
+  }
+};
