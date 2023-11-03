@@ -37,7 +37,7 @@ const Layout = () => {
           <div className=" hover:shadow-gray-400 hover:shadow-md">
             <Link
               to={"/admin"}
-              className="flex items-center active-nav-link text-white py-4 pl-6 nav-item gap-2"
+              className="flex items-center active-nav-link text-white py-4 pl-6 nav-item gap-2 focus:outline-none focus:shadow-md focus:shadow-gray-500"
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -60,7 +60,7 @@ const Layout = () => {
           <div className=" hover:shadow-gray-400 hover:shadow-md">
             <Link
               to={"allauthority"}
-              className="flex items-center active-nav-link text-white py-4 pl-6 nav-item gap-2"
+              className="flex items-center active-nav-link text-white py-4 pl-6 nav-item gap-2 focus:outline-none focus:shadow-md focus:shadow-gray-500"
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -83,7 +83,7 @@ const Layout = () => {
           <div className=" hover:shadow-gray-400 hover:shadow-md">
             <Link
               to={"allmanager"}
-              className="flex items-center active-nav-link text-white py-4 pl-6 nav-item gap-2"
+              className="flex items-center active-nav-link text-white py-4 pl-6 nav-item gap-2 focus:outline-none focus:shadow-md focus:shadow-gray-500"
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -106,7 +106,7 @@ const Layout = () => {
           <div className=" hover:shadow-gray-400 hover:shadow-md">
             <Link
               to={"allfacility"}
-              className="flex items-center active-nav-link text-white py-4 pl-6 nav-item gap-2"
+              className="flex items-center active-nav-link text-white py-4 pl-6 nav-item gap-2 focus:outline-none focus:shadow-md focus:shadow-gray-500"
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -129,7 +129,7 @@ const Layout = () => {
           <div className=" hover:shadow-gray-400 hover:shadow-md">
             <Link
               to={"allsportscomplex"}
-              className="flex items-center active-nav-link text-white py-4 pl-6 nav-item gap-2"
+              className="flex items-center active-nav-link text-white py-4 pl-6 nav-item gap-2 focus:outline-none focus:shadow-md focus:shadow-gray-500"
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
