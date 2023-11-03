@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import Swal from "sweetalert2";
 import "primereact/resources/themes/lara-light-indigo/theme.css";
 import { FilterMatchMode } from "primereact/api";
 import { DataTable } from "primereact/datatable";
@@ -9,10 +10,9 @@ import { Calendar } from "primereact/calendar";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 
-import { ComplaintService } from "./ComplaintServices";
-import { useRef } from "react";
+import { AuthorityComplaintService } from "./ComplaintServices";
 
-export default function ComplaintDataTable() {
+export default function AthorityComplaintDataTable() {
   const { SportComplexId } = useSelector((state) => state.user.user);
   const [deleterefresh, setdeleterefresh] = useState(true);
   const [customers, setCustomers] = useState([]);
@@ -55,10 +55,12 @@ export default function ComplaintDataTable() {
   //     });
   //   };
   useEffect(() => {
-    ComplaintService.getCustomersXLarge(SportComplexId).then((data) => {
-      setCustomers(getCustomers(data));
-      setLoading(false);
-    });
+    AuthorityComplaintService.getCustomersXLarge(SportComplexId).then(
+      (data) => {
+        setCustomers(getCustomers(data));
+        setLoading(false);
+      }
+    );
     initFilters();
   }, [deleterefresh]);
 
