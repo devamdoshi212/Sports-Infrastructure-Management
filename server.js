@@ -130,7 +130,7 @@ app.get(
 );
 
 //Rating routes
-app.post("/addRating", RatingController.addRating);
+app.get("/addRating", RatingController.addRating);
 app.get("/getAllRatings", RatingController.getAllRatings);
 
 //Complaint routes
