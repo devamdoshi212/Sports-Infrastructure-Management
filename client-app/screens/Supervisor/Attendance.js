@@ -10,10 +10,31 @@ import {
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { DateTimePickerAndroid } from "@react-native-community/datetimepicker";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import ipconfig from "../../ipconfig";
+import { useSelector } from "react-redux";
 
 const Attendance = ({ navigation }) => {
-  const [date, setDate] = useState(new Date(1598051730000));
+  const Userdata = useSelector((s) => s.user.User);
+  const ip = ipconfig.ip;
+  const [attendance, setattendance] = useState([]);
+  const [date, setDate] = useState(new Date());
+  useEffect(() => {
+    var requestOptions = {
+      method: "GET",
+      redirect: "follow",
+    };
+    fetch(
+      `http://${ip}:9999/getSession?sportscomplex=${Userdata.SportComplexId}&date=${date}`,
+      requestOptions
+    )
+      .then((response) => response.json())
+      .then((result) => {
+        if (result.data) setattendance(result.data[0].enrolls);
+        else setattendance([]);
+      })
+      .catch((error) => console.log("error", error));
+  }, [date]);
   const onChange = (event, selectedDate) => {
     const currentDate = selectedDate;
     setDate(currentDate);
@@ -70,22 +91,41 @@ const Attendance = ({ navigation }) => {
           <Button onPress={showDatepicker} title="Date" />
         </View>
         <ScrollView contentContainerStyle={styles.scrollContainer}>
-          <Pressable
-            onPress={() => {
-              navigation.navigate("SportAttendance");
-            }}
-          >
-            <View style={styles.card}>
+          <View style={styles.card}>
+            <View style={styles.row}>
+              <View style={styles.column1}>
+                <Text style={styles.label}>Name</Text>
+              </View>
+              <View style={styles.column2}>
+                <Text style={styles.label}>In Time</Text>
+              </View>
+              <View style={styles.column3}>
+                <Text style={{ fontWeight: "bold", fontSize: 17 }}>
+                  {" "}
+                  Out Time
+                </Text>
+              </View>
+            </View>
+          </View>
+          {attendance.map((item, index) => (
+            <View style={styles.card} key={index}>
               <View style={styles.row}>
                 <View style={styles.column1}>
-                  <Text style={styles.label}>Cricket</Text>
+                  <Text style={styles.label}>{item.userId.Name}</Text>
                 </View>
                 <View style={styles.column2}>
-                  <Text style={styles.input}>5/15</Text>
+                  <Text style={styles.label}>
+                    {new Date(item.entry).toUTCString().substring(17, 29)}
+                  </Text>
+                </View>
+                <View style={styles.column3}>
+                  <Text style={styles.label}>
+                    {new Date(item.exit).toUTCString().substring(17, 29)}
+                  </Text>
                 </View>
               </View>
             </View>
-          </Pressable>
+          ))}
         </ScrollView>
       </View>
     </>
@@ -142,10 +182,13 @@ const styles = StyleSheet.create({
     paddingVertical: "5%",
   },
   column1: {
-    width: "60%",
+    width: "40%",
     paddingLeft: "5%",
   },
   column2: {
+    width: "20%",
+  },
+  column3: {
     width: "45%",
   },
   label: {
