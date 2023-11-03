@@ -90,7 +90,15 @@ module.exports.addSession = async function (req, res) {
 module.exports.getSession = async function (req, res) {
   try {
     const data = await sessions
-      .find(req.query)
+      .find({
+        $expr: {
+          $eq: [
+            { $dateToString: { format: "%Y-%m-%d", date: "$enrolls.entry" } },
+            { $dateToString: { format: "%Y-%m-%d", date: givenDate } },
+          ],
+        },
+        sportsComplex: req.query.sportscomplexId,
+      })
       .populate("sportscomplex")
       .populate("enrolls.userId");
     res.json({

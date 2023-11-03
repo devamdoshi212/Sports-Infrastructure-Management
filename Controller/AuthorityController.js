@@ -59,12 +59,13 @@ module.exports.getDetails = async function (req, res) {
           Paymentcount: { $sum: 1 },
         },
       },
-      {
-        $project: {
-          _id: 1,
-          Paymentcount: 1,
-        },
-      },
+    //   {
+    //     $project: {
+    //       _id: 1,
+    //       Paymentcount: 1,
+            
+    //     },
+    //   },
     ]);
     complaintCount.sort((a, b) => a._id - b._id);
     console.log(complaintCount);
