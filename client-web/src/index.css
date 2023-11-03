@@ -4,10 +4,22 @@
 @tailwind utilities;
 .p-datatable table {
   border-collapse: collapse;
-  border: 1px solid #ccc;
-}
+  border: 1px solid #949494;
+  }
 
 .p-datatable th,
 .p-datatable td {
-  border: 1px solid #ccc;
+  border: 1px solid #949494;
+}
+
+.p-datatable th{
+  background-color:#DEDEDE;
+}
+
+.p-datatable tr:nth-child(even) {
+  background-color: #E8E9EB;
+}
+
+.p-datatable tr:hover{
+   background-color:#F5F5F5;
 }

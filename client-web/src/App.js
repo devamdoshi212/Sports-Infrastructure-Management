@@ -50,6 +50,8 @@ import AllInstructor from "./Components/Manager/Instructor/AllInstructor";
 import SportsComplexDetails from "./Components/Manager/SportsComplexDetails/SportsComplexDetails";
 import EditSportsComplexDetails from "./Components/Manager/SportsComplexDetails/EditSportsComplexDetails";
 import ComplaintDetails from "./Components/Manager/Complaint/ComplainDetails";
+import AuthorityComplaintDataTable from "./Components/Authority/Complaint/ComplaintDetails";
+import Athelte from "./Components/Manager/Athelte/Athelte";
 
 const routes = createBrowserRouter([
   {
@@ -139,6 +141,11 @@ const routes = createBrowserRouter([
         element: <AllAuthoritySportsComplex />,
         errorElement: <ErrorPage />,
       },
+      {
+        path: "allcomplaint",
+        element: <AuthorityComplaintDataTable />,
+        errorElement: <ErrorPage />,
+      },
     ],
   },
   {
@@ -191,6 +198,11 @@ const routes = createBrowserRouter([
       {
         path: "allcomplaint",
         element: <ComplaintDetails />,
+        errorElement: <ErrorPage />,
+      },
+      {
+        path: "allathelte",
+        element: <Athelte />,
         errorElement: <ErrorPage />,
       },
     ],

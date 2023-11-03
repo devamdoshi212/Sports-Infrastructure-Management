@@ -1,4 +1,4 @@
-export const ComplaintService = {
+export const AuthorityComplaintService = {
   getData(id) {
     return fetch(
       `http://localhost:9999/getAllComplaints?sportsComplex=${id}&level=1&status=0`
