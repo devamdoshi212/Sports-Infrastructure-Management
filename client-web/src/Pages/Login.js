@@ -6,6 +6,7 @@ import { useCookies } from "react-cookie";
 import Swal from "sweetalert2";
 import { useDispatch } from "react-redux";
 import { UserActions } from "../store/UserData";
+import image from './../Assets/symbol.png'
 const initialValues = {
   Email: "",
   Password: "",
@@ -95,7 +96,7 @@ const Login = () => {
               </p> */}
 
               <span className="mt-[3.75rem] inline-block">
-                <img src = "symbol.png" alt="symbol"/>
+                <img src = {image} alt="symbol"/>
                 {/* <svg
                   width="350"
                   height="350"

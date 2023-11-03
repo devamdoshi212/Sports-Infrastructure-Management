@@ -10,6 +10,7 @@ import { FetchDistrict } from "../../API/FetchDistrict";
 import Swal from "sweetalert2";
 import { UserActions } from "../../store/UserData";
 import { useDispatch } from "react-redux";
+import image from './../../Assets/symbol.png'
 const Layout = () => {
   const [isOpen, setIsOpen] = useState(false);
   const navigate = useNavigate();
@@ -37,7 +38,8 @@ const Layout = () => {
   return (
     <div className="bg-gray-100 font-family-karla flex">
       <aside className="relative bg-[#13459c]  h-screen w-64 hidden sm:block shadow-xl shadow-gray-900">
-        <div className="p-6">
+        <div className="p-6 text-center">
+          <img src={image} alt="symbol" className="opacity-60 w-2/3 m-auto"/>
           <a
             href="index.html"
             className="text-white text-3xl font-semibold uppercase hover:text-gray-300"
@@ -158,7 +160,7 @@ const Layout = () => {
           </div>
           <div className=" hover:shadow-gray-400 hover:shadow-md">
             <Link
-              className="flex items-center active-nav-link text-white py-4 pl-6 nav-item gap-2"
+              className="flex items-center active-nav-link text-white py-4 pl-6 nav-item gap-2 focus:outline-none focus:shadow-md focus:shadow-gray-500"
               to={"allcomplaint"}
             >
               <svg
