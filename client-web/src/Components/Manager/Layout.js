@@ -49,7 +49,7 @@ const Layout = () => {
           <div className=" hover:shadow-gray-400 hover:shadow-md">
             <Link
               to={"profile"}
-              className="flex items-center active-nav-link text-white py-4 pl-6 nav-item gap-2 hover:text-gray-300"
+              className="flex items-center active-nav-link text-white py-4 pl-6 nav-item gap-2 hover:text-gray-300 focus:outline-none focus:shadow-md focus:shadow-gray-500"
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -71,7 +71,7 @@ const Layout = () => {
           <div className=" hover:shadow-gray-400 hover:shadow-md">
             <Link
               to={"/manager"}
-              className="flex items-center active-nav-link text-white py-4 pl-6 nav-item gap-2"
+              className="flex items-center active-nav-link text-white py-4 pl-6 nav-item gap-2 focus:outline-none focus:shadow-md focus:shadow-gray-500"
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -92,7 +92,7 @@ const Layout = () => {
           </div>
           <div className=" hover:shadow-gray-400 hover:shadow-md">
             <Link
-              className="flex items-center active-nav-link text-white py-4 pl-6 nav-item gap-2"
+              className="flex items-center active-nav-link text-white py-4 pl-6 nav-item gap-2 focus:outline-none focus:shadow-md focus:shadow-gray-500"
               to={"facilitydetails"}
             >
               <svg
@@ -114,7 +114,7 @@ const Layout = () => {
           </div>
           <div className=" hover:shadow-gray-400 hover:shadow-md">
             <Link
-              className="flex items-center active-nav-link text-white py-4 pl-6 nav-item gap-2"
+              className="flex items-center active-nav-link text-white py-4 pl-6 nav-item gap-2 focus:outline-none focus:shadow-md focus:shadow-gray-500"
               to={"allsupervisor"}
             >
               <svg
@@ -136,7 +136,7 @@ const Layout = () => {
           </div>
           <div className=" hover:shadow-gray-400 hover:shadow-md">
             <Link
-              className="flex items-center active-nav-link text-white py-4 pl-6 nav-item gap-2"
+              className="flex items-center active-nav-link text-white py-4 pl-6 nav-item gap-2 focus:outline-none focus:shadow-md focus:shadow-gray-500"
               to={"allinstructor"}
             >
               <svg
