@@ -132,8 +132,7 @@ const styles = StyleSheet.create({
     alignSelf: "center",
   },
   pickerContainer: {
-    borderWidth: 1,
-    borderColor: "#ccc",
+    backgroundColor:"white",
     borderRadius: 5,
     marginBottom: 15,
   },
@@ -179,7 +178,6 @@ const styles = StyleSheet.create({
   input: {
     marginLeft: 6,
     textAlign: "center",
-    // marginLeft: "45%",
   },
 });
 
