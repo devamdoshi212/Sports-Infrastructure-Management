@@ -183,7 +183,7 @@ app.post("/remarkRatingByAthlete", async (req, res) => {
   let rating = new athleteRatingModel({
     athleteId,
     remarks,
-    sport: sportId,
+    sport: sportId, 
     sportComplex: sportComplexId,
   });
   await rating.save();
