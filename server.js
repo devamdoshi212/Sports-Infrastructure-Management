@@ -197,7 +197,8 @@ app.get("/ratingForSupervisor", async (req, res) => {
       sportComplex: sportComplexId,
       isEvaluated: 0,
     })
-    .populate("athleteId");
+    .populate("athleteId")
+    .sort({ rating: -1 });
   res.json({ rcode: 200, ratings });
 });
 app.post("/ratingBySupervisor", async (req, res) => {
