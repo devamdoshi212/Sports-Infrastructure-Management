@@ -6,6 +6,7 @@ import Ionicons from "@expo/vector-icons/Ionicons";
 import QR from "./QR";
 import ProfileNavigator from "./ProfileNavigator";
 import AthelteSearchNavigator from "./AthelteSearchNavigator";
+import QRNavigator from "./QRnavigator";
 const Main = ({ navigation }) => {
   return (
     <Tab.Navigator
@@ -33,7 +34,7 @@ const Main = ({ navigation }) => {
       })}
     >
       <Tab.Screen name="AthelteSearch" component={AthelteSearchNavigator} />
-      <Tab.Screen name="Attendance" component={QR} />
+      <Tab.Screen name="Attendance" component={QRNavigator} />
       <Tab.Screen name="AthelteProfile" component={ProfileNavigator} />
     </Tab.Navigator>
   );
