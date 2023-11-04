@@ -23,8 +23,6 @@ const SportComplexDetail = () => {
   const [details, setDetails] = useState({});
   const [detailsInstructor, setDetailsInstrutor] = useState({});
   const [visible, setvisible] = useState(false);
-  // console.log(data);
-  // console.log(data.item._id);
 
   useEffect(() => {
     var requestOptions = {
@@ -53,7 +51,7 @@ const SportComplexDetail = () => {
   }, []);
 
   const openGoogleMaps = () => {
-    const mapUrl = "https://maps.google.com/?q=latitude,longitude"; // Replace with the actual latitude and longitude or address you want to open
+    const mapUrl = details.location; // Replace with the actual latitude and longitude or address you want to open
 
     Linking.openURL(mapUrl).catch((err) =>
       console.error("An error occurred: ", err)
