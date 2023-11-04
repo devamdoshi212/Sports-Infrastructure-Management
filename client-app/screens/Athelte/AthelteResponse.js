@@ -13,8 +13,14 @@ import React, { useEffect } from "react";
 import { Picker } from "@react-native-picker/picker";
 import { Ionicons } from "@expo/vector-icons";
 import { useState } from "react";
+import { useSelector } from "react-redux";
+import ipconfig from "../../ipconfig";
+import { useNavigation } from "@react-navigation/native";
 
-const AthleteResponse = ({ navigation }) => {
+const AthleteResponse = () => {
+  const navigation = useNavigation();
+  const ip = ipconfig.ip;
+  const Athelte = useSelector((state) => state.athelte.Athelte);
   const sportList = [
     "Cricket",
     "Basketball",
@@ -25,6 +31,31 @@ const AthleteResponse = ({ navigation }) => {
   ];
   const [value, onChangeText] = React.useState("");
   const [userResponse, setUserResponse] = useState();
+  const submitHandler = () => {
+    var myHeaders = new Headers();
+    myHeaders.append("Content-Type", "application/json");
+
+    var raw = JSON.stringify({
+      sportId: userResponse,
+      athleteId: Athelte[0]._id,
+      sportComplexId: Athelte[0].createdBy.SportComplexId,
+      remarks: value,
+    });
+
+    var requestOptions = {
+      method: "POST",
+      headers: myHeaders,
+      body: raw,
+      redirect: "follow",
+    };
+
+    fetch(`http://${ip}:9999/remarkRatingByAthlete`, requestOptions)
+      .then((response) => response.text())
+      .then((result) => {
+        navigation.goBack();
+      })
+      .catch((error) => console.log("error", error));
+  };
 
   return (
     <>
@@ -46,15 +77,19 @@ const AthleteResponse = ({ navigation }) => {
           </View>
         </View>
         <Picker
-          //   selectedValue={}
-          onValueChange={(value, index) => setUserResponse(value)}
+          selectedValue={userResponse}
+          onValueChange={(value) => setUserResponse(value)}
           mode="dropdown" // Android only
           style={styles.picker}
         >
           <Picker.Item label="Please select your Sport" value="" />
-          {sportList.map((item, index) => {
+          {/* {sportList.map((item, index) => {
             return <Picker.Item label={item} value={index} key={index} />;
-          })}
+          })} */}
+          <Picker.Item label="Cricket" value="6540e2b1af277f6329395500" />
+          <Picker.Item label="Basketball" value="6540e344af277f6329395503" />
+          <Picker.Item label="Football" value="6540e302959854c7bc0be7fb" />
+          <Picker.Item label="Volley Ball" value="6540e378959854c7bc0be807" />
         </Picker>
         <View
           style={{
@@ -80,7 +115,7 @@ const AthleteResponse = ({ navigation }) => {
         <TouchableOpacity
           style={{ width: "40%", alignSelf: "center", paddingVertical: "10%" }}
         >
-          <Button title="Submit" />
+          <Button title="Submit" onPress={submitHandler} />
         </TouchableOpacity>
       </View>
     </>
