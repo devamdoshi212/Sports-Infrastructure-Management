@@ -201,6 +201,21 @@ app.get("/ratingForSupervisor", async (req, res) => {
     .sort({ rating: -1 });
   res.json({ rcode: 200, ratings });
 });
+
+app.get("/ratingForAll", async (req, res) => {
+
+  let ratings = await athleteRatingModel
+  .find()
+  .populate({
+    path: "athleteId",
+    populate: {
+      path: "userId",
+    },
+  })
+  .sort({ rating: -1 });
+res.json({ rcode: 200, ratings });
+
+});
 app.post("/ratingBySupervisor", async (req, res) => {
   let { ratingId, rating } = req.body;
   let ratings = await athleteRatingModel.findOne({ _id: ratingId });
