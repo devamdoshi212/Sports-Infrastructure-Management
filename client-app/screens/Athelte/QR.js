@@ -4,8 +4,90 @@ import React, { useEffect, useState } from "react";
 import { BarCodeScanner } from "expo-barcode-scanner";
 import { useSelector } from "react-redux";
 import ipconfig from "../../ipconfig";
+import {
+  getCurrentPositionAsync,
+  useForegroundPermissions,
+  PermissionStatus,
+} from "expo-location";
 export default function QR({ navigation }) {
+  function haversineDistance(lat1, lon1, lat2, lon2) {
+    const earthRadius = 6371; // Radius of the Earth in kilometers
+
+    // Convert latitude and longitude from degrees to radians
+    const radLat1 = (Math.PI * lat1) / 180;
+    const radLon1 = (Math.PI * lon1) / 180;
+    const radLat2 = (Math.PI * lat2) / 180;
+    const radLon2 = (Math.PI * lon2) / 180;
+
+    // Haversine formula
+    const dLat = radLat2 - radLat1;
+    const dLon = radLon2 - radLon1;
+    const a =
+      Math.sin(dLat / 2) ** 2 +
+      Math.cos(radLat1) * Math.cos(radLat2) * Math.sin(dLon / 2) ** 2;
+    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+    const distance = earthRadius * c;
+
+    return distance;
+  }
+
+  const [locationPermissionInformation, requestPermission] =
+    useForegroundPermissions();
+
+  async function verifyPermissions() {
+    if (
+      locationPermissionInformation.status === PermissionStatus.UNDETERMINED
+    ) {
+      const permissionResponse = await requestPermission();
+
+      return permissionResponse.granted;
+    }
+
+    if (locationPermissionInformation.status === PermissionStatus.DENIED) {
+      Alert.alert(
+        "Insufficient Permissions!",
+        "You need to grant location permissions to use this app."
+      );
+      return false;
+    }
+
+    return true;
+  }
+  async function getLocationHandler() {
+    const hasPermission = await verifyPermissions();
+
+    if (!hasPermission) {
+      return;
+    }
+
+    const location = await getCurrentPositionAsync();
+    const latitude1 = 23.1067914; // Latitude of the first point
+    const longitude1 = 72.5928109;
+    console.log(location);
+    const distance = haversineDistance(
+      latitude1,
+      longitude1,
+      location.coords.latitude,
+      location.coords.longitude
+    );
+    const data = distance.toFixed(2);
+    console.log(
+      `The distance between the two points is ${distance.toFixed(
+        2
+      )} kilometers.`
+    );
+    if (data < 1) {
+      alert("Your Attendance has been successfully saved");
+    } else {
+      alert("You are not in Range ");
+    }
+  }
+
   const userdata = useSelector((state) => state.user.User);
+  // console.log(userdata);
+  const AthelteData = useSelector((state) => state.athelte.Athelte);
+
+  const complexId = AthelteData[0].createdBy.SportComplexId;
   const ip = ipconfig.ip;
   const [hasPermission, setHasPermission] = useState(false);
   const [scanData, setScanData] = useState(undefined);
@@ -59,9 +141,10 @@ export default function QR({ navigation }) {
         {
           text: "OK",
           onPress: () => {
-            navigation.navigate("AthelteSearch");
+            getLocationHandler();
           },
         },
+        // navigation.navigate("AthelteSearch");
       ]);
       var myHeaders = new Headers();
       myHeaders.append("Content-Type", "application/json");
