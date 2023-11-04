@@ -61,8 +61,8 @@ export default function QR({ navigation }) {
     }
 
     const location = await getCurrentPositionAsync();
-    const latitude1 = 23.1067914; // Latitude of the first point
-    const longitude1 = 72.5928109;
+    const latitude1 = 19.7514798; // Latitude of the first point
+    const longitude1 = 75.7138884;
     console.log(location);
     const distance = haversineDistance(
       latitude1,
@@ -165,6 +165,23 @@ export default function QR({ navigation }) {
         .then((response) => response.json())
         .then((result) => {
           console.log(result);
+          if (result.rcode == 200) {
+            navigation.navigate("AthelteSearch");
+          } else {
+            Alert.alert("Alert Title", "Exit Done", [
+              // {
+              //     text: 'Cancel',
+              //     onPress: () => console.log('Cancel Pressed'),
+              //     style: 'cancel',
+              // },
+              {
+                text: "OK",
+                onPress: () => {
+                  navigation.navigate("ExitForm");
+                },
+              },
+            ]);
+          }
         })
         .catch((error) => console.log("error", error));
     } else {
