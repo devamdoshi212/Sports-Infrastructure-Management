@@ -27,14 +27,6 @@ const AdminDashboard = () => {
       {/* <AllBlogs /> */}
       <div className="grid grid-cols-1 gap-4 lg:grid-cols-3 lg:gap-8">
         <div className=" text-center rounded-lg bg-gray-300 ">
-          <div className=" font-bold p-5 text-3xl">Total Active Complaints</div>
-          <div className="p-5 text-2xl ">{visible && data.activecomplaints}</div>
-        </div>
-        <div className=" text-center rounded-lg bg-gray-300 ">
-          <div className=" font-bold p-5 text-3xl">Total Solved Complaints</div>
-          <div className="p-5 text-2xl">{visible && data.solvedComplaints}</div>
-        </div>
-        <div className=" text-center rounded-lg bg-gray-300 ">
           <div className=" font-bold p-5 text-3xl">Total Complexes</div>
           <div className="p-5 text-2xl">{visible && data.totalComplex}</div>
         </div>
@@ -46,10 +38,7 @@ const AdminDashboard = () => {
           <div className=" font-bold p-5 text-3xl">Total Athlete</div>
           <div className="p-5 text-2xl">{visible && data.totalathlete}</div>
         </div>
-        <div className=" text-center rounded-lg bg-gray-300 ">
-          <div className=" font-bold p-5 text-3xl">Total Complaints</div>
-          <div className="p-5 text-2xl">{visible && data.totalcomplaints}</div>
-        </div>
+
         <div className=" text-center rounded-lg bg-gray-300 ">
           <div className=" font-bold p-5 text-3xl">Total Instructor</div>
           <div className="p-5 text-2xl">{visible && data.totalinstructer}</div>
@@ -61,6 +50,20 @@ const AdminDashboard = () => {
         <div className="text-center rounded-lg bg-gray-300 ">
           <div className=" font-bold p-5 text-3xl">Total Supervisor</div>
           <div className="p-5 text-2xl">{visible && data.totalsupervisor}</div>
+        </div>
+        <div className=" text-center rounded-lg bg-gray-300 ">
+          <div className=" font-bold p-5 text-3xl">Total Complaints</div>
+          <div className="p-5 text-2xl">{visible && data.totalcomplaints}</div>
+        </div>
+        <div className=" text-center rounded-lg bg-gray-300 ">
+          <div className=" font-bold p-5 text-3xl">Total Active Complaints</div>
+          <div className="p-5 text-2xl ">
+            {visible && data.activecomplaints}
+          </div>
+        </div>
+        <div className=" text-center rounded-lg bg-gray-300 ">
+          <div className=" font-bold p-5 text-3xl">Total Solved Complaints</div>
+          <div className="p-5 text-2xl">{visible && data.solvedComplaints}</div>
         </div>
       </div>
     </div>
