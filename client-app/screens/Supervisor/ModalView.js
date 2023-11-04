@@ -47,7 +47,7 @@ const ModalView = (props) => {
                 <Text style={styles.label}>Sport Name</Text>
               </View>
               <View style={styles.column2}>
-                <Text style={styles.label}>Present/Total</Text>
+                <Text style={styles.label}>Total Enroll Student</Text>
               </View>
             </View>
             <View style={styles.row}>
@@ -55,7 +55,7 @@ const ModalView = (props) => {
                 <Text style={styles.label}>Cricket</Text>
               </View>
               <View style={styles.column2}>
-                <Text style={styles.input}>5/15</Text>
+                <Text style={styles.input}>15</Text>
               </View>
             </View>
             <View style={styles.row}>
@@ -63,7 +63,7 @@ const ModalView = (props) => {
                 <Text style={styles.label}>Volleyball</Text>
               </View>
               <View style={styles.column2}>
-                <Text style={styles.input}>20/25</Text>
+                <Text style={styles.input}>25</Text>
               </View>
             </View>
             <View style={styles.row}>
@@ -71,7 +71,7 @@ const ModalView = (props) => {
                 <Text style={styles.label}>Chess</Text>
               </View>
               <View style={styles.column2}>
-                <Text style={styles.input}>4/5</Text>
+                <Text style={styles.input}>5</Text>
               </View>
             </View>
             <TouchableOpacity style={styles.actionButton}>
