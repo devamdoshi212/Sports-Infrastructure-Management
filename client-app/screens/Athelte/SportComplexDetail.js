@@ -20,7 +20,7 @@ const SportComplexDetail = () => {
   const ip = ipconfig.ip;
   const Atheltedata = useSelector((state) => state.athelte.Athelte);
   const complexId = Atheltedata[0].createdBy.SportComplexId;
-  const [details, setDetails] = useState([]);
+  const [details, setDetails] = useState({});
   const [detailsInstructor, setDetailsInstrutor] = useState({});
   const [visible, setvisible] = useState(false);
   // console.log(data);
@@ -39,11 +39,19 @@ const SportComplexDetail = () => {
       .then((response) => response.json())
       .then((result) => {
         setDetailsInstrutor(result);
-        setvisible(true);
         // console.log(result);
+      });
+
+    fetch(`http://${ip}:9999/getSportsComplex?_id=${complexId}`, requestOptions)
+      .then((response) => response.json())
+      .then((result) => {
+        // console.log(result.data[0]);
+        setDetails(result.data[0]);
+        setvisible(true);
       })
       .catch((error) => console.log("error", error));
   }, []);
+
   const openGoogleMaps = () => {
     const mapUrl = "https://maps.google.com/?q=latitude,longitude"; // Replace with the actual latitude and longitude or address you want to open
 
@@ -85,23 +93,25 @@ const SportComplexDetail = () => {
               {/* <View style={styles.card}> */}
               <View style={styles.row}>
                 <Text style={styles.label}>Sport Complex Name: </Text>
-                <Text style={styles.input}>{details.name}</Text>
+                <Text style={styles.input}>{visible && details.name}</Text>
               </View>
               <View style={styles.row}>
                 <Text style={styles.label}>Address:</Text>
-                <Text style={styles.input}>{details.location}</Text>
+                <Text style={styles.input}>{visible && details.location}</Text>
               </View>
               <View style={styles.row}>
                 <Text style={styles.label}>Taluka:</Text>
-                <Text style={styles.input}>{details.taluka}</Text>
+                <Text style={styles.input}>{visible && details.taluka}</Text>
               </View>
               <View style={styles.row}>
                 <Text style={styles.label}>Since :</Text>
-                <Text style={styles.input}>{details.operationalSince}</Text>
+                <Text style={styles.input}>
+                  {visible && details.operationalSince}
+                </Text>
               </View>
               <View style={styles.row}>
                 <Text style={styles.label}>Area :</Text>
-                <Text style={styles.input}>{details.area}</Text>
+                <Text style={styles.input}>{visible && details.area}</Text>
               </View>
               <View style={styles.row}>
                 <Text style={styles.label}>Available Sports :</Text>
