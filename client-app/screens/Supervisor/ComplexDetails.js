@@ -6,6 +6,7 @@ import {
   Button,
   TouchableOpacity,
   Pressable,
+  Linking,
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { useSelector } from "react-redux";
@@ -22,6 +23,8 @@ const ComplexDetails = ({ navigation }) => {
   const [detailsInstructor, setDetailsInstrutor] = useState({});
   const [visible, setvisible] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [link, setLink] = useState("https://maps.app.goo.gl/QMpF8LiY8ohdbdNGA");
+
   useEffect(() => {
     var requestOptions = {
       method: "GET",
@@ -36,19 +39,25 @@ const ComplexDetails = ({ navigation }) => {
       .then((result) => {
         console.log(result);
         setDetailsInstrutor(result);
-        // console.log(result);
         setLoading(true);
       });
 
     fetch(`http://${ip}:9999/getSportsComplex?_id=${complexId}`, requestOptions)
       .then((response) => response.json())
       .then((result) => {
-        // console.log(result.data[0]);
         setDetails(result.data[0]);
         setvisible(true);
       })
       .catch((error) => console.log("error", error));
   }, []);
+
+  const openGoogleMaps = () => {
+    const mapUrl = details.location; // Replace with the actual latitude and longitude or address you want to open
+
+    Linking.openURL(mapUrl).catch((err) =>
+      console.error("An error occurred: ", err)
+    );
+  };
   return (
     <View style={styles.container}>
       <View style={styles.header}>
@@ -119,7 +128,7 @@ const ComplexDetails = ({ navigation }) => {
           <View style={{ alignSelf: "center", marginTop: 10 }}></View>
           <TouchableOpacity style={styles.actionButton}>
             <View style={{ width: "50%", alignSelf: "center" }}>
-              <Button title="Edit" />
+              <Button title="View in Map" onPress={openGoogleMaps} />
             </View>
           </TouchableOpacity>
         </View>
