@@ -8,7 +8,47 @@ import {
   Pressable,
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
+import { useSelector } from "react-redux";
+import { useEffect } from "react";
+import ipconfig from "../../ipconfig";
+import { useState } from "react";
+
 const ComplexDetails = ({ navigation }) => {
+  const Userdata = useSelector((state) => state.user.User);
+  const complexId = Userdata.SportComplexId;
+  console.log(complexId);
+  const ip = ipconfig.ip;
+  const [details, setDetails] = useState({});
+  const [detailsInstructor, setDetailsInstrutor] = useState({});
+  const [visible, setvisible] = useState(false);
+  const [loading, setLoading] = useState(false);
+  useEffect(() => {
+    var requestOptions = {
+      method: "GET",
+      redirect: "follow",
+    };
+
+    fetch(
+      `http://${ip}:9999/sportsComplexDetail?sportsComplex=${complexId}`,
+      requestOptions
+    )
+      .then((response) => response.json())
+      .then((result) => {
+        console.log(result);
+        setDetailsInstrutor(result);
+        // console.log(result);
+        setLoading(true);
+      });
+
+    fetch(`http://${ip}:9999/getSportsComplex?_id=${complexId}`, requestOptions)
+      .then((response) => response.json())
+      .then((result) => {
+        // console.log(result.data[0]);
+        setDetails(result.data[0]);
+        setvisible(true);
+      })
+      .catch((error) => console.log("error", error));
+  }, []);
   return (
     <View style={styles.container}>
       <View style={styles.header}>
@@ -33,15 +73,15 @@ const ComplexDetails = ({ navigation }) => {
         <View style={styles.ComplexDetail}>
           <View style={styles.row}>
             <Text style={styles.label}>Complex Name :</Text>
-            <Text style={styles.input}>NRC</Text>
+            <Text style={styles.input}>{visible && details.name}</Text>
           </View>
           <View style={styles.row}>
             <Text style={styles.label}>Email :</Text>
-            <Text style={styles.input}>abc@gmail.com</Text>
+            <Text style={styles.input}>{Userdata.Email}</Text>
           </View>
           <View style={styles.row}>
             <Text style={styles.label}>Contact No :</Text>
-            <Text style={styles.input}>1231231231</Text>
+            <Text style={styles.input}>{Userdata.ContactNum}</Text>
           </View>
           <View style={styles.row}>
             <Text style={styles.label}>Address :</Text>
@@ -49,21 +89,32 @@ const ComplexDetails = ({ navigation }) => {
           </View>
           <View style={styles.row}>
             <Text style={styles.label}>Since :</Text>
-            <Text style={styles.input}>1996</Text>
+            <Text style={styles.input}>
+              {visible && details.operationalSince}
+            </Text>
           </View>
           <View style={styles.row}>
             <Text style={styles.label}>Available Sports :</Text>
           </View>
           <View>
-            <Text style={styles.input}>Cricket, Basketball, Volleyball</Text>
+            {loading &&
+              detailsInstructor.availableSports.map((item, index) => (
+                <Text style={styles.input} key={index}>
+                  {item}
+                </Text>
+              ))}
           </View>
           <View style={styles.row}>
             <Text style={styles.label}>Total number of Instructor :</Text>
-            <Text style={styles.input}>7</Text>
+            <Text style={styles.input}>
+              {loading && detailsInstructor.instructerData.length}
+            </Text>
           </View>
           <View style={styles.row}>
             <Text style={styles.label}>Total number of Enroll Student :</Text>
-            <Text style={styles.input}>7</Text>
+            <Text style={styles.input}>
+              {loading && detailsInstructor.athleteCount}
+            </Text>
           </View>
           <View style={{ alignSelf: "center", marginTop: 10 }}></View>
           <TouchableOpacity style={styles.actionButton}>
