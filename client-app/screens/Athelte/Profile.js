@@ -75,6 +75,17 @@ function Profile({ navigation }) {
               <TouchableOpacity
                 style={styles.actionButton}
                 onPress={() => {
+                  navigation.navigate("LeaderBoard");
+                }}
+              >
+                <View style={styles.row}>
+                  {/* <Ionicons name="repeat-outline" size={24} /> */}
+                  <Text style={styles.actionText}>Leaderboard</Text>
+                </View>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={styles.actionButton}
+                onPress={() => {
                   navigation.navigate("SportsComplexDetails");
                 }}
               >
