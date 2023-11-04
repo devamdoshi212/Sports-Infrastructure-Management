@@ -23,6 +23,7 @@ const SportComplexDetail = () => {
   const [details, setDetails] = useState({});
   const [detailsInstructor, setDetailsInstrutor] = useState({});
   const [visible, setvisible] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     var requestOptions = {
@@ -37,6 +38,7 @@ const SportComplexDetail = () => {
       .then((response) => response.json())
       .then((result) => {
         setDetailsInstrutor(result);
+        setLoading(true);
         // console.log(result);
       });
 
@@ -115,7 +117,7 @@ const SportComplexDetail = () => {
                 <Text style={styles.label}>Available Sports :</Text>
               </View>
               <View>
-                {visible &&
+                {loading &&
                   detailsInstructor.availableSports.map((item, index) => (
                     <Text style={styles.input} key={index}>
                       {item}
@@ -125,7 +127,7 @@ const SportComplexDetail = () => {
               <View style={styles.row}>
                 <Text style={styles.label}>Total number of Instructor :</Text>
                 <Text style={styles.input}>
-                  {visible && detailsInstructor.instructerData.length}
+                  {loading && detailsInstructor.instructerData.length}
                 </Text>
               </View>
               <View style={styles.row}>
@@ -133,7 +135,7 @@ const SportComplexDetail = () => {
                   Total number of Enroll Student :
                 </Text>
                 <Text style={styles.input}>
-                  {visible && detailsInstructor.athleteCount}
+                  {loading && detailsInstructor.athleteCount}
                 </Text>
               </View>
               <View style={{ alignSelf: "center", marginTop: 10 }}></View>
