@@ -56,13 +56,13 @@ const AdminDashboard = () => {
           <div className="p-5 text-2xl">{visible && data.totalcomplaints}</div>
         </div>
         <div className=" text-center rounded-lg bg-gray-300 ">
-          <div className=" font-bold p-5 text-3xl">Total Active Complaints</div>
+          <div className=" font-bold p-5 text-3xl">Total Solved Complaints</div>
           <div className="p-5 text-2xl ">
             {visible && data.activecomplaints}
           </div>
         </div>
         <div className=" text-center rounded-lg bg-gray-300 ">
-          <div className=" font-bold p-5 text-3xl">Total Solved Complaints</div>
+          <div className=" font-bold p-5 text-3xl">Total Active Complaints</div>
           <div className="p-5 text-2xl">{visible && data.solvedComplaints}</div>
         </div>
       </div>
