@@ -2,7 +2,7 @@ const { default: mongoose } = require("mongoose");
 
 const athleteRatingSchema = new mongoose.Schema(
     {
-        athleteId: { type: mongoose.SchemaTypes.ObjectId, ref: "users" },
+        athleteId: { type: mongoose.SchemaTypes.ObjectId, ref: "athletes" },
         rating: Number,
         sport: { type: mongoose.SchemaTypes.ObjectId, ref: "sports" },
         sportComplex: {
