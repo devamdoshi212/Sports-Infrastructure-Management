@@ -14,7 +14,7 @@ module.exports.getDetails = async function (req, res) {
   console.log(sportcomplex);
 
   let sportComlexUser = [];
-  console.log(sportcomplex[0]._id);
+  // console.log(sportcomplex[0]._id);
 
   for (let i = 0; i < sportcomplex.length; i++) {
     const athleteCount = await paymentModel.aggregate([

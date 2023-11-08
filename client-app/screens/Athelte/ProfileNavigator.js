@@ -11,6 +11,8 @@ import SportEnroll from "./SportEnroll";
 import ListComplaint from "./ListComplaint";
 import ViewComplaint from "./ViewComplaint";
 import IDCard from "./IDCard";
+import AthleteResponse from "./AthelteResponse";
+import LeaderBoard from "./LeaderBoard";
 const ProfileNavigator = ({ navigation }) => {
   return (
     <Stack.Navigator>
@@ -58,6 +60,16 @@ const ProfileNavigator = ({ navigation }) => {
         <Stack.Screen
           name="IDCard"
           component={IDCard}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="ExitForm"
+          component={AthleteResponse}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="LeaderBoard"
+          component={LeaderBoard}
           options={{ headerShown: false }}
         />
       </Stack.Group>

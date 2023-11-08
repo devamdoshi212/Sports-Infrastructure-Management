@@ -61,6 +61,7 @@ module.exports.addSession = async function (req, res) {
       let data = await existingSession.save();
       res.json({
         data: data,
+        rcode: 201,
         msg: "User Exit from sportcomlex",
       });
     }

@@ -151,7 +151,7 @@ export default function AthorityComplaintDataTable() {
     myHeaders.append("Content-Type", "application/json");
 
     var raw = JSON.stringify({
-      level: 2,
+      level: 3,
     });
 
     var requestOptions = {
