@@ -59,18 +59,17 @@ module.exports.getDetails = async function (req, res) {
           Complaintcount: { $sum: 1 },
         },
       },
-      //   {
-      //     $project: {
-      //       _id: 1,
-      //       Paymentcount: 1,
-      //       Complaintcount: 1,
-
-      //     },
-      //   },
+      {
+        $project: {
+          _id: 1,
+          Paymentcount: 1,
+          Complaintcount: 1,
+        },
+      },
     ]);
     complaintCount.sort((a, b) => a._id - b._id);
     console.log(complaintCount);
-    if (complaintCount.length > 0) {
+    if (complaintCount.length > 1) {
       sportComlexComplaint.push({
         sportComplex: sportcomplex[i].name,
         complaintCount: complaintCount.length,
@@ -78,11 +77,18 @@ module.exports.getDetails = async function (req, res) {
         activeComplaint: complaintCount[0].Complaintcount,
       });
     } else {
+      let active = 0,
+        solved = 0;
+      if (complaintCount[0]._id === 0) {
+        active = complaintCount[0].Complaintcount;
+      } else {
+        solved = complaintCount[0].Complaintcount;
+      }
       sportComlexComplaint.push({
         sportComplex: sportcomplex[i].name,
         complaintCount: complaintCount.length,
-        solvedComplaint: 0,
-        activeComplaint: 0,
+        solvedComplaint: solved,
+        activeComplaint: active,
       });
     }
   }
