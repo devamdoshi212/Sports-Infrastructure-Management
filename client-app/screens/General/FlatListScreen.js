@@ -58,7 +58,7 @@ function renderCategoryItem(itemData, ip, navigate) {
             pressed ? styles.buttonPressed : null,
           ]}
           onPress={() => {
-            navigate.navigate("ComplexFullDetails", { data: itemData });
+            navigate.navigate("ComplexDetailsinGeneral", { data: itemData });
           }}
         >
           <View style={[styles.innerContainer, { backgroundColor: "gray" }]}>
@@ -78,7 +78,6 @@ function FlatListScreen({ optionField, searchfield, navigate }) {
       method: "GET",
       redirect: "follow",
     };
-
     fetch(`http://${ip}:9999/${optionField}?q=${searchfield}`, requestOptions)
       .then((response) => response.json())
       .then((result) => {

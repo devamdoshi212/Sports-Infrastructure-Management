@@ -53,6 +53,8 @@ import ComplaintDetails from "./Components/Manager/Complaint/ComplainDetails";
 import AuthorityComplaintDataTable from "./Components/Authority/Complaint/ComplaintDetails";
 import Athelte from "./Components/Manager/Athelte/Athelte";
 import AdminComplaint from "./Components/Admin/Complaint/Complaint";
+import Analysis from "./Components/Admin/Analysis/Analysis";
+import AuthorityAnalysis from "./Components/Authority/Analysis/Analysis";
 
 const routes = createBrowserRouter([
   {
@@ -113,6 +115,11 @@ const routes = createBrowserRouter([
         element: <AdminComplaint />,
         errorElement: <ErrorPage />,
       },
+      {
+        path: "allanalysis",
+        element: <Analysis />,
+        errorElement: <ErrorPage />,
+      },
     ],
   },
   {
@@ -130,6 +137,11 @@ const routes = createBrowserRouter([
       {
         path: "profile",
         element: <Profile />,
+        errorElement: <ErrorPage />,
+      },
+      {
+        path: "analysis",
+        element: <AuthorityAnalysis />,
         errorElement: <ErrorPage />,
       },
       {

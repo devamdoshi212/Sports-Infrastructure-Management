@@ -20,11 +20,10 @@ const SportComplexDetail = () => {
   const ip = ipconfig.ip;
   const Atheltedata = useSelector((state) => state.athelte.Athelte);
   const complexId = Atheltedata[0].createdBy.SportComplexId;
-  const [details, setDetails] = useState([]);
+  const [details, setDetails] = useState({});
   const [detailsInstructor, setDetailsInstrutor] = useState({});
   const [visible, setvisible] = useState(false);
-  // console.log(data);
-  // console.log(data.item._id);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     var requestOptions = {
@@ -39,13 +38,22 @@ const SportComplexDetail = () => {
       .then((response) => response.json())
       .then((result) => {
         setDetailsInstrutor(result);
-        setvisible(true);
+        setLoading(true);
         // console.log(result);
+      });
+
+    fetch(`http://${ip}:9999/getSportsComplex?_id=${complexId}`, requestOptions)
+      .then((response) => response.json())
+      .then((result) => {
+        // console.log(result.data[0]);
+        setDetails(result.data[0]);
+        setvisible(true);
       })
       .catch((error) => console.log("error", error));
   }, []);
+
   const openGoogleMaps = () => {
-    const mapUrl = "https://maps.google.com/?q=latitude,longitude"; // Replace with the actual latitude and longitude or address you want to open
+    const mapUrl = details.location; // Replace with the actual latitude and longitude or address you want to open
 
     Linking.openURL(mapUrl).catch((err) =>
       console.error("An error occurred: ", err)
@@ -85,29 +93,31 @@ const SportComplexDetail = () => {
               {/* <View style={styles.card}> */}
               <View style={styles.row}>
                 <Text style={styles.label}>Sport Complex Name: </Text>
-                <Text style={styles.input}>{details.name}</Text>
+                <Text style={styles.input}>{visible && details.name}</Text>
               </View>
               <View style={styles.row}>
                 <Text style={styles.label}>Address:</Text>
-                <Text style={styles.input}>{details.location}</Text>
+                <Text style={styles.input}>{visible && details.location}</Text>
               </View>
               <View style={styles.row}>
                 <Text style={styles.label}>Taluka:</Text>
-                <Text style={styles.input}>{details.taluka}</Text>
+                <Text style={styles.input}>{visible && details.taluka}</Text>
               </View>
               <View style={styles.row}>
                 <Text style={styles.label}>Since :</Text>
-                <Text style={styles.input}>{details.operationalSince}</Text>
+                <Text style={styles.input}>
+                  {visible && details.operationalSince}
+                </Text>
               </View>
               <View style={styles.row}>
                 <Text style={styles.label}>Area :</Text>
-                <Text style={styles.input}>{details.area}</Text>
+                <Text style={styles.input}>{visible && details.area}</Text>
               </View>
               <View style={styles.row}>
                 <Text style={styles.label}>Available Sports :</Text>
               </View>
               <View>
-                {visible &&
+                {loading &&
                   detailsInstructor.availableSports.map((item, index) => (
                     <Text style={styles.input} key={index}>
                       {item}
@@ -117,7 +127,7 @@ const SportComplexDetail = () => {
               <View style={styles.row}>
                 <Text style={styles.label}>Total number of Instructor :</Text>
                 <Text style={styles.input}>
-                  {visible && detailsInstructor.instructerData.length}
+                  {loading && detailsInstructor.instructerData.length}
                 </Text>
               </View>
               <View style={styles.row}>
@@ -125,7 +135,7 @@ const SportComplexDetail = () => {
                   Total number of Enroll Student :
                 </Text>
                 <Text style={styles.input}>
-                  {visible && detailsInstructor.athleteCount}
+                  {loading && detailsInstructor.athleteCount}
                 </Text>
               </View>
               <View style={{ alignSelf: "center", marginTop: 10 }}></View>

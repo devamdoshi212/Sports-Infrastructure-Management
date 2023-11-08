@@ -12,6 +12,7 @@ import {
   Button,
   TouchableOpacity,
   Pressable,
+  ScrollView,
 } from "react-native";
 import ipconfig from "../../ipconfig";
 async function removeItem() {
@@ -46,107 +47,120 @@ function Profile({ navigation }) {
     // Implement your logout logic here
   };
   return (
-    <View style={styles.container}>
-      <Pressable onPress={ProfileDetailHandler}>
-        <View style={styles.profileInfo}>
-          <View style={styles.leftColumn}>
-            <Image
-              style={{
-                width: 100,
-                height: 100,
-                borderRadius: 50,
-                marginLeft: 1,
-              }}
-              source={{ uri: `http://${ip}:9999/${image}` }}
-            />
+    <ScrollView>
+      <View style={styles.container}>
+        <Pressable onPress={ProfileDetailHandler}>
+          <View style={styles.profileInfo}>
+            <View style={styles.leftColumn}>
+              <Image
+                style={{
+                  width: 100,
+                  height: 100,
+                  borderRadius: 50,
+                  marginLeft: 1,
+                }}
+                source={{ uri: `http://${ip}:9999/${image}` }}
+              />
+            </View>
+            <View style={styles.rightColumn}>
+              <Text style={styles.name}>Name : {Userdata.Name}</Text>
+              <Text style={styles.name}>Email : {Userdata.Email}</Text>
+              <Text style={styles.name}>ContactNo : {Userdata.ContactNum}</Text>
+            </View>
           </View>
-          <View style={styles.rightColumn}>
-            <Text style={styles.name}>Name : {Userdata.Name}</Text>
-            <Text style={styles.name}>Email : {Userdata.Email}</Text>
-            <Text style={styles.name}>ContactNo : {Userdata.ContactNum}</Text>
-          </View>
+        </Pressable>
+        <View style={styles.actions}>
+          {Atheltedata[0].createdBy && (
+            <>
+              <TouchableOpacity
+                style={styles.actionButton}
+                onPress={() => {
+                  navigation.navigate("LeaderBoard");
+                }}
+              >
+                <View style={styles.row}>
+                  {/* <Ionicons name="repeat-outline" size={24} /> */}
+                  <Text style={styles.actionText}>Leaderboard</Text>
+                </View>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={styles.actionButton}
+                onPress={() => {
+                  navigation.navigate("SportsComplexDetails");
+                }}
+              >
+                <View style={styles.row}>
+                  {/* <FontAwesome5 name="user" size={24} /> */}
+                  <Text style={styles.actionText}>Sport Complex Details</Text>
+                </View>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={styles.actionButton}
+                onPress={() => {
+                  navigation.navigate("IDCard");
+                }}
+              >
+                <View style={styles.row}>
+                  {/* <Ionicons name="repeat-outline" size={24} /> */}
+                  <Text style={styles.actionText}>ID card</Text>
+                </View>
+              </TouchableOpacity>
+
+              <TouchableOpacity
+                style={styles.actionButton}
+                onPress={() => {
+                  navigation.navigate("SportEnroll");
+                }}
+              >
+                <View style={styles.row}>
+                  {/* <MaterialCommunityIcons name="history" size={24} /> */}
+                  <Text style={styles.actionText}>Enrolled Sports</Text>
+                </View>
+              </TouchableOpacity>
+
+              <TouchableOpacity
+                style={styles.actionButton}
+                onPress={() => {
+                  navigation.navigate("PaymentHistory");
+                }}
+              >
+                <View style={styles.row}>
+                  {/* <MaterialCommunityIcons name="certificate-outline" size={24} /> */}
+                  <Text style={styles.actionText}>Payment History</Text>
+                </View>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={styles.actionButton}
+                onPress={() => {
+                  navigation.navigate("AthelteComplaint");
+                }}
+              >
+                <View style={styles.row}>
+                  {/* <Ionicons name="bookmarks-outline" size={24} /> */}
+                  <Text style={styles.actionText}>Raise Complaint</Text>
+                </View>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={styles.actionButton}
+                onPress={() => {
+                  navigation.navigate("ComplaintList");
+                }}
+              >
+                <View style={styles.row}>
+                  {/* <Ionicons name="bookmarks-outline" size={24} /> */}
+                  <Text style={styles.actionText}>Complaint History</Text>
+                </View>
+              </TouchableOpacity>
+            </>
+          )}
+          <TouchableOpacity style={styles.logout}>
+            <Button color="#FF3D3D" title="Logout" onPress={handleLogout} />
+            {/* <MaterialCommunityIcons name="logout" size={24} /> */}
+            {/* <Button title="Logout" style={styles.actionText}/> */}
+          </TouchableOpacity>
         </View>
-      </Pressable>
-      <View style={styles.actions}>
-        {Atheltedata[0].createdBy && (
-          <>
-            <TouchableOpacity
-              style={styles.actionButton}
-              onPress={() => {
-                navigation.navigate("SportsComplexDetails");
-              }}
-            >
-              <View style={styles.row}>
-                {/* <FontAwesome5 name="user" size={24} /> */}
-                <Text style={styles.actionText}>Sport Complex Details</Text>
-              </View>
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={styles.actionButton}
-              onPress={() => {
-                navigation.navigate("IDCard");
-              }}
-            >
-              <View style={styles.row}>
-                {/* <Ionicons name="repeat-outline" size={24} /> */}
-                <Text style={styles.actionText}>ID card</Text>
-              </View>
-            </TouchableOpacity>
-
-            <TouchableOpacity
-              style={styles.actionButton}
-              onPress={() => {
-                navigation.navigate("SportEnroll");
-              }}
-            >
-              <View style={styles.row}>
-                {/* <MaterialCommunityIcons name="history" size={24} /> */}
-                <Text style={styles.actionText}>Enrolled Sports</Text>
-              </View>
-            </TouchableOpacity>
-
-            <TouchableOpacity
-              style={styles.actionButton}
-              onPress={() => {
-                navigation.navigate("PaymentHistory");
-              }}
-            >
-              <View style={styles.row}>
-                {/* <MaterialCommunityIcons name="certificate-outline" size={24} /> */}
-                <Text style={styles.actionText}>Payment History</Text>
-              </View>
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={styles.actionButton}
-              onPress={() => {
-                navigation.navigate("AthelteComplaint");
-              }}
-            >
-              <View style={styles.row}>
-                {/* <Ionicons name="bookmarks-outline" size={24} /> */}
-                <Text style={styles.actionText}>Raise Complaint</Text>
-              </View>
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={styles.actionButton}
-              onPress={() => {
-                navigation.navigate("ComplaintList");
-              }}
-            >
-              <View style={styles.row}>
-                {/* <Ionicons name="bookmarks-outline" size={24} /> */}
-                <Text style={styles.actionText}>Complaint History</Text>
-              </View>
-            </TouchableOpacity>
-          </>
-        )}
-        <TouchableOpacity style={styles.logout}>
-          <Button color="#FF3D3D" title="Logout" onPress={handleLogout} />
-          {/* <MaterialCommunityIcons name="logout" size={24} /> */}
-          {/* <Button title="Logout" style={styles.actionText}/> */}
-        </TouchableOpacity>
       </View>
-    </View>
+    </ScrollView>
   );
 }
 

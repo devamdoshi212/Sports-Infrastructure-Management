@@ -4,6 +4,8 @@ const SportsComplexSchema = new mongoose.Schema(
   {
     name: String,
     location: String,
+    lat: String,
+    long: String,
     district: { type: mongoose.SchemaTypes.ObjectId, ref: "districts" },
     taluka: String,
     area: String, //in acres

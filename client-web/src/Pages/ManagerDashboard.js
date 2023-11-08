@@ -2,6 +2,7 @@ import React from "react";
 import { useState } from "react";
 import { useEffect } from "react";
 import { useSelector } from "react-redux";
+import Utilization from "../Components/Manager/Analysis/Utilization";
 const ManagerDashboard = () => {
   const [visibale, setvisible] = useState(false);
   const [Instructor, setDetailsInstrutor] = useState({});
@@ -86,6 +87,7 @@ const ManagerDashboard = () => {
           <div className="p-3 text-2xl ">{visibale && remain}</div>
         </div>
       </div>
+      <Utilization />
     </div>
   );
 };

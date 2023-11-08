@@ -25,6 +25,7 @@ const {
 } = require("./Controller/FilterSportsForComplex");
 
 const bodyParser = require("body-parser");
+const athleteRatingModel = require("./Model/athleteRatingModel");
 const app = express();
 
 //middleware
@@ -176,5 +177,64 @@ app.get(
   SupervisorController.getInstructorForPayment
 );
 app.get("/paymentHistoryAthlete", PaymentController.getAthletePayments);
+
+app.post("/remarkRatingByAthlete", async (req, res) => {
+  let { sportId, athleteId, sportComplexId, remarks } = req.body;
+  let rating = new athleteRatingModel({
+    athleteId,
+    remarks,
+    sport: sportId, 
+    sportComplex: sportComplexId,
+  });
+  await rating.save();
+
+  res.json({ rcode: 200 });
+});
+app.get("/ratingForSupervisor", async (req, res) => {
+  let { sportComplexId } = req.query;
+  let ratings = await athleteRatingModel
+    .find({
+      sportComplex: sportComplexId,
+      isEvaluated: 0,
+    })
+    .populate("athleteId")
+    .sort({ rating: -1 });
+  res.json({ rcode: 200, ratings });
+});
+
+app.get("/ratingForAll", async (req, res) => {
+
+  let ratings = await athleteRatingModel
+  .find()
+  .populate({
+    path: "athleteId",
+    populate: {
+      path: "userId",
+    },
+  })
+  .sort({ rating: -1 });
+res.json({ rcode: 200, ratings });
+
+});
+app.post("/ratingBySupervisor", async (req, res) => {
+  let { ratingId, rating } = req.body;
+  let ratings = await athleteRatingModel.findOne({ _id: ratingId });
+  ratings.rating = rating;
+  await ratings.save();
+  res.json({ rcode: 200 });
+});
+async function averageRating(userId, sportId) {
+  let ratings = await athleteRatingModel.find({
+    athleteId: userId,
+    sport: sportId,
+    isEvaluated: 1,
+  });
+  let total = ratings.length;
+  let total2 = 0;
+  ratings.forEach((ele) => {
+    total2 += ele.rating;
+  });
+  return total2 / total;
+}
 app.listen(9999);
 console.log("server started at 9999");
