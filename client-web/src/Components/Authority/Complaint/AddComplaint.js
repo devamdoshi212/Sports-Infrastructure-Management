@@ -7,7 +7,7 @@ const initialValues = {
   description: "",
   Thumbnail: [],
 };
-const AddComplaintType = () => {
+const AddComplaint = () => {
   const handleOneFileChange = (event) => {
     const selectedFiles = Array.from(event.target.files);
     setFieldValue("Thumbnail", selectedFiles);
@@ -135,4 +135,4 @@ const AddComplaintType = () => {
   );
 };
 
-export default AddComplaintType;
+export default AddComplaint;
