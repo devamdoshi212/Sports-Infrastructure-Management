@@ -103,3 +103,6 @@ export const compalintSchemas = Yup.object().shape({
         })
     ),
 });
+export const complaintTypeSchemas = Yup.object().shape({
+  type: Yup.string().required("Type is require "),
+});
