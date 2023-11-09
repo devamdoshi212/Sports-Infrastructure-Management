@@ -48,9 +48,7 @@ module.exports.sportDetailOfComplex = async function (req, res) {
     const data = await paymentModel.aggregate([
       {
         $match: {
-          sportsComplexId: new mongoose.Types.ObjectId(
-            req.query.sportsComplexId
-          ),
+          sportsComplexId: req.query.sportsComplexId,
         },
       },
       {
