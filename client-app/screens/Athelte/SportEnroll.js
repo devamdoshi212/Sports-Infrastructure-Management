@@ -44,7 +44,8 @@ const SportEnroll = () => {
     setrating(id);
     console.log(id);
   };
-  const ratingHandler = () => {
+  const ratingHandler = (id) => {
+    setsportid(id);
     setRateModal(!rateModal);
   };
   const navigate = useNavigation();
@@ -80,9 +81,6 @@ const SportEnroll = () => {
           {payments.map((item, index) => (
             <View style={styles.card} key={index}>
               <Pressable
-                onPress={() => {
-                  setsportid(item.sports._id);
-                }}
                 style={({ pressed }) => [
                   {
                     backgroundColor: pressed ? "#f0f0f0" : "white",
@@ -131,7 +129,7 @@ const SportEnroll = () => {
                 </View>
 
                 {/* </View> */}
-                <Pressable onPress={ratingHandler}>
+                <Pressable onPress={ratingHandler.bind(this, item.sports._id)}>
                   <View style={{ alignSelf: "flex-end", padding: 10 }}>
                     <Text style={{ color: "#0054a8" }}>Rate us</Text>
                   </View>
