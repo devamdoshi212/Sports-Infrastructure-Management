@@ -1,7 +1,7 @@
 const ComplaintModel = require("../Model/ComplaintModel");
 
 module.exports.addComplaint = async function (req, res) {
-  console.log("file detail => " + req.file);
+  // console.log("file detail => " + req.file);
   const BaseUrl = `http://localhost:9999/Complains/${req.file.originalname}`;
 
   req.body.baseUrl = BaseUrl;
@@ -10,7 +10,7 @@ module.exports.addComplaint = async function (req, res) {
 
   let data = await Complaint.save();
 
-  console.log(data);
+  // console.log(data);
 
   res.json({ data: data, msg: "Complaint Generated", rcode: 200 });
 };

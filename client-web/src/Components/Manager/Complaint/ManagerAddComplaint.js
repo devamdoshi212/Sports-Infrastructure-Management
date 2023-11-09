@@ -9,10 +9,10 @@ const initialValues = {
   description: "",
   Thumbnail: [],
 };
-const AddComplaint = () => {
+const ManagerAddComplaint = () => {
   const navigate = useNavigate();
   const ComplaintType = useSelector((s) => s.complaintType.complaintType);
-  const { _id } = useSelector((s) => s.user.user);
+  const { _id, SportComplexId } = useSelector((s) => s.user.user);
   const handleOneFileChange = (event) => {
     const selectedFiles = Array.from(event.target.files);
     setFieldValue("Thumbnail", selectedFiles);
@@ -23,8 +23,8 @@ const AddComplaint = () => {
     formdata.append("type", values.type);
     formdata.append("Description", values.description);
     formdata.append("userId", _id);
-    // formdata.append("sportsComplex", "654a07e68d14ca1d77041c04");
-    formdata.append("level", "3");
+    formdata.append("sportsComplex", SportComplexId);
+    formdata.append("level", "2");
     formdata.append("status", "0");
     formdata.append("picture", fileInput.files[0], values.Thumbnail[0].name);
 
@@ -44,7 +44,7 @@ const AddComplaint = () => {
           showConfirmButton: false,
           timer: 1500,
         });
-        navigate("/authority/allcomplaints");
+        navigate("/admin/allcomplaints");
       })
       .catch((error) => console.log("error", error));
   };
@@ -162,4 +162,4 @@ const AddComplaint = () => {
   );
 };
 
-export default AddComplaint;
+export default ManagerAddComplaint;
