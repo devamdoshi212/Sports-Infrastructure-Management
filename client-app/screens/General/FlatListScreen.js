@@ -15,7 +15,8 @@ function renderCategoryItem(itemData, ip, navigate) {
   if (itemData.item.baseUrl) {
     const image = itemData.item.baseUrl;
     const updatedImage = image.replace("localhost", ip); // Replace "localhost" with the IP address
-
+    const itemDataWithoutSeparators = { ...itemData }; // Create a copy of itemData
+    delete itemDataWithoutSeparators.separators;
     return (
       <View style={styles.gridItem}>
         <Pressable
@@ -25,7 +26,9 @@ function renderCategoryItem(itemData, ip, navigate) {
             pressed ? styles.buttonPressed : null,
           ]}
           onPress={() => {
-            navigate.navigate("SportComplexName", { data: itemData });
+            navigate.navigate("SportComplexName", {
+              data: itemDataWithoutSeparators,
+            });
           }}
         >
           {/* <View style={[styles.innerContainer, { backgroundColor: "gray" }]}> */}
@@ -49,6 +52,9 @@ function renderCategoryItem(itemData, ip, navigate) {
       </View>
     );
   } else {
+    const itemDataWithoutSeparators = { ...itemData }; // Create a copy of itemData
+    delete itemDataWithoutSeparators.separators;
+
     return (
       <View style={styles.gridItem}>
         <Pressable
@@ -58,7 +64,9 @@ function renderCategoryItem(itemData, ip, navigate) {
             pressed ? styles.buttonPressed : null,
           ]}
           onPress={() => {
-            navigate.navigate("ComplexDetailsinGeneral", { data: itemData });
+            navigate.navigate("ComplexDetailsinGeneral", {
+              data: itemDataWithoutSeparators,
+            });
           }}
         >
           <View style={[styles.innerContainer, { backgroundColor: "gray" }]}>

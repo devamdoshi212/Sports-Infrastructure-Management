@@ -46,7 +46,6 @@ const SportEnroll = () => {
   };
   const ratingHandler = () => {
     setRateModal(!rateModal);
-    console.log(rateModal);
   };
   const navigate = useNavigation();
   return (

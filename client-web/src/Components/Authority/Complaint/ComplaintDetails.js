@@ -6,11 +6,11 @@ const AuthorityComplaintDataTable = () => {
   return (
     <div className="px-4">
       <div className="flex justify-end mb-4">
-        {/* <NavLink to={"/manager/editfacility"}>
+        <NavLink to={"/authority/addcomplaint"}>
           <Button className="items-end cta-btn font-semibold py-4 mt-5 rounded-br-lg rounded-bl-lg rounded-tr-lg shadow-lg hover:shadow-xl ">
             Add Complaint
           </Button>
-        </NavLink> */}
+        </NavLink>
       </div>
       <AthorityComplaintDataTable />
     </div>
