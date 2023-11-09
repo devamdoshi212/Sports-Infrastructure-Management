@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 const initialValues = {
-  districts: [{}],
+  districts: [],
 };
 
 const DistrictSlice = createSlice({

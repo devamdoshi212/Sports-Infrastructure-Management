@@ -17,8 +17,10 @@ module.exports.AdminViewDetails = async function (req, res) {
     const manager = allUsers.filter((user) => user.Role === 3);
     const supervisor = allUsers.filter((user) => user.Role === 1);
     const complaints = await complaintModel.find();
-    const activeComplaints = complaints.filter((ele) => ele.status === 1);
-    const solvedComplaints = complaints.filter((ele) => ele.status === 0);
+    const activeComplaints = complaints.filter(
+      (ele) => ele.status === 0 && ele.level === 3
+    );
+    const solvedComplaints = complaints.filter((ele) => ele.status === 1);
 
     res.json({
       totalSports: sports.length,
