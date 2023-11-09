@@ -80,3 +80,26 @@ export const facilitySchema = Yup.object().shape({
     ),
   Facility: Yup.string().required("Facility is Required"),
 });
+
+export const compalintSchemas = Yup.object().shape({
+  type: Yup.string().required("Type is required"),
+  description: Yup.string().required("Description is required"),
+  Thumbnail: Yup.array()
+    .min(1, "Select at least one file")
+    .max(1, "Select at least one file")
+    .of(
+      Yup.mixed()
+        .test("fileFormat", "Only image files are allowed", (value) => {
+          if (!value) return true; // If no file is selected, skip validation
+
+          const acceptedFormats = ["image/jpeg", "image/png", "image/gif"];
+          return acceptedFormats.includes(value.type);
+        })
+        .test("fileSize", "File size is too large", (value) => {
+          if (!value) return true; // If no file is selected, skip validation
+
+          const maxSizeInBytes = 10 * 1024 * 1024; // 50MB
+          return value.size <= maxSizeInBytes;
+        })
+    ),
+});

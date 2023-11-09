@@ -11,6 +11,8 @@ import {
 } from "react-native";
 import ipconfig from "../../ipconfig";
 function renderCategoryItem(itemData, ip, navigation) {
+  const itemDataWithoutSeparators = { ...itemData }; // Create a copy of itemData
+  delete itemDataWithoutSeparators.separators;
   return (
     <View style={styles.gridItem}>
       <Pressable
@@ -21,7 +23,7 @@ function renderCategoryItem(itemData, ip, navigation) {
         ]}
         onPress={() => {
           navigation.navigate("ComplexFullDetailsinAthelte", {
-            data: itemData,
+            data: itemDataWithoutSeparators,
           });
         }}
       >
