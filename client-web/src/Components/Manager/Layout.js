@@ -11,6 +11,7 @@ import Swal from "sweetalert2";
 import { UserActions } from "../../store/UserData";
 import { useDispatch } from "react-redux";
 import image from "./../../Assets/symbol.png";
+import { FetchComplaintType } from "../../API/FetchComplaintType";
 
 const Layout = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -35,6 +36,7 @@ const Layout = () => {
     });
   };
   FetchDistrict();
+  FetchComplaintType();
 
   return (
     <div className="bg-gray-100 font-family-karla flex">

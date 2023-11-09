@@ -20,7 +20,7 @@ const SupervisorController = require("./Controller/SupervisorController");
 const AuthorityController = require("./Controller/AuthorityController");
 const AdminController = require("./Controller/AdminController");
 const ComplaintTypeController = require("./Controller/ComplaintTypeController");
-const ComplaintImageController = require("./Controller/ComplainImageController")
+const ComplaintImageController = require("./Controller/ComplainImageController");
 
 const {
   filtersportsforcomplex,
@@ -154,7 +154,11 @@ const uploadPhoto = multer({
 app.post("/complaintPhoto", uploadPhoto.single("photo"), (req, res) => {
   res.json({ rcode: 200 });
 });
-app.post("/addComplaint", ComplaintImageController.upload.single("picture"),ComplaintController.addComplaint);
+app.post(
+  "/addComplaint",
+  ComplaintImageController.upload.single("picture"),
+  ComplaintController.addComplaint
+);
 app.get("/getAllComplaints", ComplaintController.getAllComplaints);
 app.patch("/updateComplaint/:id", ComplaintController.updateComplaint);
 
