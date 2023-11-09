@@ -19,6 +19,7 @@ const SessionController = require("./Controller/SessionConroller");
 const SupervisorController = require("./Controller/SupervisorController");
 const AuthorityController = require("./Controller/AuthorityController");
 const AdminController = require("./Controller/AdminController");
+const ComplaintTypeController = require("./Controller/ComplaintTypeController");
 
 const {
   filtersportsforcomplex,
@@ -156,6 +157,10 @@ app.post("/addComplaint", ComplaintController.addComplaint);
 app.get("/getAllComplaints", ComplaintController.getAllComplaints);
 app.patch("/updateComplaint/:id", ComplaintController.updateComplaint);
 
+//Complaint Types
+app.post("/addComplaintType", ComplaintTypeController.addComplaintType);
+app.get("/getComplaintType", ComplaintTypeController.getComplainttype);
+
 //Authority details
 app.get("/AuthorityDetails", AuthorityController.getDetails);
 app.get("/getSportsCount", AuthorityController.getSportsCount);
@@ -183,7 +188,7 @@ app.post("/remarkRatingByAthlete", async (req, res) => {
   let rating = new athleteRatingModel({
     athleteId,
     remarks,
-    sport: sportId, 
+    sport: sportId,
     sportComplex: sportComplexId,
   });
   await rating.save();
@@ -203,18 +208,16 @@ app.get("/ratingForSupervisor", async (req, res) => {
 });
 
 app.get("/ratingForAll", async (req, res) => {
-
   let ratings = await athleteRatingModel
-  .find()
-  .populate({
-    path: "athleteId",
-    populate: {
-      path: "userId",
-    },
-  })
-  .sort({ rating: -1 });
-res.json({ rcode: 200, ratings });
-
+    .find()
+    .populate({
+      path: "athleteId",
+      populate: {
+        path: "userId",
+      },
+    })
+    .sort({ rating: -1 });
+  res.json({ rcode: 200, ratings });
 });
 app.post("/ratingBySupervisor", async (req, res) => {
   let { ratingId, rating } = req.body;

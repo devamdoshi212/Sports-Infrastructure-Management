@@ -43,6 +43,8 @@ const Analysis = () => {
           onChange={handleOptionChange} // Add an onChange event handler
           value={selectedOption} // Set the value of the select element to the selectedOption state
         >
+          <option value="">select Any One</option>
+
           {data.map((item) => (
             <option key={item._id} value={item._id}>
               {item.name}

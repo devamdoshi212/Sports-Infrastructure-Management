@@ -3,8 +3,10 @@ import Swal from "sweetalert2";
 import { Outlet, NavLink, Link, useNavigate } from "react-router-dom";
 import { FetchDistrict } from "../../API/FetchDistrict";
 import image from "./../../Assets/symbol.png";
+import { FetchComplaintType } from "../../API/FetchComplaintType";
 const Layout = () => {
   FetchDistrict();
+  FetchComplaintType();
   const [isOpen, setIsOpen] = useState(false);
   const navigate = useNavigate();
   const LogoutHandler = () => {
@@ -28,12 +30,12 @@ const Layout = () => {
       <aside className="relative  bg-[#13459c] h-screen w-64 hidden sm:block shadow-xl shadow-gray-900">
         <div className="p-6 text-center">
           <img src={image} alt="symbol" className="opacity-60 w-2/3 m-auto" />
-          <a
-            href="index.html"
+          <Link
+            to={"/admin"}
             className="text-white text-3xl  first-letter:font-semibold uppercase hover:text-gray-300"
           >
             Admin
-          </a>
+          </Link>
         </div>
         <nav className=" text-base font-semibold pt-3">
           <div className=" hover:shadow-gray-400 hover:shadow-md">

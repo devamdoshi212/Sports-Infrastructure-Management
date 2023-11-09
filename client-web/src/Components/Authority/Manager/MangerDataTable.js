@@ -17,8 +17,8 @@ export default function ManagerDateTable() {
   const [customers, setCustomers] = useState(null);
   const [filters, setFilters] = useState(null);
   const [loading, setLoading] = useState(false);
-  let district = [{}];
-  district = useSelector((state) => state.district.districts);
+  // let district = [];
+  // district = useSelector((state) => state.district.districts);
   const [globalFilterValues, setGlobalFilterValues] = useState({
     Name: "",
     ContactNum: "",
@@ -63,12 +63,12 @@ export default function ManagerDateTable() {
       setLoading(false);
     });
     initFilters();
-  }, [deleterefresh, district]);
+  }, [deleterefresh]);
 
   const getCustomers = (data) => {
     return [...(data || [])].map((d) => {
       d.date = new Date(d.date);
-      d.District = getDistrictName(d.DistrictId);
+      // d.District = getDistrictName(d.DistrictId);
       return d;
     });
   };
@@ -189,15 +189,15 @@ export default function ManagerDateTable() {
     return rowData.Category.join(", ");
   };
 
-  const DistrictBodyTemplete = (rowdata) => {
-    const data = district.find((c) => c._id === rowdata.DistrictId);
-    return data.District;
-  };
+  // const DistrictBodyTemplete = (rowdata) => {
+  //   const data = district.find((c) => c._id === rowdata.DistrictId);
+  //   return data.District;
+  // };
 
-  const getDistrictName = (id) => {
-    const data = district.find((c) => c._id === id);
-    return data.District;
-  };
+  // const getDistrictName = (id) => {
+  //   const data = district.find((c) => c._id === id);
+  //   return data.District;
+  // };
 
   return (
     <div className="card">
