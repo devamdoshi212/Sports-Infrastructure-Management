@@ -11,6 +11,7 @@ import { UserActions } from "../../store/UserData";
 import { FetchDistrict } from "../../API/FetchDistrict";
 import Swal from "sweetalert2";
 import image from "./../../Assets/symbol.png";
+import { FetchComplaintType } from "../../API/FetchComplaintType";
 
 const Layout = () => {
   const dispatch = useDispatch();
@@ -34,7 +35,7 @@ const Layout = () => {
     });
   };
   FetchDistrict();
-
+  FetchComplaintType();
   return (
     <div className="bg-gray-100 font-family-karla flex">
       <aside className="relative bg-[#13459c] h-screen w-64 hidden sm:block shadow-xl shadow-gray-900">

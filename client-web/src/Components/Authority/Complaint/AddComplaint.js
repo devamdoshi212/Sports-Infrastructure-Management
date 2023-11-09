@@ -1,6 +1,7 @@
 import React from "react";
 import { useFormik } from "formik";
 import { compalintSchemas } from "../../../Schemas";
+import { useSelector } from "react-redux";
 
 const initialValues = {
   type: "",
@@ -8,6 +9,7 @@ const initialValues = {
   Thumbnail: [],
 };
 const AddComplaint = () => {
+  const ComplaintType = useSelector((s) => s.complaintType.complaintType);
   const handleOneFileChange = (event) => {
     const selectedFiles = Array.from(event.target.files);
     setFieldValue("Thumbnail", selectedFiles);
@@ -62,15 +64,11 @@ const AddComplaint = () => {
               onBlur={handleBlur}
             >
               <option value="">Select any One</option>
-              <option value="Hello">Select One</option>
-              {/* {type.map((item, index) => (
+              {ComplaintType.map((item, index) => (
                 <option key={index} value={item._id}>
-                  {item.name}
+                  {item.Type}
                 </option>
-              ))} */}
-              {/* <option value="Jamnagar">Jamnagar</option>
-              <option value="Surat">Surat</option>
-              <option value="Anand">Anand</option> */}
+              ))}
             </select>
             {errors.type && touched.type ? (
               <small className="text-ligth text-red-600">{errors.type}</small>

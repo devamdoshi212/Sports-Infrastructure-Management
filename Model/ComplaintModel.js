@@ -2,7 +2,7 @@ const { default: mongoose } = require("mongoose");
 
 const complaintSchema = new mongoose.Schema(
   {
-    type: String, // , Maintenance Requirement
+    type: { type: mongoose.SchemaTypes.ObjectId, ref: "complainttypes" }, // , Maintenance Requirement
     Description: String,
     photo: String,
     Sremarks: String,
