@@ -28,6 +28,9 @@ const {
 
 const bodyParser = require("body-parser");
 const athleteRatingModel = require("./Model/athleteRatingModel");
+const {
+  getAuthorityComplaint,
+} = require("./Controller/AuthorityComplaintController");
 const app = express();
 
 //middleware
@@ -162,6 +165,7 @@ app.post(
 app.post("/addComplaintApp", ComplaintController.addComplaintApp);
 app.get("/getAllComplaints", ComplaintController.getAllComplaints);
 app.patch("/updateComplaint/:id", ComplaintController.updateComplaint);
+app.get("/getAuthorityComplaint", getAuthorityComplaint);
 
 //Complaint Types
 app.post("/addComplaintType", ComplaintTypeController.addComplaintType);
