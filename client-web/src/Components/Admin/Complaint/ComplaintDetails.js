@@ -13,7 +13,7 @@ import { useSelector } from "react-redux";
 import { AdminComplaintService } from "./ComplaintServices";
 
 export default function AdminComplaintDataTable() {
-  const { SportComplexId } = useSelector((state) => state.user.user);
+  const { _id } = useSelector((state) => state.user.user);
   const [deleterefresh, setdeleterefresh] = useState(true);
   const [customers, setCustomers] = useState([]);
   const [filters, setFilters] = useState(null);
@@ -22,9 +22,9 @@ export default function AdminComplaintDataTable() {
     SportName: "",
     Category: "",
   });
-
+  const [remark, setremarks] = useState("");
   useEffect(() => {
-    AdminComplaintService.getCustomersXLarge(SportComplexId).then((data) => {
+    AdminComplaintService.getCustomersXLarge().then((data) => {
       setCustomers(getCustomers(data));
       setLoading(false);
     });
@@ -122,7 +122,9 @@ export default function AdminComplaintDataTable() {
     myHeaders.append("Content-Type", "application/json");
 
     var raw = JSON.stringify({
-      status: 0,
+      status: 1,
+      remark: remark,
+      userId: _id,
     });
 
     var requestOptions = {
@@ -139,34 +141,14 @@ export default function AdminComplaintDataTable() {
       .then((response) => response.json())
       .then((result) => {
         console.log(result);
-        setdeleterefresh(true);
-      })
-      .catch((error) => console.log("error", error));
-  };
-
-  const PassHandler = (rowdata) => {
-    var myHeaders = new Headers();
-    myHeaders.append("Content-Type", "application/json");
-
-    var raw = JSON.stringify({
-      level: 2,
-    });
-
-    var requestOptions = {
-      method: "PATCH",
-      headers: myHeaders,
-      body: raw,
-      redirect: "follow",
-    };
-
-    fetch(
-      `http://localhost:9999/updateComplaint/${rowdata._id}`,
-      requestOptions
-    )
-      .then((response) => response.json())
-      .then((result) => {
-        console.log(result);
-        setdeleterefresh(true);
+        Swal.fire({
+          position: "top-end",
+          icon: "success",
+          title: "Complaint Sloved Successfully",
+          showConfirmButton: false,
+          timer: 1500,
+        });
+        setdeleterefresh(!deleterefresh);
       })
       .catch((error) => console.log("error", error));
   };
@@ -186,8 +168,10 @@ export default function AdminComplaintDataTable() {
             name="remarks"
             type="text"
             placeholder="Type here ..."
-            // value={values.name}
-            // onChange={handleChange}
+            value={remark}
+            onChange={(e) => {
+              setremarks(e.target.value);
+            }}
             // onBlur={handleBlur}
           />
         </div>

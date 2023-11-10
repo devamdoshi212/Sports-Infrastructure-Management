@@ -122,7 +122,7 @@ export default function AthorityComplaintDataTable() {
     myHeaders.append("Content-Type", "application/json");
 
     var raw = JSON.stringify({
-      status: 0,
+      status: 1,
       userId: _id,
       remark: remark,
     });

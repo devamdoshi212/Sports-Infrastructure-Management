@@ -11,6 +11,7 @@ import { useSelector } from "react-redux";
 
 import { ComplaintService } from "./ComplaintServices";
 import { useRef } from "react";
+import Swal from "sweetalert2";
 
 export default function ComplaintDataTable() {
   const { SportComplexId, _id } = useSelector((state) => state.user.user);
@@ -153,7 +154,7 @@ export default function ComplaintDataTable() {
     myHeaders.append("Content-Type", "application/json");
 
     var raw = JSON.stringify({
-      status: 0,
+      status: 1,
       remark: remark,
       userId: _id,
     });
@@ -171,6 +172,13 @@ export default function ComplaintDataTable() {
     )
       .then((response) => response.json())
       .then((result) => {
+        Swal.fire({
+          position: "top-end",
+          icon: "success",
+          title: "Complaint Sloved Successfully",
+          showConfirmButton: false,
+          timer: 1500,
+        });
         console.log(result);
         setdeleterefresh(!deleterefresh);
       })
@@ -201,6 +209,13 @@ export default function ComplaintDataTable() {
       .then((response) => response.json())
       .then((result) => {
         console.log(result);
+        Swal.fire({
+          position: "top-end",
+          icon: "success",
+          title: "Complaint Pass To Authority Successfully",
+          showConfirmButton: false,
+          timer: 1500,
+        });
         setdeleterefresh(!deleterefresh);
       })
       .catch((error) => console.log("error", error));
