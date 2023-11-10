@@ -95,13 +95,7 @@ const ListComplaint = () => {
                   </View>
                   <View style={styles.column2}>
                     <Text style={styles.input}>Type</Text>
-                    <Text style={styles.input}>
-                      {item.type == 0 && "Maintenance"}
-                      {item.type == 1 && "Behaviour"}
-                      {item.type == 2 && "Refund"}
-                      {item.type == 3 && "Inquiry"}
-                      {item.type == 4 && "Other"}
-                    </Text>
+                    <Text style={styles.input}>{item.type.Type}</Text>
                   </View>
                 </View>
               </Pressable>
@@ -132,7 +126,7 @@ const styles = StyleSheet.create({
     alignSelf: "center",
   },
   pickerContainer: {
-    backgroundColor:"white",
+    backgroundColor: "white",
     borderRadius: 5,
     marginBottom: 15,
   },
