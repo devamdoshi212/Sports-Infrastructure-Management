@@ -75,7 +75,7 @@ const Complaint = ({ navigation }) => {
       redirect: "follow",
     };
     let response = await fetch(
-      `http://${ip}:9999/addComplaint`,
+      `http://${ip}:9999/addComplaintApp`,
       requestOptions
     );
     let result = await response.json();
@@ -146,7 +146,14 @@ const Complaint = ({ navigation }) => {
             ></TextInput>
           </ScrollView>
         </View>
-        <View style={{marginVertical:"5%", width:"50%", alignItems:"center", marginHorizontal:"25%"}}>
+        <View
+          style={{
+            marginVertical: "5%",
+            width: "50%",
+            alignItems: "center",
+            marginHorizontal: "25%",
+          }}
+        >
           {photo && <Image source={{ uri: photo }} style={styles.photo} />}
         </View>
         <TouchableOpacity style={styles.uploadButton} onPress={pickImage}>

@@ -2,9 +2,10 @@ const ComplaintModel = require("../Model/ComplaintModel");
 
 module.exports.addComplaint = async function (req, res) {
   // console.log("file detail => " + req.file);
-  const BaseUrl = `http://localhost:9999/Complains/${req.file.originalname}`;
+  // const BaseUrl = `http://localhost:9999/Complains/${req.file.originalname}`;
+  const BaseUrl = `${req.file.originalname}`;
 
-  req.body.baseUrl = BaseUrl;
+  req.body.photo = BaseUrl;
 
   let Complaint = new ComplaintModel(req.body);
 
@@ -15,9 +16,26 @@ module.exports.addComplaint = async function (req, res) {
   res.json({ data: data, msg: "Complaint Generated", rcode: 200 });
 };
 
+module.exports.addComplaintApp = async function (req, res) {
+  // console.log("file detail => " + req.file);
+  // const BaseUrl = `http://localhost:9999/Complains/${req.file.originalname}`;
+  // const BaseUrl = `${req.file.originalname}`;
+
+  // req.body.baseUrl = BaseUrl;
+
+  let Complaint = new ComplaintModel(req.body);
+
+  let data = await Complaint.save();
+
+  console.log(data);
+
+  res.json({ data: data, msg: "Complaint Generated", rcode: 200 });
+};
+
 module.exports.getAllComplaints = async function (req, res) {
   ComplaintModel.find(req.query)
     .populate("userId")
+    .populate("type")
     .then((data) => {
       res.json({ data: data, msg: "Complaint Retrived", rcode: 200 });
     })

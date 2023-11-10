@@ -44,7 +44,7 @@ const AddComplaint = () => {
           showConfirmButton: false,
           timer: 1500,
         });
-        navigate("/authority/allcomplaints");
+        navigate("/authority/allcomplaint");
       })
       .catch((error) => console.log("error", error));
   };

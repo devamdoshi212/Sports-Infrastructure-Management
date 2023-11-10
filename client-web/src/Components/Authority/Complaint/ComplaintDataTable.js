@@ -278,22 +278,8 @@ export default function AthorityComplaintDataTable() {
           />
           <Column
             header="Complaint Type"
-            field="type"
-            filterField="type"
-            body={(rowdata) => {
-              //   console.log(rowdata);
-              if (rowdata.type === "1") {
-                return <span>Maintenance</span>;
-              } else if (rowdata.type === "2") {
-                return <span>Behaviour</span>;
-              } else if (rowdata.type === "3") {
-                return <span>Refund</span>;
-              } else if (rowdata.type === "4") {
-                return <span>Inquiry</span>;
-              } else if (rowdata.type === "5") {
-                return <span>Other</span>;
-              }
-            }}
+            field="type.Type"
+            filterField="type.Type"
             style={{ minWidth: "12rem" }}
           />
           <Column header="Action" body={actionBodyTemplate} />
