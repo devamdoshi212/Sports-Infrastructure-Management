@@ -15,9 +15,6 @@ const complaintSchema = new mongoose.Schema(
     },
     level: Number, //0 - Supervisor, 1 - Manager, 2 - Authority, 3 - Admin
     status: Number, //0 - Active(Not Solved), 1 - Solved
-    baseUrl: {
-        type: String,
-      }
   },
 
   { timestamps: true }

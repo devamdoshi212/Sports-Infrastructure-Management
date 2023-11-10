@@ -21,14 +21,7 @@ import mime from "mime";
 
 const Complaint = ({ navigation }) => {
   const Userdata = useSelector((state) => state.user.User);
-
-  const complaintList = [
-    "Maintenance",
-    "Behaviour",
-    "Refund",
-    "Inquiry",
-    "Other",
-  ];
+  const [complaintList, setcomplaintList] = useState([]);
   const [value, onChangeText] = React.useState("");
   const [complaint, setCompalint] = useState();
   const [photo, setphoto] = useState("");
@@ -36,6 +29,23 @@ const Complaint = ({ navigation }) => {
   const ip = ipconfig.ip;
 
   const complexId = Userdata.SportComplexId;
+
+  useEffect(() => {
+    (() => {
+      var requestOptions = {
+        method: "GET",
+        redirect: "follow",
+      };
+
+      fetch(`http://${ip}:9999/getComplaintType`, requestOptions)
+        .then((response) => response.json())
+        .then((result) => {
+          setcomplaintList(result.data);
+        })
+        .catch((error) => console.log("error", error));
+    })();
+  }, []);
+
   const pickImage = async () => {
     const result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.Images,
@@ -74,7 +84,7 @@ const Complaint = ({ navigation }) => {
       redirect: "follow",
     };
     let response = await fetch(
-      `http://${ip}:9999/addComplaint`,
+      `http://${ip}:9999/addComplaintApp`,
       requestOptions
     );
     let result = await response.json();
@@ -121,7 +131,9 @@ const Complaint = ({ navigation }) => {
         >
           <Picker.Item label="Please select your Complaint Type" value="" />
           {complaintList.map((item, index) => {
-            return <Picker.Item label={item} value={index} key={index} />;
+            return (
+              <Picker.Item label={item.Type} value={item._id} key={index} />
+            );
           })}
         </Picker>
         <View

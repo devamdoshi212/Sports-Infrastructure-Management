@@ -159,6 +159,7 @@ app.post(
   ComplaintImageController.upload.single("picture"),
   ComplaintController.addComplaint
 );
+app.post("/addComplaintApp", ComplaintController.addComplaintApp);
 app.get("/getAllComplaints", ComplaintController.getAllComplaints);
 app.patch("/updateComplaint/:id", ComplaintController.updateComplaint);
 
