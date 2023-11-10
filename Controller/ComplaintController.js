@@ -43,6 +43,23 @@ module.exports.getAllComplaints = async function (req, res) {
       res.json({ data: err.msg, msg: "smw", rcode: -9 });
     });
 };
+module.exports.getAllComplaintsAdmin = async function (req, res) {
+  ComplaintModel.find(req.query)
+    .populate("userId")
+    .populate("type")
+    .populate({
+      path: "sportsComplex",
+      populate: {
+        path: "district",
+      },
+    })
+    .then((data) => {
+      res.json({ data: data, msg: "Complaint Retrived", rcode: 200 });
+    })
+    .catch((err) => {
+      res.json({ data: err.msg, msg: "smw", rcode: -9 });
+    });
+};
 
 module.exports.updateComplaint = async function (req, res) {
   const id = req.params.id;
@@ -67,7 +84,12 @@ module.exports.updateComplaint = async function (req, res) {
     Complaint.level = req.body.level;
   }
   try {
-    Complaint.remarks.push({date:new Date(), level:currentLevel, userId:userId, remark:remark});
+    Complaint.remarks.push({
+      date: new Date(),
+      level: currentLevel,
+      userId: userId,
+      remark: remark,
+    });
     let response = await Complaint.save();
     res.json({
       data: response,

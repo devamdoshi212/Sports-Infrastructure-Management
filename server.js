@@ -166,7 +166,7 @@ app.post("/addComplaintApp", ComplaintController.addComplaintApp);
 app.get("/getAllComplaints", ComplaintController.getAllComplaints);
 app.patch("/updateComplaint/:id", ComplaintController.updateComplaint);
 app.get("/getAuthorityComplaint", getAuthorityComplaint);
-
+app.get("/getAllComplaintsAdmin", ComplaintController.getAllComplaintsAdmin);
 //Complaint Types
 app.post("/addComplaintType", ComplaintTypeController.addComplaintType);
 app.get("/getComplaintType", ComplaintTypeController.getComplainttype);
