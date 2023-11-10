@@ -14,7 +14,11 @@ module.exports.getAuthorityComplaint = async function (req, res) {
     const element = data[index];
     let complaintdata = await ComplaintModel.find({
       sportsComplex: element._id,
-    });
+      level: 2,
+    })
+      .populate("userId")
+      .populate("type")
+      .populate("sportsComplex");
     for (let i = 0; i < complaintdata.length; i++) {
       const e = complaintdata[i];
       complaintdataarray.push(e);
@@ -23,7 +27,11 @@ module.exports.getAuthorityComplaint = async function (req, res) {
     let complaintdata1 = await ComplaintModel.find({
       sportsComplex: element._id,
       status: 0,
-    });
+      level: 2,
+    })
+      .populate("userId")
+      .populate("type")
+      .populate("sportsComplex");
     for (let i = 0; i < complaintdata1.length; i++) {
       const e = complaintdata1[i];
       complaintdataarraystatus0.push(e);
@@ -32,7 +40,11 @@ module.exports.getAuthorityComplaint = async function (req, res) {
     let complaintdata2 = await ComplaintModel.find({
       sportsComplex: element._id,
       status: 1,
-    });
+      level: 2,
+    })
+      .populate("userId")
+      .populate("type")
+      .populate("sportsComplex");
     for (let i = 0; i < complaintdata2.length; i++) {
       const e = complaintdata2[i];
       complaintdataarraystatus1.push(e);

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import Swal from "sweetalert2";
 import "primereact/resources/themes/lara-light-indigo/theme.css";
 import { FilterMatchMode } from "primereact/api";
@@ -7,13 +7,12 @@ import { Column } from "primereact/column";
 import { InputText } from "primereact/inputtext";
 import { Button } from "primereact/button";
 import { Calendar } from "primereact/calendar";
-import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 
 import { AuthorityComplaintService } from "./ComplaintServices";
 
 export default function AthorityComplaintDataTable() {
-  const { SportComplexId } = useSelector((state) => state.user.user);
+  const { DistrictId } = useSelector((state) => state.user.user);
   const [deleterefresh, setdeleterefresh] = useState(true);
   const [customers, setCustomers] = useState([]);
   const [filters, setFilters] = useState(null);
@@ -24,12 +23,10 @@ export default function AthorityComplaintDataTable() {
   });
 
   useEffect(() => {
-    AuthorityComplaintService.getCustomersXLarge(SportComplexId).then(
-      (data) => {
-        setCustomers(getCustomers(data));
-        setLoading(false);
-      }
-    );
+    AuthorityComplaintService.getCustomersXLarge(DistrictId).then((data) => {
+      setCustomers(getCustomers(data));
+      setLoading(false);
+    });
     initFilters();
   }, [deleterefresh]);
 
@@ -140,8 +137,15 @@ export default function AthorityComplaintDataTable() {
     )
       .then((response) => response.json())
       .then((result) => {
-        console.log(result);
-        setdeleterefresh(true);
+        // console.log(result);
+        Swal.fire({
+          position: "top-end",
+          icon: "success",
+          title: "Complaint Sloved Successfully",
+          showConfirmButton: false,
+          timer: 1500,
+        });
+        setdeleterefresh(!deleterefresh);
       })
       .catch((error) => console.log("error", error));
   };
@@ -153,7 +157,6 @@ export default function AthorityComplaintDataTable() {
     var raw = JSON.stringify({
       level: 3,
     });
-
     var requestOptions = {
       method: "PATCH",
       headers: myHeaders,
@@ -167,8 +170,15 @@ export default function AthorityComplaintDataTable() {
     )
       .then((response) => response.json())
       .then((result) => {
-        console.log(result);
-        setdeleterefresh(true);
+        // console.log(result);
+        Swal.fire({
+          position: "top-end",
+          icon: "success",
+          title: "Complaint Pass To Admin Successfully",
+          showConfirmButton: false,
+          timer: 1500,
+        });
+        setdeleterefresh(!deleterefresh);
       })
       .catch((error) => console.log("error", error));
   };
@@ -221,9 +231,68 @@ export default function AthorityComplaintDataTable() {
   const calculateIndex = (currentPage, rowIndex) => {
     return currentPage * 10 + rowIndex + 1;
   };
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [modalImages, setModalImages] = useState("");
+  const [selectedRowData, setSelectedRowData] = useState(null);
+  const modalOverlayRef = useRef(null);
 
+  const openModal = (rowdata) => {
+    setModalImages(rowdata.photo);
+    setSelectedRowData(rowdata);
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setModalImages([]);
+    setSelectedRowData(null);
+    setIsModalOpen(false);
+  };
+
+  useEffect(() => {
+    const handleOutsideClick = (event) => {
+      if (
+        modalOverlayRef.current &&
+        !modalOverlayRef.current.contains(event.target)
+      ) {
+        closeModal();
+      }
+    };
+
+    if (isModalOpen) {
+      document.addEventListener("mousedown", handleOutsideClick);
+    } else {
+      document.removeEventListener("mousedown", handleOutsideClick);
+    }
+
+    return () => {
+      document.removeEventListener("mousedown", handleOutsideClick);
+    };
+  }, [isModalOpen]);
   return (
     <div>
+      {isModalOpen && (
+        <div
+          ref={modalOverlayRef}
+          className="fixed inset-0 z-50 flex items-center justify-center modal-overlay bg-gray-900 bg-opacity-80"
+        >
+          <div className="modal-above-screen bg-white rounded-lg p-4 relative">
+            <span
+              className="close absolute top-2 right-2 text-3xl cursor-pointer"
+              onClick={closeModal}
+            >
+              &times;
+            </span>
+            <div className="modal-body p-4 flex justify-center items-center">
+              <img
+                key=""
+                src={` http://localhost:9999/complaints/${modalImages}`}
+                alt="Sport Facility Pic"
+                className="w-60 h-60 object-cover mx-2"
+              />
+            </div>
+          </div>
+        </div>
+      )}
       <div className="card">
         <DataTable
           value={customers}
@@ -256,6 +325,12 @@ export default function AthorityComplaintDataTable() {
             style={{ minWidth: "12rem" }}
           />
           <Column
+            header="Complex Name"
+            field="sportsComplex.name"
+            filterField="name"
+            style={{ minWidth: "12rem" }}
+          />
+          <Column
             header="Description"
             field="Description"
             filterField="Category"
@@ -265,16 +340,15 @@ export default function AthorityComplaintDataTable() {
             header="Image"
             field="photo"
             filterField="photo"
-            body={(rowdata) => {
-              return (
-                <img
-                  className="w-full h-96"
-                  src={`http://localhost:9999/complaints/${rowdata.photo}`}
-                  alt="Sport Facility Pic"
-                />
-              );
-            }}
             style={{ minWidth: "12rem" }}
+            body={(rowdata) => (
+              <button
+                onClick={() => openModal(rowdata)}
+                className="text-blue-900 hover:underline hover:decoration-black "
+              >
+                View Images
+              </button>
+            )}
           />
           <Column
             header="Complaint Type"
@@ -288,3 +362,5 @@ export default function AthorityComplaintDataTable() {
     </div>
   );
 }
+
+//
