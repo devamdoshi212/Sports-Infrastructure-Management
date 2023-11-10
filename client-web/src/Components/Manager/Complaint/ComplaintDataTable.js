@@ -13,7 +13,7 @@ import { ComplaintService } from "./ComplaintServices";
 import { useRef } from "react";
 
 export default function ComplaintDataTable() {
-  const { SportComplexId } = useSelector((state) => state.user.user);
+  const { SportComplexId, _id } = useSelector((state) => state.user.user);
   const [deleterefresh, setdeleterefresh] = useState(true);
   const [customers, setCustomers] = useState([]);
   const [filters, setFilters] = useState(null);
@@ -22,7 +22,7 @@ export default function ComplaintDataTable() {
     SportName: "",
     Category: "",
   });
-
+  const [remark, setremarks] = useState("");
   //   console.log(SportComplexId);
 
   //   const DeleteHandler = (rowdata) => {
@@ -154,6 +154,8 @@ export default function ComplaintDataTable() {
 
     var raw = JSON.stringify({
       status: 0,
+      remark: remark,
+      userId: _id,
     });
 
     var requestOptions = {
@@ -170,7 +172,7 @@ export default function ComplaintDataTable() {
       .then((response) => response.json())
       .then((result) => {
         console.log(result);
-        setdeleterefresh(true);
+        setdeleterefresh(!deleterefresh);
       })
       .catch((error) => console.log("error", error));
   };
@@ -181,6 +183,8 @@ export default function ComplaintDataTable() {
 
     var raw = JSON.stringify({
       level: 2,
+      remark: remark,
+      userId: _id,
     });
 
     var requestOptions = {
@@ -197,7 +201,7 @@ export default function ComplaintDataTable() {
       .then((response) => response.json())
       .then((result) => {
         console.log(result);
-        setdeleterefresh(true);
+        setdeleterefresh(!deleterefresh);
       })
       .catch((error) => console.log("error", error));
   };
@@ -217,8 +221,10 @@ export default function ComplaintDataTable() {
             name="remarks"
             type="text"
             placeholder="Type here ..."
-            // value={values.name}
-            // onChange={handleChange}
+            value={remark}
+            onChange={(e) => {
+              setremarks(e.target.value);
+            }}
             // onBlur={handleBlur}
           />
         </div>
