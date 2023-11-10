@@ -3,7 +3,12 @@ import * as Yup from "yup";
 export const userSchemas = Yup.object().shape({
   name: Yup.string().required("Please Enter Name"),
   email: Yup.string().email().required("Please Enter Valid Email"),
-  mobileNumber: Yup.number().required("Please Enter Mobile Number"),
+  mobileNumber: Yup.number()
+    .typeError("That doesn't look like a phone number")
+    .positive("A phone number can't start with a minus")
+    .integer("A phone number can't include a decimal point")
+    .min(8)
+    .required("Please Enter Mobile Number"),
   district: Yup.string().required("Select at least one District"),
   dob: Yup.string().required("Select at Date of Birth"),
 });
@@ -11,14 +16,24 @@ export const userSchemas = Yup.object().shape({
 export const ManagerSchemas = Yup.object().shape({
   name: Yup.string().required("Please Enter Name"),
   email: Yup.string().email().required("Please Enter Valid Email"),
-  mobileNumber: Yup.number().required("Please Enter Mobile Number"),
+  mobileNumber: Yup.number()
+    .typeError("That doesn't look like a phone number")
+    .positive("A phone number can't start with a minus")
+    .integer("A phone number can't include a decimal point")
+    .min(8)
+    .required("Please Enter Mobile Number"),
   dob: Yup.string().required("Select at Date of Birth"),
   Sportscomplex: Yup.string().required("Select Sports Complex"),
 });
 export const SupervisorSchemas = Yup.object().shape({
   name: Yup.string().required("Please Enter Name"),
   email: Yup.string().email().required("Please Enter Valid Email"),
-  mobileNumber: Yup.number().required("Please Enter Mobile Number"),
+  mobileNumber: Yup.number()
+    .typeError("That doesn't look like a phone number")
+    .positive("A phone number can't start with a minus")
+    .integer("A phone number can't include a decimal point")
+    .min(8)
+    .required("Please Enter Mobile Number"),
   dob: Yup.string().required("Select at Date of Birth"),
 });
 
@@ -59,7 +74,9 @@ export const sportComplexSchema = Yup.object().shape({
 });
 
 export const facilitySchema = Yup.object().shape({
-  Fees: Yup.number().required("Fees is Required"),
+  Fees: Yup.number()
+    .positive("fees not include minus")
+    .required("Fees is Required"),
   Image: Yup.array()
     .min(1, "Select at least one file")
     .max(10, "Select at least one file")
