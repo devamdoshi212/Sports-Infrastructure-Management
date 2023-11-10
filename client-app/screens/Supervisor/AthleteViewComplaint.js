@@ -14,10 +14,13 @@ import { Ionicons } from "@expo/vector-icons";
 import { useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import ipconfig from "../../ipconfig";
+import { useSelector } from "react-redux";
 function AthleteViewComplaint({ route, navigation }) {
   const navigate = useNavigation();
   const data = route.params.data;
   const ip = ipconfig.ip;
+  const { _id } = useSelector((s) => s.user.User);
+  console.log(_id);
   const [remarks, setremarks] = useState("");
   const resolveHandler = () => {
     var myHeaders = new Headers();
@@ -25,6 +28,8 @@ function AthleteViewComplaint({ route, navigation }) {
 
     var raw = JSON.stringify({
       status: 1,
+      remark: remarks,
+      userId: _id,
     });
 
     var requestOptions = {
@@ -55,7 +60,8 @@ function AthleteViewComplaint({ route, navigation }) {
 
     var raw = JSON.stringify({
       level: 1,
-      Sremarks: remarks,
+      remark: remarks,
+      userId: _id,
     });
 
     var requestOptions = {
