@@ -79,10 +79,14 @@ module.exports.getDetails = async function (req, res) {
     } else {
       let active = 0,
         solved = 0;
-      if (complaintCount[0]._id === 0) {
-        active = complaintCount[0].Complaintcount;
+      if (complaintCount.length > 0) {
+        if (complaintCount[0]._id === 0) {
+          active = complaintCount[0].Complaintcount;
+        } else {
+          solved = complaintCount[0].Complaintcount;
+        }
       } else {
-        solved = complaintCount[0].Complaintcount;
+        (active = 0), (solved = 0);
       }
       sportComlexComplaint.push({
         sportComplex: sportcomplex[i].name,
