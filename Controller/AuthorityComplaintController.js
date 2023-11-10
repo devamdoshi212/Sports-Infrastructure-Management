@@ -6,34 +6,44 @@ module.exports.getAuthorityComplaint = async function (req, res) {
 
   let data = await SportsComplex.find({ district: districtid });
   //   console.log(data);
-  let compalintdataarray = [];
-  let compalintdataarraystatus0 = [];
-  let compalintdataarraystatus1 = [];
+  let complaintdataarray = [];
+  let complaintdataarraystatus0 = [];
+  let complaintdataarraystatus1 = [];
 
   for (let index = 0; index < data.length; index++) {
     const element = data[index];
-    let compalintdata = await ComplaintModel.find({
+    let complaintdata = await ComplaintModel.find({
       sportsComplex: element._id,
     });
+    for (let i = 0; i < complaintdata.length; i++) {
+      const e = complaintdata[i];
+      complaintdataarray.push(e);
+    }
+
     let complaintdata1 = await ComplaintModel.find({
       sportsComplex: element._id,
       status: 0,
     });
+    for (let i = 0; i < complaintdata1.length; i++) {
+      const e = complaintdata1[i];
+      complaintdataarraystatus0.push(e);
+    }
+
     let complaintdata2 = await ComplaintModel.find({
       sportsComplex: element._id,
       status: 1,
     });
-
-    compalintdataarray.push(compalintdata);
-    compalintdataarraystatus0.push(complaintdata1);
-    compalintdataarraystatus1.push(complaintdata2);
+    for (let i = 0; i < complaintdata2.length; i++) {
+      const e = complaintdata2[i];
+      complaintdataarraystatus1.push(e);
+    }
   }
 
   if (data) {
     res.json({
-      data: compalintdataarray,
-      status0: compalintdataarraystatus0,
-      status1: compalintdataarraystatus1,
+      data: complaintdataarray,
+      status0: complaintdataarraystatus0,
+      status1: complaintdataarraystatus1,
       msg: "Complaint Retrived For Authority",
       rcode: 200,
     });
