@@ -12,7 +12,7 @@ import { useSelector } from "react-redux";
 import { AuthorityComplaintService } from "./ComplaintServices";
 
 export default function AthorityComplaintDataTable() {
-  const { DistrictId } = useSelector((state) => state.user.user);
+  const { DistrictId, _id } = useSelector((state) => state.user.user);
   const [deleterefresh, setdeleterefresh] = useState(true);
   const [customers, setCustomers] = useState([]);
   const [filters, setFilters] = useState(null);
@@ -21,6 +21,7 @@ export default function AthorityComplaintDataTable() {
     SportName: "",
     Category: "",
   });
+  const [remark, setremarks] = useState("");
 
   useEffect(() => {
     AuthorityComplaintService.getCustomersXLarge(DistrictId).then((data) => {
@@ -122,6 +123,8 @@ export default function AthorityComplaintDataTable() {
 
     var raw = JSON.stringify({
       status: 0,
+      userId: _id,
+      remark: remark,
     });
 
     var requestOptions = {
@@ -156,6 +159,8 @@ export default function AthorityComplaintDataTable() {
 
     var raw = JSON.stringify({
       level: 3,
+      remark: remark,
+      userId: _id,
     });
     var requestOptions = {
       method: "PATCH",
@@ -198,8 +203,10 @@ export default function AthorityComplaintDataTable() {
             name="remarks"
             type="text"
             placeholder="Type here ..."
-            // value={values.name}
-            // onChange={handleChange}
+            value={remark}
+            onChange={(e) => {
+              setremarks(e.target.value);
+            }}
             // onBlur={handleBlur}
           />
         </div>
