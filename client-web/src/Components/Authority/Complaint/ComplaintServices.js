@@ -1,9 +1,9 @@
 export const AuthorityComplaintService = {
   getData(id) {
-    return fetch(`http://localhost:9999/getAllComplaints?level=2&status=0`)
+    return fetch(`http://localhost:9999/getAuthorityComplaint?DistrictId=${id}`)
       .then((res) => res.json())
       .then((res) => {
-        return res.data;
+        return res.status0;
       });
   },
 

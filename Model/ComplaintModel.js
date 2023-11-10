@@ -11,7 +11,7 @@ const complaintSchema = new mongoose.Schema(
     userId: { type: mongoose.SchemaTypes.ObjectId, ref: "users" },
     sportsComplex: {
       type: mongoose.SchemaTypes.ObjectId,
-      ref: "sportsComplexes",
+      ref: "sportscomplexes",
     },
     level: Number, //0 - Supervisor, 1 - Manager, 2 - Authority, 3 - Admin
     status: Number, //0 - Active(Not Solved), 1 - Solved
