@@ -23,18 +23,36 @@ const Complaint = ({ navigation }) => {
   const Userdata = useSelector((state) => state.user.User);
   const Atheltedata = useSelector((state) => state.athelte.Athelte);
 
-  const complaintList = [
-    "Maintenance",
-    "Behaviour",
-    "Refund",
-    "Inquiry",
-    "Other",
-  ];
+  // const complaintList = [
+  //   "Maintenance",
+  //   "Behaviour",
+  //   "Refund",
+  //   "Inquiry",
+  //   "Other",
+  // ];
+  const [complaintList, setcomplaintList] = useState([]);
+
   const [value, onChangeText] = React.useState("");
   const [complaint, setCompalint] = useState();
   const [photo, setphoto] = useState("");
   const [phototype, setphototype] = useState("");
   const ip = ipconfig.ip;
+
+  useEffect(() => {
+    (() => {
+      var requestOptions = {
+        method: "GET",
+        redirect: "follow",
+      };
+
+      fetch(`http://${ip}:9999/getComplaintType`, requestOptions)
+        .then((response) => response.json())
+        .then((result) => {
+          setcomplaintList(result.data);
+        })
+        .catch((error) => console.log("error", error));
+    })();
+  }, []);
 
   const complexId = Atheltedata[0].createdBy.SportComplexId;
   const pickImage = async () => {
@@ -122,7 +140,9 @@ const Complaint = ({ navigation }) => {
         >
           <Picker.Item label="Please select your Complaint Type" value="" />
           {complaintList.map((item, index) => {
-            return <Picker.Item label={item} value={index} key={index} />;
+            return (
+              <Picker.Item label={item.Type} value={item._id} key={index} />
+            );
           })}
         </Picker>
         <View
