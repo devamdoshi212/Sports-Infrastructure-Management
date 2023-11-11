@@ -117,6 +117,7 @@ export default function QR({ navigation }) {
         })
         .catch((error) => console.log("error", error));
     })();
+    setScanData(undefined);
   }, [scanData]);
 
   if (!hasPermission) {

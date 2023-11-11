@@ -8,6 +8,7 @@ import AthelteMain from "../Athelte/Main";
 import ipconfig from "../../ipconfig";
 import SupervisorMain from "../Supervisor/SupervisorMain";
 import { AthelteActions } from "../../store/Athelte";
+import InstructorMain from "../Instructor/InstructorMain";
 const getLoginData = async () => {
   return await AsyncStorage.getItem("token");
 };
@@ -69,6 +70,8 @@ const Main = ({ navigation }) => {
     return <AthelteMain />;
   } else if (UserData.Role === 1) {
     return <SupervisorMain />;
+  } else if (UserData.Role === 2) {
+    return <InstructorMain />;
   } else {
     return <NoAuthTab />;
   }

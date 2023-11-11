@@ -21,11 +21,11 @@ async function removeItem() {
     // Handle the error
   }
 }
-function SupervisorProfile({ navigation }) {
+function Profile({ navigation }) {
   const dispatch = useDispatch();
   const ip = ipconfig.ip;
   const Userdata = useSelector((state) => state.user.User);
-  const [image, setimage] = useState("./../../assets/icon.png");
+  const [image, setimage] = useState("./../../assets/Instructor.jpg");
 
   useEffect(() => {}, [image]);
   const handleLogout = () => {
@@ -57,7 +57,7 @@ function SupervisorProfile({ navigation }) {
                   borderRadius: 50,
                   marginLeft: 1,
                 }}
-                source={require("./../../assets/icon.png")}
+                source={require("./../../assets/Instructor.jpg")}
               />
             </View>
             <View style={styles.rightColumn}>
@@ -77,78 +77,21 @@ function SupervisorProfile({ navigation }) {
           <TouchableOpacity
             style={styles.actionButton}
             onPress={() => {
-              navigation.navigate("AddAthlete");
+              navigation.navigate("AthelteDetails");
             }}
           >
             <View style={styles.row}>
-              {/* <MaterialCommunityIcons name="history" size={24} /> */}
-              <Text style={styles.actionText}>Add Athlete</Text>
+              <Text style={styles.actionText}>Athelte Details</Text>
             </View>
           </TouchableOpacity>
           <TouchableOpacity
             style={styles.actionButton}
             onPress={() => {
-              navigation.navigate("AthleteDetails");
+              //   navigation.navigate("AthelteDetails");
             }}
           >
             <View style={styles.row}>
-              {/* <MaterialCommunityIcons name="history" size={24} /> */}
-              <Text style={styles.actionText}>Athlete Details</Text>
-            </View>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={styles.actionButton}
-            onPress={() => {
-              navigation.navigate("Attendance");
-            }}
-          >
-            <View style={styles.row}>
-              {/* <Ionicons name="repeat-outline" size={24} /> */}
-              <Text style={styles.actionText}>Attendance</Text>
-            </View>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={styles.actionButton}
-            onPress={() => {
-              navigation.navigate("AthelteListComplaint");
-            }}
-          >
-            <View style={styles.row}>
-              {/* <MaterialCommunityIcons name="certificate-outline" size={24} /> */}
-              <Text style={styles.actionText}>Athelte Coming Complaint</Text>
-            </View>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={styles.actionButton}
-            onPress={() => {
-              navigation.navigate("ListComplaint");
-            }}
-          >
-            <View style={styles.row}>
-              {/* <MaterialCommunityIcons name="certificate-outline" size={24} /> */}
-              <Text style={styles.actionText}>View Complaint</Text>
-            </View>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={styles.actionButton}
-            onPress={() => {
-              navigation.navigate("RaiseComplaint");
-            }}
-          >
-            <View style={styles.row}>
-              {/* <MaterialCommunityIcons name="certificate-outline" size={24} /> */}
-              <Text style={styles.actionText}>Raise Complaint</Text>
-            </View>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={styles.actionButton}
-            onPress={() => {
-              navigation.navigate("Response");
-            }}
-          >
-            <View style={styles.row}>
-              {/* <MaterialCommunityIcons name="certificate-outline" size={24} /> */}
-              <Text style={styles.actionText}>Daily Response</Text>
+              <Text style={styles.actionText}>Custom Notifications</Text>
             </View>
           </TouchableOpacity>
 
@@ -255,4 +198,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default SupervisorProfile;
+export default Profile;

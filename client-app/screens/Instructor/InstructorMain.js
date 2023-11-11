@@ -2,13 +2,10 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import React from "react";
 import "react-native-gesture-handler";
 const Tab = createBottomTabNavigator();
-import AddAthelte from "./AddAthelte";
-import ComplexDetails from "./ComplexDetails";
-import SupervisorProfile from "./SupervisorProfile";
 import Ionicons from "@expo/vector-icons/Ionicons";
-import SupervisorNavigator from "./SupervisorNavigator";
-import QR from "./QR";
-const SupervisorMain = ({ navigation }) => {
+import ProfileNavigator from "./ProfileNavigator";
+import Home from "./Home";
+const InstructorMain = ({ navigation }) => {
   return (
     <Tab.Navigator
       initialRouteName="Home"
@@ -22,7 +19,7 @@ const SupervisorMain = ({ navigation }) => {
             iconName = "person-add-outline";
           } else if (route.name === "Home") {
             iconName = "home-outline";
-          } else if (route.name === "SupervisorProfile") {
+          } else if (route.name === "Profile") {
             iconName = "person-outline";
           } else if (route.name === "SupervisorQR") {
             iconName = "qr-code-outline";
@@ -38,10 +35,10 @@ const SupervisorMain = ({ navigation }) => {
       })}
     >
       {/* <Tab.Screen name="AddAthelte" component={AddAthelte} /> */}
-      <Tab.Screen name="SupervisorQR" component={QR} />
-      <Tab.Screen name="Home" component={ComplexDetails} />
-      <Tab.Screen name="SupervisorProfile" component={SupervisorNavigator} />
+      {/* <Tab.Screen name="SupervisorQR" component={QR} /> */}
+      <Tab.Screen name="Home" component={Home} />
+      <Tab.Screen name="Profile" component={ProfileNavigator} />
     </Tab.Navigator>
   );
 };
-export default SupervisorMain;
+export default InstructorMain;
