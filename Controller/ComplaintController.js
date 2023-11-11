@@ -36,6 +36,12 @@ module.exports.getAllComplaints = async function (req, res) {
   ComplaintModel.find(req.query)
     .populate("userId")
     .populate("type")
+    .populate({
+      path: "remarks",
+      populate: {
+        path: "userId",
+      },
+    })
     .then((data) => {
       res.json({ data: data, msg: "Complaint Retrived", rcode: 200 });
     })

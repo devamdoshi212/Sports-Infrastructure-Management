@@ -124,7 +124,7 @@ export default function ComplaintDataTable() {
   };
 
   const dateBodyTemplate = (rowData) => {
-    const date = new Date(rowData.CreatedAt);
+    const date = new Date(rowData.date);
     return formatDate(date);
   };
 
@@ -271,6 +271,41 @@ export default function ComplaintDataTable() {
   const calculateIndex = (currentPage, rowIndex) => {
     return currentPage * 10 + rowIndex + 1;
   };
+  const nameBodyTemplate = (data) => {
+    if (data.userId.Role === 0)
+      return <div>{data.userId.Name + " (Athelte)"}</div>;
+    if (data.userId.Role === 1)
+      return <div>{data.userId.Name + " (Supervisor)"}</div>;
+    if (data.userId.Role === 2)
+      return <div>{data.userId.Name + " (Instructor)"}</div>;
+    if (data.userId.Role === 3)
+      return <div>{data.userId.Name + " (Manager)"}</div>;
+    if (data.userId.Role === 4)
+      return <div>{data.userId.Name + " (Authority)"}</div>;
+  };
+  const RemarkBy = (rowData) => {
+    if (rowData.level === 0) return `Supervisor ${rowData.userId.Name}`;
+    if (rowData.level === 1) return `Manager ${rowData.userId.Name}`;
+    if (rowData.level === 2) return `Authority ${rowData.userId.Name}`;
+    else {
+      return "";
+    }
+  };
+
+  const remarksBodyTemplate = (rowData) => {
+    console.log(rowData);
+    if (rowData.remarks) {
+      return rowData.remarks.map((item, index) => (
+        <div className="border">
+          <p className="font-bold">Remark by : {RemarkBy(item)}</p>
+          <p>Remark : {item.remark}</p>
+          <p>Date : {dateBodyTemplate(item)}</p>
+        </div>
+      ));
+    } else {
+      return "";
+    }
+  };
 
   return (
     <div>
@@ -301,9 +336,10 @@ export default function ComplaintDataTable() {
 
           <Column
             header="Complaint Raised By"
-            field="userId.Name"
-            filterField="Name"
-            style={{ minWidth: "12rem" }}
+            // field="userId.Name"
+            // filterField="Name"
+            style={{ minWidth: "8rem" }}
+            body={nameBodyTemplate}
           />
           <Column
             header="Description"
@@ -311,6 +347,7 @@ export default function ComplaintDataTable() {
             filterField="Category"
             style={{ minWidth: "12rem" }}
           />
+          <Column header="Remarks" body={remarksBodyTemplate} />
           <Column
             header="Image"
             field="photo"
