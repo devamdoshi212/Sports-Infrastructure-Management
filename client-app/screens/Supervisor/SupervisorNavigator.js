@@ -15,6 +15,7 @@ import SupervisorViewComplaint from "./SupervisorViewComplaint";
 import AthleteViewComplaint from "./AthleteViewComplaint";
 import AthleteListComplaint from "./AthleteListComplaint";
 import Response from "./Response";
+import AddAthlete from "./AddAthelte";
 const SupervisorNavigator = ({ navigation }) => {
   return (
     <Stack.Navigator>
@@ -27,6 +28,11 @@ const SupervisorNavigator = ({ navigation }) => {
         <Stack.Screen
           name="DetailProfile"
           component={SupervisorProfileDetail}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="AddAthlete"
+          component={AddAthlete}
           options={{ headerShown: false }}
         />
         <Stack.Screen
