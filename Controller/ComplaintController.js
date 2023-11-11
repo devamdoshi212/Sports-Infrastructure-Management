@@ -53,6 +53,12 @@ module.exports.getAllComplaintsAdmin = async function (req, res) {
         path: "district",
       },
     })
+    .populate({
+      path: "remarks",
+      populate: {
+        path: "userId",
+      },
+    })
     .then((data) => {
       res.json({ data: data, msg: "Complaint Retrived", rcode: 200 });
     })
