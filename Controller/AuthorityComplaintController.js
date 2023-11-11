@@ -18,7 +18,13 @@ module.exports.getAuthorityComplaint = async function (req, res) {
     })
       .populate("userId")
       .populate("type")
-      .populate("sportsComplex");
+      .populate("sportsComplex")
+      .populate({
+        path: "remarks",
+        populate: {
+          path: "userId",
+        },
+      });
     for (let i = 0; i < complaintdata.length; i++) {
       const e = complaintdata[i];
       complaintdataarray.push(e);
@@ -31,7 +37,13 @@ module.exports.getAuthorityComplaint = async function (req, res) {
     })
       .populate("userId")
       .populate("type")
-      .populate("sportsComplex");
+      .populate("sportsComplex")
+      .populate({
+        path: "remarks",
+        populate: {
+          path: "userId",
+        },
+      });
     for (let i = 0; i < complaintdata1.length; i++) {
       const e = complaintdata1[i];
       complaintdataarraystatus0.push(e);
@@ -44,7 +56,13 @@ module.exports.getAuthorityComplaint = async function (req, res) {
     })
       .populate("userId")
       .populate("type")
-      .populate("sportsComplex");
+      .populate("sportsComplex")
+      .populate({
+        path: "remarks",
+        populate: {
+          path: "userId",
+        },
+      });
     for (let i = 0; i < complaintdata2.length; i++) {
       const e = complaintdata2[i];
       complaintdataarraystatus1.push(e);

@@ -93,7 +93,7 @@ export default function AdminComplaintDataTable() {
   };
 
   const dateBodyTemplate = (rowData) => {
-    const date = new Date(rowData.CreatedAt);
+    const date = new Date(rowData.date);
     return formatDate(date);
   };
 
@@ -107,6 +107,14 @@ export default function AdminComplaintDataTable() {
     return "";
   };
 
+  const RemarkBy = (rowData) => {
+    if (rowData.level === 0) return `Supervisor ${rowData.userId.Name}`;
+    if (rowData.level === 1) return `Manager ${rowData.userId.Name}`;
+    if (rowData.level === 2) return `Authority ${rowData.userId.Name}`;
+    else {
+      return "";
+    }
+  };
   const dateFilterTemplate = (options) => {
     return (
       <Calendar
@@ -221,6 +229,32 @@ export default function AdminComplaintDataTable() {
     setIsModalOpen(false);
   };
 
+  const remarksBodyTemplate = (rowData) => {
+    if (rowData.remarks) {
+      return rowData.remarks.map((item, index) => (
+        <div className="border">
+          <p className="font-bold">Remark by : {RemarkBy(item)}</p>
+          <p>Remark : {item.remark}</p>
+          <p>Date : {dateBodyTemplate(item)}</p>
+        </div>
+      ));
+    } else {
+      return "";
+    }
+  };
+  const nameBodyTemplate = (data) => {
+    if (data.userId.Role === 0)
+      return <div>{data.userId.Name + " (Athelte)"}</div>;
+    if (data.userId.Role === 1)
+      return <div>{data.userId.Name + " (Supervisor)"}</div>;
+    if (data.userId.Role === 2)
+      return <div>{data.userId.Name + " (Instructor)"}</div>;
+    if (data.userId.Role === 3)
+      return <div>{data.userId.Name + " (Manager)"}</div>;
+    if (data.userId.Role === 4)
+      return <div>{data.userId.Name + " (Authority)"}</div>;
+  };
+
   useEffect(() => {
     const handleOutsideClick = (event) => {
       if (
@@ -294,9 +328,10 @@ export default function AdminComplaintDataTable() {
 
           <Column
             header="Complaint Raised By"
-            field="userId.Name"
-            filterField="Name"
+            // field="userId.Name"
+            // filterField="Name"
             style={{ minWidth: "10rem" }}
+            body={nameBodyTemplate}
           />
           <Column
             header="District"
@@ -316,6 +351,12 @@ export default function AdminComplaintDataTable() {
             filterField="Category"
             style={{ minWidth: "10rem" }}
           />
+          <Column
+            header="Remarks"
+            style={{ minWidth: "12rem" }}
+            body={remarksBodyTemplate}
+          />
+
           <Column
             header="Image"
             field="photo"

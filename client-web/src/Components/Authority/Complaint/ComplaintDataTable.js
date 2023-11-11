@@ -92,7 +92,7 @@ export default function AthorityComplaintDataTable() {
   };
 
   const dateBodyTemplate = (rowData) => {
-    const date = new Date(rowData.CreatedAt);
+    const date = new Date(rowData.date);
     return formatDate(date);
   };
 
@@ -188,6 +188,30 @@ export default function AthorityComplaintDataTable() {
       .catch((error) => console.log("error", error));
   };
 
+  const RemarkBy = (rowData) => {
+    if (rowData.level === 0) return `Supervisor ${rowData.userId.Name}`;
+    if (rowData.level === 1) return `Manager ${rowData.userId.Name}`;
+    if (rowData.level === 2) return `Authority ${rowData.userId.Name}`;
+    else {
+      return "";
+    }
+  };
+
+  const remarksBodyTemplate = (rowData) => {
+    console.log(rowData);
+    if (rowData.remarks) {
+      return rowData.remarks.map((item, index) => (
+        <div className="border">
+          <p className="font-bold">Remark by : {RemarkBy(item)}</p>
+          <p>Remark : {item.remark}</p>
+          <p>Date : {dateBodyTemplate(item)}</p>
+        </div>
+      ));
+    } else {
+      return "";
+    }
+  };
+
   const actionBodyTemplate = (rowData) => {
     return (
       <>
@@ -253,6 +277,19 @@ export default function AthorityComplaintDataTable() {
     setModalImages([]);
     setSelectedRowData(null);
     setIsModalOpen(false);
+  };
+
+  const nameBodyTemplate = (data) => {
+    if (data.userId.Role === 0)
+      return <div>{data.userId.Name + " (Athelte)"}</div>;
+    if (data.userId.Role === 1)
+      return <div>{data.userId.Name + " (Supervisor)"}</div>;
+    if (data.userId.Role === 2)
+      return <div>{data.userId.Name + " (Instructor)"}</div>;
+    if (data.userId.Role === 3)
+      return <div>{data.userId.Name + " (Manager)"}</div>;
+    if (data.userId.Role === 4)
+      return <div>{data.userId.Name + " (Authority)"}</div>;
   };
 
   useEffect(() => {
@@ -327,27 +364,29 @@ export default function AthorityComplaintDataTable() {
 
           <Column
             header="Complaint Raised By"
-            field="userId.Name"
-            filterField="Name"
-            style={{ minWidth: "12rem" }}
+            // field="userId.Name"
+            // filterField="Name"
+            style={{ minWidth: "8rem" }}
+            body={nameBodyTemplate}
           />
           <Column
             header="Complex Name"
             field="sportsComplex.name"
             filterField="name"
-            style={{ minWidth: "12rem" }}
+            style={{ minWidth: "10rem" }}
           />
           <Column
             header="Description"
             field="Description"
             filterField="Category"
-            style={{ minWidth: "12rem" }}
+            style={{ minWidth: "10rem" }}
           />
+          <Column header="Remarks" body={remarksBodyTemplate} />
           <Column
             header="Image"
             field="photo"
             filterField="photo"
-            style={{ minWidth: "12rem" }}
+            style={{ minWidth: "10rem" }}
             body={(rowdata) => (
               <button
                 onClick={() => openModal(rowdata)}
@@ -361,7 +400,7 @@ export default function AthorityComplaintDataTable() {
             header="Complaint Type"
             field="type.Type"
             filterField="type.Type"
-            style={{ minWidth: "12rem" }}
+            style={{ minWidth: "10rem" }}
           />
           <Column header="Action" body={actionBodyTemplate} />
         </DataTable>
