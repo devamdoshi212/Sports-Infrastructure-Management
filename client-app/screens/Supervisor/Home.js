@@ -34,21 +34,21 @@ const Home = () => {
   //   ]}
   return (
     <FlatList
-      data={[
-        { key: "Athlete Count", value: detailsInstructor.athleteCount },
-        // {
-        //   key: "Athlete Payment Count",
-        //   value: detailsInstructor.athletePaymentCount[0].Paymentcount,
-        // },
-        {
-          key: "Available Sports",
-          value: detailsInstructor.availableSports.join(", "),
-        },
-        {
-          key: "Instructor Data",
-          value: detailsInstructor.instructerData.join(", "),
-        },
-      ]}
+    //   data={[
+    //     { key: "Athlete Count", value: detailsInstructor.athleteCount },
+    //     // {
+    //     //   key: "Athlete Payment Count",
+    //     //   value: detailsInstructor.athletePaymentCount[0].Paymentcount,
+    //     // },
+    //     {
+    //       key: "Available Sports",
+    //       value: detailsInstructor.availableSports.join(", "),
+    //     },
+    //     {
+    //       key: "Instructor Data",
+    //       value: detailsInstructor.instructerData.join(", "),
+    //     },
+    //   ]}
       renderItem={renderCategoryItem}
       numColumns={2}
       keyExtractor={(item) => item.key}

@@ -11,6 +11,7 @@ import {
 import { Ionicons } from "@expo/vector-icons";
 import { useEffect, useState } from "react";
 import { Calendar } from "react-native-calendars";
+import { DateTimePickerAndroid } from "@react-native-community/datetimepicker";
 import ipconfig from "../../ipconfig";
 import { useSelector } from "react-redux";
 
@@ -19,6 +20,8 @@ const Attendance = ({ navigation }) => {
     const ip = ipconfig.ip;
     const [attendance, setattendance] = useState([]);
     const [date, setDate] = useState(new Date());
+    const [dateCal, setDateCal] = useState(new Date());
+
     useEffect(() => {
         var requestOptions = {
             method: "GET",
@@ -35,6 +38,21 @@ const Attendance = ({ navigation }) => {
             })
             .catch((error) => console.log("error", error));
     }, [date]);
+    const onChange = (event, selectedDate) => {
+        const currentDate = selectedDate;
+        setDate(currentDate);
+    };
+    const showMode = (currentMode) => {
+        DateTimePickerAndroid.open({
+            value: date,
+            onChange,
+            mode: currentMode,
+            is24Hour: true,
+        });
+    };
+    const showDatepicker = () => {
+        showMode("date");
+    };
     return (
         <>
             <View style={styles.container}>
@@ -90,13 +108,37 @@ const Attendance = ({ navigation }) => {
                     onDayPress={day => {
                         console.log('selected day', day);
                         console.log('selected date', day.dateString);
-                        setDate(day.dateString);
+                        setDateCal(day.dateString);
                     }}
                     markedDates={{
-                        [date]: { selected: true, disableTouchEvent: true, selectedDotColor: 'orange' }
+                        [dateCal]: { selected: true, disableTouchEvent: true, selectedDotColor: 'orange' }
                     }}
                     enableSwipeMonths={true}
                 />
+                <View
+                    style={{
+                        width: "93%",
+                        paddingLeft: "7%",
+                        display: "flex",
+                        flexDirection: "row",
+                        alignContent: "space-around",
+                        marginTop:"5%"
+                    }}
+                >
+                    <Text
+                        style={{
+                            width: "80%",
+                            borderRadius: 2,
+                            backgroundColor: "white",
+                            paddingBottom: "5%",
+                            textAlign: "center",
+                            paddingTop: "4%",
+                        }}
+                    >
+                        {date.toUTCString()}
+                    </Text>
+                    <Button onPress={showDatepicker} title="Date" />
+                </View>
                 <ScrollView contentContainerStyle={styles.scrollContainer}>
                     <View style={styles.card}>
                         <View style={styles.row}>
