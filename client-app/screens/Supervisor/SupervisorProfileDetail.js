@@ -44,7 +44,7 @@ const SupervisorProfileDetail = ({ navigation }) => {
                   borderRadius: 60,
                   marginHorizontal: 15,
                 }}
-                source={require("./../../assets/icon.png")}
+                source={require("./../../assets/Supervisor.png")}
               />
             </View>
           </View>

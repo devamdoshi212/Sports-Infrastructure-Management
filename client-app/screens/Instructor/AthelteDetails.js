@@ -19,10 +19,14 @@ import { useNavigation } from "@react-navigation/native";
 import ipconfig from "../../ipconfig";
 import { useSelector } from "react-redux";
 const AthleteDetails = () => {
-  const [show, setShow] = useState(false);
-  const navigate = useNavigation();
-  const [athelteList, setAthelteList] = useState([]);
   const Userdata = useSelector((state) => state.user.User);
+  const navigate = useNavigation();
+  const [selectedOptionFacility, setSelectedOptionFacility] = useState("");
+  const [TimeSlot, setTimeSlot] = useState([]);
+  const [selectedOptionTimeSlot, setSelectedOptionTimeSlot] = useState("");
+  const [show, setShow] = useState(false);
+  const [instructorData, setInstructorData] = useState([]);
+  const [athelteList, setAthelteList] = useState([]);
   const sid = Userdata.SportComplexId;
 
   const ip = ipconfig.ip;
@@ -33,6 +37,16 @@ const AthleteDetails = () => {
     };
 
     fetch(
+      `http://${ip}:9999/getInstructorswithsport?userId=${Userdata._id}`,
+      requestOptions
+    )
+      .then((response) => response.json())
+      .then((result) => {
+        setInstructorData(result.data[0].sports);
+      })
+      .catch((error) => console.log("error", error));
+
+    fetch(
       `http://${ip}:9999/countOfPayment?sportsComplexId=${sid}`,
       requestOptions
     )
@@ -41,7 +55,7 @@ const AthleteDetails = () => {
         setAthelteList(result.data);
       })
       .catch((error) => console.log("error", error));
-  }, []);
+  }, [selectedOptionFacility]);
 
   return (
     <>
@@ -81,19 +95,43 @@ const AthleteDetails = () => {
           <View style={styles.header}>
             <Picker
               style={styles.dropdownPicker}
-              //   selectedValue={selectedOption}
-              //   onValueChange={handleDropdownChange}
+              selectedValue={selectedOptionFacility}
+              onValueChange={(e) => {
+                if (e) {
+                  instructorData
+                    .filter((item) => {
+                      return item.sport._id === e;
+                    })
+                    .then((r) => {
+                      setTimeSlot(r.timeSlot);
+                    });
+                  setSelectedOptionFacility(e);
+                }
+              }}
             >
-              <Picker.Item label="Cricket" value="getSports" />
-              <Picker.Item label="volleyball" value="searchSportsComplex" />
+              <Picker.Item label="Select Facility" value="" />
+              {instructorData.map((item, index) => (
+                <Picker.Item
+                  label={item.sport.SportName}
+                  value={item.sport._id}
+                  key={index}
+                />
+              ))}
             </Picker>
             <Picker
               style={styles.dropdownPicker}
-              //   selectedValue={selectedOption}
-              //   onValueChange={handleDropdownChange}
+              selectedValue={selectedOptionTimeSlot}
+              onValueChange={(e) => {}}
             >
-              <Picker.Item label="Time Slot" value="getSports" />
-              <Picker.Item label="Sports Complex" value="searchSportsComplex" />
+              <Picker.Item label="Select Time Slot" value="" />
+              {TimeSlot.map((item, index) => (
+                <Picker.Item
+                  // label={item.from + "-" + item.to}
+                  label="sd"
+                  // value={item.from + "-" + item.to}
+                  key={index}
+                />
+              ))}
             </Picker>
           </View>
         </View>
