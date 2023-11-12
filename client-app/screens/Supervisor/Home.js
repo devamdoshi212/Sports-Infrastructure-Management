@@ -1,17 +1,32 @@
 import React, { useEffect, useState } from "react";
-import { View, Text, StyleSheet, Pressable, FlatList } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  Pressable,
+  FlatList,
+  ActivityIndicator,
+  RefreshControl,
+} from "react-native";
 import { useSelector } from "react-redux";
 import ipconfig from "../../ipconfig";
 const Home = () => {
   const ip = ipconfig.ip;
   const { SportComplexId } = useSelector((state) => state.user.User);
   const [detailsInstructor, setDetailsInstrutor] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [refreshing, setRefreshing] = useState(false);
 
   useEffect(() => {
+    fetchData();
+  }, []);
+
+  const fetchData = () => {
     var requestOptions = {
       method: "GET",
       redirect: "follow",
     };
+
     fetch(
       `http://${ip}:9999/sportsComplexDetail?sportsComplex=${SportComplexId}`,
       requestOptions
@@ -20,10 +35,18 @@ const Home = () => {
       .then((result) => {
         console.log(result);
         setDetailsInstrutor(result);
-        // setLoading(true);
       })
-      .catch((error) => console.log("error", error));
-  }, []);
+      .catch((error) => console.log("error", error))
+      .finally(() => {
+        setLoading(false);
+        setRefreshing(false);
+      });
+  };
+
+  const handleRefresh = () => {
+    setRefreshing(true);
+    fetchData();
+  };
   //   data={[
   //     "Number of Atheltes",
   //     "Number of Facilities of Instructor",
@@ -32,27 +55,39 @@ const Home = () => {
   //     "Number of Instructor",
   //     "Number of Present Athelte ", //(Perticular sport ma aatla Athelte)
   //   ]}
+  if (loading) {
+    return (
+      <View style={styles.centeredContainer}>
+        <ActivityIndicator size="large" color="orange" />
+      </View>
+    );
+  }
   return (
-    <FlatList
-      data={[
-        { key: "Athlete Count", value: detailsInstructor.athleteCount },
-        // {
-        //   key: "Athlete Payment Count",
-        //   value: detailsInstructor.athletePaymentCount[0].Paymentcount,
-        // },
-        {
-          key: "Available Sports",
-          value: detailsInstructor.availableSports.join(", "),
-        },
-        {
-          key: "Instructor Data",
-          value: detailsInstructor.instructerData.join(", "),
-        },
-      ]}
-      renderItem={renderCategoryItem}
-      numColumns={2}
-      keyExtractor={(item) => item.key}
-    />
+    <>
+      <FlatList
+        data={[
+          { key: "Athlete Count", value: detailsInstructor.athleteCount },
+          // {
+          //   key: "Athlete Payment Count",
+          //   value: detailsInstructor.athletePaymentCount[0].Paymentcount,
+          // },
+          {
+            key: "Available Sports",
+            value: detailsInstructor.availableSports.join(", "),
+          },
+          {
+            key: "Instructor Data",
+            value: detailsInstructor.instructerData.join(", "),
+          },
+        ]}
+        renderItem={renderCategoryItem}
+        numColumns={2}
+        keyExtractor={(item) => item.key}
+        refreshControl={
+          <RefreshControl refreshing={refreshing} onRefresh={handleRefresh} />
+        }
+      />
+    </>
   );
 };
 
