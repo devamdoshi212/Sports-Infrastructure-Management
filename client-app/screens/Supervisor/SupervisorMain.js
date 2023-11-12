@@ -8,6 +8,7 @@ import SupervisorProfile from "./SupervisorProfile";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import SupervisorNavigator from "./SupervisorNavigator";
 import QR from "./QR";
+import Home from "./Home";
 const SupervisorMain = ({ navigation }) => {
   return (
     <Tab.Navigator
@@ -39,7 +40,7 @@ const SupervisorMain = ({ navigation }) => {
     >
       {/* <Tab.Screen name="AddAthelte" component={AddAthelte} /> */}
       <Tab.Screen name="SupervisorQR" component={QR} />
-      <Tab.Screen name="Home" component={ComplexDetails} />
+      <Tab.Screen name="Home" component={Home} />
       <Tab.Screen name="SupervisorProfile" component={SupervisorNavigator} />
     </Tab.Navigator>
   );

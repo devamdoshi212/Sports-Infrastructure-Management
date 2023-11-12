@@ -17,7 +17,7 @@ import { useState } from "react";
 const ComplexDetails = ({ navigation }) => {
   const Userdata = useSelector((state) => state.user.User);
   const complexId = Userdata.SportComplexId;
-  console.log(complexId);
+  // console.log(complexId);
   const ip = ipconfig.ip;
   const [details, setDetails] = useState({});
   const [detailsInstructor, setDetailsInstrutor] = useState({});
