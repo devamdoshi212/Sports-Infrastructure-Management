@@ -57,7 +57,7 @@ function SupervisorProfile({ navigation }) {
                   borderRadius: 50,
                   marginLeft: 1,
                 }}
-                source={require("./../../assets/icon.png")}
+                source={require("./../../assets/Supervisor.png")}
               />
             </View>
             <View style={styles.rightColumn}>
