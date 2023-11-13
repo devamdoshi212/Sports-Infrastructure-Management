@@ -9,6 +9,8 @@ const initialValues = {
   name: "",
   location: "",
   area: "",
+  latitude: "",
+  longitude: "",
   taluka: "",
   district: "",
   operationalSince: "",
@@ -25,6 +27,8 @@ const AddSportsComplex = () => {
       location: values.location,
       taluka: values.taluka,
       area: values.area,
+      latitude: values.latitude,
+      longitude: values.longitude,
       operationalSince: values.operationalSince,
       district: values.district,
     });
@@ -164,6 +168,50 @@ const AddSportsComplex = () => {
               />
               {errors.area && touched.area ? (
                 <small className="text-ligth text-red-600">{errors.area}</small>
+              ) : null}
+            </div>
+            <div className="mb-4">
+              <label
+                className="block text-gray-700 text-sm font-bold mb-2"
+                htmlFor="latitude"
+              >
+                Latitude
+              </label>
+              <input
+                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                name="latitude"
+                type="text"
+                placeholder="Latitude"
+                value={values.latitude}
+                onChange={handleChange}
+                onBlur={handleBlur}
+              />
+              {errors.latitude && touched.latitude ? (
+                <small className="text-ligth text-red-600">
+                  {errors.latitude}
+                </small>
+              ) : null}
+            </div>
+            <div className="mb-4">
+              <label
+                className="block text-gray-700 text-sm font-bold mb-2"
+                htmlFor="longitude"
+              >
+                Longitude
+              </label>
+              <input
+                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                name="longitude"
+                type="text"
+                placeholder="Longitude"
+                value={values.longitude}
+                onChange={handleChange}
+                onBlur={handleBlur}
+              />
+              {errors.longitude && touched.longitude ? (
+                <small className="text-ligth text-red-600">
+                  {errors.longitude}
+                </small>
               ) : null}
             </div>
 

@@ -4,8 +4,8 @@ const SportsComplexSchema = new mongoose.Schema(
   {
     name: String,
     location: String,
-    lat: String,
-    long: String,
+    latitude: String,
+    longitude: String,
     district: { type: mongoose.SchemaTypes.ObjectId, ref: "districts" },
     taluka: String,
     area: String, //in acres
@@ -16,6 +16,7 @@ const SportsComplexSchema = new mongoose.Schema(
         images: [String],
         rating: Number,
         fees: String,
+        capacity: String,
       },
     ],
     manager: { type: mongoose.SchemaTypes.ObjectId, ref: "users" },

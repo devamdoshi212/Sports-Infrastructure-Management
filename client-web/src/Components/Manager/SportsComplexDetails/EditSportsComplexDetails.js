@@ -9,6 +9,7 @@ const initialValues = {
   Fees: "",
   Facility: "",
   Image: [],
+  capacity: "",
 };
 const EditSportsComplexDetails = () => {
   const { SportComplexId } = useSelector((state) => state.user.user);
@@ -48,6 +49,7 @@ const EditSportsComplexDetails = () => {
       formdata.append("images", file, values.Image[i].name);
     }
     formdata.append("fees", values.Fees);
+    formdata.append("capacity", values.capacity);
     formdata.append("sport", values.Facility);
 
     var requestOptions = {
@@ -167,7 +169,7 @@ const EditSportsComplexDetails = () => {
                 className="block text-gray-700 text-sm font-bold mb-2"
                 htmlFor="Fees"
               >
-                Fees
+                Fees in rupees (Per Month)
               </label>
               <input
                 className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
@@ -180,6 +182,28 @@ const EditSportsComplexDetails = () => {
               />
               {errors.Fees && touched.Fees ? (
                 <small className="text-ligth text-red-600">{errors.Fees}</small>
+              ) : null}
+            </div>
+            <div className="mb-4">
+              <label
+                className="block text-gray-700 text-sm font-bold mb-2"
+                htmlFor="capacity"
+              >
+                Capacity of Atheltes in this Facility (per Day)
+              </label>
+              <input
+                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                name="capacity"
+                type="number"
+                placeholder="capacity"
+                value={values.capacity}
+                onChange={handleChange}
+                onBlur={handleBlur}
+              />
+              {errors.capacity && touched.capacity ? (
+                <small className="text-ligth text-red-600">
+                  {errors.capacity}
+                </small>
               ) : null}
             </div>
 
