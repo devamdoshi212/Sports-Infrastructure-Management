@@ -8,6 +8,8 @@ const paymentModel = require("../Model/PaymentModel");
 module.exports.AddSportsComplex = async function (req, res) {
   let SportComplex = new SportsComplex({
     name: req.body.name,
+    latitude: req.body.latitude,
+    longitude: req.body.longitude,
     location: req.body.location,
     district: req.body.district,
     // sports: [],
@@ -88,6 +90,7 @@ module.exports.updateSportsComplex = async function (req, res) {
     images: resourcesarray,
     rating: req.body.rating,
     fees: req.body.fees,
+    capacity: req.body.capacity,
   };
 
   let sportcomplex = await SportsComplex.findOne({ _id: id });
@@ -178,10 +181,10 @@ module.exports.SportsComplexDetail = async function (req, res) {
         SportComplexId: req.query.sportsComplex,
       })
       .populate("userId");
-      console.log(instructerData);
+    console.log(instructerData);
     const insName = instructerData.map((doc) => doc.userId.Name);
 
-    console.log("insname => "+insName);
+    console.log("insname => " + insName);
 
     const SportsData = await SportsComplex.find({
       _id: req.query.sportsComplex,
@@ -197,7 +200,6 @@ module.exports.SportsComplexDetail = async function (req, res) {
     // for (let i=0; i < SportsData.length; i++){
     //   console.log(SportsData[i].sports[i].sport.SportName)
     // }
-    
 
     // let SportsNames = [];
     // for (let i=0; i < SportsData.length; i++) {
@@ -212,18 +214,15 @@ module.exports.SportsComplexDetail = async function (req, res) {
 
     let SportsNames = [];
 
-//sportdata 1 j hoy every time
-for (let i = 0; i < SportsData.length; i++) {
-  for(let j=0;j<SportsData[i].sports.length;j++)
-  {
-    const sportsName = SportsData[i].sports[j].sport.SportName;
-   SportsNames.push(sportsName);
-  }
-  
-}
+    //sportdata 1 j hoy every time
+    for (let i = 0; i < SportsData.length; i++) {
+      for (let j = 0; j < SportsData[i].sports.length; j++) {
+        const sportsName = SportsData[i].sports[j].sport.SportName;
+        SportsNames.push(sportsName);
+      }
+    }
 
-console.log("SportNames =>", SportsNames);
-
+    console.log("SportNames =>", SportsNames);
 
     const athleteCount = await paymentModel.aggregate([
       {

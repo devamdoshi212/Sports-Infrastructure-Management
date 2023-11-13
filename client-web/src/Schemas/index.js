@@ -68,6 +68,8 @@ export const sportComplexSchema = Yup.object().shape({
   name: Yup.string().required("Sports Complex Name is Required "),
   district: Yup.string().required("District is Required"),
   area: Yup.string().required("Area is Required"),
+  latitude: Yup.string().required("Latitude is Required"),
+  longitude: Yup.string().required("Longitude is Required"),
   taluka: Yup.string().required("Taluka is Required"),
   location: Yup.string().required("Location is Required"),
   operationalSince: Yup.string().required("Opreational Since is Required"),
@@ -77,6 +79,9 @@ export const facilitySchema = Yup.object().shape({
   Fees: Yup.number()
     .positive("fees not include minus")
     .required("Fees is Required"),
+  capacity: Yup.number()
+    .positive("Capacity not include minus")
+    .required("Capacity is Required"),
   Image: Yup.array()
     .min(1, "Select at least one file")
     .max(10, "Select at least one file")
