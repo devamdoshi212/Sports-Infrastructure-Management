@@ -4,10 +4,10 @@ const sportModel = require("../Model/SportModel");
 // const SportsComplexModel = require("../Model/SportsComplexModel");
 const instructerModel = require("../Model/instructorModel");
 const paymentModel = require("../Model/PaymentModel");
-const complaintModel = require('../Model/ComplaintModel')
+const complaintModel = require("../Model/ComplaintModel");
+const session = require("../Model/SessionModel");
 
 module.exports.AddSportsComplex = async function (req, res) {
-
   const BaseUrl = `/SportComplexes/${req.file.originalname}`;
   console.log(BaseUrl);
   // req.body.baseUrl = BaseUrl;
@@ -22,10 +22,8 @@ module.exports.AddSportsComplex = async function (req, res) {
     taluka: req.body.taluka,
     area: req.body.area,
     operationalSince: req.body.operationalSince,
-    picture: BaseUrl
+    picture: BaseUrl,
   });
-
- 
 
   let data = await SportComplex.save();
   res.json({ data: data, msg: "SportComplex Added", rcode: 200 });
@@ -221,17 +219,15 @@ module.exports.SportsComplexDetail = async function (req, res) {
     // }
     // console.log("SportNames => "+SportsNames)
 
-
     const complaintcount = await complaintModel.find({
-      $and:[
-        {sportsComplex: req.query.sportsComplex},
-        {level : 0},
-        {status : 0},
-      ] 
-      })
+      $and: [
+        { sportsComplex: req.query.sportsComplex },
+        { level: 0 },
+        { status: 0 },
+      ],
+    });
 
     //console.log(complaintcount.length);
-
 
     let SportsNames = [];
 
@@ -263,13 +259,36 @@ module.exports.SportsComplexDetail = async function (req, res) {
       //   },
       // },
     ]);
+
+    const current = ;
+    const presentCount = await session.aggregate([
+      {
+        $match: {
+          sportscomplex: new mongoose.Types.ObjectId(req.query.sportsComplex),
+          date: {
+          
+          }, // Match date within the given day
+        },
+      },
+      {
+        $unwind: "$enrolls",
+      },
+      {
+        $group: {
+          _id: "$enrolls.userId",
+          count: { $sum: 1 },
+        },
+      },
+    ]);
+
     res.json({
       athleteCount: athleteCount.length,
       athletePaymentCount: athleteCount,
       instructerData: insName,
-      instructerCount:insName.length,
-      ComplainCount:complaintcount,
+      instructerCount: insName.length,
+      ComplainCount: complaintcount,
       availableSports: SportsNames,
+      presentCount: presentCount,
       rcode: 200,
     });
   } catch (err) {

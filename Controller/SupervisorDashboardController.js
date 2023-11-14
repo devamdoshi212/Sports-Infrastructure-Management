@@ -1,15 +1,36 @@
 const { default: mongoose } = require("mongoose");
 const SportsComplex = require("../Model/SportsComplexModel");
 const sportModel = require("../Model/SportModel");
-// const SportsComplexModel = require("../Model/SportsComplexModel");
+// const sessionModel=require("../")
+
 const instructerModel = require("../Model/instructorModel");
 const paymentModel = require("../Model/PaymentModel");
 const complaintModel = require("../Model/ComplaintModel");
-const sessionModel = require("../Model/SessionModel");
 
-module.exports.SportsComplexDetail = async function (req, res) {
+module.exports.presence = async function (req, res) {
   try {
-    const instructerData = await instructerModel
+    const presentCount = await sessionModel.aggregate([
+      {
+        $match: {
+          sportscomplex: req.query.sportsComplex,
+          date: {
+            $gte: new Date(date),
+            $lt: new Date(date).setDate(new Date(date).getDate() + 1),
+          }, // Match date within the given day
+        },
+      },
+      // {
+      //   $unwind: "$enrolls",
+      // },
+      {
+        $group: {
+          _id: "$enrolls.userId",
+          count: { $sum: 1 },
+        },
+      },
+    ]);
+
+    const instructerData = await instructerModel  
       .find({
         SportComplexId: req.query.sportsComplex,
       })
@@ -64,6 +85,7 @@ module.exports.SportsComplexDetail = async function (req, res) {
       }
     }
 
+    // console.log("hueh");
     console.log("SportNames =>", SportsNames);
 
     const athleteCount = await paymentModel.aggregate([
@@ -85,10 +107,28 @@ module.exports.SportsComplexDetail = async function (req, res) {
       // },
     ]);
 
+    console.log("presentCOunr:" + presentCount);
+    res.json({
+      athleteCount: athleteCount.length,
+      athletePaymentCount: athleteCount,
+      instructerData: insName,
+      instructerCount: insName.length,
+      present: presentCount,
+      ComplainCount: complaintcount,
+      availableSports: SportsNames,
+      rcode: 200,
+    });
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+module.exports.presence = async function (req, res) {
+  try {
     const presentCount = await sessionModel.aggregate([
       {
         $match: {
-          sportscomplex: mongoose.Types.ObjectId(req.query.sportsComplex),
+          sportscomplex: req.query.sportsComplex,
           date: {
             $gte: new Date(date),
             $lt: new Date(date).setDate(new Date(date).getDate() + 1),
@@ -105,18 +145,6 @@ module.exports.SportsComplexDetail = async function (req, res) {
         },
       },
     ]);
-    
-    console.log("presentCOunr:" + presentCount);
-    res.json({
-      athleteCount: athleteCount.length,
-      athletePaymentCount: athleteCount,
-      instructerData: insName,
-      instructerCount: insName.length,
-      present: presentCount,
-      ComplainCount: complaintcount,
-      availableSports: SportsNames,
-      rcode: 200,
-    });
   } catch (err) {
     console.log(err);
   }
