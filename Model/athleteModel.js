@@ -15,6 +15,11 @@ const athleteSchema = new mongoose.Schema(
     baseUrl: {
       type: String,
     },
+    Rating:{
+      type:Number,
+      default:0
+
+    },
     payments: [{ type: mongoose.SchemaTypes.ObjectId, ref: "payments" }],
   },
   { timestamps: true }
