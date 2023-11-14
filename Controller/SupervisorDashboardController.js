@@ -1,27 +1,35 @@
 const { default: mongoose } = require("mongoose");
 const SportsComplex = require("../Model/SportsComplexModel");
 const sportModel = require("../Model/SportModel");
-// const sessionModel=require("../")
+const sessionModel=require("../Model/SessionModel")
 
 const instructerModel = require("../Model/instructorModel");
 const paymentModel = require("../Model/PaymentModel");
 const complaintModel = require("../Model/ComplaintModel");
 
-module.exports.presence = async function (req, res) {
-  try {
+module.exports.SupervisorDasboardCount = async function (req, res) {
+
+    const startOfDay = new Date();
+    startOfDay.setUTCHours(0, 0, 0, 0);
+
+    const endOfDay = new Date();
+    endOfDay.setUTCHours(23, 59, 59, 999);
+
     const presentCount = await sessionModel.aggregate([
       {
         $match: {
-          sportscomplex: req.query.sportsComplex,
+          sportscomplex: new mongoose.Types.ObjectId(req.query.sportsComplex),
           date: {
-            $gte: new Date(date),
-            $lt: new Date(date).setDate(new Date(date).getDate() + 1),
+
+            $gte: startOfDay,
+            $lt: endOfDay,
+          
           }, // Match date within the given day
         },
       },
-      // {
-      //   $unwind: "$enrolls",
-      // },
+      {
+        $unwind: "$enrolls",
+      },
       {
         $group: {
           _id: "$enrolls.userId",
@@ -29,6 +37,8 @@ module.exports.presence = async function (req, res) {
         },
       },
     ]);
+
+    console.log(presentCount.length);
 
     const instructerData = await instructerModel  
       .find({
@@ -107,45 +117,17 @@ module.exports.presence = async function (req, res) {
       // },
     ]);
 
-    console.log("presentCOunr:" + presentCount);
     res.json({
       athleteCount: athleteCount.length,
       athletePaymentCount: athleteCount,
       instructerData: insName,
       instructerCount: insName.length,
-      present: presentCount,
       ComplainCount: complaintcount,
       availableSports: SportsNames,
+      presentCount : presentCount.length,
       rcode: 200,
     });
-  } catch (err) {
-    console.log(err);
-  }
-};
+  } 
 
-module.exports.presence = async function (req, res) {
-  try {
-    const presentCount = await sessionModel.aggregate([
-      {
-        $match: {
-          sportscomplex: req.query.sportsComplex,
-          date: {
-            $gte: new Date(date),
-            $lt: new Date(date).setDate(new Date(date).getDate() + 1),
-          }, // Match date within the given day
-        },
-      },
-      {
-        $unwind: "$enrolls",
-      },
-      {
-        $group: {
-          _id: "$enrolls.userId",
-          count: { $sum: 1 },
-        },
-      },
-    ]);
-  } catch (err) {
-    console.log(err);
-  }
-};
+
+
