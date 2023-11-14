@@ -13,30 +13,47 @@ const initialValues = {
   longitude: "",
   taluka: "",
   district: "",
+  Image: [],
   operationalSince: "",
 };
 const AddSportsComplex = () => {
   const District = useSelector((state) => state.district.districts);
   const navigate = useNavigate();
+  const handleOneFileChange = (event) => {
+    const selectedFiles = Array.from(event.target.files);
+    setFieldValue("Image", selectedFiles);
+  };
   const submitHandler = (values) => {
-    var myHeaders = new Headers();
-    myHeaders.append("Content-Type", "application/json");
+    var formdata = new FormData();
+    var fileInput = document.getElementById("fileInput");
 
-    var raw = JSON.stringify({
-      name: values.name,
-      location: values.location,
-      taluka: values.taluka,
-      area: values.area,
-      latitude: values.latitude,
-      longitude: values.longitude,
-      operationalSince: values.operationalSince,
-      district: values.district,
-    });
+    formdata.append("name", values.name);
+    formdata.append("location", values.location);
+    formdata.append("taluka", values.taluka);
+    formdata.append("area", values.area);
+    formdata.append("latitude", values.latitude);
+    formdata.append("longitude", values.longitude);
+    formdata.append("picture", fileInput.files[0], values.Image[0].name);
+    formdata.append("operationalSince", values.operationalSince);
+    formdata.append("district", values.district);
+
+    // var myHeaders = new Headers();
+    // myHeaders.append("Content-Type", "application/json");
+
+    // var raw = JSON.stringify({
+    //   name: values.name,
+    //   location: values.location,
+    //   taluka: values.taluka,
+    //   area: values.area,
+    //   latitude: values.latitude,
+    //   longitude: values.longitude,
+    //   operationalSince: values.operationalSince,
+    //   district: values.district,
+    // });
 
     var requestOptions = {
       method: "POST",
-      headers: myHeaders,
-      body: raw,
+      body: formdata,
       redirect: "follow",
     };
 
@@ -55,16 +72,23 @@ const AddSportsComplex = () => {
       .catch((error) => console.log("error", error));
   };
 
-  const { values, errors, touched, handleBlur, handleChange, handleSubmit } =
-    useFormik({
-      initialValues: initialValues,
-      validationSchema: sportComplexSchema,
-      onSubmit: (values, action) => {
-        console.log(values);
-        submitHandler(values);
-        action.resetForm();
-      },
-    });
+  const {
+    values,
+    errors,
+    touched,
+    handleBlur,
+    handleChange,
+    handleSubmit,
+    setFieldValue,
+  } = useFormik({
+    initialValues: initialValues,
+    validationSchema: sportComplexSchema,
+    onSubmit: (values, action) => {
+      console.log(values);
+      submitHandler(values);
+      action.resetForm();
+    },
+  });
   return (
     <>
       <div className="flex bg-gray-200 mx-5">
@@ -170,51 +194,72 @@ const AddSportsComplex = () => {
                 <small className="text-ligth text-red-600">{errors.area}</small>
               ) : null}
             </div>
-            <div className="mb-4">
-              <label
-                className="block text-gray-700 text-sm font-bold mb-2"
-                htmlFor="latitude"
-              >
-                Latitude
-              </label>
-              <input
-                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                name="latitude"
-                type="text"
-                placeholder="Latitude"
-                value={values.latitude}
-                onChange={handleChange}
-                onBlur={handleBlur}
-              />
-              {errors.latitude && touched.latitude ? (
-                <small className="text-ligth text-red-600">
-                  {errors.latitude}
-                </small>
-              ) : null}
+            <div className="flex gap-10">
+              <div className="mb-4">
+                <label
+                  className="block text-gray-700 text-sm font-bold mb-2"
+                  htmlFor="latitude"
+                >
+                  Latitude
+                </label>
+                <input
+                  className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                  name="latitude"
+                  type="text"
+                  placeholder="Latitude"
+                  value={values.latitude}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                />
+                {errors.latitude && touched.latitude ? (
+                  <small className="text-ligth text-red-600">
+                    {errors.latitude}
+                  </small>
+                ) : null}
+              </div>
+              <div className="mb-4">
+                <label
+                  className="block text-gray-700 text-sm font-bold mb-2"
+                  htmlFor="longitude"
+                >
+                  Longitude
+                </label>
+                <input
+                  className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                  name="longitude"
+                  type="text"
+                  placeholder="Longitude"
+                  value={values.longitude}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                />
+                {errors.longitude && touched.longitude ? (
+                  <small className="text-ligth text-red-600">
+                    {errors.longitude}
+                  </small>
+                ) : null}
+              </div>
             </div>
             <div className="mb-4">
               <label
                 className="block text-gray-700 text-sm font-bold mb-2"
-                htmlFor="longitude"
+                htmlFor="Image"
               >
-                Longitude
+                Image
               </label>
               <input
                 className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                name="longitude"
-                type="text"
-                placeholder="Longitude"
-                value={values.longitude}
-                onChange={handleChange}
+                name="Image"
+                type="file"
+                id="fileInput"
+                accept="image/*"
+                onChange={handleOneFileChange}
                 onBlur={handleBlur}
               />
-              {errors.longitude && touched.longitude ? (
-                <small className="text-ligth text-red-600">
-                  {errors.longitude}
-                </small>
-              ) : null}
             </div>
-
+            {errors.Image && touched.Image ? (
+              <small className="text-ligth text-red-600">{errors.Image}</small>
+            ) : null}
             <div className="mb-4">
               <label
                 className="block text-gray-700 text-sm font-bold mb-2"
