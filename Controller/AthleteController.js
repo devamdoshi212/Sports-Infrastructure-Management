@@ -126,6 +126,10 @@ module.exports.updateAthlete = async function (req, res) {
     Athlete.emergencyNumber = req.body.emergencyNumber;
   }
 
+  if (req.body.Rating !== undefined) {
+    Athlete.Rating = req.body.Rating;
+  }
+
   try {
     let response = await Athlete.save();
     res.json({ data: response, msg: "updated successfully", rcode: 200 });
