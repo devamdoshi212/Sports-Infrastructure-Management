@@ -260,12 +260,21 @@ module.exports.SportsComplexDetail = async function (req, res) {
       // },
     ]);
 
-    const current = ;
+
+    const startOfDay = new Date();
+    startOfDay.setUTCHours(0, 0, 0, 0);
+
+    const endOfDay = new Date();
+    endOfDay.setUTCHours(23, 59, 59, 999);
+
     const presentCount = await session.aggregate([
       {
         $match: {
           sportscomplex: new mongoose.Types.ObjectId(req.query.sportsComplex),
           date: {
+
+            $gte: startOfDay,
+            $lt: endOfDay,
           
           }, // Match date within the given day
         },
@@ -281,6 +290,8 @@ module.exports.SportsComplexDetail = async function (req, res) {
       },
     ]);
 
+    console.log(presentCount.length);
+    
     res.json({
       athleteCount: athleteCount.length,
       athletePaymentCount: athleteCount,
@@ -288,7 +299,7 @@ module.exports.SportsComplexDetail = async function (req, res) {
       instructerCount: insName.length,
       ComplainCount: complaintcount,
       availableSports: SportsNames,
-      presentCount: presentCount,
+      presentCount: presentCount.length,
       rcode: 200,
     });
   } catch (err) {

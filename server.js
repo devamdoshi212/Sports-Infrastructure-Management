@@ -90,6 +90,10 @@ app.get(
 );
 app.get("/searchSportsComplex", SportsComplexController.SearchComplex);
 
+// Counts for Supervisor Dashboard (App)
+
+app.get("/SupervisorDasboardCount",SupervisorDashboardController.SupervisorDasboardCount)
+
 app.patch(
   "/updateSportsComplex/:id",
   SportController.upload.array("images"),
