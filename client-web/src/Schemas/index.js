@@ -70,6 +70,24 @@ export const sportComplexSchema = Yup.object().shape({
   area: Yup.string().required("Area is Required"),
   latitude: Yup.string().required("Latitude is Required"),
   longitude: Yup.string().required("Longitude is Required"),
+  Image: Yup.array()
+    .min(1, "Select at least one file")
+    .max(1, "Select at least one file")
+    .of(
+      Yup.mixed()
+        .test("fileFormat", "Only image files are allowed", (value) => {
+          if (!value) return true; // If no file is selected, skip validation
+
+          const acceptedFormats = ["image/jpeg", "image/png", "image/gif"];
+          return acceptedFormats.includes(value.type);
+        })
+        .test("fileSize", "File size is too large", (value) => {
+          if (!value) return true; // If no file is selected, skip validation
+
+          const maxSizeInBytes = 10 * 1024 * 1024; // 50MB
+          return value.size <= maxSizeInBytes;
+        })
+    ),
   taluka: Yup.string().required("Taluka is Required"),
   location: Yup.string().required("Location is Required"),
   operationalSince: Yup.string().required("Opreational Since is Required"),
