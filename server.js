@@ -21,6 +21,7 @@ const AuthorityController = require("./Controller/AuthorityController");
 const AdminController = require("./Controller/AdminController");
 const ComplaintTypeController = require("./Controller/ComplaintTypeController");
 const ComplaintImageController = require("./Controller/ComplainImageController");
+const SportComplexeImageController = require("./Controller/SportComplexImageController")
 
 const {
   filtersportsforcomplex,
@@ -64,7 +65,7 @@ app.post("/addDistrict", DistrictController.addDistrict);
 app.get("/getDistrict", DistrictController.getDistrict);
 
 //Sports Complex routes
-app.post("/addSportsComplex", SportsComplexController.AddSportsComplex);
+app.post("/addSportsComplex", SportComplexeImageController.upload.single('picture'),SportsComplexController.AddSportsComplex);
 app.get("/getSportsComplex", SportsComplexController.getSportsComplex);
 app.get(
   "/getSportsComplexwithmanager",

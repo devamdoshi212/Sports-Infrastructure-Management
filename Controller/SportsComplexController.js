@@ -6,6 +6,11 @@ const instructerModel = require("../Model/instructorModel");
 const paymentModel = require("../Model/PaymentModel");
 
 module.exports.AddSportsComplex = async function (req, res) {
+
+  const BaseUrl = `/SportComplexes/${req.file.originalname}`;
+  console.log(BaseUrl);
+  // req.body.baseUrl = BaseUrl;
+
   let SportComplex = new SportsComplex({
     name: req.body.name,
     latitude: req.body.latitude,
@@ -16,7 +21,10 @@ module.exports.AddSportsComplex = async function (req, res) {
     taluka: req.body.taluka,
     area: req.body.area,
     operationalSince: req.body.operationalSince,
+    picture: BaseUrl
   });
+
+ 
 
   let data = await SportComplex.save();
   res.json({ data: data, msg: "SportComplex Added", rcode: 200 });
