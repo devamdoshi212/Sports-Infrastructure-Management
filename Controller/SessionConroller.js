@@ -1,4 +1,4 @@
-const sessions = require("../model/SessionModel");
+const sessions = require("../Model/SessionModel");
 module.exports.addSession = async function (req, res) {
   let existingSession = await sessions.findOne(
     {
