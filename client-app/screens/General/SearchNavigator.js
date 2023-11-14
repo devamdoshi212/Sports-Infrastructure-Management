@@ -7,13 +7,14 @@ import Search from "./Search";
 import AthelteFlatListScreen from "../Athelte/AthelteFlatScreen";
 import FlatListScreen from "./FlatListScreen";
 import ComplexDetails from "./ComplexDetails";
+import MyCarousel from "./GeneralSearch";
 const SearchNavigator = ({ navigation }) => {
   return (
     <Stack.Navigator>
       <Stack.Group>
         <Stack.Screen
           name="Search"
-          component={Search}
+          component={MyCarousel}
           options={{ headerShown: false }}
         />
         <Stack.Screen
