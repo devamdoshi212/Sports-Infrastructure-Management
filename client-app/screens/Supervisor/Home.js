@@ -79,6 +79,19 @@ const Home = () => {
             key: "Instructor Data",
             value: detailsInstructor.instructerData.join(", "),
           },
+          {
+            key: "Total Complaint at My Level",
+            value: "5",
+          },
+          {
+            key: "Present Athlete in Complex",
+            value: "1",
+          },
+
+          {
+            key: "Present Athlete in Complex in Particular Sports",
+            value: "200/100",
+          },
         ]}
         renderItem={renderCategoryItem}
         numColumns={2}

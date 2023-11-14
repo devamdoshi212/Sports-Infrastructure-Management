@@ -263,7 +263,7 @@ const SignUp = ({ navigation }) => {
                 <TextInput
                   placeholder="Select Your BirthDate"
                   editable={false}
-                  style={{color:"black"}}
+                  style={{ color: "black" }}
                   value={fdata.DOB.toDateString()}
                 ></TextInput>
                 <Icon
@@ -377,7 +377,7 @@ const SignUp = ({ navigation }) => {
 
 const styles = StyleSheet.create({
   scrollContainer: {
-    paddingVertical: 50,
+    // paddingVertical: 50,
     flexGrow: 1,
     backgroundColor: "#f0f0f0",
   },
@@ -385,9 +385,11 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "#f0f0f0",
+    backgroundColor: "#fbe8e8",
+    paddingBottom: 20,
   },
   formContainer: {
+    marginTop: 50,
     backgroundColor: "white",
     padding: 20,
     borderRadius: 10,
@@ -404,17 +406,16 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
   dobContainer: {
-      flexDirection: "row",
-      alignItems: "center",
-      justifyContent: "space-between",
-      width: "100%",
-      height: 46,
-      borderWidth: 1,
-      borderColor: "#ccc",
-      marginBottom: 15,
-      padding: 10,
-      borderRadius: 5,
-    
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    width: "100%",
+    height: 46,
+    borderWidth: 1,
+    borderColor: "#ccc",
+    marginBottom: 15,
+    padding: 10,
+    borderRadius: 5,
   },
   input: {
     width: "100%",

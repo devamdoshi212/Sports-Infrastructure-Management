@@ -5,7 +5,7 @@ import {
   TouchableOpacity,
   Text,
   StyleSheet,
-  Image
+  Image,
 } from "react-native";
 
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -59,9 +59,11 @@ const Login = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
-        <Image style={{width:150,height:150,marginBottom:20}} source={require("../../assets/Logo.png")} />
+      <Image
+        style={{ width: 150, height: 150, marginBottom: 20 }}
+        source={require("../../assets/Logo.png")}
+      />
       <View style={styles.loginBox}>
-
         <Text style={styles.title}>Sports Authority of Gujarat</Text>
         <TextInput
           style={styles.input}
@@ -100,10 +102,9 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "#f0f0f0",
+    backgroundColor: "#fbe8e8",
   },
   loginBox: {
-
     paddingVertical: "8%",
     paddingHorizontal: "6%",
     borderRadius: 8,
@@ -140,13 +141,14 @@ const styles = StyleSheet.create({
   },
   loginButton: {
     height: 50,
-    backgroundColor: "#007bff",
+    backgroundColor: "black",
     justifyContent: "center",
     alignItems: "center",
     borderRadius: 8,
     marginTop: 20,
-    width:100,
-    alignSelf:"center"
+    width: 100,
+    alignSelf: "center",
+    fontWeight: "bold",
   },
   buttonText: {
     color: "white",
@@ -165,7 +167,6 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: "bold",
     color: "blue",
-    
   },
 });
 

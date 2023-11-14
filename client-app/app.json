@@ -10,7 +10,7 @@
         "splash": {
             "image": "./assets/sports.png",
             "resizeMode": "contain",
-            "backgroundColor": "#ffffff"
+            "backgroundColor": "#fbe8e8"
         },
         "plugins": [
             [
@@ -27,7 +27,7 @@
         "android": {
             "adaptiveIcon": {
                 "foregroundImage": "./assets/Logo.png",
-                "backgroundColor": "#ffffff"
+                "backgroundColor": "#fbe8e8"
             }
         },
         "web": {
