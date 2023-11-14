@@ -4,6 +4,7 @@ const sportModel = require("../Model/SportModel");
 // const SportsComplexModel = require("../Model/SportsComplexModel");
 const instructerModel = require("../Model/instructorModel");
 const paymentModel = require("../Model/PaymentModel");
+const complaintModel = require('../Model/ComplaintModel')
 
 module.exports.AddSportsComplex = async function (req, res) {
 
@@ -220,6 +221,18 @@ module.exports.SportsComplexDetail = async function (req, res) {
     // }
     // console.log("SportNames => "+SportsNames)
 
+
+    const complaintcount = await complaintModel.find({
+      $and:[
+        {sportsComplex: req.query.sportsComplex},
+        {level : 0},
+        {status : 0},
+      ] 
+      })
+
+    //console.log(complaintcount.length);
+
+
     let SportsNames = [];
 
     //sportdata 1 j hoy every time
@@ -254,6 +267,8 @@ module.exports.SportsComplexDetail = async function (req, res) {
       athleteCount: athleteCount.length,
       athletePaymentCount: athleteCount,
       instructerData: insName,
+      instructerCount:insName.length,
+      ComplainCount:complaintcount,
       availableSports: SportsNames,
       rcode: 200,
     });
