@@ -30,6 +30,29 @@ export default function QR({ navigation }) {
 
     return distance;
   }
+  const [lat, setLat] = useState("");
+  const [long, setLong] = useState("");
+
+  useEffect(() => {
+    (async () => {
+      var requestOptions = {
+        method: "GET",
+        redirect: "follow",
+      };
+
+      fetch(
+        `http://${ip}:9999/getSportsComplex?_id=${complexId}`,
+        requestOptions
+      )
+        .then((response) => response.json())
+        .then((result) => {
+          // console.log(result);
+          setLat(result.data[0].latitude);
+          setLong(result.data[0].longitude);
+        })
+        .catch((error) => console.log("error", error));
+    })();
+  }, []);
 
   const [locationPermissionInformation, requestPermission] =
     useForegroundPermissions();
@@ -61,8 +84,11 @@ export default function QR({ navigation }) {
     }
 
     const location = await getCurrentPositionAsync();
-    const latitude1 = 19.7514798; // Latitude of the first point
-    const longitude1 = 75.7138884;
+    // const latitude1 = 19.7514798; // Latitude of the first point
+    // const longitude1 = 75.7138884;
+    const latitude1 = lat; // Latitude of the first point
+    const longitude1 = long;
+
     console.log(location);
     const distance = haversineDistance(
       latitude1,
@@ -84,7 +110,6 @@ export default function QR({ navigation }) {
   }
 
   const userdata = useSelector((state) => state.user.User);
-  // console.log(userdata);
   const AthelteData = useSelector((state) => state.athelte.Athelte);
 
   const complexId = AthelteData[0].createdBy.SportComplexId;
@@ -93,6 +118,7 @@ export default function QR({ navigation }) {
   const [scanData, setScanData] = useState(undefined);
   const [complexid, setcomplexid] = useState("");
   const [athleteid, setathleteid] = useState("");
+  // const [isLoading, setIsLoading] = useState(false);
   useEffect(() => {
     (async () => {
       const { status } = await BarCodeScanner.requestPermissionsAsync();
@@ -117,8 +143,9 @@ export default function QR({ navigation }) {
         })
         .catch((error) => console.log("error", error));
     })();
+
     setScanData(undefined);
-  }, [scanData]);
+  }, []);
 
   if (!hasPermission) {
     return (
@@ -207,8 +234,10 @@ export default function QR({ navigation }) {
         style={StyleSheet.absoluteFillObject}
         onBarCodeScanned={scanData ? undefined : handleBarCodeScanned}
       />
-      {scanData && (
+      {scanData ? (
         <Button title="Scan Again?" onPress={() => setScanData(undefined)} />
+      ) : (
+        <Text>Scan a QR Code</Text>
       )}
       <StatusBar style="auto" />
     </View>
