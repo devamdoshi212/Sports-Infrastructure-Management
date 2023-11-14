@@ -32,6 +32,15 @@ export default function QR({ navigation }) {
   }
   const [lat, setLat] = useState("");
   const [long, setLong] = useState("");
+  const userdata = useSelector((state) => state.user.User);
+  const AthelteData = useSelector((state) => state.athelte.Athelte);
+
+  const complexId = AthelteData[0].createdBy.SportComplexId;
+  const ip = ipconfig.ip;
+  const [hasPermission, setHasPermission] = useState(false);
+  const [scanData, setScanData] = useState(undefined);
+  const [complexid, setcomplexid] = useState("");
+  const [athleteid, setathleteid] = useState("");
 
   useEffect(() => {
     (async () => {
@@ -76,7 +85,7 @@ export default function QR({ navigation }) {
 
     return true;
   }
-  async function getLocationHandler() {
+  async function getLocationHandler(data) {
     const hasPermission = await verifyPermissions();
 
     if (!hasPermission) {
@@ -96,28 +105,68 @@ export default function QR({ navigation }) {
       location.coords.latitude,
       location.coords.longitude
     );
-    const data = distance.toFixed(2);
+    const userDistance = distance.toFixed(2);
     console.log(
       `The distance between the two points is ${distance.toFixed(
         2
       )} kilometers.`
     );
-    if (data < 1) {
-      alert("Your Attendance has been successfully saved");
+    if (userDistance < 0.31) {
+      var myHeaders = new Headers();
+      myHeaders.append("Content-Type", "application/json");
+
+      // const id = userdata._id.toString();
+      var raw = JSON.stringify({
+        userId: userdata._id,
+      });
+
+      var requestOptions = {
+        method: "POST",
+        headers: myHeaders,
+        body: raw,
+        redirect: "follow",
+      };
+
+      fetch(`http://${ip}:9999/addSession/${data}`, requestOptions)
+        .then((response) => response.json())
+        .then((result) => {
+          console.log(result);
+          if (result.rcode == 200) {
+            Alert.alert("Alert Title", "Entry Done", [
+              // {
+              //     text: 'Cancel',
+              //     onPress: () => console.log('Cancel Pressed'),
+              //     style: 'cancel',
+              // },
+              {
+                text: "OK",
+                onPress: () => {
+                  navigation.navigate("AthelteSearch");
+                },
+              },
+            ]);
+          } else {
+            Alert.alert("Alert Title", "Exit Done", [
+              // {
+              //     text: 'Cancel',
+              //     onPress: () => console.log('Cancel Pressed'),
+              //     style: 'cancel',
+              // },
+              {
+                text: "OK",
+                onPress: () => {
+                  navigation.navigate("ExitForm");
+                },
+              },
+            ]);
+          }
+        })
+        .catch((error) => console.log("error", error));
     } else {
-      alert("You are not in Range ");
+      alert("You are not in Range");
     }
   }
 
-  const userdata = useSelector((state) => state.user.User);
-  const AthelteData = useSelector((state) => state.athelte.Athelte);
-
-  const complexId = AthelteData[0].createdBy.SportComplexId;
-  const ip = ipconfig.ip;
-  const [hasPermission, setHasPermission] = useState(false);
-  const [scanData, setScanData] = useState(undefined);
-  const [complexid, setcomplexid] = useState("");
-  const [athleteid, setathleteid] = useState("");
   // const [isLoading, setIsLoading] = useState(false);
   useEffect(() => {
     (async () => {
@@ -169,49 +218,11 @@ export default function QR({ navigation }) {
         {
           text: "OK",
           onPress: () => {
-            getLocationHandler();
+            getLocationHandler(data);
           },
         },
         // navigation.navigate("AthelteSearch");
       ]);
-      var myHeaders = new Headers();
-      myHeaders.append("Content-Type", "application/json");
-
-      // const id = userdata._id.toString();
-      var raw = JSON.stringify({
-        userId: userdata._id,
-      });
-
-      var requestOptions = {
-        method: "POST",
-        headers: myHeaders,
-        body: raw,
-        redirect: "follow",
-      };
-
-      fetch(`http://${ip}:9999/addSession/${data}`, requestOptions)
-        .then((response) => response.json())
-        .then((result) => {
-          console.log(result);
-          if (result.rcode == 200) {
-            navigation.navigate("AthelteSearch");
-          } else {
-            Alert.alert("Alert Title", "Exit Done", [
-              // {
-              //     text: 'Cancel',
-              //     onPress: () => console.log('Cancel Pressed'),
-              //     style: 'cancel',
-              // },
-              {
-                text: "OK",
-                onPress: () => {
-                  navigation.navigate("ExitForm");
-                },
-              },
-            ]);
-          }
-        })
-        .catch((error) => console.log("error", error));
     } else {
       Alert.alert(
         "Alert Title",
