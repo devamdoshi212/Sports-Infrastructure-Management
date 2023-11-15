@@ -8,9 +8,10 @@ import {
   Platform,
   FlatList,
   ImageBackground,
+  TouchableOpacity,
+  Image,
 } from "react-native";
 import ipconfig from "../../ipconfig";
-import { useNavigation } from "@react-navigation/native";
 function renderCategoryItem(itemData, ip, navigate) {
   if (itemData.item.baseUrl) {
     const image = itemData.item.baseUrl;
@@ -56,24 +57,36 @@ function renderCategoryItem(itemData, ip, navigate) {
     delete itemDataWithoutSeparators.separators;
 
     return (
-      <View style={styles.gridItem}>
-        <Pressable
-          android_ripple={{ color: "#ccc" }}
-          style={({ pressed }) => [
-            styles.button,
-            pressed ? styles.buttonPressed : null,
-          ]}
-          onPress={() => {
-            navigate.navigate("ComplexDetailsinGeneral", {
-              data: itemDataWithoutSeparators,
-            });
-          }}
-        >
-          <View style={[styles.innerContainer, { backgroundColor: "gray" }]}>
-            <Text style={styles.title}>{itemData.item.name}</Text>
+      <TouchableOpacity
+        onPress={() => {
+          navigate.navigate("ComplexDetailsinGeneral", {
+            data: itemDataWithoutSeparators,
+          });
+        }}
+      >
+        {console.log(itemData)}
+        <View style={styles.card}>
+          <Image
+            style={{
+              width: 300,
+              height: 200,
+              borderRadius: 5,
+            }}
+            source={{
+              uri: `http://${ip}:9999${itemData.item.picture}`,
+            }}
+          />
+          <View style={styles.cardHeader}>
+            <Text style={styles.cardHeaderText}>{itemData.item.name}</Text>
+            <View style={styles.cardHeaderTextDescriptionView}>
+              <Text style={styles.cardHeaderTextDescriptionView}>
+                {itemData.item.taluka}
+              </Text>
+              <Text style={styles.cardHeaderTextCount}>48 Atheltes</Text>
+            </View>
           </View>
-        </Pressable>
-      </View>
+        </View>
+      </TouchableOpacity>
     );
   }
 }
@@ -96,10 +109,11 @@ function FlatListScreen({ optionField, searchfield, navigate }) {
 
   return (
     <FlatList
+      key={optionField}
       data={complex}
       keyExtractor={(item) => item._id}
       renderItem={(itemData) => renderCategoryItem(itemData, ip, navigate)}
-      numColumns={2}
+      numColumns={optionField === "getSports" ? 2 : 1}
       extraData={{ ip }}
       // extraData={searchfield}
     />
@@ -146,5 +160,56 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
+  },
+  card: {
+    flexDirection: "column",
+    marginLeft: "7%",
+    marginTop: "2%",
+    alignItems: "center",
+    padding: 10,
+    width: "85%",
+    borderWidth: 1,
+    borderRadius: 10,
+    borderBottomWidth: 3,
+    backgroundColor: "white",
+    height: 235,
+
+    shadowColor: "black",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.2,
+    shadowRadius: 4,
+    elevation: 5,
+    marginHorizontal: 15,
+    marginVertical: 5,
+    marginBottom: "2%",
+    paddingBottom: "5%",
+    backgroundColor: "#f3f0f0",
+  },
+  cardHeader: {
+    flexDirection: "column",
+    backgroundColor: "#f3f0f0",
+    width: "100%",
+    // borderWidth:1,
+    height: 40,
+    marginTop: -40,
+  },
+  cardHeaderText: {
+    marginTop: "1%",
+    fontSize: 20,
+    fontWeight: "bold",
+  },
+  cardHeaderTextDescriptionView: {
+    flexDirection: "row",
+    fontSize: 14,
+    fontWeight: "700",
+  },
+  cardHeaderTextDescription: {
+    flex: 1,
+    fontSize: 13,
+    fontWeight: "bold",
+  },
+  cardHeaderTextCount: {
+    flex: 1,
+    marginLeft: "33%",
   },
 });
