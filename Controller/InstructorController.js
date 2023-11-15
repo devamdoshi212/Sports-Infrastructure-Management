@@ -1,5 +1,7 @@
 const UsersModel = require("../Model/UsersModel");
 const InstructorModel = require("../Model/instructorModel");
+const paymentModel = require("../Model/PaymentModel");
+const complaintModel = require("../Model/ComplaintModel");
 
 module.exports.addInstructor = async function (req, res) {
   let Instructor = new InstructorModel(req.body);
@@ -94,5 +96,65 @@ module.exports.updateInstructor = async function (req, res) {
   } catch (error) {
     console.error(error);
     res.json({ data: error.msg, msg: "smw", rcode: -9 });
+  }
+};
+
+module.exports.atheleteCountbyInstructer = async function (req, res) {
+  try {
+    const data = await paymentModel.aggregate([
+      {
+        $lookup: {
+          from: "instructors",
+          localField: "instructorId",
+          foreignField: "_id",
+          as: "instructorInfo",
+        },
+      },
+      {
+        $lookup: {
+          from: "users",
+          localField: "instructorInfo.userId",
+          foreignField: "_id",
+          as: "userInfo",
+        },
+      },
+      {
+        $unwind: "$userInfo",
+      },
+      {
+        $group: {
+          _id: {
+            instructorId: "$userInfo.Name",
+          },
+          uniqueAthleteIds: { $addToSet: "$athleteId" },
+        },
+      },
+      {
+        $project: {
+          // instructorId: "$_id.instructorId",
+          userCount: { $size: "$uniqueAthleteIds" },
+        },
+      },
+    ]);
+
+    res.json({
+      data: data,
+      rcode: 200,
+    });
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+module.exports.complaintCount = async function (req, res) {
+  try {
+    let data = await complaintModel.find({ level: 1 });
+    res.json({
+      result: data.length,
+      data: data,
+      rcode: 200,
+    });
+  } catch (err) {
+    console.log(err);
   }
 };

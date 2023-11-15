@@ -92,7 +92,10 @@ app.get("/searchSportsComplex", SportsComplexController.SearchComplex);
 
 // Counts for Supervisor Dashboard (App)
 
-app.get("/SupervisorDasboardCount",SupervisorDashboardController.SupervisorDasboardCount)
+app.get(
+  "/SupervisorDasboardCount",
+  SupervisorDashboardController.SupervisorDasboardCount
+);
 
 app.patch(
   "/updateSportsComplex/:id",
@@ -202,6 +205,12 @@ app.get(
   SupervisorController.getInstructorForPayment
 );
 app.get("/paymentHistoryAthlete", PaymentController.getAthletePayments);
+app.get(
+  "/atheleteCountbyInstructer",
+  InstructorController.atheleteCountbyInstructer
+);
+
+app.get("/complaintCount", InstructorController.complaintCount);
 
 // app.get(
 //   "/supervisorDashboard",
