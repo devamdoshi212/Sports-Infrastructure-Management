@@ -74,12 +74,15 @@ const MyCarousel = ({ navigation, route }) => {
     setEntries(ENTRIES1);
   }, []);
   useEffect(() => {
-    const { lat, long, distance } = route.params || {};
+    const { lat, long, distance, district } = route.params || {};
     if (lat) {
       // console.log(lat, long);
       setlat(lat);
       setlong(long);
       setDistance(distance);
+    }
+    if (district) {
+      setSearchQuery(district);
     }
   }, [route.params]);
   const renderItem = ({ item, index }, parallaxProps) => {

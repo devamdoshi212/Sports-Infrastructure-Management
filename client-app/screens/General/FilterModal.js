@@ -45,7 +45,7 @@ const FilterModal = (props) => {
     // }
     setSelectedItems(selectedItem);
   };
-
+  console.log(selectedItems);
   const items = [
     {
       id: "1",
@@ -119,6 +119,7 @@ const FilterModal = (props) => {
           lat: location.coords.latitude,
           long: location.coords.longitude,
           distance: distance,
+          district: selectedItems[0],
         });
         setModalVisible(!modalVisible);
       } else {
@@ -194,7 +195,7 @@ const FilterModal = (props) => {
               maximumSelectionLength={5}
               // hideTags
               items={district}
-              uniqueKey="_id"
+              uniqueKey="District"
               // ref={(component) => { MultiSelect = component }}
               onSelectedItemsChange={onSelectedItemsChange}
               selectedItems={selectedItems}
