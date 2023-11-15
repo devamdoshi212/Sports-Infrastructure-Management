@@ -57,11 +57,14 @@ const ENTRIES1 = [
 
 const { width: screenWidth } = Dimensions.get("window");
 
-const MyCarousel = ({ navigation }) => {
+const MyCarousel = ({ navigation, route }) => {
   const [selectedOption, setSelectedOption] = useState("getSports");
   const [searchQuery, setSearchQuery] = useState("");
   const [entries, setEntries] = useState([]);
   const [filterModal, setFilterModal] = useState(false);
+  const [lat, setlat] = useState("");
+  const [long, setlong] = useState("");
+  const [distance, setDistance] = useState("");
   const carouselRef = useRef(null);
 
   const goForward = () => {
@@ -70,6 +73,15 @@ const MyCarousel = ({ navigation }) => {
   useEffect(() => {
     setEntries(ENTRIES1);
   }, []);
+  useEffect(() => {
+    const { lat, long, distance } = route.params || {};
+    if (lat) {
+      // console.log(lat, long);
+      setlat(lat);
+      setlong(long);
+      setDistance(distance);
+    }
+  }, [route.params]);
   const renderItem = ({ item, index }, parallaxProps) => {
     return (
       <View style={styles.item}>
@@ -90,7 +102,9 @@ const MyCarousel = ({ navigation }) => {
   return (
     <View style={styles.container}>
       {/* {filterModal && <Modal show={filterModal} />} */}
-      {filterModal && <FilterModal show={filterModal} />}
+      {filterModal && (
+        <FilterModal show={filterModal} selectedOption={selectedOption} />
+      )}
       <TouchableOpacity onPress={goForward}>
         {/* <Text>go to next slide</Text> */}
       </TouchableOpacity>
@@ -111,7 +125,6 @@ const MyCarousel = ({ navigation }) => {
               style={styles.button1}
               onPress={() => {
                 setSelectedOption("getSports");
-                // alert("Facility");
               }}
             >
               <Text style={styles.buttonText1}>Facility</Text>
@@ -120,7 +133,6 @@ const MyCarousel = ({ navigation }) => {
               style={styles.button}
               onPress={() => {
                 setSelectedOption("searchSportsComplex");
-                // alert("Sports Complex");
               }}
             >
               <Text style={styles.buttonText}>Sports Complex</Text>
@@ -152,6 +164,9 @@ const MyCarousel = ({ navigation }) => {
             optionField={selectedOption}
             searchfield={searchQuery}
             navigate={navigation}
+            lat={lat}
+            distance={distance}
+            long={long}
           />
         </View>
       </View>
