@@ -25,7 +25,7 @@ import {
   Icon,
 } from "@expo/vector-icons";
 import { ScrollView } from "react-native-gesture-handler";
-// import Modal from './FilterModal';
+import FilterModal from "./FilterModal";
 
 const ENTRIES1 = [
   {
@@ -90,6 +90,7 @@ const MyCarousel = ({ navigation }) => {
   return (
     <View style={styles.container}>
       {/* {filterModal && <Modal show={filterModal} />} */}
+      {filterModal && <FilterModal show={filterModal} />}
       <TouchableOpacity onPress={goForward}>
         {/* <Text>go to next slide</Text> */}
       </TouchableOpacity>
