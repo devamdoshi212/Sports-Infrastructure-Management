@@ -13,7 +13,7 @@ import ipconfig from "../../ipconfig";
 const Home = () => {
   const ip = ipconfig.ip;
   const { SportComplexId } = useSelector((state) => state.user.User);
-  const [detailsInstructor, setDetailsInstrutor] = useState([]);
+  const [supervisor, setSupervisor] = useState([]);
   const [loading, setLoading] = useState(true);
   const [refreshing, setRefreshing] = useState(false);
 
@@ -28,13 +28,13 @@ const Home = () => {
     };
 
     fetch(
-      `http://${ip}:9999/sportsComplexDetail?sportsComplex=${SportComplexId}`,
+      `http://${ip}:9999/SupervisorDasboardCount?sportsComplex=${SportComplexId}`,
       requestOptions
     )
       .then((response) => response.json())
       .then((result) => {
         console.log(result);
-        setDetailsInstrutor(result);
+        setSupervisor(result);
       })
       .catch((error) => console.log("error", error))
       .finally(() => {
@@ -66,35 +66,30 @@ const Home = () => {
     <>
       <FlatList
         data={[
-          { key: "Athlete Count", value: detailsInstructor.athleteCount },
-          // {
-          //   key: "Athlete Payment Count",
-          //   value: detailsInstructor.athletePaymentCount[0].Paymentcount,
-          // },
+          { key: "Athlete Count", value: supervisor.athleteCount },
           {
             key: "Available Sports",
-            value: detailsInstructor.availableSports.join(", "),
+            value: supervisor.availableSports.join(", "),
           },
           {
             key: "Instructor Data",
-            value: detailsInstructor.instructerData.join(", "),
+            value: supervisor.instructerData.join(", "),
           },
           {
             key: "Total Complaint at My Level",
-            value: "5",
+            value: supervisor.ComplainCount.length,
           },
           {
             key: "Present Athlete in Complex",
-            value: "1",
+            value: supervisor.presentCount,
           },
-
           {
             key: "Present Athlete in Complex in Particular Sports",
             value: "200/100",
           },
         ]}
         renderItem={renderCategoryItem}
-        numColumns={2}
+        numColumns={1}
         keyExtractor={(item) => item.key}
         refreshControl={
           <RefreshControl refreshing={refreshing} onRefresh={handleRefresh} />
@@ -119,7 +114,7 @@ const renderCategoryItem = ({ item }) => {
       >
         <View style={[styles.innerContainer, { backgroundColor: "orange" }]}>
           <Text style={styles.title}>
-            {/* {item.key}: {detailsInstructor && detailsInstructor[item.value]} */}
+            {/* {item.key}: {supervisor && supervisor[item.value]} */}
             {item.key} : {item.value}
             {/* {item.key}: {value !== undefined ? value : "N/A"} */}
           </Text>

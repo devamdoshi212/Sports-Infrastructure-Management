@@ -6,6 +6,7 @@ const instructerModel = require("../Model/instructorModel");
 const paymentModel = require("../Model/PaymentModel");
 const complaintModel = require("../Model/ComplaintModel");
 const session = require("../Model/SessionModel");
+const { response } = require("express");
 
 module.exports.AddSportsComplex = async function (req, res) {
   const BaseUrl = `/SportComplexes/${req.file.originalname}`;
@@ -106,13 +107,55 @@ module.exports.updateSportsComplex = async function (req, res) {
   res.json({ data: response, msg: "updated successfully", rcode: 200 });
 };
 
+function haversineDistance(lat1, lon1, lat2, lon2) {
+  const earthRadius = 6371; // Radius of the Earth in kilometers
+
+  // Convert latitude and longitude from degrees to radians
+  const radLat1 = (Math.PI * lat1) / 180;
+  const radLon1 = (Math.PI * lon1) / 180;
+  const radLat2 = (Math.PI * lat2) / 180;
+  const radLon2 = (Math.PI * lon2) / 180;
+
+  // Haversine formula
+  const dLat = radLat2 - radLat1;
+  const dLon = radLon2 - radLon1;
+  const a =
+    Math.sin(dLat / 2) ** 2 +
+    Math.cos(radLat1) * Math.cos(radLat2) * Math.sin(dLon / 2) ** 2;
+  const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+  const distance = earthRadius * c;
+
+  return distance;
+}
+
 module.exports.SearchComplex = async function (req, res) {
   try {
     const query = req.query.q;
     var data = [];
     if (!query) {
       let data1 = await SportsComplex.find();
-      return res.status(200).json({
+
+      if (req.query.distance) {
+        const { distance, lat, lon } = req.query;
+
+        const complex = data1.filter((element) => {
+          const distanceCheck = haversineDistance(
+            element.latitude,
+            element.longitude,
+            lat,
+            lon
+          );
+          return distanceCheck <= distance;
+        });
+
+        return res.json({
+          result: complex.length,
+          data: complex,
+          rcode: 200,
+        });
+      }
+
+      res.status(200).json({
         results: data1.length,
         data: data1,
         status: "Success",
@@ -148,6 +191,26 @@ module.exports.SearchComplex = async function (req, res) {
       },
     ]);
 
+    if (req.query.distance) {
+      const { distance, lat, lon } = req.query;
+
+      const complex = data.filter((element) => {
+        const distanceCheck = haversineDistance(
+          element.latitude,
+          element.longitude,
+          lat,
+          lon
+        );
+        return distanceCheck <= distance;
+      });
+
+      return res.json({
+        result: complex.length,
+        data: complex,
+        rcode: 200,
+      });
+    }
+
     res.json({
       result: data.length,
       data: data,
@@ -155,10 +218,10 @@ module.exports.SearchComplex = async function (req, res) {
     });
   } catch (err) {
     console.log(err);
-    res.json({
-      error: err.msg,
-      rcode: -9,
-    });
+    // res.json({
+    //   error: err.msg,
+    //   rcode: -9,
+    // });
   }
 };
 
@@ -260,7 +323,6 @@ module.exports.SportsComplexDetail = async function (req, res) {
       // },
     ]);
 
-
     const startOfDay = new Date();
     startOfDay.setUTCHours(0, 0, 0, 0);
 
@@ -272,10 +334,8 @@ module.exports.SportsComplexDetail = async function (req, res) {
         $match: {
           sportscomplex: new mongoose.Types.ObjectId(req.query.sportsComplex),
           date: {
-
             $gte: startOfDay,
             $lt: endOfDay,
-          
           }, // Match date within the given day
         },
       },
@@ -291,7 +351,7 @@ module.exports.SportsComplexDetail = async function (req, res) {
     ]);
 
     console.log(presentCount.length);
-    
+
     res.json({
       athleteCount: athleteCount.length,
       athletePaymentCount: athleteCount,
