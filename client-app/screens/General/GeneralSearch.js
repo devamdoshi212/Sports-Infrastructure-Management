@@ -119,6 +119,10 @@ const MyCarousel = ({ navigation, route }) => {
         data={entries}
         renderItem={renderItem}
         hasParallaxImages={true}
+        autoplay={true}
+        autoplayInterval={5000}
+        loop={true}
+        loopClonesPerSide={2}
       />
       <View style={styles.background}>
         <View style={styles.primaryView}></View>

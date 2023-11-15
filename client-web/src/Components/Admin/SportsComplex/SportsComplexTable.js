@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import Swal from "sweetalert2";
 import "primereact/resources/themes/lara-light-indigo/theme.css";
 import { FilterMatchMode } from "primereact/api";
@@ -181,20 +181,69 @@ export default function SportComplexTable() {
   const calculateIndex = (currentPage, rowIndex) => {
     return currentPage * 10 + rowIndex + 1;
   };
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [modalImages, setModalImages] = useState("");
+  const [selectedRowData, setSelectedRowData] = useState(null);
+  const modalOverlayRef = useRef(null);
 
-  const representativeBodyTemplate = (rowData) => {
-    return rowData.Category.join(", ");
+  const openModal = (rowdata) => {
+    console.log(rowdata);
+    setModalImages(rowdata.picture);
+    setSelectedRowData(rowdata);
+    setIsModalOpen(true);
   };
 
-  const district = useSelector((state) => state.district.districts);
-
-  const DistrictBodyTemplete = (rowdata) => {
-    const data = district.find((c) => c._id === rowdata.district);
-    return data.District;
+  const closeModal = () => {
+    setModalImages([]);
+    setSelectedRowData(null);
+    setIsModalOpen(false);
   };
+  useEffect(() => {
+    const handleOutsideClick = (event) => {
+      if (
+        modalOverlayRef.current &&
+        !modalOverlayRef.current.contains(event.target)
+      ) {
+        closeModal();
+      }
+    };
+
+    if (isModalOpen) {
+      document.addEventListener("mousedown", handleOutsideClick);
+    } else {
+      document.removeEventListener("mousedown", handleOutsideClick);
+    }
+
+    return () => {
+      document.removeEventListener("mousedown", handleOutsideClick);
+    };
+  }, [isModalOpen]);
 
   return (
     <div className="card">
+      {isModalOpen && (
+        <div
+          ref={modalOverlayRef}
+          className="fixed inset-0 z-50 flex items-center justify-center modal-overlay bg-gray-900 bg-opacity-80"
+        >
+          <div className="modal-above-screen bg-white rounded-lg p-4 relative">
+            <span
+              className="close absolute top-2 right-2 text-3xl cursor-pointer"
+              onClick={closeModal}
+            >
+              &times;
+            </span>
+            <div className="modal-body p-4 flex justify-center items-center">
+              <img
+                key=""
+                src={` http://localhost:9999${modalImages}`}
+                alt="Sport Complex Pic"
+                className="w-60 h-60 object-cover mx-2"
+              />
+            </div>
+          </div>
+        </div>
+      )}
       <DataTable
         value={customers}
         paginator
@@ -251,11 +300,26 @@ export default function SportComplexTable() {
           style={{ minWidth: "12rem" }}
         />
         <Column
+          header="Image"
+          field="picture"
+          filterField="photo"
+          style={{ minWidth: "10rem" }}
+          body={(rowdata) => (
+            <button
+              onClick={() => openModal(rowdata)}
+              className="text-blue-900 hover:underline hover:decoration-black "
+            >
+              View Images
+            </button>
+          )}
+        />
+        <Column
           header="Taluka"
           field="taluka"
           filterField="taluka"
           style={{ minWidth: "12rem" }}
         />
+
         <Column
           header="District"
           field="district.District" // Replace 'districtName' with the actual field name
