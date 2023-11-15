@@ -1,1 +1,1 @@
-export default { ip: "192.168.1.102" };
+export default { ip: "192.168.235.55" };

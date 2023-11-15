@@ -107,7 +107,7 @@ const MyCarousel = ({ navigation }) => {
         <View style={styles.primaryView}></View>
         <View style={styles.ovalSection}>
           <View style={{ flexDirection: "row" }}>
-            <Pressable
+            <TouchableOpacity
               style={styles.button1}
               onPress={() => {
                 setSelectedOption("getSports");
@@ -115,8 +115,8 @@ const MyCarousel = ({ navigation }) => {
               }}
             >
               <Text style={styles.buttonText1}>Facility</Text>
-            </Pressable>
-            <Pressable
+            </TouchableOpacity>
+            <TouchableOpacity
               style={styles.button}
               onPress={() => {
                 setSelectedOption("searchSportsComplex");
@@ -124,7 +124,7 @@ const MyCarousel = ({ navigation }) => {
               }}
             >
               <Text style={styles.buttonText}>Sports Complex</Text>
-            </Pressable>
+            </TouchableOpacity>
           </View>
           <View style={styles.searchContainer}>
             <TextInput
