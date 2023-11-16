@@ -175,7 +175,7 @@ const AthleteResponse = () => {
                     value={(
                       inputFields.find(
                         (field) => field.parameter === parameter
-                      ) || {}
+                      ) || { value: "" }
                     ).value.toString()}
                     onChangeText={(text) => handleInputChange(parameter, text)}
                   />
