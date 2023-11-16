@@ -245,18 +245,35 @@ app.post("/remarkRatingByAthlete", async (req, res) => {
 
   res.json({ rcode: 200 });
 });
-app.get("/ratingForSupervisor", async (req, res) => {
-  let { sportComplexId } = req.query;
+// app.get("/ratingForSupervisor", async (req, res) => {
+//   let { sportComplexId } = req.query;
+//   let ratings = await athleteRatingModel
+//     .find({
+//       sportComplex: sportComplexId,
+//       isEvaluated: 0,
+//     })
+//     .populate("athleteId")
+//     .sort({ rating: -1 });
+//   res.json({ rcode: 200, ratings });
+// });
+
+app.get("/ratingForInstructor", async (req, res) => {
+  let { instructorId } = req.query;
   let ratings = await athleteRatingModel
     .find({
-      sportComplex: sportComplexId,
+      instructorId: instructorId,
       isEvaluated: 0,
     })
-    .populate("athleteId")
+    .populate({
+      path: "athleteId",
+      populate: {
+        path: "userId",
+      },
+    })
+    .populate("sport")
     .sort({ rating: -1 });
   res.json({ rcode: 200, ratings });
 });
-
 app.get("/ratingForAll", async (req, res) => {
   let ratings = await athleteRatingModel
     .find()

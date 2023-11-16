@@ -95,6 +95,16 @@ function Profile({ navigation }) {
             </View>
           </TouchableOpacity>
 
+          <TouchableOpacity
+            style={styles.actionButton}
+            onPress={() => {
+              navigation.navigate("AthelteDailyResponse");
+            }}
+          >
+            <View style={styles.row}>
+              <Text style={styles.actionText}>Athelte Daily Response</Text>
+            </View>
+          </TouchableOpacity>
           <TouchableOpacity style={styles.actionButton}>
             <View
               style={{ width: "40%", alignSelf: "center", marginTop: "3%" }}
