@@ -21,21 +21,16 @@ const AthleteResponse = () => {
   const navigation = useNavigation();
   const ip = ipconfig.ip;
   const [payments, setPayment] = useState([]);
+
   const Athelte = useSelector((state) => state.athelte.Athelte);
-  const sportList = [
-    "Cricket",
-    "Basketball",
-    "Football",
-    "Tennis",
-    "Volley Ball",
-    "Table Tennis",
-  ];
+
   const [value, onChangeText] = React.useState("");
   const [userResponse, setUserResponse] = useState();
   const [parameters, setparameters] = useState([]);
   // ["goasl", "defend"];
   // [{paramter:global,value:xsdfssfsd},{paramter:defend,value:bsdbkfds}]
   // ["ads","sdas"]
+  const [instructor, setInstructor] = useState("");
 
   const [inputFields, setInputFields] = useState([]);
 
@@ -53,8 +48,6 @@ const AthleteResponse = () => {
     setInputFields(newInputFields);
   };
 
-  // console.log(inputFields);
-
   const filteredFields = inputFields
     .filter(
       (field) => typeof field === "object" && field.parameter && field.value
@@ -62,7 +55,7 @@ const AthleteResponse = () => {
     .map(({ parameter, value }) => ({ parameter, value }));
 
   useEffect(() => {
-    // console.log(inputFields);
+    // console.log(payments);
 
     var requestOptions = {
       method: "GET",
@@ -80,7 +73,7 @@ const AthleteResponse = () => {
       })
       .catch((error) => console.log("error", error));
 
-    if (parameters) console.log(parameters);
+    // if (parameters) console.log(parameters);
   }, [parameters, inputFields]);
 
   const submitHandler = () => {
@@ -93,6 +86,7 @@ const AthleteResponse = () => {
       sportComplexId: Athelte[0].createdBy.SportComplexId,
       remarks: value,
       parameters: filteredFields,
+      instructorId: instructor,
     });
 
     var requestOptions = {
@@ -135,6 +129,7 @@ const AthleteResponse = () => {
             setUserResponse(data);
             setInputFields(payments[index - 1].sports.parameters);
             setparameters(payments[index - 1].sports.parameters);
+            setInstructor(payments[index - 1].instructorId.userId._id);
           }}
           mode="dropdown" // Android only
           style={styles.picker}
@@ -177,13 +172,11 @@ const AthleteResponse = () => {
                     keyboardType="numeric"
                     style={{ height: 40, borderColor: "gray", borderWidth: 1 }}
                     placeholder="Enter a value"
-                    value={
-                      (
-                        inputFields.find(
-                          (field) => field.parameter === parameter
-                        ) || {}
-                      ).value
-                    }
+                    value={(
+                      inputFields.find(
+                        (field) => field.parameter === parameter
+                      ) || {}
+                    ).value.toString()}
                     onChangeText={(text) => handleInputChange(parameter, text)}
                   />
                 </View>
