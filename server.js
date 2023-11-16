@@ -225,13 +225,21 @@ app.get("/paymentHistoryAthlete", PaymentController.getAthletePayments);
 // );
 
 app.post("/remarkRatingByAthlete", async (req, res) => {
-  let { sportId, athleteId, sportComplexId, remarks, parameters } = req.body;
+  let {
+    sportId,
+    athleteId,
+    sportComplexId,
+    remarks,
+    parameters,
+    instructorId,
+  } = req.body;
   let rating = new athleteRatingModel({
     athleteId,
     remarks,
     sport: sportId,
     sportComplex: sportComplexId,
     parameters,
+    instructorId,
   });
   await rating.save();
 
