@@ -52,7 +52,9 @@ const AthleteResponse = () => {
     }
     setInputFields(newInputFields);
   };
+
   // console.log(inputFields);
+
   const filteredFields = inputFields
     .filter(
       (field) => typeof field === "object" && field.parameter && field.value
