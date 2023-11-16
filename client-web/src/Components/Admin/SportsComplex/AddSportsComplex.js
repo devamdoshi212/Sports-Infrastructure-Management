@@ -91,21 +91,24 @@ const AddSportsComplex = () => {
   });
   return (
     <>
-      <div className="flex bg-gray-200 mx-5">
+      <div className=" bg-gray-200 mx-5 mt-5">
         <Button
-          className="items-end cta-btn font-semibold py-4 mt-5 rounded-br-lg rounded-bl-lg rounded-tr-lg shadow-lg hover:shadow-xl "
+          className="items-end cta-btn font-semibold py-4 mt-5 rounded-br-lg rounded-bl-lg rounded-tr-lg shadow-lg hover:shadow-xl mx-5"
           onClick={() => {
             navigate(-1);
           }}
         >
           Back
         </Button>
-      </div>
-      <div className="flex items-center justify-center bg-gray-200 min-h-screen">
-        <div className="w-full max-w-2xl">
-          <h2 className="text-center text-2xl uppercase font-semibold font-serif text-gray-800">
+        <div className="flex items-center justify-center">
+          <h2 className="text-center text-2xl uppercase font-semibold font-serif text-gray-800  ">
             Add New Sports Complex
           </h2>
+        </div>
+      </div>
+
+      <div className="flex items-center justify-center bg-gray-200">
+        <div className=" w-full max-w-2xl">
           <form
             onSubmit={handleSubmit}
             className="bg-white shadow-md rounded-md px-8 pt-6 pb-8 mb-4 mt-5"
@@ -195,7 +198,7 @@ const AddSportsComplex = () => {
               ) : null}
             </div>
             <div className="flex gap-10">
-              <div className="mb-4">
+              <div className="mb-4 w-1/2">
                 <label
                   className="block text-gray-700 text-sm font-bold mb-2"
                   htmlFor="latitude"
@@ -217,7 +220,7 @@ const AddSportsComplex = () => {
                   </small>
                 ) : null}
               </div>
-              <div className="mb-4">
+              <div className="mb-4 w-1/2">
                 <label
                   className="block text-gray-700 text-sm font-bold mb-2"
                   htmlFor="longitude"
@@ -315,7 +318,7 @@ const AddSportsComplex = () => {
             </div>
             <div className="flex items-center justify-center">
               <button
-                className="bg-blue-500 uppercase hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                className="bg-blue-900 uppercase hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
                 type="submit"
                 // onClick={console.log("Hello")}
               >
