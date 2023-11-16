@@ -140,17 +140,16 @@ function SupervisorProfile({ navigation }) {
               <Text style={styles.actionText}>Raise Complaint</Text>
             </View>
           </TouchableOpacity>
-          <TouchableOpacity
+          {/* <TouchableOpacity
             style={styles.actionButton}
             onPress={() => {
               navigation.navigate("Response");
             }}
           >
             <View style={styles.row}>
-              {/* <MaterialCommunityIcons name="certificate-outline" size={24} /> */}
               <Text style={styles.actionText}>Daily Response</Text>
             </View>
-          </TouchableOpacity>
+          </TouchableOpacity> */}
 
           <TouchableOpacity style={styles.actionButton}>
             <View

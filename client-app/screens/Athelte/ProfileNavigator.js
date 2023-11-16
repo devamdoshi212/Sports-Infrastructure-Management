@@ -13,6 +13,7 @@ import ViewComplaint from "./ViewComplaint";
 import IDCard from "./IDCard";
 import AthleteResponse from "./AthelteResponse";
 import LeaderBoard from "./LeaderBoard";
+import SatisfiedResponse from "./SatisfiedResponse";
 const ProfileNavigator = ({ navigation }) => {
   return (
     <Stack.Navigator>
@@ -59,7 +60,8 @@ const ProfileNavigator = ({ navigation }) => {
         />
         <Stack.Screen
           name="IDCard"
-          component={IDCard}
+          // component={IDCard}
+          component={SatisfiedResponse}
           options={{ headerShown: false }}
         />
         <Stack.Screen

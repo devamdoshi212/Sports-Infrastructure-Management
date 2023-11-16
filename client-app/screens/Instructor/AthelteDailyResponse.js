@@ -23,13 +23,16 @@ const AthelteDailyResponse = () => {
   const [rating, setrating] = useState("");
   const ip = ipconfig.ip;
   const [data, setData] = useState([]);
-
+  const [refresh, setrefersh] = useState(false);
+  const refreshHandler = () => {
+    setrefersh(!refresh);
+  };
   useEffect(() => {
     var requestOptions = {
       method: "GET",
       redirect: "follow",
     };
-    console.log(Userdata._id);
+    // console.log(Userdata._id);
     fetch(
       `http://${ip}:9999/ratingForInstructor?instructorId=${Userdata._id}`,
       requestOptions
@@ -39,14 +42,15 @@ const AthelteDailyResponse = () => {
         setData(result.ratings);
       })
       .catch((error) => console.log("error", error));
-  }, []);
+  }, [refresh]);
 
   const ratingcountHandler = (id) => {
     setrating(id);
-    console.log(id);
   };
-  const ratingHandler = () => {
+  const ratingHandler = (id) => {
+    console.log(id);
     setRateModal(!rateModal);
+    setRateId(id);
   };
   const navigate = useNavigation();
   return (
@@ -63,6 +67,7 @@ const AthelteDailyResponse = () => {
                 rateID={rateId}
                 setrating={ratingcountHandler}
                 rateModal={rateModal}
+                refreshHandler={refreshHandler}
               ></RatingModal>
             )}
             <View style={styles.back}>
@@ -71,7 +76,7 @@ const AthelteDailyResponse = () => {
           </Pressable>
           <View style={styles.heading}>
             <Text style={{ fontWeight: "bold", fontSize: 25 }}>
-              Enrolled Sports List
+              Athelte Daily Response
             </Text>
           </View>
         </View>
@@ -80,7 +85,7 @@ const AthelteDailyResponse = () => {
             <View style={styles.card} key={index}>
               <Pressable
                 onPress={() => {
-                  setRateId(item._id);
+                  // setRateId(item._id);
                 }}
                 style={({ pressed }) => [
                   {
@@ -105,46 +110,21 @@ const AthelteDailyResponse = () => {
                 <View style={styles.row}>
                   <Text style={styles.label}>Parameter : </Text>
                 </View>
+
                 {item.parameters.map((item, index) => (
                   <View style={styles.row} key={index}>
                     <Text style={styles.label}>{item.parameter}</Text>
                     <Text style={styles.input}>{item.value}</Text>
                   </View>
                 ))}
-                {/* <View style={styles.row}>
-                    <Text style={styles.label}>Sport Category:</Text>
-                    <Text style={styles.input}>{item.sports.Category}</Text>
-                  </View>
-                  <View style={styles.row}>
-                    <Text style={styles.label}>Instructor:</Text>
-                    <Text style={styles.input}>
-                      {item.instructorId.userId.Name}
-                    </Text>
-                  </View>
-                  <View style={styles.row}>
-                    <Text style={styles.label}>Start Date :</Text>
-                    <Text style={styles.input}>
-                      {new Date(item.from).getDate() +
-                        "/" +
-                        (new Date(item.from).getMonth() + 1) +
-                        "/" +
-                        new Date(item.from).getFullYear()}
-                    </Text>
-                  </View>
-                  <View style={styles.row}>
-                    <Text style={styles.label}>Duration:</Text>
-                    <Text style={styles.input}>
-                      {parseInt((new Date(item.from) - new Date()) / 86400000)}
-                    </Text>
-                  </View>
-                  <View style={styles.row}>
-                    <Text style={styles.label}>Time Slot : </Text>
-                    <Text style={styles.input}>{item.timeSlot.from} </Text>
-                    <Text style={styles.input}>to</Text>
-                    <Text style={styles.input}>{item.timeSlot.to}</Text>
-                  </View> */}
 
-                <Pressable onPress={ratingHandler}>
+                <View style={styles.row}>
+                  <Text style={styles.label}>Date : </Text>
+                  <Text style={styles.input}>
+                    {item.createdAt.split("T")[0]}
+                  </Text>
+                </View>
+                <Pressable onPress={ratingHandler.bind(this, item._id)}>
                   <View style={{ alignSelf: "flex-end", padding: 10 }}>
                     <Text style={{ color: "#0054a8" }}>Rate us</Text>
                   </View>
