@@ -83,7 +83,7 @@ const Home = () => {
           },
           {
             key: "Present Athlete in Complex",
-            value: supervisor.presentCount[0].count,
+            value: supervisor.presentCount[0].count || supervisor.presentCount,
           },
           {
             key: "Present Athlete in Complex in Particular Sports",
