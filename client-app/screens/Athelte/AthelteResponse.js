@@ -33,20 +33,35 @@ const AthleteResponse = () => {
   const [value, onChangeText] = React.useState("");
   const [userResponse, setUserResponse] = useState();
   const [parameters, setparameters] = useState([]);
-  ["goasl", "defend"];
-
+  // ["goasl", "defend"];
   // [{paramter:global,value:xsdfssfsd},{paramter:defend,value:bsdbkfds}]
   // ["ads","sdas"]
 
   const [inputFields, setInputFields] = useState([]);
-  const handleInputChange = (index, text) => {
+
+  const handleInputChange = (parameter, text) => {
     const newInputFields = [...inputFields];
-    newInputFields[index] = text;
+    const existingField = newInputFields.find(
+      (field) => field.parameter === parameter
+    );
+
+    if (existingField) {
+      existingField.value = parseInt(text);
+    } else {
+      newInputFields.push({ parameter, value: parseInt(text) });
+    }
     setInputFields(newInputFields);
   };
+  // console.log(inputFields);
+  const filteredFields = inputFields
+    .filter(
+      (field) => typeof field === "object" && field.parameter && field.value
+    )
+    .map(({ parameter, value }) => ({ parameter, value }));
 
   useEffect(() => {
-    console.log(inputFields);
+    // console.log(inputFields);
+
     var requestOptions = {
       method: "GET",
       redirect: "follow",
@@ -62,8 +77,9 @@ const AthleteResponse = () => {
         // console.log(result.data);
       })
       .catch((error) => console.log("error", error));
+
     if (parameters) console.log(parameters);
-  }, [parameters]);
+  }, [parameters, inputFields]);
 
   const submitHandler = () => {
     var myHeaders = new Headers();
@@ -74,6 +90,7 @@ const AthleteResponse = () => {
       athleteId: Athelte[0]._id,
       sportComplexId: Athelte[0].createdBy.SportComplexId,
       remarks: value,
+      parameters: filteredFields,
     });
 
     var requestOptions = {
@@ -151,14 +168,21 @@ const AthleteResponse = () => {
               placeholder="Type here"
             ></TextInput>
             <View>
-              {inputFields.map((inputField, index) => (
+              {parameters.map((parameter, index) => (
                 <View key={index}>
-                  <Text>{inputField}</Text>
+                  <Text>{parameter}</Text>
                   <TextInput
+                    keyboardType="numeric"
                     style={{ height: 40, borderColor: "gray", borderWidth: 1 }}
                     placeholder="Enter a value"
-                    value={inputField.value}
-                    onChangeText={(text) => handleInputChange(index, text)}
+                    value={
+                      (
+                        inputFields.find(
+                          (field) => field.parameter === parameter
+                        ) || {}
+                      ).value
+                    }
+                    onChangeText={(text) => handleInputChange(parameter, text)}
                   />
                 </View>
               ))}
