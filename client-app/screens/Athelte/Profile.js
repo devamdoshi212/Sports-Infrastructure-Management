@@ -151,6 +151,18 @@ function Profile({ navigation }) {
                   <Text style={styles.actionText}>Complaint History</Text>
                 </View>
               </TouchableOpacity>
+
+              <TouchableOpacity
+                style={styles.actionButton}
+                onPress={() => {
+                  navigation.navigate("ExitForm");
+                }}
+              >
+                <View style={styles.row}>
+                  {/* <Ionicons name="bookmarks-outline" size={24} /> */}
+                  <Text style={styles.actionText}>Athelete Responnse</Text>
+                </View>
+              </TouchableOpacity>
             </>
           )}
           <TouchableOpacity style={styles.logout}>

@@ -6,8 +6,12 @@ module.exports.AddSport = async function (req, res) {
   //console.log(BaseUrl);
   req.body.baseUrl = BaseUrl;
 
-  let Sport = new SportModel(req.body);
-  console.log(Sport);
+  let Sport = new SportModel({
+    SportName: req.body.SportName,
+    Category: req.body.Category,
+    baseUrl: req.body.baseUrl,
+    parameters: req.body.parameters.split(","),
+  });
   let data = await Sport.save();
 
   res.json({ data: data, msg: "Sport Added", rcode: 200 });
