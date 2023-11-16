@@ -3,7 +3,10 @@ const mongoose = require("mongoose");
 const athleteSchema = new mongoose.Schema(
   {
     userId: { type: mongoose.SchemaTypes.ObjectId, ref: "users" },
-    SportComplexId: { type: mongoose.SchemaTypes.ObjectId, ref: "sportscomplexes" },
+    SportComplexId: {
+      type: mongoose.SchemaTypes.ObjectId,
+      ref: "sportscomplexes",
+    },
     createdBy: { type: mongoose.SchemaTypes.ObjectId, ref: "users" },
     bloodGroup: String,
     disability: Number,
@@ -15,11 +18,15 @@ const athleteSchema = new mongoose.Schema(
     baseUrl: {
       type: String,
     },
-    Rating:{
-      type:Number,
-      default:0
-
-    },
+    // Rating: [
+    //   {
+    //     sportId: { type: mongoose.SchemaTypes.ObjectId, ref: "sports" },
+    //     rating: {
+    //       type: Number,
+    //       default: 0,
+    //     },
+    //   },
+    // ],
     payments: [{ type: mongoose.SchemaTypes.ObjectId, ref: "payments" }],
   },
   { timestamps: true }

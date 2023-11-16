@@ -286,17 +286,21 @@ app.get("/ratingForAll", async (req, res) => {
     .sort({ rating: -1 });
   res.json({ rcode: 200, ratings });
 });
-app.post("/ratingBySupervisor", async (req, res) => {
+app.post("/ratingByInstructor", async (req, res) => {
   let { ratingId, rating } = req.body;
   let ratings = await athleteRatingModel.findOne({ _id: ratingId });
   ratings.rating = rating;
   await ratings.save();
   res.json({ rcode: 200 });
 });
+app.get("/averageUserRating", async (req, res) => {
+  let rating = await averageRating(req.query.userId, req.query.sportId);
+  res.json({ rating, rcode: 200 });
+});
 async function averageRating(userId, sportId) {
   let ratings = await athleteRatingModel.find({
     athleteId: userId,
-    sport: sportId,
+    sport: sportId == null ? { $exists: true } : sportId,
     isEvaluated: 1,
   });
   let total = ratings.length;
