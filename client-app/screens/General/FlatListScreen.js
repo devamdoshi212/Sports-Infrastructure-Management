@@ -69,7 +69,7 @@ function renderCategoryItem(itemData, ip, navigate) {
         <View style={styles.card}>
           <Image
             style={{
-              width: 300,
+              width: "100%",
               height: 200,
               borderRadius: 5,
             }}
@@ -81,7 +81,7 @@ function renderCategoryItem(itemData, ip, navigate) {
             <Text style={styles.cardHeaderText}>{itemData.item.name}</Text>
             <View style={styles.cardHeaderTextDescriptionView}>
               <Text style={styles.cardHeaderTextDescription}>
-                {itemData.item.taluka}
+                {itemData.item.taluka},{itemData.item.district.District}
               </Text>
               <Text style={styles.cardHeaderTextCount}>48 Atheltes</Text>
             </View>
@@ -177,7 +177,7 @@ function FlatListScreen({
       data={complex}
       keyExtractor={(item) => item._id}
       renderItem={(itemData) => renderCategoryItem(itemData, ip, navigate)}
-      numColumns={optionField === "getSports" ? 2 : 1}
+      numColumns={1}
       extraData={{ ip }}
       // extraData={searchfield}
       refreshControl={
