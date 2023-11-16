@@ -14,11 +14,13 @@ import { Ionicons } from "@expo/vector-icons";
 import { useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import ipconfig from "../../ipconfig";
+import SatisfiedResponse from "./SatisfiedResponse";
 function ViewComplaint({ route, navigation }) {
   const navigate = useNavigation();
   const data = route.params.data;
+  const { refreshhandler } = route.params;
   const ip = ipconfig.ip;
-  console.log(data.remarks);
+  // console.log(data.remarks);
 
   const dateBodyTemplate = (rowData) => {
     const date = new Date(rowData);
@@ -119,13 +121,16 @@ function ViewComplaint({ route, navigation }) {
             {/* <View style={styles.complaintTrackTextCard}>
               <Text style={styles.column1}>DD/MM</Text>
               <Text style={styles.column2}>Complaint Forwarded to Manager</Text>
-            </View>
-            <View style={styles.complaintTrackTextCard}>
+              </View>
+              <View style={styles.complaintTrackTextCard}>
               <Text style={styles.column1}>DD/MM</Text>
               <Text style={styles.column2}>Complaint Solved By Manager</Text>
             </View> */}
           </ScrollView>
         </View>
+        {data.status == 1 && data.satisfied == 0 && (
+          <SatisfiedResponse cid={data._id} refreshhandler={refreshhandler} />
+        )}
         {/* <View
                     style={styles.complaintTrack}>
                     <Text style={{ fontWeight: "bold", paddingBottom: 7, paddingTop: "3%", paddingBottom: "3%" }}>

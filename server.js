@@ -289,6 +289,7 @@ app.get("/ratingForAll", async (req, res) => {
 app.post("/ratingByInstructor", async (req, res) => {
   let { ratingId, rating } = req.body;
   let ratings = await athleteRatingModel.findOne({ _id: ratingId });
+  ratings.isEvaluated = 1;
   ratings.rating = rating;
   await ratings.save();
   res.json({ rcode: 200 });

@@ -94,6 +94,7 @@ module.exports.getSession = async function (req, res) {
     let date = new Date(req.query.date);
     date.setHours(0, 0, 0, 0);
     let night12 = new Date(date.getTime() + 86400000);
+    console.log(date + "  " + night12);
     const data = await sessions
       .find({
         sportscomplex: sportscomplex,

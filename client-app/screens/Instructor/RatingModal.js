@@ -13,12 +13,13 @@ const RatingModal = (props) => {
   const ip = ipconfig.ip;
   const [modalVisible, setModalVisible] = useState(props.rateModal);
   const [rating, setRating] = useState(1);
+  console.log(props.rateID);
   const ratinghandler = () => {
     var myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/json");
 
     var raw = JSON.stringify({
-      ratingId: props.rateId,
+      ratingId: props.rateID,
       rating: rating,
     });
 
@@ -29,10 +30,12 @@ const RatingModal = (props) => {
       redirect: "follow",
     };
 
-    fetch(`http://${ip}:9999/ratingBySupervisor`, requestOptions)
+    fetch(`http://${ip}:9999/ratingByInstructor`, requestOptions)
       .then((response) => response.text())
       .then((result) => {
-        alert("DONE");
+        alert("Rating Added Successfully");
+        props.refreshHandler();
+        setModalVisible(false);
       })
       .catch((error) => console.log("error", error));
   };
@@ -72,7 +75,7 @@ const RatingModal = (props) => {
                 alignSelf: "center",
               }}
             >
-              <Button title="rating" />
+              <Button title="rating" onPress={ratinghandler} />
             </View>
           </TouchableOpacity>
         </View>
