@@ -20,6 +20,7 @@ import { useNavigation } from "@react-navigation/native";
 const AthleteResponse = () => {
   const navigation = useNavigation();
   const ip = ipconfig.ip;
+  const [payments, setPayment] = useState([]);
   const Athelte = useSelector((state) => state.athelte.Athelte);
   const sportList = [
     "Cricket",
@@ -31,6 +32,39 @@ const AthleteResponse = () => {
   ];
   const [value, onChangeText] = React.useState("");
   const [userResponse, setUserResponse] = useState();
+  const [parameters, setparameters] = useState([]);
+  ["goasl", "defend"];
+
+  // [{paramter:global,value:xsdfssfsd},{paramter:defend,value:bsdbkfds}]
+  // ["ads","sdas"]
+
+  const [inputFields, setInputFields] = useState([]);
+  const handleInputChange = (index, text) => {
+    const newInputFields = [...inputFields];
+    newInputFields[index] = text;
+    setInputFields(newInputFields);
+  };
+
+  useEffect(() => {
+    console.log(inputFields);
+    var requestOptions = {
+      method: "GET",
+      redirect: "follow",
+    };
+
+    fetch(
+      `http://${ip}:9999/getPaymentDetailswithsportwithinstructor?athleteId=${Athelte[0]._id}`,
+      requestOptions
+    )
+      .then((response) => response.json())
+      .then((result) => {
+        setPayment(result.data);
+        // console.log(result.data);
+      })
+      .catch((error) => console.log("error", error));
+    if (parameters) console.log(parameters);
+  }, [parameters]);
+
   const submitHandler = () => {
     var myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/json");
@@ -78,18 +112,24 @@ const AthleteResponse = () => {
         </View>
         <Picker
           selectedValue={userResponse}
-          onValueChange={(value) => setUserResponse(value)}
+          onValueChange={(data, index) => {
+            setUserResponse(data);
+            setInputFields(payments[index - 1].sports.parameters);
+            setparameters(payments[index - 1].sports.parameters);
+          }}
           mode="dropdown" // Android only
           style={styles.picker}
         >
           <Picker.Item label="Please select your Sport" value="" />
-          {/* {sportList.map((item, index) => {
-            return <Picker.Item label={item} value={index} key={index} />;
-          })} */}
-          <Picker.Item label="Cricket" value="6540e2b1af277f6329395500" />
-          <Picker.Item label="Basketball" value="6540e344af277f6329395503" />
-          <Picker.Item label="Football" value="6540e302959854c7bc0be7fb" />
-          <Picker.Item label="Volley Ball" value="6540e378959854c7bc0be807" />
+          {payments.map((item, index) => {
+            return (
+              <Picker.Item
+                label={item.sports.SportName}
+                value={item.sports._id}
+                key={index}
+              />
+            );
+          })}
         </Picker>
         <View
           style={{
@@ -110,6 +150,19 @@ const AthleteResponse = () => {
               editable
               placeholder="Type here"
             ></TextInput>
+            <View>
+              {inputFields.map((inputField, index) => (
+                <View key={index}>
+                  <Text>{inputField}</Text>
+                  <TextInput
+                    style={{ height: 40, borderColor: "gray", borderWidth: 1 }}
+                    placeholder="Enter a value"
+                    value={inputField.value}
+                    onChangeText={(text) => handleInputChange(index, text)}
+                  />
+                </View>
+              ))}
+            </View>
           </ScrollView>
         </View>
         <TouchableOpacity
