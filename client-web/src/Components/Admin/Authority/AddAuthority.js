@@ -73,7 +73,7 @@ const AddAuthority = () => {
     });
   return (
     <>
-      <div className="flex bg-gray-200 mx-5">
+      <div className="flex bg-gray-200 mx-5 ">
         <Button
           className="items-end cta-btn font-semibold py-4 mt-5 rounded-br-lg rounded-bl-lg rounded-tr-lg shadow-lg hover:shadow-xl "
           onClick={() => {
