@@ -5,6 +5,7 @@ import Profile from "./Profile";
 import ProfileDetails from "./ProfileDetails";
 import AthleteDetails from "./AthelteDetails";
 import AthelteProfile from "./AthelteProfile";
+import AthelteDailyResponse from "./AthelteDailyResponse";
 const Stack = createStackNavigator();
 const ProfileNavigator = ({ navigation }) => {
   return (
@@ -28,6 +29,11 @@ const ProfileNavigator = ({ navigation }) => {
         <Stack.Screen
           name="AthleteProfile"
           component={AthelteProfile}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="AthelteDailyResponse"
+          component={AthelteDailyResponse}
           options={{ headerShown: false }}
         />
       </Stack.Group>
