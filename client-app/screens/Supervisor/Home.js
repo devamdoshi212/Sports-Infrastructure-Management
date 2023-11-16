@@ -33,7 +33,7 @@ const Home = () => {
     )
       .then((response) => response.json())
       .then((result) => {
-        console.log(result);
+        // console.log(result);
         setSupervisor(result);
       })
       .catch((error) => console.log("error", error))
@@ -42,11 +42,19 @@ const Home = () => {
         setRefreshing(false);
       });
   };
+  if (loading) {
+    return (
+      <View style={styles.centeredContainer}>
+        <ActivityIndicator size="large" color="orange" />
+      </View>
+    );
+  }
 
   const handleRefresh = () => {
     setRefreshing(true);
     fetchData();
   };
+
   //   data={[
   //     "Number of Atheltes",
   //     "Number of Facilities of Instructor",
@@ -55,13 +63,7 @@ const Home = () => {
   //     "Number of Instructor",
   //     "Number of Present Athelte ", //(Perticular sport ma aatla Athelte)
   //   ]}
-  if (loading) {
-    return (
-      <View style={styles.centeredContainer}>
-        <ActivityIndicator size="large" color="orange" />
-      </View>
-    );
-  }
+
   return (
     <>
       <FlatList
@@ -81,7 +83,7 @@ const Home = () => {
           },
           {
             key: "Present Athlete in Complex",
-            value: supervisor.presentCount,
+            value: supervisor.presentCount[0].count,
           },
           {
             key: "Present Athlete in Complex in Particular Sports",
