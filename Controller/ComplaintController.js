@@ -79,15 +79,6 @@ module.exports.updateComplaint = async function (req, res) {
   let remark = req.body.remark;
   let userId = req.body.userId;
   let currentLevel = Complaint.level;
-  // if (req.body.Sremarks !== undefined) {
-  //   Complaint.Sremarks = req.body.Sremarks;
-  // }
-  // if (req.body.Mremarks !== undefined) {
-  //   Complaint.Mremarks = req.body.Mremarks;
-  // }
-  // if (req.body.Aremarks !== undefined) {
-  //   Complaint.Aremarks = req.body.Aremarks;
-  // }
   if (req.body.status !== undefined) {
     Complaint.status = req.body.status;
   }
@@ -106,6 +97,25 @@ module.exports.updateComplaint = async function (req, res) {
     res.json({
       data: response,
       msg: "Complaint updated successfully",
+      rcode: 200,
+    });
+  } catch (error) {
+    console.error(error);
+    res.json({ data: error.msg, msg: "smw", rcode: -9 });
+  }
+};
+
+module.exports.updateComplaintAthleteResponse = async function (req, res) {
+  const id = req.params.id;
+  let Complaint = await ComplaintModel.findOne({ _id: id });
+  let s = req.body.satisfied;
+
+  try {
+    Complaint.satisfied = s;
+    let response = await Complaint.save();
+    res.json({
+      data: response,
+      msg: "Athelte Response of Complaint added successfully",
       rcode: 200,
     });
   } catch (error) {

@@ -133,7 +133,7 @@ module.exports.SearchComplex = async function (req, res) {
     const query = req.query.q;
     var data = [];
     if (!query) {
-      let data1 = await SportsComplex.find();
+      let data1 = await SportsComplex.find().populate("district");
 
       if (req.query.distance) {
         const { distance, lat, lon } = req.query;
