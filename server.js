@@ -136,6 +136,7 @@ app.get(
 );
 app.get("/getInstructorswithall", InstructorController.getInstructorwithAll);
 app.patch("/updateInstructors/:id", InstructorController.updateInstructor);
+app.get("/CountForInstructer",InstructorController.CountForInstructer)
 
 //payment routes
 app.post("/paymentdetail", PaymentController.addPayment);
@@ -210,12 +211,13 @@ app.get(
   SupervisorController.getInstructorForPayment
 );
 app.get("/paymentHistoryAthlete", PaymentController.getAthletePayments);
-app.get(
-  "/atheleteCountbyInstructer",
-  InstructorController.atheleteCountbyInstructer
-);
 
-app.get("/complaintCount", InstructorController.complaintCount);
+// app.get(
+//   "/atheleteCountbyInstructer",
+//   InstructorController.atheleteCountbyInstructer
+// );
+
+// app.get("/complaintCount", InstructorController.complaintCount);
 
 // app.get(
 //   "/supervisorDashboard",

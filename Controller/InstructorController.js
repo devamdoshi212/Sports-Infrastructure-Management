@@ -99,7 +99,7 @@ module.exports.updateInstructor = async function (req, res) {
   }
 };
 
-module.exports.atheleteCountbyInstructer = async function (req, res) {
+module.exports.CountForInstructer = async function (req, res) {
   try {
     const data = await paymentModel.aggregate([
       {
@@ -137,8 +137,11 @@ module.exports.atheleteCountbyInstructer = async function (req, res) {
       },
     ]);
 
+    const complaincount =  await complaintModel.find({ level: 1 });
+
     res.json({
       data: data,
+      ComplainCount:complaincount.length,
       rcode: 200,
     });
   } catch (err) {
@@ -146,15 +149,15 @@ module.exports.atheleteCountbyInstructer = async function (req, res) {
   }
 };
 
-module.exports.complaintCount = async function (req, res) {
-  try {
-    let data = await complaintModel.find({ level: 1 });
-    res.json({
-      result: data.length,
-      data: data,
-      rcode: 200,
-    });
-  } catch (err) {
-    console.log(err);
-  }
-};
+// module.exports.complaintCount = async function (req, res) {
+//   try {
+//     let data = await complaintModel.find({ level: 1 });
+//     res.json({
+//       result: data.length,
+//       data: data,
+//       rcode: 200,
+//     });
+//   } catch (err) {
+//     console.log(err);
+//   }
+// };
