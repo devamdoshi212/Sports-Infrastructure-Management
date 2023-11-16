@@ -5,7 +5,7 @@ import SportComplexDataTable from "./SportsComplexDataTable";
 
 const AllAuthoritySportsComplex = () => {
   return (
-    <div className="px-4">
+    <div className="px-4 py-6">
       <SportComplexDataTable />
     </div>
   );
