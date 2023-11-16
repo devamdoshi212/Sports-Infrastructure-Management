@@ -1,4 +1,5 @@
 const UsersModel = require("../Model/UsersModel");
+const mongoose = require("mongoose");
 const InstructorModel = require("../Model/instructorModel");
 const paymentModel = require("../Model/PaymentModel");
 const complaintModel = require("../Model/ComplaintModel");
@@ -139,11 +140,85 @@ module.exports.CountForInstructer = async function (req, res) {
 
     const complaincount =  await complaintModel.find({ level: 1 });
 
-    res.json({
-      data: data,
-      ComplainCount:complaincount.length,
-      rcode: 200,
-    });
+
+    const result = await paymentModel.aggregate([
+     {
+      $match: {
+        
+        sportsComplexId:new mongoose.Types.ObjectId(req.query.sportsComplexId), 
+      },
+     }, 
+      {
+        $lookup: {
+          from: "instructors",
+          localField: "instructorId",
+          foreignField: "_id",
+          as: "instructorInfo",
+        },
+      },
+      {
+        $lookup: {
+          from: "users",
+          localField: "instructorInfo.userId",
+          foreignField: "_id",
+          as: "userInfo",
+        },
+      },
+      {
+        $unwind: "$userInfo",
+      },
+
+      {
+        $group: {
+          _id: {
+            sportsComplexId: '$sportsComplexId',
+            instructorId: '$userInfo.Name',
+            athleteId: '$athleteId', // Group by athleteId for unique counts
+          },
+          athleteCount: { $sum: 1 },
+        },
+      },
+
+      { 
+        $group: {
+          _id: {
+           sportsComplexId: '$_id.sportsComplexId',
+            instructorId: '$_id.instructorId',
+          },
+          
+          uniqueAthleteCount: { $sum: 1 }, // Count of athletes
+        },
+      },
+      {
+        $project: {
+          _id: 0, // Exclude the default _id field
+          //sportsComplexId: '$_id.sportsComplexId',
+          instructorName: "$_id.instructorId",
+          //instructorName: '$userInfo.Name',
+          uniqueAthleteCount: 1,
+        },
+      },
+    ])
+    
+    console.log(result);
+
+
+
+    const responseArray = [
+      { data: data },
+      { ComplainCount: complaincount.length },
+      { result: result },
+      { rcode: 200 }
+    ];
+    
+    res.json(responseArray);
+
+    // res.json({
+    //   data: data,
+    //   ComplainCount:complaincount.length,
+    //   result : result,
+    //   rcode: 200,
+    // });
   } catch (err) {
     console.log(err);
   }
@@ -161,3 +236,4 @@ module.exports.CountForInstructer = async function (req, res) {
 //     console.log(err);
 //   }
 // };
+
