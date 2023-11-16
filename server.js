@@ -178,6 +178,11 @@ app.post(
 app.post("/addComplaintApp", ComplaintController.addComplaintApp);
 app.get("/getAllComplaints", ComplaintController.getAllComplaints);
 app.patch("/updateComplaint/:id", ComplaintController.updateComplaint);
+//
+app.patch(
+  "/updateComplaintAthleteResponse/:id",
+  ComplaintController.updateComplaintAthleteResponse
+);
 app.get("/getAuthorityComplaint", getAuthorityComplaint);
 app.get("/getAllComplaintsAdmin", ComplaintController.getAllComplaintsAdmin);
 //Complaint Types
