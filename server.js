@@ -136,7 +136,7 @@ app.get(
 );
 app.get("/getInstructorswithall", InstructorController.getInstructorwithAll);
 app.patch("/updateInstructors/:id", InstructorController.updateInstructor);
-app.get("/CountForInstructer",InstructorController.CountForInstructer)
+app.get("/CountForInstructer", InstructorController.CountForInstructer);
 
 //payment routes
 app.post("/paymentdetail", PaymentController.addPayment);
@@ -225,12 +225,13 @@ app.get("/paymentHistoryAthlete", PaymentController.getAthletePayments);
 // );
 
 app.post("/remarkRatingByAthlete", async (req, res) => {
-  let { sportId, athleteId, sportComplexId, remarks } = req.body;
+  let { sportId, athleteId, sportComplexId, remarks, parameters } = req.body;
   let rating = new athleteRatingModel({
     athleteId,
     remarks,
     sport: sportId,
     sportComplex: sportComplexId,
+    parameters,
   });
   await rating.save();
 
