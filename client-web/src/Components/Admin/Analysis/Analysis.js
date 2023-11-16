@@ -37,7 +37,7 @@ const Analysis = () => {
 
   return (
     <div>
-      <div className="w-48 relative">
+      <div className="w-1/5 relative m-5">
         <select
           className="block appearance-none w-full bg-white border border-gray-300 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:border-blue-300 focus:ring focus:ring-blue-200"
           onChange={handleOptionChange} // Add an onChange event handler
@@ -61,8 +61,10 @@ const Analysis = () => {
           </svg>
         </div>
       </div>
+  
       <GeneralAnalysis selectedOption={selectedOption} />
-      <div className="w-48 relative">
+      <hr className="h-px bg-gray-700 "/>
+      <div className="w-1/5 relative m-5">
         <select
           className="block appearance-none w-full bg-white border border-gray-300 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:border-blue-300 focus:ring focus:ring-blue-200"
           onChange={handleDistrict} // Add an onChange event handler
@@ -85,6 +87,7 @@ const Analysis = () => {
         </div>
       </div>
       <DistrictWiseChart selectedata={selectedDistrict} />
+      <hr className="h-px bg-gray-700 "/>
       <SportsComplexWiseUser />
       {/* Pass selectedOption as a prop */}
     </div>

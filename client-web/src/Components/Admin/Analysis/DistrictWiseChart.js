@@ -116,7 +116,7 @@ const DistrictWiseChart = (props) => {
   }, [props.selectedata]);
 
   return (
-    <div className="chart">
+    <div className="chart m-8">
       <ReactApexChart
         options={chartData.options}
         series={chartData.series}

@@ -115,14 +115,16 @@ const GeneralAnalyis = (props) => {
   }, [props.selectedOption]);
 
   return (
-    <div className="chart">
+    <div className="chart m-8">
       <ReactApexChart
         options={chartData.options}
         series={chartData.series}
         type="bar"
         height={chartData.options.chart.height}
       />
+      
     </div>
+    
   );
 };
 
