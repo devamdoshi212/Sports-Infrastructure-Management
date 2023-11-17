@@ -138,16 +138,23 @@ module.exports.CountForInstructer = async function (req, res) {
       },
     ]);
 
-    const complaincount =  await complaintModel.find({ level: 1 });
-
+    const complaincount = await complaintModel.find({ level: 1 });
 
     const result = await paymentModel.aggregate([
-     {
-      $match: {
-        
-        sportsComplexId:new mongoose.Types.ObjectId(req.query.sportsComplexId), 
+      {
+        $match: {
+          $and: [
+            {
+              sportsComplexId: new mongoose.Types.ObjectId(
+                req.query.sportsComplexId
+              ),
+            },
+            {
+              instructorId: new mongoose.Types.ObjectId(req.query.instructorId),
+            },
+          ],
+        },
       },
-     }, 
       {
         $lookup: {
           from: "instructors",
@@ -171,21 +178,21 @@ module.exports.CountForInstructer = async function (req, res) {
       {
         $group: {
           _id: {
-            sportsComplexId: '$sportsComplexId',
-            instructorId: '$userInfo.Name',
-            athleteId: '$athleteId', // Group by athleteId for unique counts
+            sportsComplexId: "$sportsComplexId",
+            instructorId: "$userInfo.Name",
+            athleteId: "$athleteId", // Group by athleteId for unique counts
           },
           athleteCount: { $sum: 1 },
         },
       },
 
-      { 
+      {
         $group: {
           _id: {
-           sportsComplexId: '$_id.sportsComplexId',
-            instructorId: '$_id.instructorId',
+            sportsComplexId: "$_id.sportsComplexId",
+            instructorId: "$_id.instructorId",
           },
-          
+
           uniqueAthleteCount: { $sum: 1 }, // Count of athletes
         },
       },
@@ -198,19 +205,16 @@ module.exports.CountForInstructer = async function (req, res) {
           uniqueAthleteCount: 1,
         },
       },
-    ])
-    
+    ]);
+
     console.log(result);
-
-
-
     const responseArray = [
-      { data: data },
+      // { data: data },
       { ComplainCount: complaincount.length },
       { result: result },
-      { rcode: 200 }
+      { rcode: 200 },
     ];
-    
+
     res.json(responseArray);
 
     // res.json({
@@ -236,4 +240,3 @@ module.exports.CountForInstructer = async function (req, res) {
 //     console.log(err);
 //   }
 // };
-
