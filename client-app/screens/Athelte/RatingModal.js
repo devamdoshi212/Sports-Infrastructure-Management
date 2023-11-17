@@ -6,6 +6,8 @@ import {
   TouchableOpacity,
   Button,
   Alert,
+  Text,
+  TextInput,
 } from "react-native";
 import { Rating } from "react-native-ratings";
 import ipconfig from "../../ipconfig";
@@ -13,7 +15,7 @@ const RatingModal = (props) => {
   const ip = ipconfig.ip;
   const [modalVisible, setModalVisible] = useState(props.rateModal);
   const [rating, setRating] = useState(1);
-
+  const [remarks, setremarks] = useState("");
   const ratinghandler = () => {
     var requestOptions = {
       method: "GET",
@@ -21,13 +23,13 @@ const RatingModal = (props) => {
     };
 
     fetch(
-      `http://${ip}:9999/addRating?athleteId=${props.athelteid}&sportId=${props.sportid}&sportsComplexId=${props.sportcomplex}&rating=${rating}`,
+      `http://${ip}:9999/addRating?athleteId=${props.athelteid}&sportId=${props.sportid}&sportsComplexId=${props.sportcomplex}&rating=${rating}&remarks=${remarks}`,
       requestOptions
     )
       .then((response) => response.text())
       .then((result) => {
-          alert("Done");
-          setModalVisible(!modalVisible);
+        alert("Done");
+        setModalVisible(!modalVisible);
       })
       .catch((error) => console.log("error", error));
   };
@@ -55,6 +57,18 @@ const RatingModal = (props) => {
             startingValue={rating}
             minValue={1}
           />
+
+          <View style={styles.loginBox}>
+            <Text style={styles.title}>Remarks</Text>
+            <TextInput
+              style={styles.input}
+              placeholder="Remarks"
+              onChangeText={(e) => {
+                setremarks(e);
+              }}
+              value={remarks}
+            />
+          </View>
           <TouchableOpacity style={{ width: "50%", alignSelf: "center" }}>
             <View
               style={{
@@ -92,6 +106,25 @@ const styles = StyleSheet.create({
     marginVertical: 20,
     width: "80%",
     alignSelf: "center",
+  },
+  title: {
+    fontSize: 20,
+    textAlign: "center",
+    fontWeight: "bold",
+    marginBottom: 10,
+  },
+  input: {
+    shadowColor: "black",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.2,
+    shadowRadius: 4,
+    elevation: 5,
+    color: "black",
+    height: 50,
+    marginVertical: 10,
+    paddingHorizontal: 15,
+    borderRadius: 8,
+    backgroundColor: "white",
   },
 });
 

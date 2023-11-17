@@ -241,11 +241,17 @@ const ModalView = (props) => {
               <Text style={styles.input}>{props.data.to}</Text>
             </View>
 
-            <TouchableOpacity style={styles.actionButton}>
+            <TouchableOpacity
+              style={styles.loginButton}
+              onPress={handlePrintPDF}
+            >
+              <Text style={styles.buttonText}>Print</Text>
+            </TouchableOpacity>
+            {/* <TouchableOpacity style={styles.actionButton}>
               <View style={{ width: "50%", alignSelf: "center" }}>
                 <Button title="Print" onPress={handlePrintPDF} />
               </View>
-            </TouchableOpacity>
+            </TouchableOpacity> */}
           </View>
         </View>
       </View>
@@ -264,6 +270,22 @@ const styles = StyleSheet.create({
     marginLeft: "1%",
     marginLeft: 2,
   },
+  loginButton: {
+    height: 50,
+    backgroundColor: "#f2b69c",
+    justifyContent: "center",
+    alignItems: "center",
+    borderRadius: 8,
+    marginTop: 20,
+    width: 100,
+    alignSelf: "center",
+    fontWeight: "bold",
+  },
+
+  buttonText: {
+    color: "white",
+    fontSize: 18,
+  },
   photo: {
     height: "20%",
     justifyContent: "center",
@@ -273,7 +295,7 @@ const styles = StyleSheet.create({
     marginBottom: 60,
   },
   card: {
-    backgroundColor: "white",
+    backgroundColor: "#fbe8e0",
     padding: 20,
     borderRadius: 10,
     shadowColor: "black",
@@ -301,6 +323,7 @@ const styles = StyleSheet.create({
     width: "60%",
   },
   actions: {
+    backgroundColor: "black",
     marginTop: 5,
     width: "95%",
     alignSelf: "center",

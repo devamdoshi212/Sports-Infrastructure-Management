@@ -74,7 +74,8 @@ const PaymentHistory = ({ navigation }) => {
                 <Pressable
                   style={({ pressed }) => [
                     {
-                      backgroundColor: pressed ? "#f0f0f0" : "white",
+                      backgroundColor: pressed ? "#f8d7c9" : "#f2b69c",
+
                       padding: 20,
                       borderRadius: 10,
                     },
@@ -99,8 +100,8 @@ const PaymentHistory = ({ navigation }) => {
                     <Text style={styles.label}>To :</Text>
                     <Text style={styles.input}>{item.to}</Text>
                   </View>
-                  <View style={{alignSelf:"flex-end"}}>
-                    <Entypo style={{color:"#0054a8"}}name="eye" size={24} />
+                  <View style={{ alignSelf: "flex-end" }}>
+                    <Entypo style={{ color: "#0054a8" }} name="eye" size={24} />
                   </View>
                 </Pressable>
               </View>
@@ -114,22 +115,21 @@ const PaymentHistory = ({ navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "white",
     paddingVertical: 50,
-    backgroundColor: "#f0f0f0",
+    backgroundColor: "#fbe8e0",
   },
   header: {
     flexDirection: "row",
     marginBottom: 10,
     width: "100%",
     height: 50,
-    backgroundColor: "#f0f0f0",
+    backgroundColor: "#fbe8e0",
     alignItems: "center",
   },
   back: {
     marginHorizontal: 4,
-      alignSelf: "center",
-      marginLeft: "10%",
+    alignSelf: "center",
+    marginLeft: "10%",
   },
   heading: {
     justifyContent: "center",
