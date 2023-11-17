@@ -121,6 +121,7 @@ app.post(
   AthleteController.addAthlete
 );
 app.get("/getAthletes", AthleteController.getAthlete);
+app.get("/getAthletesWithRating", AthleteController.getAthletewithRating);
 app.get(
   "/getAthleteswithsupervisor",
   AthleteController.getAthletewithsupervisor

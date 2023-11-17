@@ -1,4 +1,5 @@
 const AthleteModel = require("../Model/athleteModel");
+const athleteRatingModel = require("../Model/athleteRatingModel");
 
 module.exports.addAthlete = async function (req, res) {
   //console.log(req.file);
@@ -15,14 +16,48 @@ module.exports.addAthlete = async function (req, res) {
 };
 
 module.exports.getAthlete = async function (req, res) {
-  AthleteModel.find(req.query)
-    .then((data) => {
-      res.json({ data: data, msg: "Athlete Retrived", rcode: 200 });
-    })
-    .catch((err) => {
-      res.json({ data: err.msg, msg: "smw", rcode: -9 });
-    });
+  const data = await AthleteModel.find(req.query).populate("userId");
+  res.json({ data: data, data1: myarray, msg: "Athlete Retrived", rcode: 200 });
 };
+module.exports.getAthletewithRating = async function (req, res) {
+  const aid = req.query.id;
+  const data = await AthleteModel.find().populate("userId");
+  let myarray = [];
+  for (let index = 0; index < data.length; index++) {
+    const element = data[index];
+    let rating = await averageRating(element._id, null);
+    myarray.push({
+      athleteid: element._id,
+      name: element.userId.Name,
+      iconUrl: element.baseUrl,
+      score: rating,
+    });
+  }
+  const currentuser = myarray.filter((ele) => ele.athleteid == aid);
+
+  myarray.sort((a, b) => b.score - a.score);
+
+  res.json({
+    data: data,
+    data1: myarray,
+    currentuserdata: currentuser,
+    msg: "Athlete Retrived",
+    rcode: 200,
+  });
+};
+async function averageRating(userId, sportId) {
+  let ratings = await athleteRatingModel.find({
+    athleteId: userId,
+    sport: sportId == null ? { $exists: true } : sportId,
+    isEvaluated: 1,
+  });
+  let total = ratings.length;
+  let total2 = 0;
+  ratings.forEach((ele) => {
+    total2 += ele.rating;
+  });
+  return total2 / total;
+}
 module.exports.getAthletewithsupervisor = async function (req, res) {
   AthleteModel.find(req.query)
     .populate("createdBy")
