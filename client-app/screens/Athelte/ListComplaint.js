@@ -16,95 +16,96 @@ import ipconfig from "../../ipconfig";
 import { useSelector } from "react-redux";
 
 const ListComplaint = () => {
-    const navigation = useNavigation();
-    const [selectedstatus, setselectedstatus] = useState("0");
-    const [Complaint, setcomplain] = useState([]);
-    const ip = ipconfig.ip;
-    const Userdata = useSelector((state) => state.user.User);
-    const sid = Userdata.SportComplexId;
-    const [refresh, setrefresh] = useState(false);
-    const refreshhandler = () => {
-        setrefresh(!refresh);
+  const navigation = useNavigation();
+  const [selectedstatus, setselectedstatus] = useState("0");
+  const [Complaint, setcomplain] = useState([]);
+  const ip = ipconfig.ip;
+  const Userdata = useSelector((state) => state.user.User);
+  // const sid = Userdata.SportComplexId;
+  const [refresh, setrefresh] = useState(false);
+  const refreshhandler = () => {
+    setrefresh(!refresh);
+  };
+  useEffect(() => {
+    var requestOptions = {
+      method: "GET",
+      redirect: "follow",
     };
-    useEffect(() => {
-        var requestOptions = {
-            method: "GET",
-            redirect: "follow",
-        };
-        fetch(
-            `http://${ip}:9999/getAllComplaints?userId=${Userdata._id}&status=${selectedstatus}`,
-            requestOptions
-        )
-            .then((response) => response.json())
-            .then((result) => {
-                setcomplain(result.data);
-            })
-            .catch((error) => console.log("error", error));
-    }, [selectedstatus, refresh]);
-    const navigate = useNavigation();
-    return (
-        <>
-            <View style={styles.container}>
-                <View style={styles.header}>
-                    <Pressable
-                        onPress={() => {
-                            navigate.goBack();
-                        }}
-                    >
-                        <View style={styles.back}>
-                            <Ionicons name="arrow-back" size={24} />
-                        </View>
-                    </Pressable>
-                    <View style={styles.heading}>
-                        <Text style={{ fontWeight: "bold", fontSize: 25 }}>
-                            Complaint List
-                        </Text>
-                    </View>
-                </View>
-                <TouchableOpacity
-                    onPress={() => {
-                        navigation.navigate("AthelteComplaint");
-                    }}
-                >
-                    <View style={styles.row}>
-                        <Text style={styles.actionText}>Raise Complaint</Text>
-                        <MaterialIcons name="navigate-next" size={24} />
-                    </View>
-                </TouchableOpacity>
-                <View style={styles.pickerContainer}>
-                    <Picker
-                        selectedValue={selectedstatus}
-                        onValueChange={(itemValue, itemIndex) => {
-                            setselectedstatus(itemValue);
-                            //   handleInput("bloodGroup", itemValue);
-                        }}
-                        style={styles.input}
-                        placeholder="Select Complaint Status"
-                    >
-                        {/* <Picker.Item label={"Select a Blood Group"} /> */}
-                        <Picker.Item label="Pending" value="0" />
-                        <Picker.Item label="Solved" value="1" />
-                    </Picker>
-                </View>
-                <ScrollView contentContainerStyle={styles.scrollContainer}>
-                    {Complaint.map((item, index) => (
-                        <View style={styles.card} key={index}>
-                            <Pressable
-                                onPress={() => {
-                                    navigate.navigate("ComplaintView", {
-                                        data: item,
-                                        refreshhandler: refreshhandler,
-                                    });
-                                }}
-                                style={({ pressed }) => [
-                                    {
-                                        backgroundColor: pressed ? "#f0f0f0" : "white",
-                                        padding: 20,
-                                        borderRadius: 10,
-                                    },
-                                ]}
-                            >
-                                {/* <View style={styles.card}> */}
+    fetch(
+      `http://${ip}:9999/getAllComplaints?userId=${Userdata._id}&status=${selectedstatus}`,
+      requestOptions
+    )
+      .then((response) => response.json())
+      .then((result) => {
+        setcomplain(result.data);
+      })
+      .catch((error) => console.log("error", error));
+  }, [selectedstatus, refresh]);
+  const navigate = useNavigation();
+  return (
+    <>
+      <View style={styles.container}>
+        <View style={styles.header}>
+          <Pressable
+            onPress={() => {
+              navigate.goBack();
+            }}
+          >
+            <View style={styles.back}>
+              <Ionicons name="arrow-back" size={24} />
+            </View>
+          </Pressable>
+          <View style={styles.heading}>
+            <Text style={{ fontWeight: "bold", fontSize: 25 }}>
+              Complaint List
+            </Text>
+          </View>
+        </View>
+
+        <TouchableOpacity
+          onPress={() => {
+            navigation.navigate("AthelteComplaint");
+          }}
+        >
+          <View style={styles.row1}>
+            <Text style={styles.actionText}>Raise Complaint</Text>
+            <MaterialIcons name="navigate-next" size={24} />
+          </View>
+        </TouchableOpacity>
+        <View style={styles.pickerContainer}>
+          <Picker
+            selectedValue={selectedstatus}
+            onValueChange={(itemValue, itemIndex) => {
+              setselectedstatus(itemValue);
+              //   handleInput("bloodGroup", itemValue);
+            }}
+            style={styles.input}
+            placeholder="Select Complaint Status"
+          >
+            {/* <Picker.Item label={"Select a Blood Group"} /> */}
+            <Picker.Item label="Pending" value="0" />
+            <Picker.Item label="Solved" value="1" />
+          </Picker>
+        </View>
+        <ScrollView contentContainerStyle={styles.scrollContainer}>
+          {Complaint.map((item, index) => (
+            <View style={styles.card} key={index}>
+              <Pressable
+                onPress={() => {
+                  navigate.navigate("ComplaintView", {
+                    data: item,
+                    refreshhandler: refreshhandler,
+                  });
+                }}
+                style={({ pressed }) => [
+                  {
+                    backgroundColor: pressed ? "#f0f0f0" : "white",
+                    padding: 20,
+                    borderRadius: 10,
+                  },
+                ]}
+              >
+                {/* <View style={styles.card}> */}
 
                                 <View style={styles.row}>
                                     <View style={styles.column1}>
