@@ -1,37 +1,46 @@
 import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
 import {
-  Pressable,
   View,
   Text,
   StyleSheet,
-  Platform,
   FlatList,
-  ImageBackground,
+  Image,
+  TouchableOpacity,
 } from "react-native";
 import ipconfig from "../../ipconfig";
 function renderCategoryItem(itemData, ip, navigation) {
   const itemDataWithoutSeparators = { ...itemData }; // Create a copy of itemData
   delete itemDataWithoutSeparators.separators;
   return (
-    <View style={styles.gridItem}>
-      <Pressable
-        android_ripple={{ color: "#ccc" }}
-        style={({ pressed }) => [
-          styles.button,
-          pressed ? styles.buttonPressed : null,
-        ]}
-        onPress={() => {
-          navigation.navigate("ComplexFullDetailsinAthelte", {
-            data: itemDataWithoutSeparators,
-          });
-        }}
-      >
-        <View style={[styles.innerContainer, { backgroundColor: "gray" }]}>
-          <Text style={styles.title}>{itemData.item.name}</Text>
+    <TouchableOpacity
+      onPress={() => {
+        navigation.navigate("ComplexFullDetailsinAthelte", {
+          data: itemDataWithoutSeparators,
+        });
+      }}
+    >
+      <View style={styles.card}>
+        <Image
+          style={{
+            width: 300,
+            height: 200,
+            borderRadius: 5,
+          }}
+          source={{
+            uri: `http://${ip}:9999${itemData.item.picture}`,
+          }}
+        />
+        <View style={styles.cardHeader}>
+          <Text style={styles.cardHeaderText}>{itemData.item.name}</Text>
+          <View style={styles.cardHeaderTextDescriptionView}>
+            <Text style={styles.cardHeaderTextDescription}>
+              {itemData.item.taluka}
+            </Text>
+            <Text style={styles.cardHeaderTextCount}>48 Atheltes</Text>
+          </View>
         </View>
-      </Pressable>
-    </View>
+      </View>
+    </TouchableOpacity>
   );
 }
 
@@ -73,38 +82,52 @@ function AthelteFlatListScreen({ route, navigation }) {
 export default AthelteFlatListScreen;
 
 const styles = StyleSheet.create({
-  gridItem: {
-    flex: 1,
-    margin: 16,
-    height: 150,
-    borderRadius: 8,
-    elevation: 4,
-    backgroundColor: "white",
-    shadowColor: "black",
-    shadowOpacity: 0.25,
-    shadowOffset: { width: 0, height: 2 },
-    shadowRadius: 8,
-    overflow: Platform.OS === "android" ? "hidden" : "visible",
-  },
-  button: {
-    flex: 1,
-  },
-  buttonPressed: {
-    opacity: 0.5,
-  },
-  innerContainer: {
-    flex: 1,
-    padding: 16,
-    borderRadius: 8,
-    justifyContent: "center",
+  card: {
+    flexDirection: "column",
+    marginLeft: "7%",
+    marginTop: "2%",
     alignItems: "center",
+    padding: 10,
+    width: "85%",
+    borderWidth: 1,
+    borderRadius: 10,
+    borderBottomWidth: 3,
+    backgroundColor: "white",
+    height: 235,
+
+    shadowColor: "black",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.2,
+    shadowRadius: 4,
+    elevation: 5,
+    marginHorizontal: 15,
+    marginVertical: 5,
+    marginBottom: "2%",
+    paddingBottom: "5%",
+    backgroundColor: "#f3f0f0",
   },
-  title: {
-    fontWeight: "bold",
+  cardHeader: {
+    flexDirection: "column",
+    backgroundColor: "#f3f0f0",
+    width: "100%",
+    height: 40,
+    marginTop: -40,
+  },
+  cardHeaderText: {
+    marginTop: "1%",
     fontSize: 16,
+    fontWeight: "bold",
   },
-  imageBackground: {
-    flex: 1, // This will make the ImageBackground take up the full parent view
+  cardHeaderTextDescriptionView: {
+    flexDirection: "row",
+  },
+  cardHeaderTextDescription: {
+    flex: 1,
+    fontSize: 13,
+    fontWeight: "bold",
+  },
+  cardHeaderTextCount: {
+    flex: 1,
   },
   centeredContainer: {
     flex: 1,

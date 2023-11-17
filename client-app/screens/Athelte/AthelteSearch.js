@@ -1,14 +1,8 @@
-import { FontAwesome } from "@expo/vector-icons";
-import { Picker } from "@react-native-picker/picker";
-import FlatListAthelte from "./FlatListAthelte";
-
 import {
   View,
   Text,
-  Image,
   TextInput,
   StyleSheet,
-  Button,
   TouchableOpacity,
   Dimensions,
   Platform,
@@ -17,15 +11,9 @@ import {
 import React, { useRef, useState, useEffect } from "react";
 import Carousel, { ParallaxImage } from "react-native-snap-carousel";
 // import LinearGradient from "react-native-linear-gradient";
-import {
-  Ionicons,
-  Feather,
-  Entypo,
-  MaterialIcons,
-  Icon,
-} from "@expo/vector-icons";
-import { ScrollView } from "react-native-gesture-handler";
-// import Modal from './FilterModal';
+import { Feather } from "@expo/vector-icons";
+import FilterModal from "../General/FilterModal";
+import FlatListAthelte from "./FlatListAthelte";
 
 const ENTRIES1 = [
   {
@@ -57,11 +45,14 @@ const ENTRIES1 = [
 
 const { width: screenWidth } = Dimensions.get("window");
 
-const AthelteSearch = ({ navigation }) => {
+const AthelteSearch = ({ navigation, route }) => {
   const [selectedOption, setSelectedOption] = useState("getSports");
   const [searchQuery, setSearchQuery] = useState("");
   const [entries, setEntries] = useState([]);
   const [filterModal, setFilterModal] = useState(false);
+  const [lat, setlat] = useState("");
+  const [long, setlong] = useState("");
+  const [distance, setDistance] = useState("");
   const carouselRef = useRef(null);
 
   const goForward = () => {
@@ -70,6 +61,18 @@ const AthelteSearch = ({ navigation }) => {
   useEffect(() => {
     setEntries(ENTRIES1);
   }, []);
+  useEffect(() => {
+    const { lat, long, distance, district } = route.params || {};
+    if (lat) {
+      // console.log(lat, long);
+      setlat(lat);
+      setlong(long);
+      setDistance(distance);
+    }
+    if (district) {
+      setSearchQuery(district);
+    }
+  }, [route.params]);
   const renderItem = ({ item, index }, parallaxProps) => {
     return (
       <View style={styles.item}>
@@ -90,6 +93,9 @@ const AthelteSearch = ({ navigation }) => {
   return (
     <View style={styles.container}>
       {/* {filterModal && <Modal show={filterModal} />} */}
+      {filterModal && (
+        <FilterModal show={filterModal} selectedOption={selectedOption} />
+      )}
       <TouchableOpacity onPress={goForward}>
         {/* <Text>go to next slide</Text> */}
       </TouchableOpacity>
@@ -101,29 +107,31 @@ const AthelteSearch = ({ navigation }) => {
         data={entries}
         renderItem={renderItem}
         hasParallaxImages={true}
+        autoplay={true}
+        autoplayInterval={5000}
+        loop={true}
+        loopClonesPerSide={2}
       />
       <View style={styles.background}>
         <View style={styles.primaryView}></View>
         <View style={styles.ovalSection}>
           <View style={{ flexDirection: "row" }}>
-            <Pressable
+            <TouchableOpacity
               style={styles.button1}
               onPress={() => {
                 setSelectedOption("getSports");
-                // alert("Facility");
               }}
             >
               <Text style={styles.buttonText1}>Facility</Text>
-            </Pressable>
-            <Pressable
+            </TouchableOpacity>
+            <TouchableOpacity
               style={styles.button}
               onPress={() => {
                 setSelectedOption("searchSportsComplex");
-                // alert("Sports Complex");
               }}
             >
               <Text style={styles.buttonText}>Sports Complex</Text>
-            </Pressable>
+            </TouchableOpacity>
           </View>
           <View style={styles.searchContainer}>
             <TextInput
@@ -151,6 +159,9 @@ const AthelteSearch = ({ navigation }) => {
             optionField={selectedOption}
             searchfield={searchQuery}
             navigate={navigation}
+            lat={lat}
+            distance={distance}
+            long={long}
           />
         </View>
       </View>
