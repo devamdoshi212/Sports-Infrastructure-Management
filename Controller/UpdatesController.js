@@ -18,7 +18,7 @@ module.exports.addUpdates = async function (req, res) {
 };
 
 module.exports.getUpdates = function (req, res) {
-  UpdatesModel.find()
+  UpdatesModel.find(req.query)
     .then((data) => {
       res.json({ data: data, msg: "Update Retrived", rcode: 200 });
     })
