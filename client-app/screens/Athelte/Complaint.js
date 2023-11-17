@@ -193,9 +193,8 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     height: "100%",
-    backgroundColor: "white",
     paddingVertical: 50,
-    backgroundColor: "#f0f0f0",
+    backgroundColor: "#fbe8e0",
   },
   photo: {
     width: 100,
@@ -216,7 +215,7 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     width: "100%",
     height: 50,
-    backgroundColor: "#f0f0f0",
+    backgroundColor: "#fbe8e0",
   },
   back: {
     marginHorizontal: 4,
@@ -257,6 +256,7 @@ const styles = StyleSheet.create({
     width: "90%",
     marginTop: "3%",
     backgroundColor: "rgba(255, 255, 255, 0.7)",
+    backgroundColor: "#f2b69c",
   },
   label: {
     fontWeight: "bold",
