@@ -88,7 +88,7 @@ const styles = StyleSheet.create({
     marginTop: "2%",
     alignItems: "center",
     padding: 10,
-    width: "85%",
+    width: "90%",
     borderWidth: 1,
     borderRadius: 10,
     borderBottomWidth: 3,
@@ -109,9 +109,9 @@ const styles = StyleSheet.create({
   cardHeader: {
     flexDirection: "column",
     backgroundColor: "#f3f0f0",
-    width: "100%",
+    width: "105%",
     height: 40,
-    marginTop: -40,
+    marginTop: -30,
   },
   cardHeaderText: {
     marginTop: "1%",
