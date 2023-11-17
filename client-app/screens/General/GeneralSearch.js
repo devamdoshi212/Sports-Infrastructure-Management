@@ -26,54 +26,39 @@ import {
 } from "@expo/vector-icons";
 import { ScrollView } from "react-native-gesture-handler";
 import FilterModal from "./FilterModal";
-
-const ENTRIES1 = [
-  {
-    title: "Beautiful and dramatic Antelope Canyon",
-    subtitle: "Lorem ipsum dolor sit amet et nuncat mergitur",
-    illustration: "https://i.imgur.com/UYiroysl.jpg",
-  },
-  {
-    title: "Earlier this morning, NYC",
-    subtitle: "Lorem ipsum dolor sit amet",
-    illustration: "https://i.imgur.com/UPrs1EWl.jpg",
-  },
-  {
-    title: "White Pocket Sunset",
-    subtitle: "Lorem ipsum dolor sit amet et nuncat ",
-    illustration: "https://i.imgur.com/MABUbpDl.jpg",
-  },
-  {
-    title: "Acrocorinth, Greece",
-    subtitle: "Lorem ipsum dolor sit amet et nuncat mergitur",
-    illustration: "https://i.imgur.com/KZsmUi2l.jpg",
-  },
-  {
-    title: "The lone tree, majestic landscape of New Zealand",
-    subtitle: "Lorem ipsum dolor sit amet",
-    illustration: "https://i.imgur.com/2nCt3Sbl.jpg",
-  },
-];
+import ipconfig from "../../ipconfig";
 
 const { width: screenWidth } = Dimensions.get("window");
 
 const MyCarousel = ({ navigation, route }) => {
   const [selectedOption, setSelectedOption] = useState("getSports");
   const [searchQuery, setSearchQuery] = useState("");
-  const [entries, setEntries] = useState([]);
   const [filterModal, setFilterModal] = useState(false);
   const [lat, setlat] = useState("");
   const [long, setlong] = useState("");
   const [distance, setDistance] = useState("");
   const [category, setCategory] = useState("");
   const carouselRef = useRef(null);
+  const [image, setImages] = useState([]);
+  const ip = ipconfig.ip;
 
   const goForward = () => {
     carouselRef.current.snapToNext();
   };
   useEffect(() => {
-    setEntries(ENTRIES1);
+    var requestOptions = {
+      method: "GET",
+      redirect: "follow",
+    };
+
+    fetch(`http://${ip}:9999/getUpdates?level=0`, requestOptions)
+      .then((response) => response.json())
+      .then((result) => {
+        setImages(result.data);
+      })
+      .catch((error) => console.log("error", error));
   }, []);
+
   useEffect(() => {
     const { lat, long, distance, district, Category } = route.params || {};
     if (lat) {
@@ -89,11 +74,14 @@ const MyCarousel = ({ navigation, route }) => {
       setCategory(Category);
     }
   }, [route.params]);
+
   const renderItem = ({ item, index }, parallaxProps) => {
+    const updatedImage = item.image.replace("localhost", ip);
+    console.log(updatedImage);
     return (
       <View style={styles.item}>
         <ParallaxImage
-          source={{ uri: item.illustration }}
+          source={{ uri: updatedImage }}
           containerStyle={styles.imageContainer}
           style={styles.image}
           parallaxFactor={0.4}
@@ -120,7 +108,7 @@ const MyCarousel = ({ navigation, route }) => {
         sliderWidth={screenWidth}
         sliderHeight={screenWidth}
         itemWidth={screenWidth - 60}
-        data={entries}
+        data={image}
         renderItem={renderItem}
         hasParallaxImages={true}
         autoplay={true}
