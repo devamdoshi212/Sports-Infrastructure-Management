@@ -8,7 +8,10 @@ import {
   ScrollView,
   ActivityIndicator,
   TouchableOpacity,
+  Pressable,
 } from "react-native";
+import { Rating } from "react-native-ratings";
+
 import {
   Ionicons,
   AntDesign,
@@ -72,7 +75,7 @@ const GeneralComplexDetailsScreen = ({ navigation, route }) => {
   };
   const renderItem = ({ item, index }, parallaxProps) => {
     const updatedImage = item.replace("localhost", ip);
-    console.log(updatedImage);
+    // console.log(updatedImage);
     return (
       <View style={styles.item}>
         <ParallaxImage
@@ -88,7 +91,6 @@ const GeneralComplexDetailsScreen = ({ navigation, route }) => {
       </View>
     );
   };
-
   return (
     <View style={styles.container}>
       <View>
@@ -102,9 +104,13 @@ const GeneralComplexDetailsScreen = ({ navigation, route }) => {
           }}
         >
           <View style={styles.header}>
-            <View>
+            <Pressable
+              onPress={() => {
+                navigation.goBack();
+              }}
+            >
               <Ionicons name="arrow-back" size={24} />
-            </View>
+            </Pressable>
             <View style={{ marginLeft: screenWidth * 0.8 }}>
               <AntDesign
                 onPress={() => {
@@ -122,7 +128,7 @@ const GeneralComplexDetailsScreen = ({ navigation, route }) => {
 
           <View style={styles.cardHeaderTextDescriptionView}>
             <Text style={styles.cardHeaderTextDescription}>
-              {data.item.taluka}
+              {data.item.taluka},{data.item.district.District}
             </Text>
             <Text style={styles.cardHeaderTextCount}>
               Total Athelte : {details.athleteCount}
@@ -131,6 +137,25 @@ const GeneralComplexDetailsScreen = ({ navigation, route }) => {
         </View>
         <View style={styles.dummyCard}>
           <ScrollView>
+            <View style={styles.cardHeader}>
+              <Text style={styles.cardHeaderText}>About</Text>
+            </View>
+            <View style={styles.aboutDescription}>
+              <View style={styles.aboutDescriptionTopic}>
+                <Text style={styles.aboutDescriptionLable}>Area</Text>
+                <Text style={styles.aboutDescriptionText}>
+                  {data.item.area}
+                </Text>
+              </View>
+            </View>
+            <View style={styles.aboutDescription}>
+              <View style={styles.aboutDescriptionTopic}>
+                <Text style={styles.aboutDescriptionLable}>Since</Text>
+                <Text style={styles.aboutDescriptionText}>
+                  {data.item.operationalSince}
+                </Text>
+              </View>
+            </View>
             <View>
               <ScrollView>
                 <View>
@@ -146,13 +171,21 @@ const GeneralComplexDetailsScreen = ({ navigation, route }) => {
                           <View style={styles.cardSportColomn2}>
                             <Text style={styles.cardSportColomn2Text}>
                               {details.availableSports[index]}
+                              <Rating
+                                type="star"
+                                ratingCount={5}
+                                imageSize={20}
+                                showRating={false}
+                                startingValue={item.rating}
+                                minValue={1}
+                              />
                             </Text>
                             <View style={styles.cardSportColomn2TextDetail}>
                               <Text style={styles.cardSportColomn2TextInfo}>
                                 Fees : {item.fees}
                               </Text>
                               <Text style={styles.cardSportColomn2TextInfo}>
-                                Capacity : {item.fees} athletes
+                                Capacity : {item.capacity}
                               </Text>
                             </View>
                             <TouchableOpacity onPress={goForward}>
@@ -180,21 +213,6 @@ const GeneralComplexDetailsScreen = ({ navigation, route }) => {
                   </View>
                 </View>
               </ScrollView>
-            </View>
-            <View style={styles.cardHeader}>
-              <Text style={styles.cardHeaderText}>About</Text>
-            </View>
-            <View style={styles.aboutDescription}>
-              <View style={styles.aboutDescriptionTopic}>
-                <Text style={styles.aboutDescriptionLable}>Area</Text>
-                <Text style={styles.aboutDescriptionText}>50 Acres</Text>
-              </View>
-            </View>
-            <View style={styles.aboutDescription}>
-              <View style={styles.aboutDescriptionTopic}>
-                <Text style={styles.aboutDescriptionLable}>Since</Text>
-                <Text style={styles.aboutDescriptionText}>1996</Text>
-              </View>
             </View>
           </ScrollView>
         </View>
