@@ -171,14 +171,16 @@ const GeneralComplexDetailsScreen = ({ navigation, route }) => {
                           <View style={styles.cardSportColomn2}>
                             <Text style={styles.cardSportColomn2Text}>
                               {details.availableSports[index]}
-                              <Rating
-                                type="star"
-                                ratingCount={5}
-                                imageSize={20}
-                                showRating={false}
-                                startingValue={item.rating}
-                                minValue={1}
-                              />
+                              {item.rating && (
+                                <Rating
+                                  type="star"
+                                  ratingCount={5}
+                                  imageSize={20}
+                                  showRating={false}
+                                  startingValue={item.rating}
+                                  minValue={1}
+                                />
+                              )}
                             </Text>
                             <View style={styles.cardSportColomn2TextDetail}>
                               <Text style={styles.cardSportColomn2TextInfo}>
