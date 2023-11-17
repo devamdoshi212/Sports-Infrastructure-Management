@@ -124,17 +124,17 @@ const styles = StyleSheet.create({
     width: "100%",
     height: 50,
     backgroundColor: "#f0f0f0",
-    justifyContent: "center",
     alignItems: "center",
   },
   back: {
     marginHorizontal: 4,
-    alignSelf: "center",
+      alignSelf: "center",
+      marginLeft: "10%",
   },
   heading: {
     justifyContent: "center",
     alignItems: "center",
-    width: "90%",
+    width: "70%",
   },
   scrollContainer: {
     flexGrow: 1,
