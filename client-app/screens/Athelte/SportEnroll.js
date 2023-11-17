@@ -23,6 +23,38 @@ const SportEnroll = () => {
   const [rating, setrating] = useState("");
   const [sportid, setsportid] = useState("");
   const ip = ipconfig.ip;
+
+  const ConvertMonthsToDays = ({ months, startdate }) => {
+    const convertMonthsToDays = (months, startdate) => {
+      // Get the current date
+
+      const today = new Date();
+      // Calculate future date based on months
+      const futureDate = new Date(startdate);
+      futureDate.setMonth(startdate.getMonth() + months);
+
+      let timeDifference;
+      // Calculate the difference in milliseconds
+      if (startdate.getMilliseconds() - today.getMilliseconds() > 0) {
+        timeDifference = futureDate - startdate;
+      } else {
+        timeDifference = futureDate - today;
+      }
+
+      // Convert milliseconds to days
+      const days = Math.ceil(timeDifference / (1000 * 60 * 60 * 24));
+
+      return days;
+    };
+
+    const remainingDays = convertMonthsToDays(months, startdate);
+
+    return (
+      <View>
+        <Text>{`${remainingDays} days remaining.`}</Text>
+      </View>
+    );
+  };
   useEffect(() => {
     var requestOptions = {
       method: "GET",
@@ -118,7 +150,11 @@ const SportEnroll = () => {
                 <View style={styles.row}>
                   <Text style={styles.label}>Duration:</Text>
                   <Text style={styles.input}>
-                    {parseInt((new Date(item.from) - new Date()) / 86400000)}
+                    <ConvertMonthsToDays
+                      startdate={new Date(item.from)}
+                      months={item.duration}
+                    />
+                    {/* {parseInt((new Date(item.from) - new Date()) / 86400000)} */}
                   </Text>
                 </View>
                 <View style={styles.row}>

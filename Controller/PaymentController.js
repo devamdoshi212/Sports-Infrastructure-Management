@@ -6,11 +6,11 @@ module.exports.addPayment = async function (req, res) {
 
   let data = await Payment.save();
   let athlete = await athleteModel.findOne({ _id: data.athleteId });
-  console.log(athlete);
+  // console.log(athlete);
   athlete.createdBy = req.body.supervisorId;
   athlete.payments.push(data._id);
   let data1 = await athlete.save();
-  console.log(data1);
+  // console.log(data1);
 
   res.json({
     data: data,
@@ -34,20 +34,40 @@ module.exports.getAllPaymentswithsportwithinstructor = async function (
   req,
   res
 ) {
-  PaymentModel.find(req.query)
+  const convertMonthsToDays = (months, startdate) => {
+    // Get the current date
+
+    const today = new Date();
+    // Calculate future date based on months
+    const futureDate = new Date(startdate);
+    futureDate.setMonth(startdate.getMonth() + months);
+
+    let timeDifference;
+    // Calculate the difference in milliseconds
+    if (startdate.getTime() - today.getTime() > 0) {
+      timeDifference = futureDate - startdate;
+    } else {
+      timeDifference = futureDate - today;
+    }
+
+    // Convert milliseconds to days
+    const days = Math.ceil(timeDifference / (1000 * 60 * 60 * 24));
+    console.log(days);
+    return days;
+  };
+
+  const d = await PaymentModel.find(req.query)
     .populate("sports")
     .populate({
       path: "instructorId",
       populate: {
         path: "userId",
       },
-    })
-    .then((data) => {
-      res.json({ data: data, msg: "Payment Retrived", rcode: 200 });
-    })
-    .catch((err) => {
-      res.json({ data: err.msg, msg: "smw", rcode: -9 });
     });
+  const data = d.filter(
+    (obj) => convertMonthsToDays(obj.duration, obj.from) >= 0
+  );
+  res.json({ data: data, msg: "Payment Retrived", rcode: 200 });
 };
 
 // .populate("instructorId")

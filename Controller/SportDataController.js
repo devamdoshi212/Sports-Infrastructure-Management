@@ -18,7 +18,7 @@ module.exports.AddSport = async function (req, res) {
 };
 
 module.exports.getSport = function (req, res) {
-  SportModel.find()
+  SportModel.find(req.query)
     .then((data) => {
       res.json({ data: data, msg: "Sport Retrived", rcode: 200 });
     })

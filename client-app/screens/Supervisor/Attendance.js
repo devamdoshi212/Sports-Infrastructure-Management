@@ -33,7 +33,7 @@ const Attendance = ({ navigation }) => {
     )
       .then((response) => response.json())
       .then((result) => {
-        if (result.data) setattendance(result.data[0].enrolls);
+        if (result.data.length === 1) setattendance(result.data[0].enrolls);
         else setattendance([]);
       })
       .catch((error) => console.log("error", error));
@@ -106,8 +106,8 @@ const Attendance = ({ navigation }) => {
             textDayHeaderFontSize: 16,
           }}
           onDayPress={(day) => {
-            console.log("selected day", day);
-            console.log("selected date", day.dateString);
+            setDate(new Date(day.timestamp));
+            // console.log("selected date", day.dateString);
             setDateCal(day.dateString);
           }}
           markedDates={{
@@ -119,7 +119,7 @@ const Attendance = ({ navigation }) => {
           }}
           enableSwipeMonths={true}
         />
-        <View
+        {/* <View
           style={{
             width: "93%",
             paddingLeft: "7%",
@@ -142,7 +142,7 @@ const Attendance = ({ navigation }) => {
             {date.toUTCString()}
           </Text>
           <Button onPress={showDatepicker} title="Date" />
-        </View>
+        </View> */}
         <ScrollView contentContainerStyle={styles.scrollContainer}>
           <View style={styles.card}>
             <View style={styles.row}>
