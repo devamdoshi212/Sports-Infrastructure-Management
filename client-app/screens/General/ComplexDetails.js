@@ -109,7 +109,7 @@ const styles = StyleSheet.create({
   cardHeader: {
     flexDirection: "column",
     backgroundColor: "#f3f0f0",
-    width: "105%",
+    width: "100%",
     height: 40,
     marginTop: -30,
   },
