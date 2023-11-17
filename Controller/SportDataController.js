@@ -18,11 +18,21 @@ module.exports.AddSport = async function (req, res) {
 };
 
 module.exports.getSport = function (req, res) {
-  SportModel.find(req.query)
-    .then((data) => {
-      res.json({ data: data, msg: "Sport Retrived", rcode: 200 });
-    })
-    .catch((err) => {
-      res.json({ data: err.msg, msg: "smw", rcode: 200 });
-    });
+  if (req.query.Category) {
+    SportModel.find({ Category: req.query.Category })
+      .then((data) => {
+        res.json({ data: data, msg: "Sport Retrived", rcode: 200 });
+      })
+      .catch((err) => {
+        res.json({ data: err.msg, msg: "smw", rcode: 200 });
+      });
+  } else {
+    SportModel.find()
+      .then((data) => {
+        res.json({ data: data, msg: "Sport Retrived", rcode: 200 });
+      })
+      .catch((err) => {
+        res.json({ data: err.msg, msg: "smw", rcode: 200 });
+      });
+  }
 };
