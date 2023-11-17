@@ -124,7 +124,7 @@ export default function AthorityComplaintDataTable() {
     var raw = JSON.stringify({
       status: 1,
       userId: _id,
-      remark: remark,
+      remark: remarks[rowdata._id] || "",
     });
 
     var requestOptions = {
@@ -159,7 +159,7 @@ export default function AthorityComplaintDataTable() {
 
     var raw = JSON.stringify({
       level: 3,
-      remark: remark,
+      remark: remarks[rowdata._id] || "",
       userId: _id,
     });
     var requestOptions = {
@@ -198,13 +198,12 @@ export default function AthorityComplaintDataTable() {
   };
 
   const remarksBodyTemplate = (rowData) => {
-    console.log(rowData);
     if (rowData.remarks) {
       return rowData.remarks.map((item, index) => (
-        <div className="border">
-          <p className="font-bold">Remark by : {RemarkBy(item)}</p>
-          <p>Remark : {item.remark}</p>
-          <p>Date : {dateBodyTemplate(item)}</p>
+        <div key={index} className="border">
+          <p className="font-bold">Remark by: {RemarkBy(item)}</p>
+          <p>Remark: {item.remark}</p>
+          <p>Date: {dateBodyTemplate(item)}</p>
         </div>
       ));
     } else {
@@ -212,26 +211,32 @@ export default function AthorityComplaintDataTable() {
     }
   };
 
+  const [remarks, setRemarks] = useState({});
+
   const actionBodyTemplate = (rowData) => {
+    const rowRemark = remarks[rowData._id] || "";
     return (
       <>
         <div className="mb-4">
           <label
             className="block text-gray-700 text-sm font-bold mb-2"
-            htmlFor="remarks"
+            htmlFor={`remarks-${rowData._id}`}
           >
             Remarks
           </label>
           <input
+            id={`remarks-${rowData._id}`}
             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-            name="remarks"
+            name={`remarks-${rowData._id}`}
             type="text"
             placeholder="Type here ..."
-            value={remark}
+            value={rowRemark}
             onChange={(e) => {
-              setremarks(e.target.value);
+              setRemarks((prevRemarks) => ({
+                ...prevRemarks,
+                [rowData._id]: e.target.value,
+              }));
             }}
-            // onBlur={handleBlur}
           />
         </div>
         <div className="flex justify-between space-x-1">
