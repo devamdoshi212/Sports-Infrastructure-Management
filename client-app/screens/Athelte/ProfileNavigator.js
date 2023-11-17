@@ -60,8 +60,7 @@ const ProfileNavigator = ({ navigation }) => {
         />
         <Stack.Screen
           name="IDCard"
-          // component={IDCard}
-          component={SatisfiedResponse}
+          component={IDCard}
           options={{ headerShown: false }}
         />
         <Stack.Screen
