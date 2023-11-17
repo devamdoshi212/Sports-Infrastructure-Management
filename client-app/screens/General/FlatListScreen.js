@@ -141,7 +141,6 @@ function FlatListScreen({
   }, [distance, lat, long, category]);
 
   //   console.log(range, latitude, longitude);
-  console.log(cat);
   const fetchData = () => {
     var requestOptions = {
       method: "GET",
