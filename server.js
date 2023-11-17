@@ -23,7 +23,8 @@ const ComplaintTypeController = require("./Controller/ComplaintTypeController");
 const ComplaintImageController = require("./Controller/ComplainImageController");
 const SportComplexeImageController = require("./Controller/SportComplexImageController");
 const SupervisorDashboardController = require("./Controller/SupervisorDashboardController");
-
+const UpdatesController = require("./Controller/UpdatesController");
+const UpdatesImageController = require("./Controller/UpdatesImageController");
 const {
   filtersportsforcomplex,
 } = require("./Controller/FilterSportsForComplex");
@@ -60,6 +61,14 @@ app.post(
   SportDataController.AddSport
 );
 app.get("/getSports", SportDataController.getSport);
+
+//updates,news,achievements
+app.post(
+  "/addUpdates",
+  UpdatesImageController.upload.single("image"),
+  UpdatesController.addUpdates
+);
+app.get("/getUpdates", UpdatesController.getUpdates);
 
 //District routes
 app.post("/addDistrict", DistrictController.addDistrict);
