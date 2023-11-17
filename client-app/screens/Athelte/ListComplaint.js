@@ -21,7 +21,7 @@ const ListComplaint = () => {
   const [Complaint, setcomplain] = useState([]);
   const ip = ipconfig.ip;
   const Userdata = useSelector((state) => state.user.User);
-  const sid = Userdata.SportComplexId;
+  // const sid = Userdata.SportComplexId;
   const [refresh, setrefresh] = useState(false);
   const refreshhandler = () => {
     setrefresh(!refresh);
@@ -67,7 +67,7 @@ const ListComplaint = () => {
             navigation.navigate("AthelteComplaint");
           }}
         >
-          <View style={styles.row}>
+          <View style={styles.row1}>
             <Text style={styles.actionText}>Raise Complaint</Text>
             <MaterialIcons name="navigate-next" size={24} />
           </View>
@@ -205,7 +205,7 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     fontSize: 15,
   },
-  row: {
+  row1: {
     width: "120%",
     marginTop: "5%",
     flexDirection: "row",
