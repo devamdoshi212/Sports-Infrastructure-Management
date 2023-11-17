@@ -115,7 +115,7 @@ const SportEnroll = () => {
               <Pressable
                 style={({ pressed }) => [
                   {
-                    backgroundColor: pressed ? "#f0f0f0" : "white",
+                    backgroundColor: pressed ? "#f8d7c9" : "#f2b69c",
                     padding: 20,
                     borderRadius: 10,
                   },
@@ -182,16 +182,15 @@ const SportEnroll = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "white",
     paddingVertical: 50,
-    backgroundColor: "#f0f0f0",
+    backgroundColor: "#fbe8e0",
   },
   header: {
     flexDirection: "row",
     marginBottom: 10,
     width: "100%",
     height: 50,
-    backgroundColor: "#f0f0f0",
+    backgroundColor: "#fbe8e0",
     alignItems: "center",
   },
   back: {
@@ -208,7 +207,6 @@ const styles = StyleSheet.create({
     padding: 10,
   },
   card: {
-    backgroundColor: "white",
     borderRadius: 10,
     shadowColor: "black",
     shadowOffset: { width: 0, height: 2 },
@@ -217,6 +215,7 @@ const styles = StyleSheet.create({
     elevation: 5,
     marginHorizontal: 15,
     marginVertical: 10,
+    backgroundColor: "#f2b69c",
   },
   inline: {
     flexDirection: "row",
