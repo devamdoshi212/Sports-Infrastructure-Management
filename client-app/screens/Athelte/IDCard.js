@@ -69,7 +69,7 @@ const IDCard = ({ navigation }) => {
                                 width: 70,
                                 height: 70,
                                 borderRadius: 62.5,
-                                marginTop: -180,
+                                marginTop: -185,
                             }}
                             source={{ uri: `http://${ip}:9999/${image}` }}
                         />
