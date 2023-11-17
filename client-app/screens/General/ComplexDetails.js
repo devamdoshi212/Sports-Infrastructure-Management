@@ -71,7 +71,7 @@ function ComplexDetails({ route, navigation }) {
         data={complex}
         keyExtractor={(item) => item._id}
         renderItem={(itemData) => renderCategoryItem(itemData, ip, navigation)}
-        numColumns={2}
+        numColumns={1}
         extraData={{ ip }}
         // extraData={searchfield}
       />
