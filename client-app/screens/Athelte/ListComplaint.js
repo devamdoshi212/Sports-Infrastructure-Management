@@ -8,7 +8,7 @@ import {
   ScrollView,
   Pressable,
 } from "react-native";
-import { Ionicons, Entypo } from "@expo/vector-icons";
+import { Ionicons, Entypo, MaterialIcons } from "@expo/vector-icons";
 import { Picker } from "@react-native-picker/picker";
 import { useEffect, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
@@ -16,6 +16,7 @@ import ipconfig from "../../ipconfig";
 import { useSelector } from "react-redux";
 
 const ListComplaint = () => {
+  const navigation = useNavigation();
   const [selectedstatus, setselectedstatus] = useState("0");
   const [Complaint, setcomplain] = useState([]);
   const ip = ipconfig.ip;
@@ -60,6 +61,17 @@ const ListComplaint = () => {
             </Text>
           </View>
         </View>
+
+        <TouchableOpacity
+          onPress={() => {
+            navigation.navigate("AthelteComplaint");
+          }}
+        >
+          <View style={styles.row}>
+            <Text style={styles.actionText}>Raise Complaint</Text>
+            <MaterialIcons name="navigate-next" size={24} />
+          </View>
+        </TouchableOpacity>
         <View style={styles.pickerContainer}>
           <Picker
             selectedValue={selectedstatus}
@@ -187,6 +199,18 @@ const styles = StyleSheet.create({
   input: {
     marginLeft: 6,
     textAlign: "center",
+  },
+  actionText: {
+    width: "75%",
+    fontWeight: "bold",
+    fontSize: 15,
+  },
+  row: {
+    width: "120%",
+    marginTop: "5%",
+    flexDirection: "row",
+    borderBottomWidth: 1,
+    paddingVertical: "3%",
   },
 });
 
