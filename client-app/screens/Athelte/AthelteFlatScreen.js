@@ -71,7 +71,7 @@ function AthelteFlatListScreen({ route, navigation }) {
         data={complex}
         keyExtractor={(item) => item._id}
         renderItem={(itemData) => renderCategoryItem(itemData, ip, navigation)}
-        numColumns={2}
+        numColumns={1}
         extraData={{ ip }}
         // extraData={searchfield}
       />
@@ -109,9 +109,9 @@ const styles = StyleSheet.create({
   cardHeader: {
     flexDirection: "column",
     backgroundColor: "#f3f0f0",
-    width: "100%",
+    width: "105%",
     height: 40,
-    marginTop: -40,
+    marginTop: -30,
   },
   cardHeaderText: {
     marginTop: "1%",
