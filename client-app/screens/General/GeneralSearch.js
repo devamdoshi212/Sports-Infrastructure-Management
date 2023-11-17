@@ -65,6 +65,7 @@ const MyCarousel = ({ navigation, route }) => {
   const [lat, setlat] = useState("");
   const [long, setlong] = useState("");
   const [distance, setDistance] = useState("");
+  const [category, setCategory] = useState("");
   const carouselRef = useRef(null);
 
   const goForward = () => {
@@ -74,7 +75,7 @@ const MyCarousel = ({ navigation, route }) => {
     setEntries(ENTRIES1);
   }, []);
   useEffect(() => {
-    const { lat, long, distance, district } = route.params || {};
+    const { lat, long, distance, district, Category } = route.params || {};
     if (lat) {
       // console.log(lat, long);
       setlat(lat);
@@ -83,6 +84,9 @@ const MyCarousel = ({ navigation, route }) => {
     }
     if (district) {
       setSearchQuery(district);
+    }
+    if (Category) {
+      setCategory(Category);
     }
   }, [route.params]);
   const renderItem = ({ item, index }, parallaxProps) => {
@@ -174,6 +178,7 @@ const MyCarousel = ({ navigation, route }) => {
             lat={lat}
             distance={distance}
             long={long}
+            category={category}
           />
         </View>
       </View>
