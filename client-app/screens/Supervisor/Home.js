@@ -83,11 +83,11 @@ const Home = () => {
           },
           {
             key: "Present Athlete in Complex",
-            value: supervisor.presentCount[0].count || supervisor.presentCount,
+            value: supervisor.presentCount,
           },
           {
-            key: "Present Athlete in Complex in Particular Sports",
-            value: "200/100",
+            key: "Toatal Visited Athelete in Complex Till now",
+            value: supervisor.totalvisited,
           },
         ]}
         renderItem={renderCategoryItem}
