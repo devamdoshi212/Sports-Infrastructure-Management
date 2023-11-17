@@ -98,6 +98,7 @@ function FlatListScreen({
   lat,
   long,
   distance,
+  category,
 }) {
   //   console.log(lat, long, distance);
   const [complex, setComplex] = useState([]);
@@ -106,7 +107,7 @@ function FlatListScreen({
   const [range, setRange] = useState(distance);
   const [latitude, setLat] = useState(lat);
   const [longitude, setLong] = useState(long);
-
+  const [cat, setCategory] = useState(category);
   const ip = ipconfig.ip;
   //   useEffect(() => {
   //     var requestOptions = {
@@ -129,23 +130,25 @@ function FlatListScreen({
     setRange("");
     setLat("");
     setLong("");
+    setCategory("");
   };
 
   useEffect(() => {
     setRange(distance);
     setLat(lat);
     setLong(long);
-  }, [distance, lat, long]);
+    setCategory(category);
+  }, [distance, lat, long, category]);
 
   //   console.log(range, latitude, longitude);
-
+  console.log(cat);
   const fetchData = () => {
     var requestOptions = {
       method: "GET",
       redirect: "follow",
     };
     fetch(
-      `http://${ip}:9999/${optionField}?q=${searchfield}&distance=${range}&lat=${latitude}&lon=${longitude}`,
+      `http://${ip}:9999/${optionField}?q=${searchfield}&distance=${range}&lat=${latitude}&lon=${longitude}&Category=${cat}`,
       requestOptions
     )
       .then((response) => response.json())
@@ -161,7 +164,7 @@ function FlatListScreen({
 
   useEffect(() => {
     fetchData();
-  }, [ip, optionField, searchfield, range, latitude, longitude]);
+  }, [ip, optionField, searchfield, range, latitude, longitude, cat]);
 
   if (loading) {
     return (
