@@ -26,7 +26,8 @@ const RatingModal = (props) => {
     )
       .then((response) => response.text())
       .then((result) => {
-        alert("Done");
+          alert("Done");
+          setModalVisible(!modalVisible);
       })
       .catch((error) => console.log("error", error));
   };
