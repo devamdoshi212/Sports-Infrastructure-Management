@@ -1,10 +1,8 @@
 import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
 import {
   View,
   Text,
   StyleSheet,
-  Platform,
   FlatList,
   Image,
   TouchableOpacity,

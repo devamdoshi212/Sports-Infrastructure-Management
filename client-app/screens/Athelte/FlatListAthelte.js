@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
 import {
   Pressable,
   View,
@@ -8,9 +7,12 @@ import {
   Platform,
   FlatList,
   ImageBackground,
+  TouchableOpacity,
+  Image,
+  RefreshControl,
+  ActivityIndicator,
 } from "react-native";
 import ipconfig from "../../ipconfig";
-import { useNavigation } from "@react-navigation/native";
 function renderCategoryItem(itemData, ip, navigate) {
   if (itemData.item.baseUrl) {
     const image = itemData.item.baseUrl;
@@ -54,54 +56,132 @@ function renderCategoryItem(itemData, ip, navigate) {
   } else {
     const itemDataWithoutSeparators = { ...itemData }; // Create a copy of itemData
     delete itemDataWithoutSeparators.separators;
+
     return (
-      <View style={styles.gridItem}>
-        <Pressable
-          android_ripple={{ color: "#ccc" }}
-          style={({ pressed }) => [
-            styles.button,
-            pressed ? styles.buttonPressed : null,
-          ]}
-          onPress={() => {
-            navigate.navigate("ComplexFullDetailsinAthelte", {
-              data: itemDataWithoutSeparators,
-            });
-          }}
-        >
-          <View style={[styles.innerContainer, { backgroundColor: "gray" }]}>
-            <Text style={styles.title}>{itemData.item.name}</Text>
+      <TouchableOpacity
+        onPress={() => {
+          navigate.navigate("ComplexFullDetailsinAthelte", {
+            data: itemDataWithoutSeparators,
+          });
+        }}
+      >
+        <View style={styles.card}>
+          <Image
+            style={{
+              width: "100%",
+              height: 200,
+              borderRadius: 5,
+            }}
+            source={{
+              uri: `http://${ip}:9999${itemData.item.picture}`,
+            }}
+          />
+          <View style={styles.cardHeader}>
+            <Text style={styles.cardHeaderText}>{itemData.item.name}</Text>
+            <View style={styles.cardHeaderTextDescriptionView}>
+              <Text style={styles.cardHeaderTextDescription}>
+                {itemData.item.taluka},{itemData.item.district.District}
+              </Text>
+              <Text style={styles.cardHeaderTextCount}>48 Atheltes</Text>
+            </View>
           </View>
-        </Pressable>
-      </View>
+        </View>
+      </TouchableOpacity>
     );
   }
 }
 
-function FlatListAthelte({ optionField, searchfield, navigate }) {
+function FlatListAthelte({
+  optionField,
+  searchfield,
+  navigate,
+  lat,
+  long,
+  distance,
+}) {
+  //   console.log(lat, long, distance);
   const [complex, setComplex] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [refreshing, setRefreshing] = useState(false);
+  const [range, setRange] = useState(distance);
+  const [latitude, setLat] = useState(lat);
+  const [longitude, setLong] = useState(long);
+
   const ip = ipconfig.ip;
+  //   useEffect(() => {
+  //     var requestOptions = {
+  //       method: "GET",
+  //       redirect: "follow",
+  //     };
+  //     fetch(
+  //       `http://${ip}:9999/${optionField}?q=${searchfield}&distance=${distance}&lat=${lat}&lon=${long}`,
+  //       requestOptions
+  //     )
+  //       .then((response) => response.json())
+  //       .then((result) => {
+  //         setComplex(result.data);
+  //       })
+  //       .catch((error) => console.log("error", error));
+  //   }, [ip, optionField, searchfield, distance, lat, long]);
+  const handleRefresh = () => {
+    setRefreshing(true);
+    fetchData();
+    setRange("");
+    setLat("");
+    setLong("");
+  };
+
   useEffect(() => {
+    setRange(distance);
+    setLat(lat);
+    setLong(long);
+  }, [distance, lat, long]);
+
+  //   console.log(range, latitude, longitude);
+
+  const fetchData = () => {
     var requestOptions = {
       method: "GET",
       redirect: "follow",
     };
-
-    fetch(`http://${ip}:9999/${optionField}?q=${searchfield}`, requestOptions)
+    fetch(
+      `http://${ip}:9999/${optionField}?q=${searchfield}&distance=${range}&lat=${latitude}&lon=${longitude}`,
+      requestOptions
+    )
       .then((response) => response.json())
       .then((result) => {
         setComplex(result.data);
       })
-      .catch((error) => console.log("error", error));
-  }, [ip, optionField, searchfield]);
+      .catch((error) => console.log("error", error))
+      .finally(() => {
+        setLoading(false);
+        setRefreshing(false);
+      });
+  };
 
+  useEffect(() => {
+    fetchData();
+  }, [ip, optionField, searchfield, range, latitude, longitude]);
+
+  if (loading) {
+    return (
+      <View style={styles.centeredContainer}>
+        <ActivityIndicator size="large" color="orange" />
+      </View>
+    );
+  }
   return (
     <FlatList
+      key={optionField}
       data={complex}
       keyExtractor={(item) => item._id}
       renderItem={(itemData) => renderCategoryItem(itemData, ip, navigate)}
-      numColumns={2}
+      numColumns={1}
       extraData={{ ip }}
       // extraData={searchfield}
+      refreshControl={
+        <RefreshControl refreshing={refreshing} onRefresh={handleRefresh} />
+      }
     />
   );
 }
@@ -146,5 +226,52 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
+  },
+  card: {
+    flexDirection: "column",
+    marginLeft: "7%",
+    marginTop: "2%",
+    alignItems: "center",
+    padding: 10,
+    width: "85%",
+    borderWidth: 1,
+    borderRadius: 10,
+    borderBottomWidth: 3,
+    backgroundColor: "white",
+    height: 235,
+
+    shadowColor: "black",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.2,
+    shadowRadius: 4,
+    elevation: 5,
+    marginHorizontal: 15,
+    marginVertical: 5,
+    marginBottom: "2%",
+    paddingBottom: "5%",
+    backgroundColor: "#f3f0f0",
+  },
+  cardHeader: {
+    flexDirection: "column",
+    backgroundColor: "#f3f0f0",
+    width: "100%",
+    height: 40,
+    marginTop: -40,
+  },
+  cardHeaderText: {
+    marginTop: "1%",
+    fontSize: 16,
+    fontWeight: "bold",
+  },
+  cardHeaderTextDescriptionView: {
+    flexDirection: "row",
+  },
+  cardHeaderTextDescription: {
+    flex: 1,
+    fontSize: 13,
+    fontWeight: "bold",
+  },
+  cardHeaderTextCount: {
+    flex: 1,
   },
 });
