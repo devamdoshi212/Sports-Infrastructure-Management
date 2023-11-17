@@ -1,35 +1,55 @@
 import {
   View,
   Text,
-  Image,
+  ImageBackground,
   StyleSheet,
-  Button,
-  TouchableOpacity,
-  ScrollView,
-  Pressable,
   Linking,
+  Dimensions,
+  ScrollView,
+  ActivityIndicator,
+  TouchableOpacity,
+  Pressable,
 } from "react-native";
-import { Ionicons } from "@expo/vector-icons";
+import { Rating } from "react-native-ratings";
+
+import {
+  Ionicons,
+  AntDesign,
+  MaterialCommunityIcons,
+  Entypo,
+} from "@expo/vector-icons";
 import { useEffect, useState } from "react";
-import Modal from "./Modal";
+import ipconfig from "../../ipconfig";
+import { useRef } from "react";
+import Carousel, { ParallaxImage } from "react-native-snap-carousel";
 import { useNavigation } from "@react-navigation/native";
 import { useSelector } from "react-redux";
-import ipconfig from "../../ipconfig";
+const { width: screenWidth, height: screenHeight } = Dimensions.get("window");
+
 const SportComplexDetail = () => {
+  const [heart, setHeart] = useState(false);
+
   const navigate = useNavigation();
   const ip = ipconfig.ip;
   const Atheltedata = useSelector((state) => state.athelte.Athelte);
   const complexId = Atheltedata[0].createdBy.SportComplexId;
   const [details, setDetails] = useState({});
   const [detailsInstructor, setDetailsInstrutor] = useState({});
-  const [visible, setvisible] = useState(false);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
+  const carouselRef = useRef(null);
 
   useEffect(() => {
     var requestOptions = {
       method: "GET",
       redirect: "follow",
     };
+    fetch(`http://${ip}:9999/getSportsComplex?_id=${complexId}`, requestOptions)
+      .then((response) => response.json())
+      .then((result) => {
+        console.log(result.data[0]);
+        setDetails(result.data[0]);
+      })
+      .catch((error) => console.log("error", error));
 
     fetch(
       `http://${ip}:9999/sportsComplexDetail?sportsComplex=${complexId}`,
@@ -38,22 +58,43 @@ const SportComplexDetail = () => {
       .then((response) => response.json())
       .then((result) => {
         setDetailsInstrutor(result);
-        setLoading(true);
-        // console.log(result);
-      });
-
-    fetch(`http://${ip}:9999/getSportsComplex?_id=${complexId}`, requestOptions)
-      .then((response) => response.json())
-      .then((result) => {
-        // console.log(result.data[0]);
-        setDetails(result.data[0]);
-        setvisible(true);
       })
-      .catch((error) => console.log("error", error));
+      .finally(() => {
+        setLoading(false);
+      });
   }, []);
 
+  if (loading) {
+    return (
+      <View style={styles.centeredContainer}>
+        <ActivityIndicator size="large" color="orange" />
+      </View>
+    );
+  }
+  const goForward = () => {
+    carouselRef.current.snapToNext();
+  };
+  const renderItem = ({ item, index }, parallaxProps) => {
+    const updatedImage = item.replace("localhost", ip);
+    // console.log(updatedImage);
+    return (
+      <View style={styles.item}>
+        <ParallaxImage
+          source={{ uri: updatedImage }}
+          containerStyle={styles.imageContainer}
+          style={styles.image}
+          parallaxFactor={0.4}
+          {...parallaxProps}
+        />
+        {/* <Text style={styles.title} numberOfLines={2}>
+                    {item.title}
+                </Text> */}
+      </View>
+    );
+  };
+
   const openGoogleMaps = () => {
-    const mapUrl = details.location; // Replace with the actual latitude and longitude or address you want to open
+    const mapUrl = `https://www.google.com/maps/search/?api=1&query=${details.latitude},${details.longitude}`;
 
     Linking.openURL(mapUrl).catch((err) =>
       console.error("An error occurred: ", err)
@@ -63,90 +104,155 @@ const SportComplexDetail = () => {
   return (
     <>
       <View style={styles.container}>
-        <View style={styles.header}>
-          <Pressable
-            onPress={() => {
-              navigate.goBack();
+        <View>
+          <ImageBackground
+            style={{
+              width: screenWidth,
+              height: screenWidth * 0.5,
+            }}
+            source={{
+              uri: `http://${ip}:9999${details.picture}`,
             }}
           >
-            <View style={styles.back}>
-              <Ionicons name="arrow-back" size={24} />
+            <View style={styles.header}>
+              <Pressable
+                onPress={() => {
+                  navigate.goBack();
+                }}
+              >
+                <Ionicons name="arrow-back" size={24} />
+              </Pressable>
+              <View style={{ marginLeft: screenWidth * 0.8 }}>
+                <AntDesign
+                  onPress={() => {
+                    setHeart(!heart);
+                  }}
+                  style={heart ? styles.heartPress : styles.heart}
+                  name="hearto"
+                  size={24}
+                />
+              </View>
             </View>
-          </Pressable>
-          <View style={styles.heading}>
-            <Text style={{ fontWeight: "bold", fontSize: 25 }}>
-              Sport Complex Details
-            </Text>
+          </ImageBackground>
+          <View style={styles.cardHeader}>
+            <Text style={styles.cardHeaderText}>{details.name}</Text>
+
+            <View style={styles.cardHeaderTextDescriptionView}>
+              <Text style={styles.cardHeaderTextDescription}>
+                {details.taluka}
+              </Text>
+              <Text style={styles.cardHeaderTextCount}>
+                Total Athelte : {detailsInstructor.athleteCount}
+              </Text>
+            </View>
           </View>
-        </View>
-        <ScrollView contentContainerStyle={styles.scrollContainer}>
-          <View style={styles.card}>
-            <Pressable
-              style={({ pressed }) => [
-                {
-                  backgroundColor: pressed ? "#f0f0f0" : "white",
-                  padding: 20,
-                  borderRadius: 10,
-                },
-              ]}
-            >
-              {/* <View style={styles.card}> */}
-              <View style={styles.row}>
-                <Text style={styles.label}>Sport Complex Name: </Text>
-                <Text style={styles.input}>{visible && details.name}</Text>
+          <View style={styles.dummyCard}>
+            <ScrollView>
+              <View style={styles.cardHeader}>
+                <Text style={styles.cardHeaderText}>About</Text>
               </View>
-              <View style={styles.row}>
-                <Text style={styles.label}>Address:</Text>
-                <Text style={styles.input}>{visible && details.location}</Text>
+              <View style={styles.aboutDescription}>
+                <View style={styles.aboutDescriptionTopic}>
+                  <Text style={styles.aboutDescriptionLable}>
+                    Total Instructor :
+                  </Text>
+                  <Text style={styles.aboutDescriptionText}>
+                    {detailsInstructor.instructerCount}
+                  </Text>
+                </View>
               </View>
-              <View style={styles.row}>
-                <Text style={styles.label}>Taluka:</Text>
-                <Text style={styles.input}>{visible && details.taluka}</Text>
+              <View style={styles.aboutDescription}>
+                <View style={styles.aboutDescriptionTopic}>
+                  <Text style={styles.aboutDescriptionLable}>Area :</Text>
+                  <Text style={styles.aboutDescriptionText}>
+                    {details.area}
+                  </Text>
+                </View>
               </View>
-              <View style={styles.row}>
-                <Text style={styles.label}>Since :</Text>
-                <Text style={styles.input}>
-                  {visible && details.operationalSince}
-                </Text>
-              </View>
-              <View style={styles.row}>
-                <Text style={styles.label}>Area :</Text>
-                <Text style={styles.input}>{visible && details.area}</Text>
-              </View>
-              <View style={styles.row}>
-                <Text style={styles.label}>Available Sports :</Text>
+              <View style={styles.aboutDescription}>
+                <View style={styles.aboutDescriptionTopic}>
+                  <Text style={styles.aboutDescriptionLable}>Since :</Text>
+                  <Text style={styles.aboutDescriptionText}>
+                    {details.operationalSince}
+                  </Text>
+                </View>
               </View>
               <View>
-                {loading &&
-                  detailsInstructor.availableSports.map((item, index) => (
-                    <Text style={styles.input} key={index}>
-                      {item}
-                    </Text>
-                  ))}
+                <ScrollView>
+                  <View>
+                    <View style={styles.sport}>
+                      {details.sports.map((item, index) => (
+                        <View key={index}>
+                          <View style={styles.cardSport}>
+                            <MaterialCommunityIcons
+                              style={styles.cardSportColomn1}
+                              name={detailsInstructor.availableSports[
+                                index
+                              ].toLowerCase()}
+                              size={48}
+                            />
+                            <View style={styles.cardSportColomn2}>
+                              <Text style={styles.cardSportColomn2Text}>
+                                {detailsInstructor.availableSports[index]}
+                                {item.rating && (
+                                  <Rating
+                                    type="star"
+                                    ratingCount={5}
+                                    imageSize={20}
+                                    showRating={false}
+                                    startingValue={item.rating}
+                                    minValue={1}
+                                  />
+                                )}
+                              </Text>
+                              <View style={styles.cardSportColomn2TextDetail}>
+                                <Text style={styles.cardSportColomn2TextInfo}>
+                                  Fees : {item.fees}
+                                </Text>
+                                <Text style={styles.cardSportColomn2TextInfo}>
+                                  Capacity : {item.capacity}
+                                </Text>
+                              </View>
+                              <TouchableOpacity
+                                onPress={goForward}
+                              ></TouchableOpacity>
+                            </View>
+                          </View>
+                          <Carousel
+                            ref={carouselRef}
+                            sliderWidth={screenWidth}
+                            sliderHeight={screenWidth}
+                            itemWidth={screenWidth - 10}
+                            data={item.images}
+                            renderItem={renderItem}
+                            hasParallaxImages={true}
+                            autoplay={true}
+                            autoplayInterval={5000}
+                            loop={true}
+                            loopClonesPerSide={2}
+                            marginTop="-19%"
+                            marginBottom="3%"
+                          />
+                        </View>
+                      ))}
+                    </View>
+                  </View>
+                </ScrollView>
               </View>
-              <View style={styles.row}>
-                <Text style={styles.label}>Total number of Instructor :</Text>
-                <Text style={styles.input}>
-                  {loading && detailsInstructor.instructerData.length}
-                </Text>
-              </View>
-              <View style={styles.row}>
-                <Text style={styles.label}>
-                  Total number of Enroll Student :
-                </Text>
-                <Text style={styles.input}>
-                  {loading && detailsInstructor.athleteCount}
-                </Text>
-              </View>
-              <View style={{ alignSelf: "center", marginTop: 10 }}></View>
-              <TouchableOpacity style={styles.actionButton}>
-                <View style={{ width: "50%", alignSelf: "center" }}>
-                  <Button title="View on Map" onPress={openGoogleMaps} />
-                </View>
-              </TouchableOpacity>
-            </Pressable>
+            </ScrollView>
           </View>
-        </ScrollView>
+          <TouchableOpacity
+            style={styles.button}
+            onPress={() => {
+              openGoogleMaps();
+            }}
+          >
+            <Text style={styles.buttonText}>View Location</Text>
+            <View style={styles.buttonImage}>
+              <Entypo backgroundColor={"white"} name="location" size={30} />
+            </View>
+          </TouchableOpacity>
+        </View>
       </View>
     </>
   );
@@ -155,54 +261,166 @@ const SportComplexDetail = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    marginTop: "2%",
+  },
+  item: {
+    width: screenWidth - 50,
+    height: screenWidth - 110,
+  },
+  imageContainer: {
+    flex: 1,
+    marginBottom: Platform.select({ ios: 0, android: 1 }), // Prevent a random Android rendering issue
     backgroundColor: "white",
-    paddingVertical: 50,
-    backgroundColor: "#f0f0f0",
+    borderRadius: 8,
+    borderWidth: 1,
+    marginTop: "15%",
+  },
+  image: {
+    ...StyleSheet.absoluteFillObject,
+    resizeMode: "cover",
   },
   header: {
     flexDirection: "row",
-    marginBottom: 10,
     width: "100%",
-    height: 50,
-    backgroundColor: "#f0f0f0",
-    justifyContent: "center",
     alignItems: "center",
+    marginLeft: "3%",
+    marginTop: "4%",
   },
-  back: {
-    marginHorizontal: 4,
-    alignSelf: "center",
+  heartPress: {
+    color: "red",
+    fontSize: 28,
   },
-  heading: {
-    justifyContent: "center",
-    alignItems: "center",
-    width: "90%",
-  },
-  scrollContainer: {
-    flexGrow: 1,
-    padding: 10,
+  heart: {
+    fontSize: 28,
   },
   card: {
-    backgroundColor: "white",
+    flexDirection: "column",
+    marginTop: "1%",
+    alignItems: "center",
+    alignSelf: "center",
+    padding: 10,
+    width: "90%",
     borderRadius: 10,
+    backgroundColor: "white",
+
     shadowColor: "black",
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.2,
     shadowRadius: 4,
     elevation: 5,
     marginHorizontal: 15,
-    marginVertical: 10,
+    marginVertical: 5,
+    marginBottom: "2%",
+    paddingBottom: "5%",
+    backgroundColor: "#f3f0f0",
   },
-  row: {
-    marginBottom: 20,
+  cardHeader: {
+    flexDirection: "column",
+    width: "95%",
+    alignSelf: "center",
+    marginTop: "1%",
+    borderBottomWidth: 1,
+    borderRadius: 5,
   },
-  label: {
+  cardHeaderText: {
+    marginTop: "1%",
+    fontSize: 24,
     fontWeight: "bold",
-    fontSize: 17,
-    marginLeft: 6,
-    marginBottom: 1,
   },
-  input: {
-    marginLeft: 6,
+  cardHeaderTextDescriptionView: {
+    flexDirection: "row",
+    fontSize: 14,
+    fontWeight: "700",
+  },
+  cardHeaderTextDescription: {
+    flex: 1,
+    fontSize: 13,
+    fontWeight: "bold",
+  },
+  cardHeaderTextCount: {
+    flex: 1,
+    marginLeft: "33%",
+  },
+
+  dummyCard: {
+    height: screenHeight * 0.55,
+    width: "100%",
+  },
+  sport: {
+    width: "90%",
+    height: "100%",
+    marginLeft: "5%",
+    marginTop: "5%",
+  },
+  cardSport: {
+    flexDirection: "row",
+    marginBottom: "5%",
+  },
+  cardSportColomn1: {
+    flex: 1,
+  },
+  cardSportColomn2: {
+    flex: 5,
+    flexDirection: "column",
+  },
+  cardSportColomn2Text: {
+    fontSize: 20,
+    fontWeight: "bold",
+    marginLeft: "5%",
+  },
+  cardSportColomn2TextDetail: {
+    flexDirection: "row",
+  },
+  cardSportColomn2TextInfo: {
+    fontSize: 16,
+    marginLeft: "5%",
+  },
+  aboutDescription: {
+    // borderWidth: 1,
+    flexDirection: "column",
+    width: "90%",
+    marginLeft: "4%",
+  },
+  aboutDescriptionTopic: {
+    flex: 1,
+    flexDirection: "row",
+  },
+  aboutDescriptionLable: {
+    flex: 1,
+    fontSize: 20,
+    fontWeight: "bold",
+  },
+  aboutDescriptionText: {
+    flex: 1,
+    fontSize: 20,
+  },
+  button: {
+    flexDirection: "row",
+    marginTop: 10,
+    marginLeft: "3%",
+    width: "94%",
+    height: screenHeight * 0.06,
+    backgroundColor: "#000",
+    borderRadius: 3,
+    padding: 10,
+  },
+  buttonText: {
+    flex: 1,
+    textAlign: "center",
+    color: "#fff",
+    fontSize: 20,
+    fontWeight: "bold",
+  },
+  buttonImage: {
+    textAlign: "center",
+    color: "#fff",
+    // fontSize: 24,
+    // fontWeight: "bold",
+  },
+  centeredContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
   },
 });
 
