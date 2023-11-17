@@ -167,7 +167,7 @@ function ViewComplaint({ route, navigation }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#f0f0f0",
+    backgroundColor: "#fbe8e0",
     paddingTop: "10%",
     height: "100%",
   },
@@ -221,7 +221,7 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     width: "100%",
     height: 50,
-    backgroundColor: "#f0f0f0",
+    backgroundColor: "#fbe8e0",
   },
   back: {
     marginHorizontal: 4,
