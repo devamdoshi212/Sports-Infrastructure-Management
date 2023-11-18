@@ -26,8 +26,10 @@ const NoAuthTab = ({ navigation }) => {
           return <Ionicons name={iconName} size={32} color="black" />;
         },
         tabBarActiveTintColor: "blue", // Color of the active tab icon
-        tabBarInactiveTintColor: "gray", // Color of the inactive tab icon
-        tabBarStyle: { backgroundColor: "white" }, // Background color of the tab bar
+        tabBarInactiveTintColor: "black", // Color of the inactive tab icon
+        tabBarStyle: {
+          backgroundColor: "#d7a592",
+        }, // Background color of the tab bar
         // showLabel: false,
       })}
     >

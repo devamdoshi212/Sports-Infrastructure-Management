@@ -213,7 +213,18 @@ const styles = StyleSheet.create({
   },
   container: {
     flex: 1,
-    backgroundColor: "gray",
+    backgroundColor: "#fff6f3",
+    // #e8b7a9
+    // #d7a592
+    // #c99c81
+    // #e3cfbf
+    // #c99c81
+    //        #f8d7c9
+
+    // #f5c6b3
+    // #f2b69c
+    //  #fbe8e0
+    // #f2b69c
   },
   input: {
     width: "90%",
@@ -235,7 +246,7 @@ const styles = StyleSheet.create({
     resizeMode: "cover",
   },
   background: {
-    backgroundColor: "gray",
+    backgroundColor: "#fff6f3",
     flexDirection: "column",
   },
   primaryView: {
@@ -244,7 +255,8 @@ const styles = StyleSheet.create({
   ovalSection: {
     marginTop: 10,
     alignSelf: "center",
-    backgroundColor: "#fbe8e8", // #fbe8e8,#fee8e8,#e8fbef
+    backgroundColor: "#f8d7c9", // #fbe8e8,#fee8e8,#e8fbef #e8b7a9
+    // #d7a592
     borderTopLeftRadius: screenWidth * 0.1,
     borderTopRightRadius: screenWidth * 0.1,
     width: screenWidth,

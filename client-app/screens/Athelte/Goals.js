@@ -13,7 +13,7 @@ import { useNavigation } from "@react-navigation/native";
 import ipconfig from "../../ipconfig";
 import { useSelector } from "react-redux";
 
-const ListComplaint = () => {
+const Goals = () => {
   const navigation = useNavigation();
   const [selectedstatus, setselectedstatus] = useState("0");
   const [Complaint, setcomplain] = useState([]);
@@ -65,10 +65,10 @@ const ListComplaint = () => {
             <View style={styles.complaint}>
               <Text style={styles.actionText}>New</Text>
               {/* <AntDesign
-                style={{ color: "black", marginLeft: "5%" }}
-                name="plus"
-                size={30}
-              /> */}
+                  style={{ color: "black", marginLeft: "5%" }}
+                  name="plus"
+                  size={30}
+                /> */}
               <Entypo
                 style={{ color: "#0054a8", marginLeft: "5%" }}
                 name="plus"
@@ -223,4 +223,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ListComplaint;
+export default Goals;
