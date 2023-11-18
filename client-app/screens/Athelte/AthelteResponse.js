@@ -28,6 +28,7 @@ const AthleteResponse = () => {
 
   const [selectedSportParameters, setSelectedSportParameters] = useState({});
   const [selectedSports, setSelectedSports] = useState([]);
+  const [selectedInstructorId, setSelectedInstructorId] = useState({});
 
   const handleParameterChange = (sportId, parameter, text) => {
     setSelectedSportParameters((prevState) => ({
@@ -38,7 +39,7 @@ const AthleteResponse = () => {
       },
     }));
   };
-  const handleSportSelection = (sportId, sportName) => {
+  const handleSportSelection = (sportId, sportName, instructorId) => {
     const newSelectedSports = [...selectedSports];
     const index = newSelectedSports.indexOf(sportId);
     if (index === -1) {
@@ -56,11 +57,14 @@ const AthleteResponse = () => {
         return newState;
       });
     }
+
+    setSelectedInstructorId((prevInstructors) => ({
+      ...prevInstructors,
+      [sportId]: instructorId,
+    }));
   };
 
   useEffect(() => {
-    // console.log(payments);
-
     var requestOptions = {
       method: "GET",
       redirect: "follow",
@@ -79,9 +83,6 @@ const AthleteResponse = () => {
   }, []);
 
   const submitHandler = () => {
-    var myHeaders = new Headers();
-    myHeaders.append("Content-Type", "application/json");
-
     const formattedData = selectedSports.map((sportId) => {
       const parameters =
         selectedSportParameters[sportId] &&
@@ -91,20 +92,51 @@ const AthleteResponse = () => {
         }));
 
       return {
+        instructorId: selectedInstructorId[sportId],
         sportId,
         parameters: parameters || [],
       };
     });
-    console.log(formattedData);
-    formattedData.forEach((item) => {
-      console.log("Sport ID:", item.sportId);
-      console.log("Parameters:");
 
-      item.parameters.forEach((parameter) => {
-        console.log("Parameter:", parameter.parameter);
-        console.log("Value:", parameter.value);
+    // console.log(formattedData);
+    for (let index = 0; index < formattedData.length; index++) {
+      const element = formattedData[index];
+      console.log(element);
+      var myHeaders = new Headers();
+      myHeaders.append("Content-Type", "application/json");
+
+      var raw = JSON.stringify({
+        sportId: element.sportId,
+        athleteId: Athelte[0]._id,
+        sportComplexId: Athelte[0].createdBy.SportComplexId,
+        // remarks: value,
+        parameters: element.parameters,
+        instructorId: element.instructorId,
       });
-    });
+
+      var requestOptions = {
+        method: "POST",
+        headers: myHeaders,
+        body: raw,
+        redirect: "follow",
+      };
+
+      fetch(`http://${ip}:9999/remarkRatingByAthlete`, requestOptions)
+        .then((response) => response.text())
+        .then((result) => {})
+        .catch((error) => console.log("error", error));
+    }
+    navigation.goBack();
+
+    // formattedData.forEach((item) => {
+    //   console.log("Sport ID:", item.sportId);
+    //   console.log("Parameters:");
+
+    //   item.parameters.forEach((parameter) => {
+    //     console.log("Parameter:", parameter.parameter);
+    //     console.log("Value:", parameter.value);
+    //   });
+    // });
   };
 
   return (
@@ -127,26 +159,23 @@ const AthleteResponse = () => {
           </View>
         </View>
         <View>
-          <ScrollView>
+          <ScrollView style={{ padding: 10 }}>
             {payments.map((item, index) => (
               <View key={index} style={{ marginVertical: 10 }}>
                 <CheckBox
                   isChecked={selectedSports.includes(item.sports._id)}
                   onClick={() =>
-                    handleSportSelection(item.sports._id, item.sports.SportName)
+                    handleSportSelection(
+                      item.sports._id,
+                      item.sports.SportName,
+                      item.instructorId.userId._id
+                    )
                   }
                   checkBoxColor="blue" // Set your desired checkbox color
                 />
                 <Text>{item.sports.SportName}</Text>
                 {selectedSports.includes(item.sports._id) && (
                   <View>
-                    <TextInput
-                      onChangeText={(text) => onChangeText(text)}
-                      value={value}
-                      multiline
-                      editable
-                      placeholder="Type here"
-                    />
                     {item.sports.parameters.map((parameter, parameterIndex) => (
                       <View key={parameterIndex}>
                         <Text>{parameter}</Text>
@@ -180,13 +209,14 @@ const AthleteResponse = () => {
                 )}
               </View>
             ))}
+            <TouchableOpacity
+              style={styles.loginButton}
+              onPress={submitHandler}
+            >
+              <Text style={styles.buttonText}>Sumbit</Text>
+            </TouchableOpacity>
           </ScrollView>
         </View>
-        <TouchableOpacity
-          style={{ width: "40%", alignSelf: "center", paddingVertical: "10%" }}
-        >
-          <Button title="Submit" onPress={submitHandler} />
-        </TouchableOpacity>
       </View>
     </>
   );
@@ -203,6 +233,23 @@ const styles = StyleSheet.create({
     width: 100,
     height: 100,
     marginBottom: 15,
+  },
+  loginButton: {
+    marginBottom: 10,
+    height: 50,
+    backgroundColor: "#f2b69c",
+    justifyContent: "center",
+    alignItems: "center",
+    borderRadius: 8,
+    marginTop: 20,
+    width: 100,
+    alignSelf: "center",
+    fontWeight: "bold",
+  },
+
+  buttonText: {
+    color: "white",
+    fontSize: 18,
   },
   uploadButton: {
     width: "40%",
