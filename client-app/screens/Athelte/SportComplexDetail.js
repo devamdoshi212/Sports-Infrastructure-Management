@@ -197,6 +197,7 @@ const SportComplexDetail = () => {
                                                                 <Text style={styles.cardSportColomn2TextInfo}>
                                                                     {detailsInstructor.availableSports[index]}
                                                                 </Text>
+                                                                <View style={{backgroundColor:"#fff",padding:5,borderRadius:10,marginLeft:"5%"}}>
                                                                 {item.rating && (
                                                                     <Rating
                                                                         type="star"
@@ -208,6 +209,7 @@ const SportComplexDetail = () => {
                                                                         style={styles.starContainer}
                                                                     />
                                                                 )}
+                                                                </View>
                                                             </View>
                                                             <View style={styles.cardSportColomn2TextDetail}>
                                                                 <Text style={styles.cardSportColomn2TextDetailInfo}>
@@ -377,7 +379,6 @@ const styles = StyleSheet.create({
         paddingRight: "15%",
     },
     starContainer: {
-        marginLeft: "10%",
         backgroundColor: "#fbe8e0",
         marginTop:"1%",
     },

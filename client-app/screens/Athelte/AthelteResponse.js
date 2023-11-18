@@ -11,7 +11,7 @@ import {
     Dimensions,
 } from "react-native";
 import React, { useEffect } from "react";
-const {height: screenHeight } = Dimensions.get("window");
+const { height: screenHeight } = Dimensions.get("window");
 import { Picker } from "@react-native-picker/picker";
 import { Ionicons } from "@expo/vector-icons";
 import { useState } from "react";
@@ -160,35 +160,46 @@ const AthleteResponse = () => {
                         </Text>
                     </View>
                 </View>
-                <View style={{ paddingLeft: 10,height:screenHeight*0.75,width:"94%",marginLeft:"2%" }}>
+                <View style={{ paddingLeft: 10, height: screenHeight * 0.75, width: "94%", marginLeft: "2%" }}>
                     <ScrollView >
                         {payments.map((item, index) => (
-                            <View key={index} style={{ marginVertical: 10 }}>
-                                <CheckBox
-                                    isChecked={selectedSports.includes(item.sports._id)}
-                                    onClick={() =>
-                                        handleSportSelection(
-                                            item.sports._id,
-                                            item.sports.SportName,
-                                            item.instructorId.userId._id
-                                        )
-                                    }
-                                    checkBoxColor="blue" // Set your desired checkbox color
-                                />
-                                <Text>{item.sports.SportName}</Text>
+                            <View
+                                key={index}
+                                style={{
+                                    marginVertical: 10,
+                                    borderWidth: 1,
+                                    borderBottomWidth: 3,
+                                    borderRadius:10 ,
+                                    padding: "2%"
+                                }}>
+                                <View style={{ flexDirection: "row" }}>
+                                    <CheckBox
+                                        isChecked={selectedSports.includes(item.sports._id)}
+                                        onClick={() =>
+                                            handleSportSelection(
+                                                item.sports._id,
+                                                item.sports.SportName,
+                                                item.instructorId.userId._id
+                                            )
+                                        }
+                                        checkBoxColor="blue" // Set your desired checkbox color
+                                    />
+                                    <Text style={{ fontSize: 17, fontWeight: "bold" }}>{item.sports.SportName}</Text>
+                                </View>
                                 {selectedSports.includes(item.sports._id) && (
                                     <View>
                                         {item.sports.parameters.map((parameter, parameterIndex) => (
                                             <View key={parameterIndex}>
-                                                <Text>{parameter}</Text>
+                                                <Text style={{ fontSize: 17 }}>{parameter}</Text>
                                                 <TextInput
                                                     keyboardType="numeric"
                                                     style={{
                                                         height: 40,
-                                                        borderColor: "gray",
-                                                        borderWidth: 1,
+                                                        borderColor: "black",
+                                                        borderWidth: 2,
+                                                        borderRadius: 5,
                                                     }}
-                                                    placeholder="Enter a value"
+                                                    placeholder="   Enter a value"
                                                     value={
                                                         selectedSportParameters[item.sports._id] &&
                                                             selectedSportParameters[item.sports._id][parameter]
