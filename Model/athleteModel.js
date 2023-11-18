@@ -18,15 +18,22 @@ const athleteSchema = new mongoose.Schema(
     baseUrl: {
       type: String,
     },
-    // Rating: [
-    //   {
-    //     sportId: { type: mongoose.SchemaTypes.ObjectId, ref: "sports" },
-    //     rating: {
-    //       type: Number,
-    //       default: 0,
-    //     },
-    //   },
-    // ],
+    goals: [
+      {
+        title: String,
+        description: String,
+        startdate: {
+          type: Date,
+          default: Date.now(),
+        },
+        targetdate: Date, //useful for reminder
+        actualdate: Date,
+        achieved: {
+          type: String,
+          default: "0",
+        },
+      },
+    ],
     payments: [{ type: mongoose.SchemaTypes.ObjectId, ref: "payments" }],
   },
   { timestamps: true }
