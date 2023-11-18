@@ -218,3 +218,70 @@ module.exports.updateAthlete = async function (req, res) {
     res.json({ data: error.msg, msg: "smw", rcode: -9 });
   }
 };
+
+module.exports.goalOfAthletes = async function(req,res){
+
+let Athlete = await AthleteModel.findOne({_id:req.query.id})
+
+if (!Athlete) {
+  res.json({ data: "", msg: "Athlete not found", rcode: 404 });
+}
+else{
+
+  let goal = 
+    {
+      title : req.body.title,
+      description: req.body.description,
+      startdate: req.body.startdate || Date.now(),
+      targetdate: req.body.targetdate, //useful for reminder
+      actualdate: req.body.actualdate,
+      achieved: req.body.achieved || '0'
+    }
+  
+  Athlete.goals = Athlete.goals || [];
+  Athlete.goals.push(goal)
+
+  
+  await AthleteModel.updateOne({ _id: req.query.id }, { $set: { goals: Athlete.goals } });
+ 
+  
+ res.json({ data: Athlete, msg: "Goals added to Athlete successfully", rcode: 200 });
+
+}
+
+
+
+}
+
+
+module.exports.achieveOfAthletes = async function(req,res){
+
+  try {
+
+    const athlete = await AthleteModel.findOne({ _id: req.query.id });
+
+    if (!athlete) {
+      return res.status(404).json({ data: "", msg: "Athlete not found", rcode: 404 });
+    }
+
+    const goalIdToUpdate = req.query.goalId;
+    const updatedAchievedStatus = req.body.updatedAchievedStatus; 
+
+    //match the id which we pass and actual id
+    const goalToUpdate = athlete.goals.find(goal => goal._id == goalIdToUpdate);
+
+    if (!goalToUpdate) {
+      return res.status(400).json({ data: "", msg: "Goal not found", rcode: 400 });
+    }
+
+    goalToUpdate.achieved = updatedAchievedStatus;
+
+    await athlete.save(); // Save the updated document
+
+    return res.status(200).json({ data: athlete, msg: "Achieved status updated successfully", rcode: 200 });
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ data: "", msg: "Internal Server Error", rcode: 500 });
+  }
+}
+
