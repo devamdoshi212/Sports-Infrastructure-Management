@@ -69,6 +69,7 @@ app.post(
   UpdatesController.addUpdates
 );
 app.get("/getUpdates", UpdatesController.getUpdates);
+app.patch("/updateUpdates/:id", UpdatesController.updateUpdates);
 
 //District routes
 app.post("/addDistrict", DistrictController.addDistrict);
