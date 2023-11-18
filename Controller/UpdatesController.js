@@ -26,3 +26,31 @@ module.exports.getUpdates = function (req, res) {
       res.json({ data: err.msg, msg: "smw", rcode: 200 });
     });
 };
+
+module.exports.updateUpdates = async function (req, res) {
+  try {
+    const _id = req.params.id;
+    let active;
+
+    let data = await UpdatesModel.findById(_id);
+
+    if (!data) {
+      return res.status(404).json({ msg: "Document not found", rcode: 404 });
+    }
+
+    if (req.body.active !== undefined) {
+      active = req.body.active;
+    } else {
+      active = data.active;
+    }
+
+    data.active = active;
+
+    let response = await data.save();
+
+    res.json({ data: response, msg: "Updated", rcode: 200 });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ msg: "Internal Server Error", rcode: 500 });
+  }
+};
