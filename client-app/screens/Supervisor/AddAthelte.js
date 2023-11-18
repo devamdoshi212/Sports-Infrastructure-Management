@@ -251,6 +251,7 @@ const Form = ({ navigation }) => {
                     </TouchableOpacity>
                     {user && (
                         <View style={styles.userInfo}>
+                            <View style={styles.userInfoCard}>
                             <Text style={styles.userInfoText}>Name: {userDetail.Name}</Text>
                             <Text style={styles.userInfoText}>Email: {userDetail.Email}</Text>
                             <Text style={styles.userInfoText}>
@@ -274,6 +275,7 @@ const Form = ({ navigation }) => {
                             <Text style={styles.userInfoText}>
                                 Emergency Number: {athleteDetail.emergencyNumber}
                             </Text>
+                            </View>
                             <Picker
                                 style={styles.dropdownPicker}
                                 selectedValue={selectedOption}
@@ -427,11 +429,6 @@ const styles = StyleSheet.create({
         marginLeft: "5%",
         alignItems: "center",
     },
-    title: {
-        fontSize: 24,
-        fontWeight: "bold",
-        marginBottom: 20,
-    },
     input: {
         width: "100%",
         height: 50,
@@ -458,8 +455,17 @@ const styles = StyleSheet.create({
     userInfo: {
         marginTop: 20,
         width: "100%",
-        paddingHorizontal: 20,
-        alignItems: "flex-start",
+        paddingHorizontal: "5%",
+    },
+    userInfoCard: {
+        width:"110%",
+        borderWidth: 1,
+        backgroundColor: "#f2b69c",
+        borderRadius: 15,
+        padding: "5%",
+        marginBottom: "2%",
+        marginTop: "-5%",
+        marginLeft:"-5%",
     },
     userInfoText: {
         fontSize: 18,
