@@ -40,10 +40,8 @@ const SportEnroll = () => {
             } else {
                 timeDifference = futureDate - today;
             }
-
             // Convert milliseconds to days
             const days = Math.ceil(timeDifference / (1000 * 60 * 60 * 24));
-
             return days;
         };
 
@@ -121,8 +119,6 @@ const SportEnroll = () => {
                                     },
                                 ]}
                             >
-                                {/* <View style={styles.card}> */}
-
                                 <View style={styles.row}>
                                     <Text style={styles.label}>Sport Name:</Text>
                                     <Text style={styles.input}>{item.sports.SportName}</Text>
@@ -182,26 +178,26 @@ const SportEnroll = () => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        paddingVertical: 50,
         backgroundColor: "#fbe8e0",
+        paddingTop: "7%",
     },
     header: {
         flexDirection: "row",
+        alignItems: "center",
         marginBottom: 10,
-        width: "100%",
+        width: "90%",
+        paddingLeft: "5%",
         height: 50,
         backgroundColor: "#fbe8e0",
-        alignItems: "center",
     },
     back: {
         marginHorizontal: 4,
         alignSelf: "center",
-        marginLeft:"10%",
     },
     heading: {
         justifyContent: "center",
         alignItems: "center",
-        width: "70%",
+        width: "90%",
     },
     scrollContainer: {
         flexGrow: 1,
@@ -217,10 +213,6 @@ const styles = StyleSheet.create({
         marginHorizontal: 15,
         marginVertical: 10,
         backgroundColor: "#f2b69c",
-    },
-    inline: {
-        flexDirection: "row",
-        alignItems: "center",
     },
     row: {
         flexDirection: "row",
