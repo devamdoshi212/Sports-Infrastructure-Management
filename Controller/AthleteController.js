@@ -27,16 +27,17 @@ module.exports.getAthletewithRating = async function (req, res) {
     const element = data[index];
     let rating = await averageRating(element._id, null);
     myarray.push({
-      athleteid: element._id,
+      athleteid: element._id.toString(),
       name: element.userId.Name,
       iconUrl: element.baseUrl,
-      score: rating,
+      score: rating ? rating : 0,
     });
   }
-  const currentuser = myarray.filter((ele) => ele.athleteid == aid);
+  let currentuser = myarray.filter((ele) => ele.athleteid == aid);
 
   myarray.sort((a, b) => b.score - a.score);
-
+  let index = myarray.findIndex((ele) => ele.athleteid == aid);
+  currentuser = { ...currentuser, index: index };
   res.json({
     data: data,
     data1: myarray,
