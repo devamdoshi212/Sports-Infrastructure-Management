@@ -80,7 +80,7 @@ const styles = StyleSheet.create({
     },
     photo: {
         height: "20%",
-        justifyContent: "center",
+        justifyContent: "space-evenly",
         alignItems: "center",
         marginVertical: 20,
         marginTop: 50,
@@ -115,14 +115,6 @@ const styles = StyleSheet.create({
         elevation: 5,
         marginHorizontal: 30,
         marginVertical: 20,
-    },
-    photo: {
-        height: "20%",
-        justifyContent: "space-evenly",
-        alignItems: "center",
-        marginVertical: 20,
-        marginTop: 50,
-        marginBottom: 60,
     },
     label: {
         fontWeight: "bold",
