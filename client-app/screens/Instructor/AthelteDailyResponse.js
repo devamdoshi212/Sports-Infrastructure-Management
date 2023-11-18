@@ -39,6 +39,7 @@ const AthelteDailyResponse = () => {
     )
       .then((response) => response.json())
       .then((result) => {
+        console.log(result);
         setData(result.ratings);
       })
       .catch((error) => console.log("error", error));

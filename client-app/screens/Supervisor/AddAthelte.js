@@ -211,7 +211,7 @@ const Form = ({ navigation }) => {
           // },
           {
             text: "OK",
-            onPress: () => navigation.navigate("SupervisorProfile"),
+            onPress: () => navigation.navigate("MainProfile"),
           },
         ]);
       })
