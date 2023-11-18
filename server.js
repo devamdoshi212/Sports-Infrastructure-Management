@@ -138,6 +138,9 @@ app.get(
 );
 app.patch("/updateAthlete/:id", AthleteController.updateAthlete);
 
+app.patch("/goalOfAthlete",AthleteController.goalOfAthletes)
+app.patch("/updatedAchievedStatus",AthleteController.achieveOfAthletes)
+
 //Instructor routes
 app.post("/addInstructor", InstructorController.addInstructor);
 app.get("/getInstructors", InstructorController.getInstructor);
