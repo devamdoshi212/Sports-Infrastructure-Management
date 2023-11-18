@@ -58,6 +58,7 @@ import AdminNews from "./Components/Admin/News/News";
 import AddNews from "./Components/Admin/News/AddNews";
 import ComplexNews from "./Components/Manager/News/ComplexNews";
 import AddComplexNews from "./Components/Manager/News/AddComplexNews";
+import Leaderboard from "./Components/Admin/LeaderBoard/Leaderboard";
 
 const routes = createBrowserRouter([
   {
@@ -136,6 +137,11 @@ const routes = createBrowserRouter([
       {
         path: "addevent",
         element: <AddNews />,
+        errorElement: <ErrorPage />,
+      },
+      {
+        path: "leaderboard",
+        element: <Leaderboard />,
         errorElement: <ErrorPage />,
       },
     ],
