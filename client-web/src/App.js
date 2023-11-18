@@ -56,6 +56,8 @@ import AddComplaintType from "./Components/Admin/Complaint/AddComplaintType";
 import ManagerAddComplaint from "./Components/Manager/Complaint/ManagerAddComplaint";
 import AdminNews from "./Components/Admin/News/News";
 import AddNews from "./Components/Admin/News/AddNews";
+import ComplexNews from "./Components/Manager/News/ComplexNews";
+import AddComplexNews from "./Components/Manager/News/AddComplexNews";
 
 const routes = createBrowserRouter([
   {
@@ -247,6 +249,16 @@ const routes = createBrowserRouter([
       {
         path: "addcomplaint",
         element: <ManagerAddComplaint />,
+        errorElement: <ErrorPage />,
+      },
+      {
+        path: "complexevents",
+        element: <ComplexNews />,
+        errorElement: <ErrorPage />,
+      },
+      {
+        path: "addcomplexevent",
+        element: <AddComplexNews />,
         errorElement: <ErrorPage />,
       },
     ],

@@ -8,11 +8,11 @@ import { InputText } from "primereact/inputtext";
 import { Button } from "primereact/button";
 import { Calendar } from "primereact/calendar";
 import { useSelector } from "react-redux";
-import { NewsServices } from "./NewsServices";
 import { useRef } from "react";
+import { ComplexNewsServices } from "./ComplexNewsServices";
 
-export default function NewsDataTable() {
-  const { _id } = useSelector((state) => state.user.user);
+export default function ComplexDataTable() {
+  const { SportComplexId } = useSelector((state) => state.user.user);
   const [deleterefresh, setdeleterefresh] = useState(true);
   const [customers, setCustomers] = useState([]);
   const [filters, setFilters] = useState(null);
@@ -23,7 +23,7 @@ export default function NewsDataTable() {
   });
   const [remark, setremarks] = useState("");
   useEffect(() => {
-    NewsServices.getCustomersXLarge().then((data) => {
+    ComplexNewsServices.getCustomersXLarge(SportComplexId).then((data) => {
       setCustomers(getCustomers(data));
       setLoading(false);
     });
