@@ -149,9 +149,9 @@ module.exports.CountForInstructer = async function (req, res) {
                 req.query.sportsComplexId
               ),
             },
-            {
-              instructorId: new mongoose.Types.ObjectId(req.query.instructorId),
-            },
+            // {
+            //   instructorId: new mongoose.Types.ObjectId(req.query.instructorId),
+            // },
           ],
         },
       },
@@ -174,7 +174,13 @@ module.exports.CountForInstructer = async function (req, res) {
       {
         $unwind: "$userInfo",
       },
-
+      {
+        $match: {
+          "instructorInfo.userId": new mongoose.Types.ObjectId(
+            req.query.instructorId
+          ),
+        },
+      },
       {
         $group: {
           _id: {
