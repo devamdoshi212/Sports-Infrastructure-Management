@@ -195,29 +195,29 @@ function AthleteViewComplaint({ route, navigation }) {
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#f0f0f0",
-    marginTop: 0,
-    paddingTop: 51,
-    paddingBottom: 80,
-  },
-  header: {
-    flexDirection: "row",
-    marginBottom: 10,
-    width: "100%",
-    height: 50,
-    backgroundColor: "#f0f0f0",
-  },
-  back: {
-    marginHorizontal: 4,
-    alignSelf: "center",
-  },
-  heading: {
-    justifyContent: "center",
-    alignItems: "center",
-    width: "90%",
-  },
+    container: {
+        flex: 1,
+        backgroundColor: "#fbe8e0",
+        paddingTop: "7%",
+    },
+    header: {
+        flexDirection: "row",
+        alignItems: "center",
+        marginBottom: 10,
+        width: "90%",
+        paddingLeft: "5%",
+        height: 50,
+        backgroundColor: "#fbe8e0",
+    },
+    back: {
+        marginHorizontal: 4,
+        alignSelf: "center",
+    },
+    heading: {
+        justifyContent: "center",
+        alignItems: "center",
+        width: "90%",
+    },
 });
 
 export default AthleteViewComplaint;
