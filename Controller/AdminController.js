@@ -22,6 +22,15 @@ module.exports.AdminViewDetails = async function (req, res) {
     );
     const solvedComplaints = complaints.filter((ele) => ele.status === 1);
 
+    const satisfiedCount = await complaintModel.find({
+      satisfied: 1,
+      status: 1,
+    });
+    const unsatisfiedCount = await complaintModel.find({
+      satisfied: 0,
+      status: 1,
+    });
+
     res.json({
       totalSports: sports.length,
       totalComplex: sportsComplex.length,
@@ -32,6 +41,8 @@ module.exports.AdminViewDetails = async function (req, res) {
       totalcomplaints: complaints.length,
       activecomplaints: activeComplaints.length,
       solvedComplaints: solvedComplaints.length,
+      unsatisfiedCount: unsatisfiedCount.length,
+      satisfiedCount: satisfiedCount.length,
       rcode: 200,
     });
   } catch (err) {
