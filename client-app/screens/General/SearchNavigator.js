@@ -8,6 +8,7 @@ import AthelteFlatListScreen from "../Athelte/AthelteFlatScreen";
 import FlatListScreen from "./FlatListScreen";
 import ComplexDetails from "./ComplexDetails";
 import MyCarousel from "./GeneralSearch";
+import Events from "./Events";
 const SearchNavigator = ({ navigation }) => {
   return (
     <Stack.Navigator>
@@ -30,6 +31,11 @@ const SearchNavigator = ({ navigation }) => {
         <Stack.Screen
           name="SportComplexName"
           component={ComplexDetails}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="Events"
+          component={Events}
           options={{ headerShown: false }}
         />
       </Stack.Group>

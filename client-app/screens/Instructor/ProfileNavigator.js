@@ -6,6 +6,7 @@ import ProfileDetails from "./ProfileDetails";
 import AthleteDetails from "./AthelteDetails";
 import AthelteProfile from "./AthelteProfile";
 import AthelteDailyResponse from "./AthelteDailyResponse";
+import InstructorComplexDetails from "./IntructorComplexDetails";
 const Stack = createStackNavigator();
 const ProfileNavigator = ({ navigation }) => {
   return (
@@ -19,6 +20,11 @@ const ProfileNavigator = ({ navigation }) => {
         <Stack.Screen
           name="DetailProfile"
           component={ProfileDetails}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="ComplexDetails"
+          component={InstructorComplexDetails}
           options={{ headerShown: false }}
         />
         <Stack.Screen

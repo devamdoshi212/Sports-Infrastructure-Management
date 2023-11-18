@@ -91,7 +91,6 @@ const Home = () => {
 };
 
 const renderCategoryItem = ({ item }) => {
-  console.log(item);
   return (
     <View style={styles.gridItem}>
       <Pressable
