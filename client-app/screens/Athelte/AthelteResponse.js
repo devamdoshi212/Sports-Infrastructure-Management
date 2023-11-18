@@ -16,7 +16,7 @@ import { useState } from "react";
 import { useSelector } from "react-redux";
 import ipconfig from "../../ipconfig";
 import { useNavigation } from "@react-navigation/native";
-
+import CheckBox from "react-native-check-box";
 const AthleteResponse = () => {
   const navigation = useNavigation();
   const ip = ipconfig.ip;
@@ -25,34 +25,38 @@ const AthleteResponse = () => {
   const Athelte = useSelector((state) => state.athelte.Athelte);
 
   const [value, onChangeText] = React.useState("");
-  const [userResponse, setUserResponse] = useState();
-  const [parameters, setparameters] = useState([]);
-  // ["goasl", "defend"];
-  // [{paramter:global,value:xsdfssfsd},{paramter:defend,value:bsdbkfds}]
-  // ["ads","sdas"]
-  const [instructor, setInstructor] = useState("");
 
-  const [inputFields, setInputFields] = useState([]);
+  const [selectedSportParameters, setSelectedSportParameters] = useState({});
+  const [selectedSports, setSelectedSports] = useState([]);
 
-  const handleInputChange = (parameter, text) => {
-    const newInputFields = [...inputFields];
-    const existingField = newInputFields.find(
-      (field) => field.parameter === parameter
-    );
-
-    if (existingField) {
-      existingField.value = parseInt(text);
-    } else {
-      newInputFields.push({ parameter, value: parseInt(text) });
-    }
-    setInputFields(newInputFields);
+  const handleParameterChange = (sportId, parameter, text) => {
+    setSelectedSportParameters((prevState) => ({
+      ...prevState,
+      [sportId]: {
+        ...prevState[sportId],
+        [parameter]: parseInt(text),
+      },
+    }));
   };
+  const handleSportSelection = (sportId, sportName) => {
+    const newSelectedSports = [...selectedSports];
+    const index = newSelectedSports.indexOf(sportId);
+    if (index === -1) {
+      newSelectedSports.push(sportId);
+    } else {
+      newSelectedSports.splice(index, 1);
+    }
+    setSelectedSports(newSelectedSports);
 
-  const filteredFields = inputFields
-    .filter(
-      (field) => typeof field === "object" && field.parameter && field.value
-    )
-    .map(({ parameter, value }) => ({ parameter, value }));
+    // Clear selected parameters when unchecking a sport
+    if (index !== -1) {
+      setSelectedSportParameters((prevState) => {
+        const newState = { ...prevState };
+        delete newState[sportId];
+        return newState;
+      });
+    }
+  };
 
   useEffect(() => {
     // console.log(payments);
@@ -72,36 +76,35 @@ const AthleteResponse = () => {
         // console.log(result.data);
       })
       .catch((error) => console.log("error", error));
-
-    // if (parameters) console.log(parameters);
-  }, [parameters, inputFields]);
+  }, []);
 
   const submitHandler = () => {
     var myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/json");
 
-    var raw = JSON.stringify({
-      sportId: userResponse,
-      athleteId: Athelte[0]._id,
-      sportComplexId: Athelte[0].createdBy.SportComplexId,
-      remarks: value,
-      parameters: filteredFields,
-      instructorId: instructor,
+    const formattedData = selectedSports.map((sportId) => {
+      const parameters =
+        selectedSportParameters[sportId] &&
+        Object.keys(selectedSportParameters[sportId]).map((parameter) => ({
+          parameter,
+          value: selectedSportParameters[sportId][parameter],
+        }));
+
+      return {
+        sportId,
+        parameters: parameters || [],
+      };
     });
+    console.log(formattedData);
+    formattedData.forEach((item) => {
+      console.log("Sport ID:", item.sportId);
+      console.log("Parameters:");
 
-    var requestOptions = {
-      method: "POST",
-      headers: myHeaders,
-      body: raw,
-      redirect: "follow",
-    };
-
-    fetch(`http://${ip}:9999/remarkRatingByAthlete`, requestOptions)
-      .then((response) => response.text())
-      .then((result) => {
-        navigation.goBack();
-      })
-      .catch((error) => console.log("error", error));
+      item.parameters.forEach((parameter) => {
+        console.log("Parameter:", parameter.parameter);
+        console.log("Value:", parameter.value);
+      });
+    });
   };
 
   return (
@@ -123,65 +126,60 @@ const AthleteResponse = () => {
             </Text>
           </View>
         </View>
-        <Picker
-          selectedValue={userResponse}
-          onValueChange={(data, index) => {
-            setUserResponse(data);
-            setInputFields(payments[index - 1].sports.parameters);
-            setparameters(payments[index - 1].sports.parameters);
-            setInstructor(payments[index - 1].instructorId.userId._id);
-          }}
-          mode="dropdown" // Android only
-          style={styles.picker}
-        >
-          <Picker.Item label="Please select your Sport" value="" />
-          {payments.map((item, index) => {
-            return (
-              <Picker.Item
-                label={item.sports.SportName}
-                value={item.sports._id}
-                key={index}
-              />
-            );
-          })}
-        </Picker>
-        <View
-          style={{
-            flexDirection: "row",
-            paddingVertical: 15,
-            paddingHorizontal: 10,
-            backgroundColor: "white",
-            marginHorizontal: 15,
-            borderRadius: 8,
-            height: 250,
-          }}
-        >
+        <View>
           <ScrollView>
-            <TextInput
-              onChangeText={(text) => onChangeText(text)}
-              value={value}
-              multiline
-              editable
-              placeholder="Type here"
-            ></TextInput>
-            <View>
-              {parameters.map((parameter, index) => (
-                <View key={index}>
-                  <Text>{parameter}</Text>
-                  <TextInput
-                    keyboardType="numeric"
-                    style={{ height: 40, borderColor: "gray", borderWidth: 1 }}
-                    placeholder="Enter a value"
-                    value={(
-                      inputFields.find(
-                        (field) => field.parameter === parameter
-                      ) || { value: "" }
-                    ).value.toString()}
-                    onChangeText={(text) => handleInputChange(parameter, text)}
-                  />
-                </View>
-              ))}
-            </View>
+            {payments.map((item, index) => (
+              <View key={index} style={{ marginVertical: 10 }}>
+                <CheckBox
+                  isChecked={selectedSports.includes(item.sports._id)}
+                  onClick={() =>
+                    handleSportSelection(item.sports._id, item.sports.SportName)
+                  }
+                  checkBoxColor="blue" // Set your desired checkbox color
+                />
+                <Text>{item.sports.SportName}</Text>
+                {selectedSports.includes(item.sports._id) && (
+                  <View>
+                    <TextInput
+                      onChangeText={(text) => onChangeText(text)}
+                      value={value}
+                      multiline
+                      editable
+                      placeholder="Type here"
+                    />
+                    {item.sports.parameters.map((parameter, parameterIndex) => (
+                      <View key={parameterIndex}>
+                        <Text>{parameter}</Text>
+                        <TextInput
+                          keyboardType="numeric"
+                          style={{
+                            height: 40,
+                            borderColor: "gray",
+                            borderWidth: 1,
+                          }}
+                          placeholder="Enter a value"
+                          value={
+                            selectedSportParameters[item.sports._id] &&
+                            selectedSportParameters[item.sports._id][parameter]
+                              ? selectedSportParameters[item.sports._id][
+                                  parameter
+                                ].toString()
+                              : ""
+                          }
+                          onChangeText={(text) =>
+                            handleParameterChange(
+                              item.sports._id,
+                              parameter,
+                              text
+                            )
+                          }
+                        />
+                      </View>
+                    ))}
+                  </View>
+                )}
+              </View>
+            ))}
           </ScrollView>
         </View>
         <TouchableOpacity
