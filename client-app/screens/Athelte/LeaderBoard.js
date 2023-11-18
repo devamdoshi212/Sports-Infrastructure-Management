@@ -11,6 +11,8 @@ import {
 import ipconfig from "../../ipconfig";
 import { Ionicons } from "@expo/vector-icons";
 import { useEffect, useState } from "react";
+import { MaterialIcons } from "@expo/vector-icons"; // Import Ionicons from @expo/vector-icons
+
 import Leaderboard from "react-native-leaderboard";
 import { useSelector } from "react-redux";
 const LeaderBoard = ({ navigation }) => {
@@ -93,6 +95,11 @@ const LeaderBoard = ({ navigation }) => {
           <Text style={styles.label}>
             {userdata[0].score ? userdata[0].score.toFixed(3) : ""}
           </Text>
+          <View>
+            <TouchableOpacity>
+              <MaterialIcons name="share" size={24} />
+            </TouchableOpacity>
+          </View>
         </View>
         <Leaderboard
           labelBy="name"
