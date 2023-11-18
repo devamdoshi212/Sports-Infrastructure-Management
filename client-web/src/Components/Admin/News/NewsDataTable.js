@@ -137,7 +137,7 @@ export default function NewsDataTable() {
         Swal.fire({
           position: "top-end",
           icon: "success",
-          title: "Event Active Successfully",
+          title: "Event InActive Successfully",
           showConfirmButton: false,
           timer: 1500,
         });
@@ -166,7 +166,7 @@ export default function NewsDataTable() {
         Swal.fire({
           position: "top-end",
           icon: "success",
-          title: "Event Inactive Successfully",
+          title: "Event Active Successfully",
           showConfirmButton: false,
           timer: 1500,
         });
@@ -192,7 +192,7 @@ export default function NewsDataTable() {
             onClick={() => PassHandler(rowData)}
             className="text-white font-bold rounded-lg bg-red-700 hover:bg-red-500 hover:text-gray-200 p-2"
           >
-            Inactive
+            InActive
           </button>
         </div>
       </>
@@ -332,7 +332,7 @@ export default function NewsDataTable() {
               } else {
                 return (
                   <h2 className=" bg-red-400 text-white rounded-md text-center">
-                    Inactive
+                    InActive
                   </h2>
                 );
               }
