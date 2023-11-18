@@ -8,8 +8,10 @@ import {
     TouchableOpacity,
     ScrollView,
     Pressable,
+    Dimensions,
 } from "react-native";
 import React, { useEffect } from "react";
+const {height: screenHeight } = Dimensions.get("window");
 import { Picker } from "@react-native-picker/picker";
 import { Ionicons } from "@expo/vector-icons";
 import { useState } from "react";
@@ -158,8 +160,8 @@ const AthleteResponse = () => {
                         </Text>
                     </View>
                 </View>
-                <View>
-                    <ScrollView style={{ padding: 10 }}>
+                <View style={{ paddingLeft: 10,height:screenHeight*0.75,width:"94%",marginLeft:"2%" }}>
+                    <ScrollView >
                         {payments.map((item, index) => (
                             <View key={index} style={{ marginVertical: 10 }}>
                                 <CheckBox
@@ -209,14 +211,14 @@ const AthleteResponse = () => {
                                 )}
                             </View>
                         ))}
-                        <TouchableOpacity
-                            style={styles.loginButton}
-                            onPress={submitHandler}
-                        >
-                            <Text style={styles.buttonText}>Submit</Text>
-                        </TouchableOpacity>
                     </ScrollView>
                 </View>
+                <TouchableOpacity
+                    style={styles.loginButton}
+                    onPress={submitHandler}
+                >
+                    <Text style={styles.buttonText}>Submit</Text>
+                </TouchableOpacity>
             </View>
         </>
     );
