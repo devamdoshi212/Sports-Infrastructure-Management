@@ -79,18 +79,24 @@ const MyCarousel = ({ navigation, route }) => {
     const updatedImage = item.image.replace("localhost", ip);
     console.log(updatedImage);
     return (
-      <View style={styles.item}>
-        <ParallaxImage
-          source={{ uri: updatedImage }}
-          containerStyle={styles.imageContainer}
-          style={styles.image}
-          parallaxFactor={0.4}
-          {...parallaxProps}
-        />
-        {/* <Text style={styles.title} numberOfLines={2}>
+      <TouchableOpacity
+        onPress={() => {
+          navigation.navigate("Events");
+        }}
+      >
+        <View style={styles.item}>
+          <ParallaxImage
+            source={{ uri: updatedImage }}
+            containerStyle={styles.imageContainer}
+            style={styles.image}
+            parallaxFactor={0.4}
+            {...parallaxProps}
+          />
+          {/* <Text style={styles.title} numberOfLines={2}>
                     {item.title}
                 </Text> */}
-      </View>
+        </View>
+      </TouchableOpacity>
     );
   };
 
@@ -107,7 +113,7 @@ const MyCarousel = ({ navigation, route }) => {
         ref={carouselRef}
         sliderWidth={screenWidth}
         sliderHeight={screenWidth}
-        itemWidth={screenWidth-60}
+        itemWidth={screenWidth - 60}
         data={image}
         renderItem={renderItem}
         hasParallaxImages={true}

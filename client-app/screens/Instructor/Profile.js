@@ -94,6 +94,16 @@ function Profile({ navigation }) {
               <Text style={styles.actionText}>Custom Notifications</Text>
             </View>
           </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.actionButton}
+            onPress={() => {
+              navigation.navigate("ComplexDetails");
+            }}
+          >
+            <View style={styles.row}>
+              <Text style={styles.actionText}>Complex Details</Text>
+            </View>
+          </TouchableOpacity>
 
           <TouchableOpacity
             style={styles.actionButton}
