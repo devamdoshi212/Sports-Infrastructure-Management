@@ -124,6 +124,10 @@ app.post(
 app.get("/getAthletes", AthleteController.getAthlete);
 app.get("/getAthletesWithRating", AthleteController.getAthletewithRating);
 app.get(
+  "/getAthletesWithAllRating",
+  AthleteController.getAthletesWithAllRating
+);
+app.get(
   "/getAthleteswithsupervisor",
   AthleteController.getAthletewithsupervisor
 );
