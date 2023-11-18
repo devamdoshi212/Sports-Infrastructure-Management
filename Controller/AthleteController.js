@@ -42,10 +42,54 @@ module.exports.getAthletewithRating = async function (req, res) {
     data: data,
     data1: myarray,
     currentuserdata: currentuser,
-    msg: "Athlete Retrived",
+    msg: "Athlete General Rating Retrived",
     rcode: 200,
   });
 };
+
+module.exports.getAthletesWithAllRating = async function (req, res) {
+  let sportId = req.query.sportId;
+
+  const data = await AthleteModel.find().populate("userId");
+  let myarray = [];
+
+  for (let index = 0; index < data.length; index++) {
+    const element = data[index];
+    if (sportId) {
+      let rating = await averageRating(element._id, sportId);
+      myarray.push({
+        athleteid: element._id.toString(),
+        name: element.userId.Name,
+        image: element.baseUrl,
+        rating: rating ? rating : 0,
+        email: element.userId.Email,
+        contact: element.userId.ContactNum,
+        dob: element.userId.DOB,
+        address: element.address,
+      });
+    } else {
+      let rating = await averageRating(element._id, null);
+      myarray.push({
+        athleteid: element._id.toString(),
+        name: element.userId.Name,
+        image: element.baseUrl,
+        rating: rating ? rating : 0,
+        email: element.userId.Email,
+        contact: element.userId.ContactNum,
+        dob: element.userId.DOB,
+        address: element.address,
+      });
+    }
+  }
+
+  myarray.sort((a, b) => b.rating - a.rating);
+  res.json({
+    data: myarray,
+    msg: "Athlete All Rating Retrived",
+    rcode: 200,
+  });
+};
+
 async function averageRating(userId, sportId) {
   let ratings = await athleteRatingModel.find({
     athleteId: userId,
