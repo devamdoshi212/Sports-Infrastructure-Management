@@ -101,6 +101,18 @@ const AdminDashboard = () => {
           </div>
           <AnimatedCount finalCount={visible && data.activecomplaints} />
         </div>
+        <div className=" text-center rounded-lg bg-gray-300 ">
+          <div className=" font-bold p-5 text-3xl">
+            Total Solved Complaints with Happy Response
+          </div>
+          <AnimatedCount finalCount={visible && data.satisfiedCount} />
+        </div>
+        <div className=" text-center rounded-lg bg-gray-300 ">
+          <div className=" font-bold p-5 text-3xl">
+            Total Solved Complaint with Sad Response
+          </div>
+          <AnimatedCount finalCount={visible && data.unsatisfiedCount} />
+        </div>
       </div>
     </div>
   );
