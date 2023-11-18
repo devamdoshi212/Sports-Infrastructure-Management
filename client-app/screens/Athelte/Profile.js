@@ -85,6 +85,16 @@ function Profile({ navigation }) {
           <View style={styles.card}>
             <TouchableOpacity
               onPress={() => {
+                navigation.navigate("Goals");
+              }}
+            >
+              <View style={styles.row}>
+                <Text style={styles.actionText}>Goals</Text>
+                <MaterialIcons name="navigate-next" size={24} />
+              </View>
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => {
                 navigation.navigate("LeaderBoard");
               }}
             >
@@ -140,16 +150,6 @@ function Profile({ navigation }) {
             >
               <View style={styles.row}>
                 <Text style={styles.actionText}>Complaint</Text>
-                <MaterialIcons name="navigate-next" size={24} />
-              </View>
-            </TouchableOpacity>
-            <TouchableOpacity
-              onPress={() => {
-                navigation.navigate("ExitForm");
-              }}
-            >
-              <View style={styles.row}>
-                <Text style={styles.actionText}>Athelte Response</Text>
                 <MaterialIcons name="navigate-next" size={24} />
               </View>
             </TouchableOpacity>
