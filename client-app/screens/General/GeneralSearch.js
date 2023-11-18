@@ -107,7 +107,7 @@ const MyCarousel = ({ navigation, route }) => {
         ref={carouselRef}
         sliderWidth={screenWidth}
         sliderHeight={screenWidth}
-        itemWidth={screenWidth - 60}
+        itemWidth={screenWidth-60}
         data={image}
         renderItem={renderItem}
         hasParallaxImages={true}
@@ -207,13 +207,7 @@ const styles = StyleSheet.create({
   },
   container: {
     flex: 1,
-    // width: screenWidth,
-    // height: screenWidth * 0.1020935961,
     backgroundColor: "gray",
-    // flexDirection: "row",
-    // justifyContent: "space-around",
-    // borderTopLeftRadius: -50,
-    // borderTopRightRadius: -50
   },
   input: {
     width: "90%",
@@ -236,22 +230,17 @@ const styles = StyleSheet.create({
   },
   background: {
     backgroundColor: "gray",
-    // flex: 1,
     flexDirection: "column",
   },
   primaryView: {
     backgroundColor: "#ffffff",
-    // flex: 1
   },
   ovalSection: {
-    // flex: 3,
     marginTop: 10,
     alignSelf: "center",
     backgroundColor: "#fbe8e8", // #fbe8e8,#fee8e8,#e8fbef
     borderTopLeftRadius: screenWidth * 0.1,
     borderTopRightRadius: screenWidth * 0.1,
-    // borderRadius: screenWidth * 0.1,
-    // borderCurve: "circular",
     width: screenWidth,
     height: 550,
   },
@@ -267,7 +256,6 @@ const styles = StyleSheet.create({
     marginTop: "2%",
     alignItems: "center",
     padding: 10,
-    // marginLeft: "-8%",
     width: "85%",
     borderWidth: 1,
     borderRadius: 10,

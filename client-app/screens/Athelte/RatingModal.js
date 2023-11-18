@@ -68,6 +68,7 @@ const RatingModal = (props) => {
                     />
                     <TouchableOpacity
                         style={styles.loginButton}
+                        onPress={ratinghandler}
                     >
                         <Text style={styles.buttonText}>Submit</Text>
                     </TouchableOpacity>
@@ -94,7 +95,7 @@ const styles = StyleSheet.create({
         elevation: 5,
         width: "80%",
         alignSelf: "center",
-        backgroundColor: "#fbe8e0",
+        backgroundColor: "#fff",
     },
     title: {
         fontSize: 20,

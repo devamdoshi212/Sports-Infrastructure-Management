@@ -171,6 +171,7 @@ const GeneralComplexDetailsScreen = ({ navigation, route }) => {
                                                             <Text style={styles.cardSportColomn2TextInfo}>
                                                                 {details.availableSports[index]}
                                                             </Text>
+                                                            <View style={{ backgroundColor: "#fff", padding: 5, borderRadius: 10, marginLeft: "5%" }}>
                                                             {item.rating && (
                                                                 <Rating
                                                                     type="star"
@@ -181,7 +182,8 @@ const GeneralComplexDetailsScreen = ({ navigation, route }) => {
                                                                     minValue={1}
                                                                     style={styles.starContainer}
                                                                 />
-                                                            )}
+                                                                )}
+                                                            </View>
                                                         </View>
                                                         <View style={styles.cardSportColomn2TextDetail}>
                                                             <Text style={styles.cardSportColomn2TextDetailInfo}>
@@ -349,7 +351,6 @@ const styles = StyleSheet.create({
         paddingRight: "15%",
     },
     starContainer: {
-        marginLeft: "10%",
         backgroundColor: "#fbe8e0",
         marginTop: "1%",
     },
