@@ -1,6 +1,6 @@
 export const NewsServices = {
   getData(id) {
-    return fetch(`http://localhost:9999/getUpdates`)
+    return fetch(`http://localhost:9999/getUpdates?level=0`)
       .then((res) => res.json())
       .then((res) => {
         return res.data;
