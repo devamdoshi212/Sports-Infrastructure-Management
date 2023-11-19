@@ -16,8 +16,17 @@ const calculateRemainingDays = (targetDate) => {
   const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
   return diffDays;
 };
+
+const calculateDays = (startdate, actualdate) => {
+  const actual = new Date(actualdate);
+  const start = new Date(startdate);
+  const diffTime = Math.abs(actual - start);
+  const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+  return diffDays;
+};
 const GoalScreen = ({ route, navigation }) => {
   const item = route.params.data;
+  console.log(item);
   const ip = ipconfig.ip;
   const { _id } = useSelector((state) => state.athelte.Athelte[0]);
 
@@ -52,42 +61,90 @@ const GoalScreen = ({ route, navigation }) => {
   };
   return (
     <ScrollView contentContainerStyle={styles.container}>
-      <View
-        style={[
-          styles.bigCircle,
-          {
-            width: 120,
-            height: 120,
-            borderWidth: circlePercentage * 0.01 * 10,
-          },
-        ]}
-      >
-        <Text style={styles.bigCircleText}>
-          Remaining Days: {remainingDays}
-        </Text>
-      </View>
-
-      <View style={styles.goalContainer}>
-        <Text style={styles.title}>{item.title}</Text>
-        <View style={styles.horizontalLine} />
-        <Text style={styles.description}>{item.description}</Text>
-        <View style={styles.middleContainer}>
-          <View>
-            <Text style={styles.date}>
-              Start Date: {new Date(item.startdate).toLocaleDateString()}
-            </Text>
-            <Text style={styles.date}>
-              Target Date: {new Date(item.targetdate).toLocaleDateString()}
+      {item.achieved === "0" ? (
+        <>
+          <View
+            style={[
+              styles.bigCircle,
+              {
+                width: 120,
+                height: 120,
+                borderWidth: circlePercentage * 0.01 * 10,
+              },
+            ]}
+          >
+            <Text style={styles.bigCircleText}>
+              Remaining Days: {remainingDays}
             </Text>
           </View>
-        </View>
-        <TouchableOpacity
-          style={styles.achievedButton}
-          onPress={achievedHandler}
-        >
-          <Text style={styles.buttonText}>Achieved</Text>
-        </TouchableOpacity>
-      </View>
+
+          <View style={styles.goalContainer}>
+            <Text style={styles.title}>{item.title}</Text>
+            <View style={styles.horizontalLine} />
+            <Text style={styles.description}>{item.description}</Text>
+            <View style={styles.middleContainer}>
+              <View>
+                <Text style={styles.date}>
+                  Start Date: {new Date(item.startdate).toLocaleDateString()}
+                </Text>
+                <Text style={styles.date}>
+                  Target Date: {new Date(item.targetdate).toLocaleDateString()}
+                </Text>
+              </View>
+            </View>
+            <TouchableOpacity
+              style={styles.achievedButton}
+              onPress={achievedHandler}
+            >
+              <Text style={styles.buttonText}>Achieved</Text>
+            </TouchableOpacity>
+          </View>
+        </>
+      ) : (
+        <>
+          <View
+            style={[
+              styles.bigCircle,
+              {
+                width: 120,
+                height: 120,
+                borderWidth: circlePercentage * 0.01 * 10,
+              },
+            ]}
+          >
+            <Text style={styles.bigCircleText}>
+              Completed in {calculateDays(item.startdate, item.actualdate)} Days
+            </Text>
+          </View>
+
+          <View style={styles.goalContainer}>
+            <Text style={styles.title}>{item.title}</Text>
+            <View style={styles.horizontalLine} />
+            <Text style={styles.description}>{item.description}</Text>
+            <View style={styles.middleContainer}>
+              <View>
+                <Text style={styles.date}>
+                  Start Date: {new Date(item.startdate).toLocaleDateString()}
+                </Text>
+                <Text style={styles.date}>
+                  Target Date: {new Date(item.targetdate).toLocaleDateString()}
+                </Text>
+
+                <Text style={styles.date}>
+                  Goal Achieved Date:{" "}
+                  {new Date(item.actualdate).toLocaleDateString()}
+                </Text>
+              </View>
+            </View>
+            <TouchableOpacity
+              style={styles.achievedButton}
+              // onPress={achievedHandler}
+            >
+              <Text style={styles.buttonText}>Goal Achieved</Text>
+            </TouchableOpacity>
+          </View>
+        </>
+      )}
     </ScrollView>
   );
 };

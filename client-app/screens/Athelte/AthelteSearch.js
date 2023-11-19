@@ -119,17 +119,27 @@ const AthelteSearch = ({ navigation, route }) => {
       <View style={styles.background}>
         <View style={styles.primaryView}></View>
         <View style={styles.ovalSection}>
-          <View style={{ flexDirection: "row" }}>
+          <View
+            style={{ flexDirection: "row", justifyContent: "space-around" }}
+          >
             <TouchableOpacity
-              style={styles.button1}
+              style={
+                selectedOption == "getSports"
+                  ? styles.button
+                  : styles.onpressbutton
+              }
               onPress={() => {
                 setSelectedOption("getSports");
               }}
             >
-              <Text style={styles.buttonText1}>Facility</Text>
+              <Text style={styles.buttonText}>Facility</Text>
             </TouchableOpacity>
             <TouchableOpacity
-              style={styles.button}
+              style={
+                selectedOption == "searchSportsComplex"
+                  ? styles.button
+                  : styles.onpressbutton
+              }
               onPress={() => {
                 setSelectedOption("searchSportsComplex");
               }}
@@ -177,39 +187,33 @@ const AthelteSearch = ({ navigation, route }) => {
 export default AthelteSearch;
 
 const styles = StyleSheet.create({
-  button1: {
-    marginTop: 10,
-    marginRight: "5%",
-    marginLeft: "7%",
-    width: "40%",
-    backgroundColor: "#000",
-    borderRadius: 10,
-    padding: 10,
-  },
-  buttonText1: {
-    textAlign: "center",
-    color: "#fff",
-    fontSize: 16,
-    fontWeight: "bold",
-  },
-  button: {
+  onpressbutton: {
     marginTop: 10,
     width: "40%",
     backgroundColor: "white",
     borderRadius: 10,
-    padding: 10,
+    padding: 5,
+    height: "90%",
+  },
+  button: {
+    marginTop: 10,
+    width: "40%",
+    backgroundColor: "#f2b69c",
+    borderRadius: 10,
+    padding: 5,
+    height: "90%",
   },
   buttonText: {
     textAlign: "center",
     color: "black",
-    fontSize: 16,
+    fontSize: 17,
     fontWeight: "bold",
   },
   container: {
     flex: 1,
     // width: screenWidth,
     // height: screenWidth * 0.1020935961,
-    backgroundColor: "gray",
+    backgroundColor: "#fff6f3",
     // flexDirection: "row",
     // justifyContent: "space-around",
     // borderTopLeftRadius: -50,
@@ -235,7 +239,7 @@ const styles = StyleSheet.create({
     resizeMode: "cover",
   },
   background: {
-    backgroundColor: "gray",
+    backgroundColor: "#fff6f3",
     // flex: 1,
     flexDirection: "column",
   },
@@ -247,7 +251,7 @@ const styles = StyleSheet.create({
     // flex: 3,
     marginTop: 10,
     alignSelf: "center",
-    backgroundColor: "#fbe8e8", // #fbe8e8,#fee8e8,#e8fbef
+    backgroundColor: "#f8d7c9", // #fbe8e8,#fee8e8,#e8fbef
     borderTopLeftRadius: screenWidth * 0.1,
     borderTopRightRadius: screenWidth * 0.1,
     // borderRadius: screenWidth * 0.1,
@@ -264,10 +268,9 @@ const styles = StyleSheet.create({
   searchContainer: {
     flexDirection: "row",
     marginLeft: "7%",
-    marginTop: "2%",
+    marginTop: "3%",
     alignItems: "center",
     padding: 10,
-    // marginLeft: "-8%",
     width: "85%",
     borderWidth: 1,
     borderRadius: 10,

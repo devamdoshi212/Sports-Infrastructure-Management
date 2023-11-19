@@ -76,7 +76,7 @@ const Events = ({ navigation }) => {
                 <Text style={styles.input}>{item.title}</Text>
               </View>
               <View style={styles.row}>
-                <Text style={styles.label}>Descreption:</Text>
+                <Text style={styles.label}>Description:</Text>
                 <Text style={styles.input}>{item.description}</Text>
               </View>
             </View>

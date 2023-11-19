@@ -225,6 +225,7 @@ const styles = StyleSheet.create({
   },
   imageBackground: {
     flex: 1,
+    height: "100%",
   },
   centeredContainer: {
     flex: 1,

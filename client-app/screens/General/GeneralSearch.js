@@ -125,17 +125,27 @@ const MyCarousel = ({ navigation, route }) => {
       <View style={styles.background}>
         <View style={styles.primaryView}></View>
         <View style={styles.ovalSection}>
-          <View style={{ flexDirection: "row" }}>
+          <View
+            style={{ flexDirection: "row", justifyContent: "space-around" }}
+          >
             <TouchableOpacity
-              style={styles.button1}
+              style={
+                selectedOption == "getSports"
+                  ? styles.button
+                  : styles.onpressbutton
+              }
               onPress={() => {
                 setSelectedOption("getSports");
               }}
             >
-              <Text style={styles.buttonText1}>Facility</Text>
+              <Text style={styles.buttonText}>Facility</Text>
             </TouchableOpacity>
             <TouchableOpacity
-              style={styles.button}
+              style={
+                selectedOption == "searchSportsComplex"
+                  ? styles.button
+                  : styles.onpressbutton
+              }
               onPress={() => {
                 setSelectedOption("searchSportsComplex");
               }}
@@ -183,32 +193,26 @@ const MyCarousel = ({ navigation, route }) => {
 export default MyCarousel;
 
 const styles = StyleSheet.create({
-  button1: {
-    marginTop: 10,
-    marginRight: "5%",
-    marginLeft: "7%",
-    width: "40%",
-    backgroundColor: "#000",
-    borderRadius: 10,
-    padding: 10,
-  },
-  buttonText1: {
-    textAlign: "center",
-    color: "#fff",
-    fontSize: 16,
-    fontWeight: "bold",
-  },
-  button: {
+  onpressbutton: {
     marginTop: 10,
     width: "40%",
     backgroundColor: "white",
     borderRadius: 10,
-    padding: 10,
+    padding: 5,
+    height: "90%",
+  },
+  button: {
+    marginTop: 10,
+    width: "40%",
+    backgroundColor: "#f2b69c",
+    borderRadius: 10,
+    padding: 5,
+    height: "90%",
   },
   buttonText: {
     textAlign: "center",
     color: "black",
-    fontSize: 16,
+    fontSize: 17,
     fontWeight: "bold",
   },
   container: {
@@ -271,7 +275,7 @@ const styles = StyleSheet.create({
   searchContainer: {
     flexDirection: "row",
     marginLeft: "7%",
-    marginTop: "2%",
+    marginTop: "3%",
     alignItems: "center",
     padding: 10,
     width: "85%",

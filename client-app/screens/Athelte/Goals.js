@@ -205,7 +205,9 @@ const Goals = () => {
               ) : (
                 <Pressable
                   onPress={() => {
-                    navigation.navigate("GoalDetail");
+                    navigation.navigate("GoalDetail", {
+                      data: item,
+                    });
                   }}
                   style={({ pressed }) => [
                     {
