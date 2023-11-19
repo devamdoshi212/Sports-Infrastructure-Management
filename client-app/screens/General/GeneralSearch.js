@@ -77,7 +77,7 @@ const MyCarousel = ({ navigation, route }) => {
 
   const renderItem = ({ item, index }, parallaxProps) => {
     const updatedImage = item.image.replace("localhost", ip);
-    console.log(updatedImage);
+    // console.log(updatedImage);
     return (
       <TouchableOpacity
         onPress={() => {

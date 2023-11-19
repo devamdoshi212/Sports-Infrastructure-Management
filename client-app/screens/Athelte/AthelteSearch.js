@@ -14,6 +14,8 @@ import Carousel, { ParallaxImage } from "react-native-snap-carousel";
 import { Feather } from "@expo/vector-icons";
 import FilterModal from "../General/FilterModal";
 import FlatListAthelte from "./FlatListAthelte";
+import { useSelector } from "react-redux";
+import ipconfig from "../../ipconfig";
 
 const ENTRIES1 = [
   {
@@ -55,13 +57,14 @@ const AthelteSearch = ({ navigation, route }) => {
   const [distance, setDistance] = useState("");
   const [category, setCategory] = useState("");
   const carouselRef = useRef(null);
-
+  const [loading, setLoading] = useState(true);
+  const [images, setImages] = useState([]);
   const goForward = () => {
     carouselRef.current.snapToNext();
   };
-  useEffect(() => {
-    setEntries(ENTRIES1);
-  }, []);
+  const Athelte = useSelector((state) => state.athelte.Athelte);
+  const ip = ipconfig.ip;
+
   useEffect(() => {
     const { lat, long, distance, district, Category } = route.params || {};
     if (lat) {
@@ -77,11 +80,32 @@ const AthelteSearch = ({ navigation, route }) => {
       setCategory(Category);
     }
   }, [route.params]);
+
+  useEffect(() => {
+    if (Athelte && Athelte.length > 0) {
+      var requestOptions = {
+        method: "GET",
+        redirect: "follow",
+      };
+      fetch(
+        `http://${ip}:9999/getUpdatesForAthlete?sportComplexId=${Athelte[0]?.createdBy?.SportComplexId}`,
+        requestOptions
+      )
+        .then((response) => response.json())
+        .then((result) => {
+          setImages(result.data);
+        })
+        .catch((error) => console.log("error", error));
+    }
+  }, [Athelte]);
+
   const renderItem = ({ item, index }, parallaxProps) => {
+    const updatedImage = item.image.replace("localhost", ip);
+
     return (
       <View style={styles.item}>
         <ParallaxImage
-          source={{ uri: item.illustration }}
+          source={{ uri: updatedImage }}
           containerStyle={styles.imageContainer}
           style={styles.image}
           parallaxFactor={0.4}
@@ -108,7 +132,7 @@ const AthelteSearch = ({ navigation, route }) => {
         sliderWidth={screenWidth}
         sliderHeight={screenWidth}
         itemWidth={screenWidth - 60}
-        data={entries}
+        data={images}
         renderItem={renderItem}
         hasParallaxImages={true}
         autoplay={true}
