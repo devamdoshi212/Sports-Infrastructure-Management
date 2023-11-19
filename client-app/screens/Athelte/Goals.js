@@ -53,17 +53,15 @@ const Goals = () => {
             </View>
           </Pressable>
           <View style={styles.heading}>
-            <Text style={{ fontWeight: "bold", fontSize: 25 }}>
-              Complaint List
-            </Text>
+            <Text style={{ fontWeight: "bold", fontSize: 25 }}>Goals</Text>
           </View>
           <TouchableOpacity
             onPress={() => {
-              navigation.navigate("AthelteComplaint");
+              navigation.navigate("AddGoals");
             }}
           >
             <View style={styles.complaint}>
-              <Text style={styles.actionText}>New</Text>
+              <Text style={styles.actionText}>Add Goals</Text>
               {/* <AntDesign
                   style={{ color: "black", marginLeft: "5%" }}
                   name="plus"
@@ -151,17 +149,17 @@ const styles = StyleSheet.create({
     alignSelf: "center",
   },
   heading: {
-    justifyContent: "center",
+    justifyContent: "flex-end",
     alignItems: "center",
-    width: "80%",
+    width: "60%",
   },
   complaint: {
     flexDirection: "row",
-    width: "80%",
-    height: 40,
+    width: "90%",
+    // height: 40,
     borderRadius: 10,
     backgroundColor: "#f2b69c",
-    paddingTop: "5%",
+    padding: "1%",
   },
   actionText: {
     marginLeft: "5%",
