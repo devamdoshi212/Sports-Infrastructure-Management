@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
-// import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
-import { Ionicons } from "@expo/vector-icons"; // Import Ionicons from @expo/vector-icons
+import { MaterialIcons } from "@expo/vector-icons"; // Import Ionicons from @expo/vector-icons
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useDispatch, useSelector } from "react-redux";
 import { UserActions } from "../../store/User";
@@ -9,12 +8,13 @@ import {
   Text,
   Image,
   StyleSheet,
-  Button,
   TouchableOpacity,
-  Pressable,
   ScrollView,
+  Dimensions,
+  Alert,
 } from "react-native";
 import ipconfig from "../../ipconfig";
+const { width: screenWidth, height: screenHeight } = Dimensions.get("window");
 async function removeItem() {
   try {
     await AsyncStorage.removeItem("token");
@@ -30,7 +30,7 @@ function Profile({ navigation }) {
   const [image, setimage] = useState("./../../assets/icon.png");
 
   const ProfileDetailHandler = () => {
-    console.log("hello");
+    // console.log("hello");
     navigation.navigate("DetailProfile");
   };
 
@@ -47,118 +47,134 @@ function Profile({ navigation }) {
     // Implement your logout logic here
   };
   return (
-    <ScrollView>
+    <ScrollView
+      style={{
+        backgroundColor: "#fbe8e0",
+      }}
+    >
       <View style={styles.container}>
-        <Pressable onPress={ProfileDetailHandler}>
-          <View style={styles.profileInfo}>
-            <View style={styles.leftColumn}>
+        <TouchableOpacity onPress={ProfileDetailHandler}>
+          <View style={styles.profileCard}>
+            <View style={styles.profileImage}>
               <Image
                 style={{
-                  width: 100,
-                  height: 100,
-                  borderRadius: 50,
-                  marginLeft: 1,
+                  width: 125,
+                  height: 125,
+                  borderRadius: 62.5,
+                  borderColor: "#fbe8e0",
+                  borderWidth: 5,
                 }}
                 source={{ uri: `http://${ip}:9999/${image}` }}
               />
             </View>
-            <View style={styles.rightColumn}>
-              <Text style={styles.name}>Name : {Userdata.Name}</Text>
-              <Text style={styles.name}>Email : {Userdata.Email}</Text>
-              <Text style={styles.name}>ContactNo : {Userdata.ContactNum}</Text>
+            <View>
+              <Text
+                style={{
+                  fontWeight: "bold",
+                  fontSize: 20,
+                  alignSelf: "center",
+                  marginTop: "1%",
+                }}
+              >
+                {Userdata.Name}
+              </Text>
             </View>
           </View>
-        </Pressable>
-        <View style={styles.actions}>
-          {Atheltedata[0].createdBy && (
-            <>
-              <TouchableOpacity
-                style={styles.actionButton}
-                onPress={() => {
-                  navigation.navigate("LeaderBoard");
-                }}
-              >
-                <View style={styles.row}>
-                  {/* <Ionicons name="repeat-outline" size={24} /> */}
-                  <Text style={styles.actionText}>Leaderboard</Text>
-                </View>
-              </TouchableOpacity>
-              <TouchableOpacity
-                style={styles.actionButton}
-                onPress={() => {
-                  navigation.navigate("SportsComplexDetails");
-                }}
-              >
-                <View style={styles.row}>
-                  {/* <FontAwesome5 name="user" size={24} /> */}
-                  <Text style={styles.actionText}>Sport Complex Details</Text>
-                </View>
-              </TouchableOpacity>
-              <TouchableOpacity
-                style={styles.actionButton}
-                onPress={() => {
-                  navigation.navigate("IDCard");
-                }}
-              >
-                <View style={styles.row}>
-                  {/* <Ionicons name="repeat-outline" size={24} /> */}
-                  <Text style={styles.actionText}>ID card</Text>
-                </View>
-              </TouchableOpacity>
-
-              <TouchableOpacity
-                style={styles.actionButton}
-                onPress={() => {
-                  navigation.navigate("SportEnroll");
-                }}
-              >
-                <View style={styles.row}>
-                  {/* <MaterialCommunityIcons name="history" size={24} /> */}
-                  <Text style={styles.actionText}>Enrolled Sports</Text>
-                </View>
-              </TouchableOpacity>
-
-              <TouchableOpacity
-                style={styles.actionButton}
-                onPress={() => {
-                  navigation.navigate("PaymentHistory");
-                }}
-              >
-                <View style={styles.row}>
-                  {/* <MaterialCommunityIcons name="certificate-outline" size={24} /> */}
-                  <Text style={styles.actionText}>Payment History</Text>
-                </View>
-              </TouchableOpacity>
-              <TouchableOpacity
-                style={styles.actionButton}
-                onPress={() => {
-                  navigation.navigate("AthelteComplaint");
-                }}
-              >
-                <View style={styles.row}>
-                  {/* <Ionicons name="bookmarks-outline" size={24} /> */}
-                  <Text style={styles.actionText}>Raise Complaint</Text>
-                </View>
-              </TouchableOpacity>
-              <TouchableOpacity
-                style={styles.actionButton}
-                onPress={() => {
-                  navigation.navigate("ComplaintList");
-                }}
-              >
-                <View style={styles.row}>
-                  {/* <Ionicons name="bookmarks-outline" size={24} /> */}
-                  <Text style={styles.actionText}>Complaint History</Text>
-                </View>
-              </TouchableOpacity>
-            </>
-          )}
-          <TouchableOpacity style={styles.logout}>
-            <Button color="#FF3D3D" title="Logout" onPress={handleLogout} />
-            {/* <MaterialCommunityIcons name="logout" size={24} /> */}
-            {/* <Button title="Logout" style={styles.actionText}/> */}
-          </TouchableOpacity>
-        </View>
+        </TouchableOpacity>
+        {Atheltedata[0].createdBy && (
+          <View style={styles.card}>
+            <TouchableOpacity
+              onPress={() => {
+                navigation.navigate("Goals");
+              }}
+            >
+              <View style={styles.row}>
+                <Text style={styles.actionText}>Goals</Text>
+                <MaterialIcons name="navigate-next" size={24} />
+              </View>
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => {
+                navigation.navigate("LeaderBoard");
+              }}
+            >
+              <View style={styles.row}>
+                <Text style={styles.actionText}>Leaderboard</Text>
+                <MaterialIcons name="navigate-next" size={24} />
+              </View>
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => {
+                navigation.navigate("SportsComplexDetails");
+              }}
+            >
+              <View style={styles.row}>
+                <Text style={styles.actionText}>Sport Complex Details</Text>
+                <MaterialIcons name="navigate-next" size={24} />
+              </View>
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => {
+                navigation.navigate("IDCard");
+              }}
+            >
+              <View style={styles.row}>
+                <Text style={styles.actionText}>ID card</Text>
+                <MaterialIcons name="navigate-next" size={24} />
+              </View>
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => {
+                navigation.navigate("SportEnroll");
+              }}
+            >
+              <View style={styles.row}>
+                <Text style={styles.actionText}>Enrolled Sports</Text>
+                <MaterialIcons name="navigate-next" size={24} />
+              </View>
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => {
+                navigation.navigate("PaymentHistory");
+              }}
+            >
+              <View style={styles.row}>
+                <Text style={styles.actionText}>Payment History</Text>
+                <MaterialIcons name="navigate-next" size={24} />
+              </View>
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => {
+                navigation.navigate("ComplaintList");
+              }}
+            >
+              <View style={styles.row}>
+                <Text style={styles.actionText}>Complaint</Text>
+                <MaterialIcons name="navigate-next" size={24} />
+              </View>
+            </TouchableOpacity>
+          </View>
+        )}
+        <TouchableOpacity
+          style={styles.button}
+          onPress={() => {
+            Alert.alert(
+              "Logout from the application",
+              "Are you sure you want to logout?",
+              [
+                {
+                  text: "CANCEL",
+                  onPress: () => console.log("Cancel"),
+                  style: "cancel",
+                },
+                { text: "LOGOUT", onPress: handleLogout },
+              ]
+            );
+          }}
+        >
+          <Text style={styles.buttonText}>Logout</Text>
+          <MaterialIcons name="logout" size={24} />
+        </TouchableOpacity>
       </View>
     </ScrollView>
   );
@@ -167,75 +183,77 @@ function Profile({ navigation }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#f0f0f0",
-    marginTop: 25,
+    marginTop: 30,
   },
-  profileInfo: {
-    backgroundColor: "white",
-    padding: 20,
-    borderRadius: 10,
+  profileCard: {
+    borderRadius: 20,
     shadowColor: "black",
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.2,
     shadowRadius: 4,
     elevation: 5,
-    width: "95%",
-    flexDirection: "row",
-    alignSelf: "center",
-    marginTop: "8%",
-    justifyContent: "space-between",
-  },
-  leftColumn: {
-    flex: 1,
-  },
-  rightColumn: {
-    flex: 2,
-    paddingLeft: 20,
-    paddingBottom: 8,
-    marginLeft: 6,
+    marginHorizontal: 15,
+    marginVertical: 5,
+    marginTop: "20%",
+    paddingBottom: "5%",
+    backgroundColor: "#9cafa2",
+    flexDirection: "column",
   },
   profileImage: {
-    width: 80,
-    height: 80,
-    borderRadius: 60,
+    flex: 1,
+    alignSelf: "center",
+    alignSelf: "center",
+    borderRadius: 15,
+    borderColor: "white",
+    marginTop: "-15%",
   },
-
-  name: {
-    fontSize: 16,
-    color: "grey",
-    marginTop: 5,
-  },
-  row: {
-    backgroundColor: "white",
-    padding: 20,
+  card: {
+    flexDirection: "column",
+    marginTop: "1%",
+    alignItems: "center",
+    alignSelf: "center",
+    padding: 10,
+    width: "95%",
     borderRadius: 10,
+    backgroundColor: "white",
     shadowColor: "black",
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.2,
     shadowRadius: 4,
     elevation: 5,
-    width: "92%",
-    alignSelf: "center",
+    marginHorizontal: 15,
+    marginVertical: 5,
+    marginBottom: "2%",
+    paddingBottom: "5%",
+    backgroundColor: "#f2b69c",
+  },
+  row: {
+    width: "120%",
+    marginTop: "5%",
     flexDirection: "row",
-  },
-  actions: {
-    marginTop: 5,
-    width: "95%",
-    alignSelf: "center",
-  },
-  actionButton: {
-    paddingVertical: 10,
+    borderBottomWidth: 1,
+    paddingVertical: "3%",
   },
   actionText: {
-    width: "80%",
-
+    width: "75%",
     fontWeight: "bold",
     fontSize: 15,
   },
-  logout: {
-    width: "40%",
-    alignSelf: "center",
-    marginTop: "15%",
+  button: {
+    flexDirection: "row",
+    marginTop: 10,
+    marginLeft: "3%",
+    width: "94%",
+    backgroundColor: "#f2b69c",
+    borderRadius: 5,
+    padding: 10,
+  },
+  buttonText: {
+    flex: 1,
+    color: "black",
+    width: "75%",
+    fontWeight: "bold",
+    fontSize: 15,
   },
 });
 

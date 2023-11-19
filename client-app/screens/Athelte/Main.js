@@ -28,9 +28,20 @@ const Main = ({ navigation }) => {
           return <Ionicons name={iconName} size={32} color="black" />;
         },
         tabBarActiveTintColor: "blue", // Color of the active tab icon
-        tabBarInactiveTintColor: "gray", // Color of the inactive tab icon
-        tabBarStyle: { backgroundColor: "white" }, // Background color of the tab bar
+        tabBarInactiveTintColor: "black", // Color of the inactive tab icon
+        tabBarStyle: {
+          backgroundColor: "#d7a592",
+        }, // Background color of the tab bar
         // showLabel: false,
+        // #e8b7a9
+        // #d7a592
+        // #c99c81
+        // #e3cfbf
+        // #f8d7c9
+        // #f5c6b3
+        // #f2b69c
+        //  #fbe8e0
+        // #f2b69c
       })}
     >
       <Tab.Screen name="AthelteSearch" component={AthelteSearchNavigator} />

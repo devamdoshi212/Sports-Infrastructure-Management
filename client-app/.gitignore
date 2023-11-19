@@ -2,7 +2,7 @@
 
 # dependencies
 node_modules/
-
+ipconfig.js
 # Expo
 .expo/
 dist/

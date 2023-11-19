@@ -11,8 +11,9 @@ import {
   TouchableOpacity,
   Pressable,
   ScrollView,
+  Alert,
 } from "react-native";
-import { Ionicons } from "@expo/vector-icons";
+import { Ionicons, MaterialIcons } from "@expo/vector-icons";
 import ipconfig from "../../ipconfig";
 async function removeItem() {
   try {
@@ -25,143 +26,146 @@ function SupervisorProfile({ navigation }) {
   const dispatch = useDispatch();
   const ip = ipconfig.ip;
   const Userdata = useSelector((state) => state.user.User);
-  const [image, setimage] = useState("./../../assets/icon.png");
-
+  const [image, setimage] = useState("./../../assets/Supervisor.png");
+  console.log(Userdata);
   useEffect(() => {}, [image]);
   const handleLogout = () => {
     dispatch(UserActions.getuserRole({ Role: "" }));
     removeItem();
   };
   return (
-    <ScrollView>
+    <ScrollView
+      style={{
+        backgroundColor: "#fbe8e0",
+      }}
+    >
       <View style={styles.container}>
-        <View style={styles.header}>
-          {/* <View style={styles.back}>
-          <Ionicons name="arrow-back" size={24} />
-        </View> */}
-          <View style={styles.heading}>
-            <Text style={{ fontWeight: "bold", fontSize: 25 }}>My Profile</Text>
-          </View>
-        </View>
         <Pressable
           onPress={() => {
             navigation.navigate("DetailProfile");
           }}
         >
-          <View style={styles.SupervisorInfo}>
-            <View style={styles.leftColumn}>
+          <View style={styles.profileCard}>
+            <View style={styles.profileImage}>
               <Image
                 style={{
-                  width: 100,
-                  height: 100,
-                  borderRadius: 50,
-                  marginLeft: 1,
+                  width: 125,
+                  height: 125,
+                  borderRadius: 62.5,
+                  borderColor: "#fbe8e0",
+                  borderWidth: 5,
+                  backgroundColor: "white",
                 }}
-                source={require("./../../assets/Supervisor.png")}
+                source={require("../../assets/Supervisor.png")}
               />
             </View>
-            <View style={styles.rightColumn}>
-              <Text style={styles.name}>Name : {Userdata.Name}</Text>
-              <Text style={styles.name}>Email : {Userdata.Email}</Text>
-              <Text style={styles.name}>ContactNo : {Userdata.ContactNum}</Text>
+            <View>
+              <Text
+                style={{
+                  fontWeight: "bold",
+                  fontSize: 20,
+                  alignSelf: "center",
+                  marginTop: "1%",
+                }}
+              >
+                {Userdata.Name}
+              </Text>
             </View>
           </View>
         </Pressable>
 
-        <View style={styles.actions}>
-          {/* <TouchableOpacity style={styles.actionButton}>
-          <View style={styles.row}>
-            <Text style={styles.actionText}>Sport Complex Details</Text>
-          </View>
-        </TouchableOpacity> */}
+        <View style={styles.card}>
           <TouchableOpacity
-            style={styles.actionButton}
             onPress={() => {
               navigation.navigate("AddAthlete");
             }}
           >
             <View style={styles.row}>
-              {/* <MaterialCommunityIcons name="history" size={24} /> */}
               <Text style={styles.actionText}>Add Athlete</Text>
+              <MaterialIcons name="navigate-next" size={24} />
             </View>
           </TouchableOpacity>
           <TouchableOpacity
-            style={styles.actionButton}
             onPress={() => {
               navigation.navigate("AthleteDetails");
             }}
           >
             <View style={styles.row}>
-              {/* <MaterialCommunityIcons name="history" size={24} /> */}
               <Text style={styles.actionText}>Athlete Details</Text>
+              <MaterialIcons name="navigate-next" size={24} />
             </View>
           </TouchableOpacity>
           <TouchableOpacity
-            style={styles.actionButton}
             onPress={() => {
               navigation.navigate("Attendance");
             }}
           >
             <View style={styles.row}>
-              {/* <Ionicons name="repeat-outline" size={24} /> */}
               <Text style={styles.actionText}>Attendance</Text>
+              <MaterialIcons name="navigate-next" size={24} />
             </View>
           </TouchableOpacity>
           <TouchableOpacity
-            style={styles.actionButton}
+            onPress={() => {
+              navigation.navigate("EventPage");
+            }}
+          >
+            <View style={styles.row}>
+              <Text style={styles.actionText}>Events in Complex</Text>
+              <MaterialIcons name="navigate-next" size={24} />
+            </View>
+          </TouchableOpacity>
+          <TouchableOpacity
             onPress={() => {
               navigation.navigate("AthelteListComplaint");
             }}
           >
             <View style={styles.row}>
-              {/* <MaterialCommunityIcons name="certificate-outline" size={24} /> */}
               <Text style={styles.actionText}>Athelte Coming Complaint</Text>
+              <MaterialIcons name="navigate-next" size={24} />
             </View>
           </TouchableOpacity>
           <TouchableOpacity
-            style={styles.actionButton}
             onPress={() => {
               navigation.navigate("ListComplaint");
             }}
           >
             <View style={styles.row}>
-              {/* <MaterialCommunityIcons name="certificate-outline" size={24} /> */}
               <Text style={styles.actionText}>View Complaint</Text>
+              <MaterialIcons name="navigate-next" size={24} />
             </View>
           </TouchableOpacity>
           <TouchableOpacity
-            style={styles.actionButton}
             onPress={() => {
               navigation.navigate("RaiseComplaint");
             }}
           >
             <View style={styles.row}>
-              {/* <MaterialCommunityIcons name="certificate-outline" size={24} /> */}
               <Text style={styles.actionText}>Raise Complaint</Text>
-            </View>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={styles.actionButton}
-            onPress={() => {
-              navigation.navigate("Response");
-            }}
-          >
-            <View style={styles.row}>
-              {/* <MaterialCommunityIcons name="certificate-outline" size={24} /> */}
-              <Text style={styles.actionText}>Daily Response</Text>
-            </View>
-          </TouchableOpacity>
-
-          <TouchableOpacity style={styles.actionButton}>
-            <View
-              style={{ width: "40%", alignSelf: "center", marginTop: "3%" }}
-            >
-              <Button color="#FF3D3D" title="Logout" onPress={handleLogout} />
-              {/* <MaterialCommunityIcons name="logout" size={24} /> */}
-              {/* <Button title="Logout" style={styles.actionText}/> */}
+              <MaterialIcons name="navigate-next" size={24} />
             </View>
           </TouchableOpacity>
         </View>
+        <TouchableOpacity
+          style={styles.button}
+          onPress={() => {
+            Alert.alert(
+              "Logout from the application",
+              "Are you sure you want to logout?",
+              [
+                {
+                  text: "CANCEL",
+                  onPress: () => console.log("Cancel"),
+                  style: "cancel",
+                },
+                { text: "LOGOUT", onPress: handleLogout },
+              ]
+            );
+          }}
+        >
+          <Text style={styles.buttonText}>Logout</Text>
+          <MaterialIcons name="logout" size={24} />
+        </TouchableOpacity>
       </View>
     </ScrollView>
   );
@@ -170,86 +174,74 @@ function SupervisorProfile({ navigation }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#f0f0f0",
-    marginTop: 25,
   },
-  header: {
-    margin: 20,
-    flexDirection: "row",
-    marginBottom: 10,
-    width: "100%",
-    height: 50,
-    backgroundColor: "#f0f0f0",
-    alignItems: "center",
-  },
-  heading: {
-    justifyContent: "center",
-    alignItems: "center",
-    width: "70%",
-  },
-  SupervisorInfo: {
-    backgroundColor: "white",
-    padding: 20,
-    borderRadius: 10,
+  profileCard: {
+    borderRadius: 20,
     shadowColor: "black",
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.2,
     shadowRadius: 4,
     elevation: 5,
-    width: "95%",
-    flexDirection: "row",
-    alignSelf: "center",
-    marginTop: "5%",
-    justifyContent: "space-between",
+    marginHorizontal: 15,
+    marginVertical: 5,
+    marginTop: "25%",
+    paddingBottom: "5%",
+    backgroundColor: "#9cafa2",
+    flexDirection: "column",
   },
-  leftColumn: {
+  profileImage: {
     flex: 1,
+    alignSelf: "center",
+    alignSelf: "center",
+    borderRadius: 15,
+    borderColor: "white",
+    marginTop: "-15%",
   },
-  rightColumn: {
-    flex: 2,
-    paddingLeft: 20,
-    paddingBottom: 8,
-    marginLeft: 6,
-  },
-  SupervisorImage: {
-    width: 80,
-    height: 80,
-    borderRadius: 60,
-  },
-  name: {
-    fontSize: 16,
-    color: "grey",
-    marginTop: 5,
+  card: {
+    flexDirection: "column",
+    marginTop: "1%",
+    alignItems: "center",
+    alignSelf: "center",
+    padding: 10,
+    width: "95%",
+    borderRadius: 10,
+    backgroundColor: "white",
+    shadowColor: "black",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.2,
+    shadowRadius: 4,
+    elevation: 5,
+    marginHorizontal: 15,
+    marginVertical: 5,
+    marginBottom: "2%",
+    paddingBottom: "5%",
+    backgroundColor: "#f2b69c",
   },
   row: {
-    backgroundColor: "white",
-    padding: 20,
-    borderRadius: 10,
-    shadowColor: "black",
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.2,
-    shadowRadius: 4,
-    elevation: 5,
-    width: "100%",
+    width: "120%",
+    marginTop: "5%",
     flexDirection: "row",
-  },
-  actions: {
-    marginTop: 5,
-    width: "95%",
-    alignSelf: "center",
-  },
-  actionButton: {
-    paddingVertical: 10,
-  },
-  scrollContainer: {
-    // flexGrow: 1,
-    width: "90%",
-    padding: 10,
-    borderWidth: 1,
+    borderBottomWidth: 1,
+    paddingVertical: "3%",
   },
   actionText: {
-    width: "80%",
-
+    width: "75%",
+    fontWeight: "bold",
+    fontSize: 15,
+  },
+  button: {
+    flexDirection: "row",
+    marginTop: 10,
+    marginLeft: "3%",
+    width: "94%",
+    backgroundColor: "#f2b69c",
+    borderRadius: 5,
+    padding: 10,
+  },
+  buttonText: {
+    flex: 1,
+    color: "black",
+    width: "75%",
     fontWeight: "bold",
     fontSize: 15,
   },

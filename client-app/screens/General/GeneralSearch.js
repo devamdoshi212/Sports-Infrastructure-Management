@@ -26,55 +26,41 @@ import {
 } from "@expo/vector-icons";
 import { ScrollView } from "react-native-gesture-handler";
 import FilterModal from "./FilterModal";
-
-const ENTRIES1 = [
-  {
-    title: "Beautiful and dramatic Antelope Canyon",
-    subtitle: "Lorem ipsum dolor sit amet et nuncat mergitur",
-    illustration: "https://i.imgur.com/UYiroysl.jpg",
-  },
-  {
-    title: "Earlier this morning, NYC",
-    subtitle: "Lorem ipsum dolor sit amet",
-    illustration: "https://i.imgur.com/UPrs1EWl.jpg",
-  },
-  {
-    title: "White Pocket Sunset",
-    subtitle: "Lorem ipsum dolor sit amet et nuncat ",
-    illustration: "https://i.imgur.com/MABUbpDl.jpg",
-  },
-  {
-    title: "Acrocorinth, Greece",
-    subtitle: "Lorem ipsum dolor sit amet et nuncat mergitur",
-    illustration: "https://i.imgur.com/KZsmUi2l.jpg",
-  },
-  {
-    title: "The lone tree, majestic landscape of New Zealand",
-    subtitle: "Lorem ipsum dolor sit amet",
-    illustration: "https://i.imgur.com/2nCt3Sbl.jpg",
-  },
-];
+import ipconfig from "../../ipconfig";
 
 const { width: screenWidth } = Dimensions.get("window");
 
 const MyCarousel = ({ navigation, route }) => {
   const [selectedOption, setSelectedOption] = useState("getSports");
   const [searchQuery, setSearchQuery] = useState("");
-  const [entries, setEntries] = useState([]);
   const [filterModal, setFilterModal] = useState(false);
   const [lat, setlat] = useState("");
   const [long, setlong] = useState("");
   const [distance, setDistance] = useState("");
+  const [category, setCategory] = useState("");
   const carouselRef = useRef(null);
+  const [image, setImages] = useState([]);
+  const ip = ipconfig.ip;
 
   const goForward = () => {
     carouselRef.current.snapToNext();
   };
   useEffect(() => {
-    setEntries(ENTRIES1);
+    var requestOptions = {
+      method: "GET",
+      redirect: "follow",
+    };
+
+    fetch(`http://${ip}:9999/getUpdates?level=0`, requestOptions)
+      .then((response) => response.json())
+      .then((result) => {
+        setImages(result.data);
+      })
+      .catch((error) => console.log("error", error));
   }, []);
+
   useEffect(() => {
-    const { lat, long, distance, district } = route.params || {};
+    const { lat, long, distance, district, Category } = route.params || {};
     if (lat) {
       // console.log(lat, long);
       setlat(lat);
@@ -84,21 +70,33 @@ const MyCarousel = ({ navigation, route }) => {
     if (district) {
       setSearchQuery(district);
     }
+    if (Category) {
+      setCategory(Category);
+    }
   }, [route.params]);
+
   const renderItem = ({ item, index }, parallaxProps) => {
+    const updatedImage = item.image.replace("localhost", ip);
+    console.log(updatedImage);
     return (
-      <View style={styles.item}>
-        <ParallaxImage
-          source={{ uri: item.illustration }}
-          containerStyle={styles.imageContainer}
-          style={styles.image}
-          parallaxFactor={0.4}
-          {...parallaxProps}
-        />
-        {/* <Text style={styles.title} numberOfLines={2}>
+      <TouchableOpacity
+        onPress={() => {
+          navigation.navigate("Events");
+        }}
+      >
+        <View style={styles.item}>
+          <ParallaxImage
+            source={{ uri: updatedImage }}
+            containerStyle={styles.imageContainer}
+            style={styles.image}
+            parallaxFactor={0.4}
+            {...parallaxProps}
+          />
+          {/* <Text style={styles.title} numberOfLines={2}>
                     {item.title}
                 </Text> */}
-      </View>
+        </View>
+      </TouchableOpacity>
     );
   };
 
@@ -116,7 +114,7 @@ const MyCarousel = ({ navigation, route }) => {
         sliderWidth={screenWidth}
         sliderHeight={screenWidth}
         itemWidth={screenWidth - 60}
-        data={entries}
+        data={image}
         renderItem={renderItem}
         hasParallaxImages={true}
         autoplay={true}
@@ -127,17 +125,27 @@ const MyCarousel = ({ navigation, route }) => {
       <View style={styles.background}>
         <View style={styles.primaryView}></View>
         <View style={styles.ovalSection}>
-          <View style={{ flexDirection: "row" }}>
+          <View
+            style={{ flexDirection: "row", justifyContent: "space-around" }}
+          >
             <TouchableOpacity
-              style={styles.button1}
+              style={
+                selectedOption == "getSports"
+                  ? styles.button
+                  : styles.onpressbutton
+              }
               onPress={() => {
                 setSelectedOption("getSports");
               }}
             >
-              <Text style={styles.buttonText1}>Facility</Text>
+              <Text style={styles.buttonText}>Facility</Text>
             </TouchableOpacity>
             <TouchableOpacity
-              style={styles.button}
+              style={
+                selectedOption == "searchSportsComplex"
+                  ? styles.button
+                  : styles.onpressbutton
+              }
               onPress={() => {
                 setSelectedOption("searchSportsComplex");
               }}
@@ -174,6 +182,7 @@ const MyCarousel = ({ navigation, route }) => {
             lat={lat}
             distance={distance}
             long={long}
+            category={category}
           />
         </View>
       </View>
@@ -184,43 +193,42 @@ const MyCarousel = ({ navigation, route }) => {
 export default MyCarousel;
 
 const styles = StyleSheet.create({
-  button1: {
-    marginTop: 10,
-    marginRight: "5%",
-    marginLeft: "7%",
-    width: "40%",
-    backgroundColor: "#000",
-    borderRadius: 10,
-    padding: 10,
-  },
-  buttonText1: {
-    textAlign: "center",
-    color: "#fff",
-    fontSize: 16,
-    fontWeight: "bold",
-  },
-  button: {
+  onpressbutton: {
     marginTop: 10,
     width: "40%",
     backgroundColor: "white",
     borderRadius: 10,
-    padding: 10,
+    padding: 5,
+    height: "90%",
+  },
+  button: {
+    marginTop: 10,
+    width: "40%",
+    backgroundColor: "#f2b69c",
+    borderRadius: 10,
+    padding: 5,
+    height: "90%",
   },
   buttonText: {
     textAlign: "center",
     color: "black",
-    fontSize: 16,
+    fontSize: 17,
     fontWeight: "bold",
   },
   container: {
     flex: 1,
-    // width: screenWidth,
-    // height: screenWidth * 0.1020935961,
-    backgroundColor: "gray",
-    // flexDirection: "row",
-    // justifyContent: "space-around",
-    // borderTopLeftRadius: -50,
-    // borderTopRightRadius: -50
+    backgroundColor: "#fff6f3",
+    // #e8b7a9
+    // #d7a592
+    // #c99c81
+    // #e3cfbf
+    // #c99c81
+    //        #f8d7c9
+
+    // #f5c6b3
+    // #f2b69c
+    //  #fbe8e0
+    // #f2b69c
   },
   input: {
     width: "90%",
@@ -242,23 +250,19 @@ const styles = StyleSheet.create({
     resizeMode: "cover",
   },
   background: {
-    backgroundColor: "gray",
-    // flex: 1,
+    backgroundColor: "#fff6f3",
     flexDirection: "column",
   },
   primaryView: {
     backgroundColor: "#ffffff",
-    // flex: 1
   },
   ovalSection: {
-    // flex: 3,
     marginTop: 10,
     alignSelf: "center",
-    backgroundColor: "#fbe8e8", // #fbe8e8,#fee8e8,#e8fbef
+    backgroundColor: "#f8d7c9", // #fbe8e8,#fee8e8,#e8fbef #e8b7a9
+    // #d7a592
     borderTopLeftRadius: screenWidth * 0.1,
     borderTopRightRadius: screenWidth * 0.1,
-    // borderRadius: screenWidth * 0.1,
-    // borderCurve: "circular",
     width: screenWidth,
     height: 550,
   },
@@ -271,10 +275,9 @@ const styles = StyleSheet.create({
   searchContainer: {
     flexDirection: "row",
     marginLeft: "7%",
-    marginTop: "2%",
+    marginTop: "3%",
     alignItems: "center",
     padding: 10,
-    // marginLeft: "-8%",
     width: "85%",
     borderWidth: 1,
     borderRadius: 10,

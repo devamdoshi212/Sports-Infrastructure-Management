@@ -33,7 +33,7 @@ const Attendance = ({ navigation }) => {
         )
             .then((response) => response.json())
             .then((result) => {
-                if (result.data) setattendance(result.data[0].enrolls);
+                if (result.data.length === 1) setattendance(result.data[0].enrolls);
                 else setattendance([]);
             })
             .catch((error) => console.log("error", error));
@@ -47,7 +47,7 @@ const Attendance = ({ navigation }) => {
             value: date,
             onChange,
             mode: currentMode,
-            is24Hour: true,
+            // is24Hour: true,
         });
     };
     const showDatepicker = () => {
@@ -80,65 +80,69 @@ const Attendance = ({ navigation }) => {
                     }}
                     // Specify theme properties to override specific styles for calendar parts. Default = {}
                     theme={{
-                        backgroundColor: '#ffffff',
-                        calendarBackground: '#ffffff',
-                        textSectionTitleColor: '#b6c1cd',
-                        textSectionTitleDisabledColor: '#d9e1e8',
-                        selectedDayBackgroundColor: '#00adf5',
-                        selectedDayTextColor: '#ffffff',
-                        todayTextColor: '#00adf5',
-                        dayTextColor: '#2d4150',
-                        textDisabledColor: '#d9e1e8',
-                        dotColor: '#00adf5',
-                        selectedDotColor: '#ffffff',
-                        arrowColor: 'orange',
-                        disabledArrowColor: '#d9e1e8',
-                        monthTextColor: 'blue',
-                        indicatorColor: 'blue',
-                        textDayFontFamily: 'monospace',
-                        textMonthFontFamily: 'monospace',
-                        textDayHeaderFontFamily: 'monospace',
-                        textDayFontWeight: '300',
-                        textMonthFontWeight: 'bold',
-                        textDayHeaderFontWeight: '300',
+                        backgroundColor: "#ffffff",
+                        calendarBackground: "#ffffff",
+                        textSectionTitleColor: "#b6c1cd",
+                        textSectionTitleDisabledColor: "#d9e1e8",
+                        selectedDayBackgroundColor: "#00adf5",
+                        selectedDayTextColor: "#ffffff",
+                        todayTextColor: "#00adf5",
+                        dayTextColor: "#2d4150",
+                        textDisabledColor: "#d9e1e8",
+                        dotColor: "#00adf5",
+                        selectedDotColor: "#ffffff",
+                        arrowColor: "orange",
+                        disabledArrowColor: "#d9e1e8",
+                        monthTextColor: "blue",
+                        indicatorColor: "blue",
+                        textDayFontFamily: "monospace",
+                        textMonthFontFamily: "monospace",
+                        textDayHeaderFontFamily: "monospace",
+                        textDayFontWeight: "300",
+                        textMonthFontWeight: "bold",
+                        textDayHeaderFontWeight: "300",
                         textDayFontSize: 16,
                         textMonthFontSize: 16,
-                        textDayHeaderFontSize: 16
+                        textDayHeaderFontSize: 16,
                     }}
-                    onDayPress={day => {
-                        console.log('selected day', day);
-                        console.log('selected date', day.dateString);
+                    onDayPress={(day) => {
+                        setDate(new Date(day.timestamp));
+                        // console.log("selected date", day.dateString);
                         setDateCal(day.dateString);
                     }}
                     markedDates={{
-                        [dateCal]: { selected: true, disableTouchEvent: true, selectedDotColor: 'orange' }
+                        [dateCal]: {
+                            selected: true,
+                            disableTouchEvent: true,
+                            selectedDotColor: "orange",
+                        },
                     }}
                     enableSwipeMonths={true}
                 />
-                <View
-                    style={{
-                        width: "93%",
-                        paddingLeft: "7%",
-                        display: "flex",
-                        flexDirection: "row",
-                        alignContent: "space-around",
-                        marginTop:"5%"
-                    }}
-                >
-                    <Text
-                        style={{
-                            width: "80%",
-                            borderRadius: 2,
-                            backgroundColor: "white",
-                            paddingBottom: "5%",
-                            textAlign: "center",
-                            paddingTop: "4%",
-                        }}
-                    >
-                        {date.toUTCString()}
-                    </Text>
-                    <Button onPress={showDatepicker} title="Date" />
-                </View>
+                {/* <View
+          style={{
+            width: "93%",
+            paddingLeft: "7%",
+            display: "flex",
+            flexDirection: "row",
+            alignContent: "space-around",
+            marginTop: "5%",
+          }}
+        >
+          <Text
+            style={{
+              width: "80%",
+              borderRadius: 2,
+              backgroundColor: "white",
+              paddingBottom: "5%",
+              textAlign: "center",
+              paddingTop: "4%",
+            }}
+          >
+            {date.toUTCString()}
+          </Text>
+          <Button onPress={showDatepicker} title="Date" />
+        </View> */}
                 <ScrollView contentContainerStyle={styles.scrollContainer}>
                     <View style={styles.card}>
                         <View style={styles.row}>
@@ -149,7 +153,13 @@ const Attendance = ({ navigation }) => {
                                 <Text style={styles.label}>In Time</Text>
                             </View>
                             <View style={styles.column3}>
-                                <Text style={{ fontWeight: "bold", fontSize: 17, paddingLeft: "13%" }}>
+                                <Text
+                                    style={{
+                                        fontWeight: "bold",
+                                        fontSize: 17,
+                                        paddingLeft: "13%",
+                                    }}
+                                >
                                     Out Time
                                 </Text>
                             </View>
@@ -183,16 +193,17 @@ const Attendance = ({ navigation }) => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: "white",
-        paddingVertical: 50,
-        backgroundColor: "#f0f0f0",
+        backgroundColor: "#fbe8e0",
+        paddingTop: "7%",
     },
     header: {
         flexDirection: "row",
+        alignItems: "center",
         marginBottom: 10,
-        width: "100%",
+        width: "90%",
+        paddingLeft: "5%",
         height: 50,
-        backgroundColor: "#f0f0f0",
+        backgroundColor: "#fbe8e0",
     },
     back: {
         marginHorizontal: 4,
@@ -215,9 +226,8 @@ const styles = StyleSheet.create({
         shadowOpacity: 0.2,
         shadowRadius: 4,
         elevation: 5,
-        marginHorizontal: 15,
-        marginVertical: 5,
-        // paddingVertical:5
+        marginVertical: "1%",
+        width:"100%",
     },
     inline: {
         flexDirection: "row",
@@ -230,14 +240,14 @@ const styles = StyleSheet.create({
         paddingVertical: "5%",
     },
     column1: {
-        width: "40%",
+        width: "30%",
         paddingLeft: "5%",
     },
     column2: {
-        width: "20%",
+        width: "35%",
     },
     column3: {
-        // width: "65%",
+        width: "35%",
     },
     label: {
         fontWeight: "bold",

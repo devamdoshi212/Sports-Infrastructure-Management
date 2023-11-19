@@ -132,7 +132,7 @@ export default function AdminComplaintDataTable() {
 
     var raw = JSON.stringify({
       status: 1,
-      remark: remark,
+      remark: remarks[rowdata._id] || "",
       userId: _id,
     });
 
@@ -162,26 +162,32 @@ export default function AdminComplaintDataTable() {
       .catch((error) => console.log("error", error));
   };
 
+  const [remarks, setRemarks] = useState({});
+
   const actionBodyTemplate = (rowData) => {
+    const rowRemark = remarks[rowData._id] || "";
     return (
       <>
         <div className="mb-4">
           <label
             className="block text-gray-700 text-sm font-bold mb-2"
-            htmlFor="remarks"
+            htmlFor={`remarks-${rowData._id}`}
           >
             Remarks
           </label>
           <input
+            id={`remarks-${rowData._id}`}
             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-            name="remarks"
+            name={`remarks-${rowData._id}`}
             type="text"
             placeholder="Type here ..."
-            value={remark}
+            value={rowRemark}
             onChange={(e) => {
-              setremarks(e.target.value);
+              setRemarks((prevRemarks) => ({
+                ...prevRemarks,
+                [rowData._id]: e.target.value,
+              }));
             }}
-            // onBlur={handleBlur}
           />
         </div>
         <div className="flex justify-between space-x-1">
@@ -194,13 +200,12 @@ export default function AdminComplaintDataTable() {
             {/* Your SVG icon for editing */}
           </button>
           {/* <button
-          type="button"
-          onClick={() => PassHandler(rowData)}
-          className="text-white font-bold rounded-lg bg-red-700 hover:bg-red-500 hover:text-gray-200 p-2"
-        >
-          Forward
-          Your SVG icon for deleting
-        </button> */}
+            type="button"
+            onClick={() => PassHandler(rowData)}
+            className="text-white font-bold rounded-lg bg-red-700 hover:bg-red-500 hover:text-gray-200 p-2"
+          >
+            Forward
+          </button> */}
         </div>
       </>
     );

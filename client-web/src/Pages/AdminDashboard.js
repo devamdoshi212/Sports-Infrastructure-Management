@@ -22,62 +22,96 @@ const AdminDashboard = () => {
       .catch((error) => console.log("error", error));
   }, []);
 
+  const AnimatedCount = ({ finalCount }) => {
+    const [count, setCount] = useState(0);
+
+    useEffect(() => {
+      const animationDuration = 500; // in milliseconds
+      const steps = finalCount;
+      const stepDuration = animationDuration / steps;
+
+      let currentStep = 0;
+
+      const interval = setInterval(() => {
+        if (currentStep <= steps) {
+          setCount(currentStep);
+          currentStep += 1;
+        } else {
+          clearInterval(interval);
+        }
+      }, stepDuration);
+
+      return () => clearInterval(interval);
+    }, [finalCount]);
+
+    return <div className="p-3 text-2xl">{count}</div>;
+  };
   return (
     <div className="m-5">
       {/* <AllBlogs /> */}
       <div className="grid grid-cols-1 gap-4 lg:grid-cols-3 lg:gap-8">
         <div className=" text-center rounded-lg bg-gray-300 ">
           <div className=" font-bold p-5 text-3xl">Total Complexes</div>
-          <div className="p-5 text-2xl">{visible && data.totalComplex}</div>
+          <AnimatedCount finalCount={visible && data.totalComplex} />
         </div>
         <div className=" text-center rounded-lg bg-gray-300 ">
           <div className=" font-bold p-5 text-3xl">Total Sports</div>
-          <div className="p-5 text-2xl">{visible && data.totalSports}</div>
+          <AnimatedCount finalCount={visible && data.totalSports} />
         </div>
         <div className=" text-center rounded-lg bg-gray-300 ">
           <div className=" font-bold p-5 text-3xl">Total Athlete</div>
-          <div className="p-5 text-2xl">{visible && data.totalathlete}</div>
+          <AnimatedCount finalCount={visible && data.totalathlete} />
         </div>
 
         <div className=" text-center rounded-lg bg-gray-300 ">
           <div className=" font-bold p-5 text-3xl">Total Instructor</div>
-          <div className="p-5 text-2xl">{visible && data.totalinstructer}</div>
+          <AnimatedCount finalCount={visible && data.totalinstructer} />
         </div>
         <div className=" text-center rounded-lg bg-gray-300 ">
           <div className=" font-bold p-5 text-3xl">Total Manager</div>
-          <div className="p-5 text-2xl">{visible && data.totalmanager}</div>
+          <AnimatedCount finalCount={visible && data.totalmanager} />
         </div>
         <div className="text-center rounded-lg bg-gray-300 ">
           <div className=" font-bold p-5 text-3xl">Total Supervisor</div>
-          <div className="p-5 text-2xl">{visible && data.totalsupervisor}</div>
+          <AnimatedCount finalCount={visible && data.totalsupervisor} />
         </div>
         <div className=" text-center rounded-lg bg-gray-300 ">
           <div className=" font-bold p-5 text-3xl">
             Total Complaints in Gujarat
           </div>
-          <div className="p-5 text-2xl">{visible && data.totalcomplaints}</div>
+          <AnimatedCount finalCount={visible && data.totalcomplaints} />
         </div>
         <div className=" text-center rounded-lg bg-gray-300 ">
           <div className=" font-bold p-5 text-3xl">
             Total Unsolved Complaints in Gujarat
           </div>
-          <div className="p-5 text-2xl ">
-            {visible && data.totalcomplaints - data.solvedComplaints}
-          </div>
+          <AnimatedCount
+            finalCount={visible && data.totalcomplaints - data.solvedComplaints}
+          />
         </div>
         <div className=" text-center rounded-lg bg-gray-300 ">
           <div className=" font-bold p-5 text-3xl">
             Total Solved Complaints in Gujarat
           </div>
-          <div className="p-5 text-2xl ">
-            {visible && data.solvedComplaints}
-          </div>
+          <AnimatedCount finalCount={visible && data.solvedComplaints} />
         </div>
         <div className=" text-center rounded-lg bg-gray-300 ">
           <div className=" font-bold p-5 text-3xl">
             Total Active Complaints(Admin)
           </div>
-          <div className="p-5 text-2xl">{visible && data.activecomplaints}</div>
+          <AnimatedCount finalCount={visible && data.activecomplaints} />
+        </div>
+        <div className=" text-center rounded-lg bg-gray-300 ">
+          <div className=" font-bold p-5 text-3xl">
+            Total Solved Complaints with Happy Response
+          </div>
+          <AnimatedCount finalCount={visible && data.satisfiedCount} />
+        </div>
+        <div className=" text-center rounded-lg bg-gray-300 ">
+          <div className=" font-bold p-5 text-3xl">
+            Total Solved Complaint with Sad Response
+          </div>
+          <AnimatedCount finalCount={visible && data.unsatisfiedCount} />
         </div>
       </div>
     </div>

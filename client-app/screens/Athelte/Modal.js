@@ -1,14 +1,11 @@
 import React, { useState } from "react";
 import {
-  Alert,
-  Modal,
-  StyleSheet,
-  Text,
-  Pressable,
-  View,
-  Image,
-  TouchableOpacity,
-  Button,
+    Alert,
+    Modal,
+    StyleSheet,
+    Text,
+    View,
+    TouchableOpacity,
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import * as Sharing from "expo-sharing";
@@ -17,10 +14,10 @@ import * as FileSystem from "expo-file-system";
 import image from "./../../assets/Logo.png";
 import { useNavigation } from "@react-navigation/native";
 const ModalView = (props) => {
-  const handlePrintPDF = async () => {
-    try {
-      const { data } = props;
-      const htmlContent = `
+    const handlePrintPDF = async () => {
+        try {
+            const { data } = props;
+            const htmlContent = `
         <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -172,139 +169,124 @@ const ModalView = (props) => {
 
       `;
 
-      const { uri } = await Print.printToFileAsync({ html: htmlContent });
-      const pdfName = "receipt.pdf";
-      const pdfPath = FileSystem.cacheDirectory + pdfName;
+            const { uri } = await Print.printToFileAsync({ html: htmlContent });
+            const pdfName = "receipt.pdf";
+            const pdfPath = FileSystem.cacheDirectory + pdfName;
 
-      await FileSystem.moveAsync({
-        from: uri,
-        to: pdfPath,
-      });
+            await FileSystem.moveAsync({
+                from: uri,
+                to: pdfPath,
+            });
 
-      const isAvailable = await Sharing.isAvailableAsync();
-      if (isAvailable) {
-        await Sharing.shareAsync(pdfPath);
-      } else {
-        console.log("Sharing is not available on this platform");
-      }
-    } catch (error) {
-      console.error("Error generating or sharing PDF:", error);
-    }
-  };
+            const isAvailable = await Sharing.isAvailableAsync();
+            if (isAvailable) {
+                await Sharing.shareAsync(pdfPath);
+            } else {
+                console.log("Sharing is not available on this platform");
+            }
+        } catch (error) {
+            console.error("Error generating or sharing PDF:", error);
+        }
+    };
 
-  const [modalVisible, setModalVisible] = useState(props.show);
-  const navigate = useNavigation();
-  return (
-    <Modal
-      animationType="slide"
-      transparent={true}
-      visible={modalVisible}
-      onRequestClose={() => {
-        setModalVisible(!modalVisible);
-      }}
-    >
-      <View style={styles.container}>
-        {/* <Pressable
-          onPress={() => {
-            // props.navigation.goBack();
-            navigate.goBack();
-          }}
-        > */}
-        {/* <View style={styles.back}>
-            <Ionicons name="arrow-back" size={24} />
-          </View>
-        </Pressable> */}
-        <View style={styles.card}>
-          <View style={styles.profileDetail}>
-            <View style={styles.row}>
-              <Text style={styles.label}>Name :</Text>
-              <Text style={styles.input}>{props.data.athleteName}</Text>
-            </View>
-            <View style={styles.row}>
-              <Text style={styles.label}>Amount :</Text>
-              <Text style={styles.input}>{props.data.amount}</Text>
-            </View>
-            <View style={styles.row}>
-              <Text style={styles.label}>Sport :</Text>
-              <Text style={styles.input}>{props.data.sportName}</Text>
-            </View>
-            <View style={styles.row}>
-              <Text style={styles.label}>Complex_Name :</Text>
-              <Text style={styles.input}>{props.data.sportComplexName}</Text>
-            </View>
-            <View style={styles.row}>
-              <Text style={styles.label}>From :</Text>
-              <Text style={styles.input}>{props.data.from}</Text>
-            </View>
-            <View style={styles.row}>
-              <Text style={styles.label}>To :</Text>
-              <Text style={styles.input}>{props.data.to}</Text>
-            </View>
-
-            <TouchableOpacity style={styles.actionButton}>
-              <View style={{ width: "50%", alignSelf: "center" }}>
-                <Button title="Print" onPress={handlePrintPDF} />
-              </View>
-            </TouchableOpacity>
-          </View>
-        </View>
-      </View>
-    </Modal>
-  );
+    const [modalVisible, setModalVisible] = useState(props.show);
+    const navigate = useNavigation();
+    return (
+        <Modal
+            animationType="slide"
+            transparent={true}
+            visible={modalVisible}
+            onRequestClose={() => {
+                setModalVisible(!modalVisible);
+            }}
+        >
+            <View style={styles.container}>
+                <View style={styles.card}>
+                        <View style={styles.row}>
+                            <Text style={styles.label}>Name :</Text>
+                            <Text style={styles.input}>{props.data.athleteName}</Text>
+                        </View>
+                        <View style={styles.row}>
+                            <Text style={styles.label}>Amount :</Text>
+                            <Text style={styles.input}>{props.data.amount}</Text>
+                        </View>
+                        <View style={styles.row}>
+                            <Text style={styles.label}>Sport :</Text>
+                            <Text style={styles.input}>{props.data.sportName}</Text>
+                        </View>
+                        <View style={styles.row}>
+                            <Text style={styles.label}>Complex_Name :</Text>
+                            <Text style={styles.input}>{props.data.sportComplexName}</Text>
+                        </View>
+                        <View style={styles.row}>
+                            <Text style={styles.label}>From :</Text>
+                            <Text style={styles.input}>{props.data.from}</Text>
+                        </View>
+                        <View style={styles.row}>
+                            <Text style={styles.label}>To :</Text>
+                            <Text style={styles.input}>{props.data.to}</Text>
+                        </View>
+                        <TouchableOpacity
+                            style={styles.loginButton}
+                            onPress={handlePrintPDF}
+                        >
+                            <Text style={styles.buttonText}>Print</Text>
+                        </TouchableOpacity>
+                    </View>
+                </View>
+        </Modal>
+    );
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "rgba(0,0,0,0.5)",
-    justifyContent: "center",
-  },
-  back: {
-    marginTop: "10%",
-    marginLeft: "1%",
-    marginLeft: 2,
-  },
-  photo: {
-    height: "20%",
-    justifyContent: "center",
-    alignItems: "center",
-    marginVertical: 20,
-    marginTop: 50,
-    marginBottom: 60,
-  },
-  card: {
-    backgroundColor: "white",
-    padding: 20,
-    borderRadius: 10,
-    shadowColor: "black",
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.2,
-    shadowRadius: 4,
-    elevation: 5,
-    marginHorizontal: 30,
-    marginVertical: 20,
-    width: "90%",
-    alignSelf: "center",
-  },
-  label: {
-    fontWeight: "bold",
-    fontSize: 17,
-  },
-  row: {
-    flexDirection: "row",
-    alignItems: "center",
-    marginBottom: 20,
-    padding: 5,
-  },
-  input: {
-    marginLeft: 6,
-    width: "60%",
-  },
-  actions: {
-    marginTop: 5,
-    width: "95%",
-    alignSelf: "center",
-  },
+    container: {
+        flex: 1,
+        backgroundColor: "rgba(0,0,0,0.5)",
+        justifyContent: "center",
+    },
+    card: {
+        backgroundColor: "#fbe8e0",
+        padding: 20,
+        borderRadius: 10,
+        shadowColor: "black",
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.2,
+        shadowRadius: 4,
+        elevation: 5,
+        marginHorizontal: 30,
+        marginVertical: 20,
+        width: "90%",
+        alignSelf: "center",
+    },
+    label: {
+        fontWeight: "bold",
+        fontSize: 17,
+    },
+    row: {
+        flexDirection: "row",
+        alignItems: "center",
+        marginBottom: 20,
+        padding: 5,
+    },
+    input: {
+        marginLeft: 6,
+        width: "60%",
+    },
+    loginButton: {
+        height: 50,
+        backgroundColor: "#f2b69c",
+        justifyContent: "center",
+        alignItems: "center",
+        borderRadius: 8,
+        marginTop: 20,
+        width: 100,
+        alignSelf: "center",
+        fontWeight: "bold",
+    },
+    buttonText: {
+        color: "white",
+        fontSize: 18,
+    },
 });
 
 export default ModalView;

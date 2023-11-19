@@ -45,8 +45,8 @@ module.exports.addSession = async function (req, res) {
 
       res.json({
         data: data,
-        msg: "Session updated .......User comes more than one time in sportComplex",
-        rcode: 200,
+        msg: "Exit Done",
+        rcode: 205, //Exit code rcode :205
       });
     } else {
       const currentDate = new Date();
@@ -61,8 +61,8 @@ module.exports.addSession = async function (req, res) {
       let data = await existingSession.save();
       res.json({
         data: data,
-        rcode: 201,
-        msg: "User Exit from sportcomlex",
+        rcode: 200, // Entry /Re-Entry rcode : 200
+        msg: "Entry / Re-Entry Done",
       });
     }
   } else {
@@ -82,7 +82,7 @@ module.exports.addSession = async function (req, res) {
     let data1 = await newSession.save();
     res.json({
       data: data1,
-      msg: "new entry created of Sportcomplex for today ",
+      msg: "New Entry also First Entry of Complex",
       rcode: 200,
     });
   }
@@ -94,6 +94,7 @@ module.exports.getSession = async function (req, res) {
     let date = new Date(req.query.date);
     date.setHours(0, 0, 0, 0);
     let night12 = new Date(date.getTime() + 86400000);
+    console.log(date + "  " + night12);
     const data = await sessions
       .find({
         sportscomplex: sportscomplex,

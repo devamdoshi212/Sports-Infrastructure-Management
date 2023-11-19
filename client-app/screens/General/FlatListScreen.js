@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
 import {
   Pressable,
   View,
@@ -34,22 +33,22 @@ function renderCategoryItem(itemData, ip, navigate) {
             });
           }}
         >
-          {/* <View style={[styles.innerContainer, { backgroundColor: "gray" }]}> */}
+          {/* <View style={[styles.innerContainer]}> */}
           <ImageBackground
             source={{ uri: updatedImage }}
             style={styles.imageBackground}
           ></ImageBackground>
-          <View>
-            <Text
-              style={{
-                textAlign: "center",
-                fontSize: 16,
-                fontWeight: "bold",
-              }}
-            >
-              {itemData.item.SportName}
-            </Text>
-          </View>
+          {/* <View> */}
+          <Text
+            style={{
+              textAlign: "center",
+              fontSize: 16,
+              fontWeight: "bold",
+            }}
+          >
+            {itemData.item.SportName}
+          </Text>
+          {/* </View> */}
           {/* </View> */}
         </Pressable>
       </View>
@@ -99,6 +98,7 @@ function FlatListScreen({
   lat,
   long,
   distance,
+  category,
 }) {
   //   console.log(lat, long, distance);
   const [complex, setComplex] = useState([]);
@@ -107,7 +107,7 @@ function FlatListScreen({
   const [range, setRange] = useState(distance);
   const [latitude, setLat] = useState(lat);
   const [longitude, setLong] = useState(long);
-
+  const [cat, setCategory] = useState(category);
   const ip = ipconfig.ip;
   //   useEffect(() => {
   //     var requestOptions = {
@@ -130,23 +130,24 @@ function FlatListScreen({
     setRange("");
     setLat("");
     setLong("");
+    setCategory("");
   };
 
   useEffect(() => {
     setRange(distance);
     setLat(lat);
     setLong(long);
-  }, [distance, lat, long]);
+    setCategory(category);
+  }, [distance, lat, long, category]);
 
   //   console.log(range, latitude, longitude);
-
   const fetchData = () => {
     var requestOptions = {
       method: "GET",
       redirect: "follow",
     };
     fetch(
-      `http://${ip}:9999/${optionField}?q=${searchfield}&distance=${range}&lat=${latitude}&lon=${longitude}`,
+      `http://${ip}:9999/${optionField}?q=${searchfield}&distance=${range}&lat=${latitude}&lon=${longitude}&Category=${cat}`,
       requestOptions
     )
       .then((response) => response.json())
@@ -162,7 +163,7 @@ function FlatListScreen({
 
   useEffect(() => {
     fetchData();
-  }, [ip, optionField, searchfield, range, latitude, longitude]);
+  }, [ip, optionField, searchfield, range, latitude, longitude, cat]);
 
   if (loading) {
     return (
@@ -193,7 +194,7 @@ const styles = StyleSheet.create({
   gridItem: {
     flex: 1,
     margin: 16,
-    height: 150,
+    height: 300,
     borderRadius: 8,
     elevation: 4,
     backgroundColor: "white",
@@ -221,10 +222,12 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
   imageBackground: {
+    height: "100%",
     flex: 1, // This will make the ImageBackground take up the full parent view
   },
   centeredContainer: {
     flex: 1,
+    width: "50%",
     justifyContent: "center",
     alignItems: "center",
   },

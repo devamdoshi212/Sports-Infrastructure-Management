@@ -3,6 +3,7 @@ import { useFormik } from "formik";
 import { sportSchema } from "../../../Schemas";
 import { Button } from "@material-tailwind/react";
 import { useNavigate } from "react-router-dom";
+import { useState } from "react";
 import Swal from "sweetalert2";
 const initialValues = {
   name: "",
@@ -11,6 +12,20 @@ const initialValues = {
 };
 const AddFacility = () => {
   const navigate = useNavigate();
+  const [inputFields, setInputFields] = useState([""]);
+  const handleInputChange = (index, event) => {
+    const values = [...inputFields];
+    values[index] = event.target.value;
+    setInputFields(values);
+  };
+  const handleAddField = () => {
+    setInputFields([...inputFields, ""]);
+  };
+  const handleRemoveField = (index) => {
+    const values = [...inputFields];
+    values.splice(index, 1);
+    setInputFields(values);
+  };
   const handleOneFileChange = (event) => {
     const selectedFiles = Array.from(event.target.files);
     setFieldValue("Image", selectedFiles);
@@ -21,7 +36,7 @@ const AddFacility = () => {
     formdata.append("SportName", values.name);
     formdata.append("Category", values.Category);
     formdata.append("picture", fileInput.files[0], values.Image[0].name);
-
+    formdata.append("parameters", inputFields);
     var requestOptions = {
       method: "POST",
       body: formdata,
@@ -147,6 +162,27 @@ const AddFacility = () => {
                   {errors.Category}
                 </small>
               ) : null}
+            </div>
+            <div>
+              {inputFields.map((inputField, index) => (
+                <div key={index}>
+                  <input
+                    type="text"
+                    placeholder="Enter a value"
+                    value={inputField.value}
+                    onChange={(event) => handleInputChange(index, event)}
+                  />
+                  <button
+                    type="button"
+                    onClick={() => handleRemoveField(index)}
+                  >
+                    Remove
+                  </button>
+                </div>
+              ))}
+              <button type="button" onClick={handleAddField}>
+                Add Field
+              </button>
             </div>
             <div className="flex items-center justify-center">
               <button

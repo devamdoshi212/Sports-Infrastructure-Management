@@ -94,7 +94,27 @@ function Profile({ navigation }) {
               <Text style={styles.actionText}>Custom Notifications</Text>
             </View>
           </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.actionButton}
+            onPress={() => {
+              navigation.navigate("ComplexDetails");
+            }}
+          >
+            <View style={styles.row}>
+              <Text style={styles.actionText}>Complex Details</Text>
+            </View>
+          </TouchableOpacity>
 
+          <TouchableOpacity
+            style={styles.actionButton}
+            onPress={() => {
+              navigation.navigate("AthelteDailyResponse");
+            }}
+          >
+            <View style={styles.row}>
+              <Text style={styles.actionText}>Athelte Daily Response</Text>
+            </View>
+          </TouchableOpacity>
           <TouchableOpacity style={styles.actionButton}>
             <View
               style={{ width: "40%", alignSelf: "center", marginTop: "3%" }}

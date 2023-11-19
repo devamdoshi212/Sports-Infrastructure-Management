@@ -5,6 +5,7 @@ module.exports.addRating = async function (req, res) {
   let athleteId = req.query.athleteId;
   let sportId = req.query.sportId;
   let sportsComplexId = req.query.sportsComplexId;
+  let remarks = req.query.remarks;
   let rating = req.query.rating;
   let oldRating = await RatingModel.findOne({
     athleteId,
@@ -39,6 +40,7 @@ module.exports.addRating = async function (req, res) {
       athleteId: athleteId,
       rating: rating,
       sportComplex: sportsComplexId,
+      remarks: remarks,
     });
   }
   await sportComplex.save();
