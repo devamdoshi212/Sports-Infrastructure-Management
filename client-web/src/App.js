@@ -1,8 +1,4 @@
-import {
-  createBrowserRouter,
-  redirect,
-  RouterProvider,
-} from "react-router-dom";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { ThemeProvider } from "@material-tailwind/react";
 import { PrimeReactProvider } from "primereact/api";
 
@@ -58,6 +54,11 @@ import AuthorityAnalysis from "./Components/Authority/Analysis/Analysis";
 import AddComplaint from "./Components/Authority/Complaint/AddComplaint";
 import AddComplaintType from "./Components/Admin/Complaint/AddComplaintType";
 import ManagerAddComplaint from "./Components/Manager/Complaint/ManagerAddComplaint";
+import AdminNews from "./Components/Admin/News/News";
+import AddNews from "./Components/Admin/News/AddNews";
+import ComplexNews from "./Components/Manager/News/ComplexNews";
+import AddComplexNews from "./Components/Manager/News/AddComplexNews";
+import Leaderboard from "./Components/Admin/LeaderBoard/Leaderboard";
 
 const routes = createBrowserRouter([
   {
@@ -126,6 +127,21 @@ const routes = createBrowserRouter([
       {
         path: "addcomplianttype",
         element: <AddComplaintType />,
+        errorElement: <ErrorPage />,
+      },
+      {
+        path: "allevents",
+        element: <AdminNews />,
+        errorElement: <ErrorPage />,
+      },
+      {
+        path: "addevent",
+        element: <AddNews />,
+        errorElement: <ErrorPage />,
+      },
+      {
+        path: "leaderboard",
+        element: <Leaderboard />,
         errorElement: <ErrorPage />,
       },
     ],
@@ -239,6 +255,16 @@ const routes = createBrowserRouter([
       {
         path: "addcomplaint",
         element: <ManagerAddComplaint />,
+        errorElement: <ErrorPage />,
+      },
+      {
+        path: "complexevents",
+        element: <ComplexNews />,
+        errorElement: <ErrorPage />,
+      },
+      {
+        path: "addcomplexevent",
+        element: <AddComplexNews />,
         errorElement: <ErrorPage />,
       },
     ],

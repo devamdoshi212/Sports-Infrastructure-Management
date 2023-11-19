@@ -16,6 +16,7 @@ import AthleteViewComplaint from "./AthleteViewComplaint";
 import AthleteListComplaint from "./AthleteListComplaint";
 import Response from "./Response";
 import AddAthlete from "./AddAthelte";
+import EventPage from "./EventPage";
 const SupervisorNavigator = ({ navigation }) => {
   return (
     <Stack.Navigator>
@@ -73,6 +74,11 @@ const SupervisorNavigator = ({ navigation }) => {
         <Stack.Screen
           name="Attendance"
           component={Attendance}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="EventPage"
+          component={EventPage}
           options={{ headerShown: false }}
         />
         <Stack.Screen

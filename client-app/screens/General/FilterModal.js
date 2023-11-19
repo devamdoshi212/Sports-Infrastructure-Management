@@ -45,7 +45,7 @@ const FilterModal = (props) => {
     // }
     setSelectedItems(selectedItem);
   };
-  console.log(selectedItems);
+  // console.log(selectedItems);
   const items = [
     {
       id: "1",
@@ -287,6 +287,9 @@ const FilterModal = (props) => {
               <Pressable
                 onPress={() => {
                   alert("done successfully");
+                  navigation.navigate("Search", {
+                    Category: selectedItems[0],
+                  });
                   setModalVisible(!modalVisible);
                 }}
               >
@@ -307,7 +310,7 @@ const FilterModal = (props) => {
               maximumSelectionLength={5}
               // hideTags
               items={items}
-              uniqueKey="_id"
+              uniqueKey="category"
               // ref={(component) => { MultiSelect = component }}
               onSelectedItemsChange={onSelectedItemsChange}
               selectedItems={selectedItems}

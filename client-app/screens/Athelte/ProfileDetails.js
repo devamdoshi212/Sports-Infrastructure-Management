@@ -8,7 +8,7 @@ import {
   Pressable,
 } from "react-native";
 import ipconfig from "../../ipconfig";
-import { MaterialCommunityIcons,Ionicons } from "@expo/vector-icons";
+import { Ionicons } from "@expo/vector-icons";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import QRCodeGenerator from "./QRCodeUser";
@@ -45,27 +45,25 @@ const ProfileDetails = ({ navigation }) => {
       </View>
       <View style={styles.card}>
         <View style={styles.photo}>
-          <View style={{ flexDirection: "row", padding: 20,alignItems:"center" }}>
+          <View
+            style={{ flexDirection: "row", padding: 20, alignItems: "center" }}
+          >
             <Image
               style={{
                 width: 120,
                 height: 120,
                 borderRadius: 60,
                 marginHorizontal: 15,
-                marginTop: -10
+                marginTop: -10,
               }}
               source={{ uri: `http://${ip}:9999/${image}` }}
             />
-            {/* <Image
-              style={{ width: 120, height: 120, marginHorizontal: 15 }}
-              source={require("./../../assets/favicon.png")}
-            /> */}
-            {supervisorId && <QRCodeGenerator   value={supervisorId} />}
+            {supervisorId && <QRCodeGenerator value={supervisorId} />}
           </View>
         </View>
-        <View style={styles.profileDetail}>
+        <View>
           <View style={styles.row}>
-            <Text style={styles.label}>Name :</Text>
+            <Text style={styles.label}>Name 1:</Text>
             <Text style={styles.input}>{Userdata.Name}</Text>
           </View>
           <View style={styles.row}>
@@ -88,15 +86,10 @@ const ProfileDetails = ({ navigation }) => {
             <Text style={styles.label}>Emergency No :</Text>
             <Text style={styles.input}>{Atheltedata[0].emergencyNumber}</Text>
           </View>
-          <View style={{ alignSelf: "center", marginTop: 10 }}>
-            {/* <Image
-                style={{ width: 120, height: 120 }}
-                source={require("../assets/icon.png")}
-              /> */}
-          </View>
-          <TouchableOpacity style={styles.logout}>
-            <View >
-              <Button title="Edit" />
+          <View style={{ alignSelf: "center", marginTop: 10 }}></View>
+          <TouchableOpacity style={styles.button}>
+            <View>
+              <Text style={styles.buttonText}>Edit</Text>
             </View>
           </TouchableOpacity>
         </View>
@@ -108,35 +101,26 @@ const ProfileDetails = ({ navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#f0f0f0",
-    marginTop: 25,
-  },
-  photo: {
-    height: "20%",
-    justifyContent: "space-evenly",
-    alignItems: "center",
-    marginVertical: 20,
-    marginTop: 50,
-    marginBottom: 60,
-
-  },
-  heading: {
-    justifyContent: "center",
-    alignItems: "center",
-    width: "70%",
+    backgroundColor: "#fbe8e0",
+    paddingTop: "7%",
   },
   header: {
-    margin: 20,
     flexDirection: "row",
-    marginBottom: 10,
-    width: "100%",
-    height: 50,
-    backgroundColor: "#f0f0f0",
     alignItems: "center",
+    marginBottom: 10,
+    width: "90%",
+    paddingLeft: "5%",
+    height: 50,
+    backgroundColor: "#fbe8e0",
   },
   back: {
     marginHorizontal: 4,
     alignSelf: "center",
+  },
+  heading: {
+    justifyContent: "center",
+    alignItems: "center",
+    width: "90%",
   },
   card: {
     backgroundColor: "white",
@@ -150,27 +134,41 @@ const styles = StyleSheet.create({
     marginHorizontal: 30,
     marginVertical: 20,
   },
-  label: {
-    fontWeight: "bold",
-    fontSize: 17,
+  photo: {
+    height: "20%",
+    justifyContent: "space-evenly",
+    alignItems: "center",
+    marginVertical: 20,
+    marginTop: 50,
+    marginBottom: 60,
   },
   row: {
     flexDirection: "row",
     alignItems: "center",
     marginBottom: 15,
   },
+  label: {
+    fontWeight: "bold",
+    fontSize: 17,
+  },
   input: {
     marginLeft: 6,
   },
-  actions: {
-    marginTop: 5,
-    width: "95%",
-    alignSelf: "center",
+  button: {
+    flexDirection: "row",
+    marginTop: 10,
+    marginLeft: "3%",
+    width: "94%",
+    backgroundColor: "#f2b69c",
+    borderRadius: 5,
+    padding: 10,
   },
-  logout:{
-    width:"40%",
-    alignSelf:"center"
-  }
+  buttonText: {
+    fontWeight: "bold",
+    fontSize: 15,
+    alignSelf: "center",
+    marginLeft: "50%",
+  },
 });
 
 export default ProfileDetails;

@@ -1,140 +1,201 @@
 import {
-  View,
-  Text,
-  Image,
-  StyleSheet,
-  Button,
-  TouchableOpacity,
-  ScrollView,
-  Pressable,
+    View,
+    Text,
+    Image,
+    StyleSheet,
+    Button,
+    TouchableOpacity,
+    ScrollView,
+    Pressable,
 } from "react-native";
 import ipconfig from "../../ipconfig";
+import { captureRef } from "react-native-view-shot";
 import { Ionicons } from "@expo/vector-icons";
-import { useEffect, useState } from "react";
-const ip = ipconfig.ip;
+import { useEffect, useState, useRef } from "react";
+import { MaterialIcons } from "@expo/vector-icons"; // Import Ionicons from @expo/vector-icons
+import Leaderboard from "react-native-leaderboard";
+import { useSelector } from "react-redux";
+import * as Sharing from "expo-sharing";
+
+const getOrdinalSuffix = (number) => {
+    if (10 <= number / 100 && number / 100 <= 20) {
+        return "th";
+    } else {
+        const suffix = { 1: "st", 2: "nd", 3: "rd" }[number % 10] || "th";
+        return suffix;
+    }
+};
+
 const LeaderBoard = ({ navigation }) => {
-  const [data, setData] = useState([]);
-  useEffect(() => {
-    var requestOptions = {
-      method: "GET",
-      redirect: "follow",
+    const ip = ipconfig.ip;
+    const AthelteData = useSelector((s) => s.athelte.Athelte);
+    const [image, setimage] = useState("../../assets/icon.png");
+    const [userdata, setuserdata] = useState([
+        {
+            name: "Adam Savage",
+            score: 5,
+            iconUrl:
+                "https://www.shareicon.net/data/128x128/2016/09/15/829473_man_512x512.png",
+        },
+    ]);
+    const [atheltedata, setatheltedata] = useState([]);
+
+    useEffect(() => {
+        const i = AthelteData[0].baseUrl.slice(1);
+        setimage(i);
+        var requestOptions = {
+            method: "GET",
+            redirect: "follow",
+        };
+
+        fetch(
+            `http://${ip}:9999/getAthletesWithRating?id=${AthelteData[0]._id}`,
+            requestOptions
+        )
+            .then((response) => response.json())
+            .then((result) => {
+                setuserdata(result.currentuserdata);
+                let temp = result.data1.map((item) => {
+                    let iconUrl = item.iconUrl.slice(1);
+                    return { ...item, iconUrl: `http://${ip}:9999/${iconUrl}` };
+                });
+                setatheltedata(temp);
+            })
+            .catch((error) => console.log("error", error));
+    }, [image]);
+
+    const leaderboardRef = useRef();
+
+    const handleCapture = async () => {
+        try {
+            const uri = await captureRef(leaderboardRef, {
+                format: "png",
+                quality: 0.8,
+            });
+            await Sharing.shareAsync(uri, {
+                mimeType: "image/png",
+                dialogTitle: "Share Leaderboard",
+            });
+        } catch (error) {
+            console.error("Error capturing screenshot:", error);
+        }
     };
 
-    fetch(`http://${ip}:9999/ratingForAll`, requestOptions)
-      .then((response) => response.json())
-      .then((result) => {
-        setData(result.ratings);
-      })
-      .catch((error) => console.log("error", error));
-  }, []);
-
-  return (
-    <>
-      <View style={styles.container}>
-        <View style={styles.header}>
-          <Pressable
-            onPress={() => {
-              navigation.goBack();
-            }}
-          >
-            <View style={styles.back}>
-              <Ionicons name="arrow-back" size={24} />
-            </View>
-          </Pressable>
-          <View style={styles.heading}>
-            <Text style={{ fontWeight: "bold", fontSize: 25 }}>Ranking</Text>
-          </View>
-        </View>
-
-        <ScrollView contentContainerStyle={styles.scrollContainer}>
-          {data.map((item, index) => (
-            <View style={styles.card} key={index}>
-              <View style={styles.row}>
-                <View style={styles.column1}>
-                  <Text style={styles.label}>{item.athleteId.userId.Name}</Text>
+    return (
+        <>
+            <View style={styles.container} ref={leaderboardRef}>
+                <View style={styles.header}>
+                    <Pressable
+                        onPress={() => {
+                            navigation.goBack();
+                        }}
+                    >
+                        <View style={styles.back}>
+                            <Ionicons name="arrow-back" size={24} />
+                        </View>
+                    </Pressable>
+                    <View style={styles.heading}>
+                        <Text style={{ fontWeight: "bold", fontSize: 25 }}>
+                            LeaderBoard
+                        </Text>
+                    </View>
                 </View>
-                <View style={styles.column2}>
-                  <Text style={styles.label}>{item.rating}</Text>
+                <View style={styles.card}>
+                    <Text style={styles.label}>
+                        {userdata.index + 1 ? userdata.index + 1 : 1}
+                        {userdata.index
+                            ? getOrdinalSuffix(parseInt(userdata.index) + 1)
+                            : "st"}
+                    </Text>
+                    <View style={styles.profileImage}>
+                        <Image
+                            style={{
+                                width: 125,
+                                height: 125,
+                                borderRadius: 62.5,
+                                borderColor: "#fbe8e0",
+                                borderWidth: 5,
+                            }}
+                            source={{ uri: `http://${ip}:9999/${image}` }}
+                        />
+                    </View>
+                    <Text style={styles.label}>
+                        {userdata[0].score ? userdata[0].score.toFixed(2) : "5"}
+                    </Text>
+                    <View>
+                        <TouchableOpacity onPress={handleCapture}>
+                            <MaterialIcons style={{ marginRight: "2%", marginTop: "20%" }} name="share" size={24} />
+                        </TouchableOpacity>
+                    </View>
                 </View>
-              </View>
+                <Leaderboard
+                    labelBy="name"
+                    sortBy="score"
+                    icon="iconUrl"
+                    data={atheltedata}
+                    onRowPress={(item, index) => {
+                        alert(item.name + " clicked");
+                    }}
+                    evenRowColor="#edfcf9"
+                    oddRowColor="#ffffff"
+                />
             </View>
-          ))}
-        </ScrollView>
-      </View>
-    </>
-  );
+        </>
+    );
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "white",
-    paddingVertical: 50,
-    backgroundColor: "#f0f0f0",
-  },
-  header: {
-    flexDirection: "row",
-    justifyContent: "center",
-    alignItems: "center",
-    marginBottom: 10,
-    width: "90%",
-    paddingLeft: "5%",
-    height: 50,
-    backgroundColor: "#f0f0f0",
-  },
-  back: {
-    marginHorizontal: 4,
-    alignSelf: "center",
-  },
-  heading: {
-    justifyContent: "center",
-    alignItems: "center",
-    width: "90%",
-  },
-  scrollContainer: {
-    flexGrow: 1,
-    padding: 10,
-  },
-  card: {
-    backgroundColor: "white",
-    borderRadius: 10,
-    shadowColor: "black",
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.2,
-    shadowRadius: 4,
-    elevation: 5,
-    marginHorizontal: 15,
-    marginVertical: 5,
-    // paddingVertical:5
-  },
-  inline: {
-    flexDirection: "row",
-    alignItems: "center",
-  },
-  row: {
-    width: "90%",
-    flexDirection: "row",
-    alignItems: "flex-end",
-    justifyContent: "space-between",
-    marginBottom: "1%",
-    paddingVertical: "5%",
-  },
-  column1: {
-    // width: "60%",
-    paddingLeft: "5%",
-  },
-  column2: {
-    // width: "50%",
-  },
-  label: {
-    fontWeight: "bold",
-    fontSize: 17,
-  },
-  input: {
-    marginLeft: 6,
-    textAlign: "center",
-    // marginLeft: "45%",
-  },
+    container: {
+        flex: 1,
+        backgroundColor: "#fbe8e0",
+        paddingTop: "7%",
+    },
+    header: {
+        flexDirection: "row",
+        alignItems: "center",
+        marginBottom: 10,
+        width: "90%",
+        paddingLeft: "5%",
+        height: 50,
+        backgroundColor: "#fbe8e0",
+    },
+    back: {
+        marginHorizontal: 4,
+        alignSelf: "center",
+    },
+    heading: {
+        justifyContent: "center",
+        alignItems: "center",
+        width: "90%",
+    },
+    card: {
+        backgroundColor: "white",
+        borderRadius: 15,
+        shadowColor: "black",
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.2,
+        shadowRadius: 4,
+        elevation: 5,
+        marginVertical: 5,
+        height: "22%",
+        flexDirection: "row",
+        width: "95%",
+        marginLeft: "2.5%",
+        backgroundColor: "#edfcf9",
+    },
+    label: {
+        fontWeight: "bold",
+        fontSize: 20,
+        flex: 1,
+        alignSelf: "center",
+        textAlign: "center",
+    },
+    profileImage: {
+        flex: 1,
+        alignSelf: "center",
+        borderRadius: 15,
+        borderColor: "white",
+    },
 });
 
 export default LeaderBoard;

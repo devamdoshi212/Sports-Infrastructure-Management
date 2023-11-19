@@ -25,23 +25,50 @@ const AuthorityDashboard = () => {
       })
       .catch((error) => console.log("error", error));
   }, []);
+
+  const AnimatedCount = ({ finalCount }) => {
+    const [count, setCount] = useState(0);
+
+    useEffect(() => {
+      const animationDuration = 500; // in milliseconds
+      const steps = finalCount;
+      const stepDuration = animationDuration / steps;
+
+      let currentStep = 0;
+
+      const interval = setInterval(() => {
+        if (currentStep <= steps) {
+          setCount(currentStep);
+          currentStep += 1;
+        } else {
+          clearInterval(interval);
+        }
+      }, stepDuration);
+
+      return () => clearInterval(interval);
+    }, [finalCount]);
+
+    return <div className="p-3 text-2xl">{count}</div>;
+  };
   return (
     <div className="m-5">
       <div className="grid grid-cols-1 gap-4 lg:grid-cols-3 lg:gap-8">
         <div className=" h-48 p-3 text-center rounded-lg bg-gray-300 ">
           <div className=" font-bold p-5 text-2xl">Total Atheltes</div>
-          <div className="p-5  text-2xl pb-6">
-            {visibale &&
+          <AnimatedCount
+            finalCount={
+              visibale &&
               data.athleteCount.reduce(
                 (sum, entry) => sum + entry.athleteCount,
                 0
-              )}
-          </div>
+              )
+            }
+          />
         </div>
         <Link to={"allsportscomplex"}>
           <div className=" h-48 p-3 text-center rounded-lg bg-gray-300 ">
             <div className=" font-bold p-5 text-2xl">Total Complexes</div>
-            <div className="p-5  text-2xl pb-6">{visibale && data.sportComplexCount}</div>
+            <AnimatedCount finalCount={visibale && data.sportComplexCount} />
           </div>
         </Link>
 
@@ -50,13 +77,15 @@ const AuthorityDashboard = () => {
             <div className=" font-bold p-5 text-2xl">
               Total Solved Complaints
             </div>
-            <div className="p-5  text-2xl pb-6">
-              {visibale &&
+            <AnimatedCount
+              finalCount={
+                visibale &&
                 data.complaintCount.reduce(
                   (sum, entry) => sum + entry.solvedComplaint,
                   0
-                )}
-            </div>
+                )
+              }
+            />
           </div>
         </Link>
 
@@ -65,13 +94,15 @@ const AuthorityDashboard = () => {
             <div className=" font-bold p-5 text-2xl">
               Total Active Complaints
             </div>
-            <div className="p-5  text-2xl pb-6">
-              {visibale &&
+            <AnimatedCount
+              finalCount={
+                visibale &&
                 data.complaintCount.reduce(
                   (sum, entry) => sum + entry.activeComplaint,
                   0
-                )}
-            </div>
+                )
+              }
+            />
           </div>
         </Link>
         <Link to={"allcomplaint"}>
@@ -79,13 +110,15 @@ const AuthorityDashboard = () => {
             <div className=" font-bold p-5 text-2xl">
               Total Complaints in Sport Complexes
             </div>
-            <div className="p-5  text-2xl pb-6">
-              {visibale &&
+            <AnimatedCount
+              finalCount={
+                visibale &&
                 data.complaintCount.reduce(
                   (sum, entry) => sum + entry.complaintCount,
                   0
-                )}
-            </div>
+                )
+              }
+            />
           </div>
         </Link>
       </div>

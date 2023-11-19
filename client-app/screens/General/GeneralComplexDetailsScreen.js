@@ -8,17 +8,21 @@ import {
   ScrollView,
   ActivityIndicator,
   TouchableOpacity,
+  Pressable,
 } from "react-native";
+import { Rating } from "react-native-ratings";
+
 import {
   Ionicons,
   AntDesign,
   MaterialCommunityIcons,
+  Entypo,
 } from "@expo/vector-icons";
 import { useEffect, useState } from "react";
 import ipconfig from "../../ipconfig";
 import { useRef } from "react";
 import Carousel, { ParallaxImage } from "react-native-snap-carousel";
-const { width: screenWidth } = Dimensions.get("window");
+const { width: screenWidth, height: screenHeight } = Dimensions.get("window");
 
 const GeneralComplexDetailsScreen = ({ navigation, route }) => {
   const [heart, setHeart] = useState(false);
@@ -71,7 +75,7 @@ const GeneralComplexDetailsScreen = ({ navigation, route }) => {
   };
   const renderItem = ({ item, index }, parallaxProps) => {
     const updatedImage = item.replace("localhost", ip);
-    console.log(updatedImage);
+    // console.log(updatedImage);
     return (
       <View style={styles.item}>
         <ParallaxImage
@@ -81,13 +85,9 @@ const GeneralComplexDetailsScreen = ({ navigation, route }) => {
           parallaxFactor={0.4}
           {...parallaxProps}
         />
-        {/* <Text style={styles.title} numberOfLines={2}>
-                    {item.title}
-                </Text> */}
       </View>
     );
   };
-
   return (
     <View style={styles.container}>
       <View>
@@ -101,9 +101,13 @@ const GeneralComplexDetailsScreen = ({ navigation, route }) => {
           }}
         >
           <View style={styles.header}>
-            <View>
+            <Pressable
+              onPress={() => {
+                navigation.goBack();
+              }}
+            >
               <Ionicons name="arrow-back" size={24} />
-            </View>
+            </Pressable>
             <View style={{ marginLeft: screenWidth * 0.8 }}>
               <AntDesign
                 onPress={() => {
@@ -117,13 +121,10 @@ const GeneralComplexDetailsScreen = ({ navigation, route }) => {
           </View>
         </ImageBackground>
         <View style={styles.cardHeader}>
-          <TouchableOpacity onPress={openGoogleMaps}>
-            <Text style={styles.cardHeaderText}>{data.item.name}</Text>
-          </TouchableOpacity>
-
+          <Text style={styles.cardHeaderText}>{data.item.name}</Text>
           <View style={styles.cardHeaderTextDescriptionView}>
             <Text style={styles.cardHeaderTextDescription}>
-              {data.item.taluka}
+              {data.item.taluka},{data.item.district.District}
             </Text>
             <Text style={styles.cardHeaderTextCount}>
               Total Athelte : {details.athleteCount}
@@ -132,43 +133,116 @@ const GeneralComplexDetailsScreen = ({ navigation, route }) => {
         </View>
         <View style={styles.dummyCard}>
           <ScrollView>
-            {data.item.sports.map((item, index) => (
-              <View style={styles.sport} key={index}>
-                <View style={styles.cardSport}>
-                  <MaterialCommunityIcons
-                    style={styles.cardSportColomn1}
-                    name={details.availableSports[index].toLowerCase()}
-                    size={48}
-                  />
-                  <View style={styles.cardSportColomn2}>
-                    <Text style={styles.cardSportColomn2Text}>
-                      {details.availableSports[index]}
-                    </Text>
-                    <Text style={styles.cardSportColomn2TextInfo}>
-                      Fees : {item.fees}
-                    </Text>
-                    <TouchableOpacity onPress={goForward}>
-                      {/* <Text>go to next slide</Text> */}
-                    </TouchableOpacity>
-                    <Carousel
-                      ref={carouselRef}
-                      sliderWidth={screenWidth}
-                      sliderHeight={screenWidth}
-                      itemWidth={screenWidth - 60}
-                      data={item.images}
-                      renderItem={renderItem}
-                      hasParallaxImages={true}
-                      autoplay={true}
-                      autoplayInterval={5000}
-                      loop={true}
-                      loopClonesPerSide={2}
-                    />
-                  </View>
+            <View style={styles.card}>
+              <View style={styles.cardHeader}>
+                <Text style={styles.cardHeaderText}>About</Text>
+              </View>
+              <View style={styles.aboutDescription}>
+                <View style={styles.aboutDescriptionTopic}>
+                  <Text style={styles.aboutDescriptionLable}>Area</Text>
+                  <Text style={styles.aboutDescriptionText}>
+                    {data.item.area}
+                  </Text>
                 </View>
               </View>
-            ))}
+              <View style={styles.aboutDescription}>
+                <View style={styles.aboutDescriptionTopic}>
+                  <Text style={styles.aboutDescriptionLable}>Since</Text>
+                  <Text style={styles.aboutDescriptionText}>
+                    {data.item.operationalSince}
+                  </Text>
+                </View>
+              </View>
+            </View>
+            <View>
+              <ScrollView>
+                <View>
+                  <View style={styles.sport}>
+                    {data.item.sports.map((item, index) => (
+                      <View key={index}>
+                        <View style={styles.cardSport}>
+                          <MaterialCommunityIcons
+                            style={styles.cardSportColomn1}
+                            name={details.availableSports[index].toLowerCase()}
+                            size={48}
+                          />
+                          <View style={styles.cardSportColomn2}>
+                            <View style={styles.cardSportColomn2Text}>
+                              <Text style={styles.cardSportColomn2TextInfo}>
+                                {details.availableSports[index]}
+                              </Text>
+                              {item.rating && (
+                                <View
+                                  style={{
+                                    backgroundColor: "#fff",
+                                    padding: 5,
+                                    borderRadius: 10,
+                                    marginLeft: "5%",
+                                  }}
+                                >
+                                  <Rating
+                                    type="star"
+                                    ratingCount={5}
+                                    imageSize={20}
+                                    showRating={false}
+                                    startingValue={item.rating}
+                                    minValue={1}
+                                    style={styles.starContainer}
+                                  />
+                                </View>
+                              )}
+                            </View>
+                            <View style={styles.cardSportColomn2TextDetail}>
+                              <Text
+                                style={styles.cardSportColomn2TextDetailInfo}
+                              >
+                                Fees : {item.fees}
+                              </Text>
+                              <Text
+                                style={styles.cardSportColomn2TextDetailInfo}
+                              >
+                                Capacity : {item.capacity}
+                              </Text>
+                            </View>
+                            <TouchableOpacity
+                              onPress={goForward}
+                            ></TouchableOpacity>
+                          </View>
+                        </View>
+                        <Carousel
+                          ref={carouselRef}
+                          sliderWidth={screenWidth}
+                          sliderHeight={screenWidth}
+                          itemWidth={screenWidth - 10}
+                          data={item.images}
+                          renderItem={renderItem}
+                          hasParallaxImages={true}
+                          autoplay={true}
+                          autoplayInterval={5000}
+                          loop={true}
+                          loopClonesPerSide={2}
+                          marginTop="-19%"
+                          marginBottom="3%"
+                        />
+                      </View>
+                    ))}
+                  </View>
+                </View>
+              </ScrollView>
+            </View>
           </ScrollView>
         </View>
+        <TouchableOpacity
+          style={styles.button}
+          onPress={() => {
+            openGoogleMaps();
+          }}
+        >
+          <Text style={styles.buttonText}>View Location</Text>
+          <View style={styles.buttonImage}>
+            <Entypo backgroundColor={"white"} name="location" size={30} />
+          </View>
+        </TouchableOpacity>
       </View>
     </View>
   );
@@ -177,23 +251,7 @@ const GeneralComplexDetailsScreen = ({ navigation, route }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    marginTop: "2%",
-  },
-  item: {
-    width: screenWidth - 50,
-    height: screenWidth - 110,
-  },
-  imageContainer: {
-    flex: 1,
-    marginBottom: Platform.select({ ios: 0, android: 1 }), // Prevent a random Android rendering issue
-    backgroundColor: "white",
-    borderRadius: 8,
-    borderWidth: 1,
-    marginTop: "15%",
-  },
-  image: {
-    ...StyleSheet.absoluteFillObject,
-    resizeMode: "cover",
+    backgroundColor: "#fbe8e0",
   },
   header: {
     flexDirection: "row",
@@ -208,27 +266,6 @@ const styles = StyleSheet.create({
   },
   heart: {
     fontSize: 28,
-  },
-  card: {
-    flexDirection: "column",
-    marginTop: "1%",
-    alignItems: "center",
-    alignSelf: "center",
-    padding: 10,
-    width: "90%",
-    borderRadius: 10,
-    backgroundColor: "white",
-
-    shadowColor: "black",
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.2,
-    shadowRadius: 4,
-    elevation: 5,
-    marginHorizontal: 15,
-    marginVertical: 5,
-    marginBottom: "2%",
-    paddingBottom: "5%",
-    backgroundColor: "#f3f0f0",
   },
   cardHeader: {
     flexDirection: "column",
@@ -257,10 +294,46 @@ const styles = StyleSheet.create({
     flex: 1,
     marginLeft: "33%",
   },
-
   dummyCard: {
-    height: "50%",
-    width: "100%S",
+    height: screenHeight * 0.55,
+    width: "100%",
+  },
+  card: {
+    flexDirection: "column",
+    marginTop: "3%",
+    alignItems: "center",
+    alignSelf: "center",
+    padding: 10,
+    width: "95%",
+    borderRadius: 10,
+    backgroundColor: "white",
+    borderBottomWidth: 3,
+    borderWidth: 1,
+
+    shadowColor: "black",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.2,
+    shadowRadius: 4,
+    elevation: 5,
+    backgroundColor: "#fbe8e0",
+  },
+  aboutDescription: {
+    flexDirection: "column",
+    width: "90%",
+    marginLeft: "4%",
+  },
+  aboutDescriptionTopic: {
+    flex: 1,
+    flexDirection: "row",
+  },
+  aboutDescriptionLable: {
+    flex: 1,
+    fontSize: 20,
+    fontWeight: "bold",
+  },
+  aboutDescriptionText: {
+    flex: 1,
+    fontSize: 20,
   },
   sport: {
     width: "90%",
@@ -280,18 +353,62 @@ const styles = StyleSheet.create({
     flexDirection: "column",
   },
   cardSportColomn2Text: {
+    flexDirection: "row",
+  },
+  cardSportColomn2TextInfo: {
     fontSize: 20,
     fontWeight: "bold",
     marginLeft: "5%",
+    paddingRight: "15%",
   },
-  cardSportColomn2TextInfo: {
+  starContainer: {
+    backgroundColor: "#fbe8e0",
+    marginTop: "1%",
+  },
+  cardSportColomn2TextDetail: {
+    flexDirection: "row",
+  },
+  cardSportColomn2TextDetailInfo: {
     fontSize: 16,
     marginLeft: "5%",
   },
-  centeredContainer: {
+  button: {
+    flexDirection: "row",
+    marginTop: 10,
+    marginLeft: "3%",
+    width: "94%",
+    height: screenHeight * 0.06,
+    backgroundColor: "#000",
+    borderRadius: 3,
+    padding: 10,
+  },
+  buttonText: {
     flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
+    textAlign: "center",
+    color: "#fff",
+    fontSize: 20,
+    fontWeight: "bold",
+  },
+  buttonImage: {
+    textAlign: "center",
+    color: "#fff",
+  },
+
+  item: {
+    width: screenWidth - 50,
+    height: screenWidth - 110,
+  },
+  imageContainer: {
+    flex: 1,
+    marginBottom: Platform.select({ ios: 0, android: 1 }), // Prevent a random Android rendering issue
+    backgroundColor: "white",
+    borderRadius: 8,
+    borderWidth: 1,
+    marginTop: "15%",
+  },
+  image: {
+    ...StyleSheet.absoluteFillObject,
+    resizeMode: "cover",
   },
 });
 

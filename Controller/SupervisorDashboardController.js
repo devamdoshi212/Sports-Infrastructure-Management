@@ -14,7 +14,7 @@ module.exports.SupervisorDasboardCount = async function (req, res) {
   const endOfDay = new Date();
   endOfDay.setUTCHours(23, 59, 59, 999);
 
-  const presentCount = await sessionModel.aggregate([
+  const totalvisited = await sessionModel.aggregate([
     {
       $match: {
         sportscomplex: new mongoose.Types.ObjectId(req.query.sportsComplex),
@@ -35,7 +35,34 @@ module.exports.SupervisorDasboardCount = async function (req, res) {
     },
   ]);
 
-  console.log(presentCount.length);
+  // console.log(presentCount.length);
+
+  const presentCount = await sessionModel.aggregate([
+    {
+      $match: {
+        sportscomplex: new mongoose.Types.ObjectId(req.query.sportsComplex),
+        date: {
+          $gte: startOfDay,
+          $lt: endOfDay,
+        }, // Match date within the given day
+        // "enrolls.exit": null,
+      },
+    },
+    {
+      $unwind: "$enrolls",
+    },
+    {
+      $match: {
+        "enrolls.exit": null, // Only consider sessions with exit date
+      },
+    },
+    {
+      $group: {
+        _id: "$enrolls.userId",
+        count: { $sum: 1 },
+      },
+    },
+  ]);
 
   const instructerData = await instructerModel
     .find({
@@ -93,7 +120,8 @@ module.exports.SupervisorDasboardCount = async function (req, res) {
     instructerCount: insName.length,
     ComplainCount: complaintcount,
     availableSports: SportsNames,
-    presentCount: presentCount,
+    totalvisited: totalvisited.length,
+    presentCount: presentCount.length,
     rcode: 200,
   });
 };

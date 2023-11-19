@@ -23,7 +23,8 @@ const ComplaintTypeController = require("./Controller/ComplaintTypeController");
 const ComplaintImageController = require("./Controller/ComplainImageController");
 const SportComplexeImageController = require("./Controller/SportComplexImageController");
 const SupervisorDashboardController = require("./Controller/SupervisorDashboardController");
-
+const UpdatesController = require("./Controller/UpdatesController");
+const UpdatesImageController = require("./Controller/UpdatesImageController");
 const {
   filtersportsforcomplex,
 } = require("./Controller/FilterSportsForComplex");
@@ -60,6 +61,15 @@ app.post(
   SportDataController.AddSport
 );
 app.get("/getSports", SportDataController.getSport);
+
+//updates,news,achievements
+app.post(
+  "/addUpdates",
+  UpdatesImageController.upload.single("image"),
+  UpdatesController.addUpdates
+);
+app.get("/getUpdates", UpdatesController.getUpdates);
+app.patch("/updateUpdates/:id", UpdatesController.updateUpdates);
 
 //District routes
 app.post("/addDistrict", DistrictController.addDistrict);
@@ -112,6 +122,12 @@ app.post(
   AthleteController.addAthlete
 );
 app.get("/getAthletes", AthleteController.getAthlete);
+app.get("/getAthleteWithGoals", AthleteController.getAthleteWithGoals);
+app.get("/getAthletesWithRating", AthleteController.getAthletewithRating);
+app.get(
+  "/getAthletesWithAllRating",
+  AthleteController.getAthletesWithAllRating
+);
 app.get(
   "/getAthleteswithsupervisor",
   AthleteController.getAthletewithsupervisor
@@ -122,6 +138,9 @@ app.get(
   AthleteController.getAthletewithpaymentswithsupervisor
 );
 app.patch("/updateAthlete/:id", AthleteController.updateAthlete);
+
+app.patch("/goalOfAthlete", AthleteController.goalOfAthletes);
+app.patch("/updatedAchievedStatus", AthleteController.achieveOfAthletes);
 
 //Instructor routes
 app.post("/addInstructor", InstructorController.addInstructor);
@@ -136,7 +155,7 @@ app.get(
 );
 app.get("/getInstructorswithall", InstructorController.getInstructorwithAll);
 app.patch("/updateInstructors/:id", InstructorController.updateInstructor);
-app.get("/CountForInstructer",InstructorController.CountForInstructer)
+app.get("/CountForInstructer", InstructorController.CountForInstructer);
 
 //payment routes
 app.post("/paymentdetail", PaymentController.addPayment);
@@ -225,29 +244,55 @@ app.get("/paymentHistoryAthlete", PaymentController.getAthletePayments);
 // );
 
 app.post("/remarkRatingByAthlete", async (req, res) => {
-  let { sportId, athleteId, sportComplexId, remarks } = req.body;
+  let {
+    sportId,
+    athleteId,
+    sportComplexId,
+    remarks,
+    parameters,
+    instructorId,
+  } = req.body;
   let rating = new athleteRatingModel({
     athleteId,
     remarks,
     sport: sportId,
     sportComplex: sportComplexId,
+    parameters,
+    instructorId,
   });
   await rating.save();
 
   res.json({ rcode: 200 });
 });
-app.get("/ratingForSupervisor", async (req, res) => {
-  let { sportComplexId } = req.query;
+// app.get("/ratingForSupervisor", async (req, res) => {
+//   let { sportComplexId } = req.query;
+//   let ratings = await athleteRatingModel
+//     .find({
+//       sportComplex: sportComplexId,
+//       isEvaluated: 0,
+//     })
+//     .populate("athleteId")
+//     .sort({ rating: -1 });
+//   res.json({ rcode: 200, ratings });
+// });
+
+app.get("/ratingForInstructor", async (req, res) => {
+  let { instructorId } = req.query;
   let ratings = await athleteRatingModel
     .find({
-      sportComplex: sportComplexId,
+      instructorId: instructorId,
       isEvaluated: 0,
     })
-    .populate("athleteId")
+    .populate({
+      path: "athleteId",
+      populate: {
+        path: "userId",
+      },
+    })
+    .populate("sport")
     .sort({ rating: -1 });
   res.json({ rcode: 200, ratings });
 });
-
 app.get("/ratingForAll", async (req, res) => {
   let ratings = await athleteRatingModel
     .find()
@@ -260,17 +305,22 @@ app.get("/ratingForAll", async (req, res) => {
     .sort({ rating: -1 });
   res.json({ rcode: 200, ratings });
 });
-app.post("/ratingBySupervisor", async (req, res) => {
+app.post("/ratingByInstructor", async (req, res) => {
   let { ratingId, rating } = req.body;
   let ratings = await athleteRatingModel.findOne({ _id: ratingId });
+  ratings.isEvaluated = 1;
   ratings.rating = rating;
   await ratings.save();
   res.json({ rcode: 200 });
 });
+app.get("/averageUserRating", async (req, res) => {
+  let rating = await averageRating(req.query.userId, req.query.sportId);
+  res.json({ rating, rcode: 200 });
+});
 async function averageRating(userId, sportId) {
   let ratings = await athleteRatingModel.find({
     athleteId: userId,
-    sport: sportId,
+    sport: sportId == null ? { $exists: true } : sportId,
     isEvaluated: 1,
   });
   let total = ratings.length;

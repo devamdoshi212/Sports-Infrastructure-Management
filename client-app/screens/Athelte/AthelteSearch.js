@@ -1,14 +1,8 @@
-import { FontAwesome } from "@expo/vector-icons";
-import { Picker } from "@react-native-picker/picker";
-import FlatListAthelte from "./FlatListAthelte";
-
 import {
   View,
   Text,
-  Image,
   TextInput,
   StyleSheet,
-  Button,
   TouchableOpacity,
   Dimensions,
   Platform,
@@ -17,15 +11,9 @@ import {
 import React, { useRef, useState, useEffect } from "react";
 import Carousel, { ParallaxImage } from "react-native-snap-carousel";
 // import LinearGradient from "react-native-linear-gradient";
-import {
-  Ionicons,
-  Feather,
-  Entypo,
-  MaterialIcons,
-  Icon,
-} from "@expo/vector-icons";
-import { ScrollView } from "react-native-gesture-handler";
-// import Modal from './FilterModal';
+import { Feather } from "@expo/vector-icons";
+import FilterModal from "../General/FilterModal";
+import FlatListAthelte from "./FlatListAthelte";
 
 const ENTRIES1 = [
   {
@@ -57,11 +45,15 @@ const ENTRIES1 = [
 
 const { width: screenWidth } = Dimensions.get("window");
 
-const AthelteSearch = ({ navigation }) => {
+const AthelteSearch = ({ navigation, route }) => {
   const [selectedOption, setSelectedOption] = useState("getSports");
   const [searchQuery, setSearchQuery] = useState("");
   const [entries, setEntries] = useState([]);
   const [filterModal, setFilterModal] = useState(false);
+  const [lat, setlat] = useState("");
+  const [long, setlong] = useState("");
+  const [distance, setDistance] = useState("");
+  const [category, setCategory] = useState("");
   const carouselRef = useRef(null);
 
   const goForward = () => {
@@ -70,6 +62,21 @@ const AthelteSearch = ({ navigation }) => {
   useEffect(() => {
     setEntries(ENTRIES1);
   }, []);
+  useEffect(() => {
+    const { lat, long, distance, district, Category } = route.params || {};
+    if (lat) {
+      // console.log(lat, long);
+      setlat(lat);
+      setlong(long);
+      setDistance(distance);
+    }
+    if (district) {
+      setSearchQuery(district);
+    }
+    if (Category) {
+      setCategory(Category);
+    }
+  }, [route.params]);
   const renderItem = ({ item, index }, parallaxProps) => {
     return (
       <View style={styles.item}>
@@ -90,6 +97,9 @@ const AthelteSearch = ({ navigation }) => {
   return (
     <View style={styles.container}>
       {/* {filterModal && <Modal show={filterModal} />} */}
+      {filterModal && (
+        <FilterModal show={filterModal} selectedOption={selectedOption} />
+      )}
       <TouchableOpacity onPress={goForward}>
         {/* <Text>go to next slide</Text> */}
       </TouchableOpacity>
@@ -101,29 +111,41 @@ const AthelteSearch = ({ navigation }) => {
         data={entries}
         renderItem={renderItem}
         hasParallaxImages={true}
+        autoplay={true}
+        autoplayInterval={5000}
+        loop={true}
+        loopClonesPerSide={2}
       />
       <View style={styles.background}>
         <View style={styles.primaryView}></View>
         <View style={styles.ovalSection}>
-          <View style={{ flexDirection: "row" }}>
-            <Pressable
-              style={styles.button1}
+          <View
+            style={{ flexDirection: "row", justifyContent: "space-around" }}
+          >
+            <TouchableOpacity
+              style={
+                selectedOption == "getSports"
+                  ? styles.button
+                  : styles.onpressbutton
+              }
               onPress={() => {
                 setSelectedOption("getSports");
-                // alert("Facility");
               }}
             >
-              <Text style={styles.buttonText1}>Facility</Text>
-            </Pressable>
-            <Pressable
-              style={styles.button}
+              <Text style={styles.buttonText}>Facility</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={
+                selectedOption == "searchSportsComplex"
+                  ? styles.button
+                  : styles.onpressbutton
+              }
               onPress={() => {
                 setSelectedOption("searchSportsComplex");
-                // alert("Sports Complex");
               }}
             >
               <Text style={styles.buttonText}>Sports Complex</Text>
-            </Pressable>
+            </TouchableOpacity>
           </View>
           <View style={styles.searchContainer}>
             <TextInput
@@ -151,6 +173,10 @@ const AthelteSearch = ({ navigation }) => {
             optionField={selectedOption}
             searchfield={searchQuery}
             navigate={navigation}
+            lat={lat}
+            distance={distance}
+            long={long}
+            category={category}
           />
         </View>
       </View>
@@ -161,39 +187,33 @@ const AthelteSearch = ({ navigation }) => {
 export default AthelteSearch;
 
 const styles = StyleSheet.create({
-  button1: {
-    marginTop: 10,
-    marginRight: "5%",
-    marginLeft: "7%",
-    width: "40%",
-    backgroundColor: "#000",
-    borderRadius: 10,
-    padding: 10,
-  },
-  buttonText1: {
-    textAlign: "center",
-    color: "#fff",
-    fontSize: 16,
-    fontWeight: "bold",
-  },
-  button: {
+  onpressbutton: {
     marginTop: 10,
     width: "40%",
     backgroundColor: "white",
     borderRadius: 10,
-    padding: 10,
+    padding: 5,
+    height: "90%",
+  },
+  button: {
+    marginTop: 10,
+    width: "40%",
+    backgroundColor: "#f2b69c",
+    borderRadius: 10,
+    padding: 5,
+    height: "90%",
   },
   buttonText: {
     textAlign: "center",
     color: "black",
-    fontSize: 16,
+    fontSize: 17,
     fontWeight: "bold",
   },
   container: {
     flex: 1,
     // width: screenWidth,
     // height: screenWidth * 0.1020935961,
-    backgroundColor: "gray",
+    backgroundColor: "#fff6f3",
     // flexDirection: "row",
     // justifyContent: "space-around",
     // borderTopLeftRadius: -50,
@@ -219,7 +239,7 @@ const styles = StyleSheet.create({
     resizeMode: "cover",
   },
   background: {
-    backgroundColor: "gray",
+    backgroundColor: "#fff6f3",
     // flex: 1,
     flexDirection: "column",
   },
@@ -231,7 +251,7 @@ const styles = StyleSheet.create({
     // flex: 3,
     marginTop: 10,
     alignSelf: "center",
-    backgroundColor: "#fbe8e8", // #fbe8e8,#fee8e8,#e8fbef
+    backgroundColor: "#f8d7c9", // #fbe8e8,#fee8e8,#e8fbef
     borderTopLeftRadius: screenWidth * 0.1,
     borderTopRightRadius: screenWidth * 0.1,
     // borderRadius: screenWidth * 0.1,
@@ -248,10 +268,9 @@ const styles = StyleSheet.create({
   searchContainer: {
     flexDirection: "row",
     marginLeft: "7%",
-    marginTop: "2%",
+    marginTop: "3%",
     alignItems: "center",
     padding: 10,
-    // marginLeft: "-8%",
     width: "85%",
     borderWidth: 1,
     borderRadius: 10,
