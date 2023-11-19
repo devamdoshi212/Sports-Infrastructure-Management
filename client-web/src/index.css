@@ -23,3 +23,25 @@
 .p-datatable tr:hover{
    background-color:#F5F5F5;
 }
+
+.scrollbar::-webkit-scrollbar {
+    width: 5px;
+}
+ 
+/* Track */
+.scrollbar::-webkit-scrollbar-track {
+    background: #E8E9EB;
+    border-radius: 5px;
+}
+ 
+/* Handle */
+.scrollbar::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 5px;
+}
+ 
+/* Handle on hover */
+.scrollbar::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
+
