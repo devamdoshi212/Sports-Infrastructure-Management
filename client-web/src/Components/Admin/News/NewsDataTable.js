@@ -325,13 +325,13 @@ export default function NewsDataTable() {
             body={(rowdata) => {
               if (rowdata.active === "1") {
                 return (
-                  <h2 className=" bg-green-700 text-white rounded-md text-center">
+                  <h2 className=" bg-green-700 text-white font-semibold rounded-md text-center p-2">
                     Active
                   </h2>
                 );
               } else {
                 return (
-                  <h2 className=" bg-red-400 text-white rounded-md text-center">
+                  <h2 className=" bg-red-400 text-white font-semibold rounded-md text-center p-2">
                     InActive
                   </h2>
                 );

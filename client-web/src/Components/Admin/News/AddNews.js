@@ -87,7 +87,8 @@ const AddNews = () => {
   });
   return (
     <>
-      <div className="flex bg-gray-200 mx-5">
+    <div className="bg-gray-200 m-5">
+      <div className="flex mx-5">
         <Button
           className="items-end cta-btn font-semibold py-4 mt-5 rounded-br-lg rounded-bl-lg rounded-tr-lg shadow-lg hover:shadow-xl "
           onClick={() => {
@@ -97,7 +98,7 @@ const AddNews = () => {
           Back
         </Button>
       </div>
-      <div className="flex items-center justify-center bg-gray-200 min-h-screen">
+      <div className="flex items-center justify-center m-5">
         <div className="w-full max-w-2xl">
           <h2 className="text-center text-2xl uppercase font-semibold font-serif text-gray-800">
             Add New Events
@@ -183,6 +184,7 @@ const AddNews = () => {
             </div>
           </form>
         </div>
+      </div>
       </div>
     </>
   );
