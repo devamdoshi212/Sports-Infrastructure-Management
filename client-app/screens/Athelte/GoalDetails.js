@@ -7,31 +7,49 @@ import {
   TouchableOpacity,
   ScrollView,
 } from "react-native";
+import ipconfig from "../../ipconfig";
+import { useSelector } from "react-redux";
+const calculateRemainingDays = (targetDate) => {
+  const today = new Date();
+  const target = new Date(targetDate);
+  const diffTime = Math.abs(target - today);
+  const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+  return diffDays;
+};
+const GoalScreen = ({ route, navigation }) => {
+  const item = route.params.data;
+  const ip = ipconfig.ip;
+  const { _id } = useSelector((state) => state.athelte.Athelte[0]);
 
-const GoalScreen = () => {
-  const goals = [
-    {
-      id: 1,
-      title: "Learn React Native",
-      description: "Build a React Native app with goals",
-      startDate: "2023-01-01",
-      targetDate: "2023-11-31",
-    },
-  ];
-
-  const calculateRemainingDays = (targetDate) => {
-    const today = new Date();
-    const target = new Date(targetDate);
-    const diffTime = Math.abs(target - today);
-    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-    return diffDays;
-  };
-
-  const remainingDays = calculateRemainingDays(goals[0].targetDate);
+  const remainingDays = calculateRemainingDays(item.targetdate);
   const completedDays = 365 - remainingDays;
 
   const circlePercentage = (completedDays / 365) * 100;
+  const achievedHandler = () => {
+    var myHeaders = new Headers();
+    myHeaders.append("Content-Type", "application/json");
 
+    var raw = JSON.stringify({
+      updatedAchievedStatus: "1",
+    });
+
+    var requestOptions = {
+      method: "PATCH",
+      headers: myHeaders,
+      body: raw,
+      redirect: "follow",
+    };
+
+    fetch(
+      `http://${ip}:9999/updatedAchievedStatus?id=${_id}&goalId=${item._id}`,
+      requestOptions
+    )
+      .then((response) => response.text())
+      .then((result) => {
+        navigation.navigate("Goals");
+      })
+      .catch((error) => console.log("error", error));
+  };
   return (
     <ScrollView contentContainerStyle={styles.container}>
       <View
@@ -49,29 +67,27 @@ const GoalScreen = () => {
         </Text>
       </View>
 
-      {goals.map((goal) => (
-        <View key={goal.id} style={styles.goalContainer}>
-          <Text style={styles.title}>{goal.title}</Text>
-          <View style={styles.horizontalLine} />
-          <Text style={styles.description}>{goal.description}</Text>
-          <View style={styles.middleContainer}>
-            <View>
-              <Text style={styles.date}>
-                Start Date: {new Date(goal.startDate).toLocaleDateString()}
-              </Text>
-              <Text style={styles.date}>
-                Target Date: {new Date(goal.targetDate).toLocaleDateString()}
-              </Text>
-            </View>
+      <View style={styles.goalContainer}>
+        <Text style={styles.title}>{item.title}</Text>
+        <View style={styles.horizontalLine} />
+        <Text style={styles.description}>{item.description}</Text>
+        <View style={styles.middleContainer}>
+          <View>
+            <Text style={styles.date}>
+              Start Date: {new Date(item.startdate).toLocaleDateString()}
+            </Text>
+            <Text style={styles.date}>
+              Target Date: {new Date(item.targetdate).toLocaleDateString()}
+            </Text>
           </View>
-          <TouchableOpacity
-            style={styles.achievedButton}
-            onPress={() => console.log("Goal Achieved")}
-          >
-            <Text style={styles.buttonText}>Achieved</Text>
-          </TouchableOpacity>
         </View>
-      ))}
+        <TouchableOpacity
+          style={styles.achievedButton}
+          onPress={achievedHandler}
+        >
+          <Text style={styles.buttonText}>Achieved</Text>
+        </TouchableOpacity>
+      </View>
     </ScrollView>
   );
 };

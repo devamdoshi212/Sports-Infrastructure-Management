@@ -165,7 +165,9 @@ const Goals = () => {
               {item.achieved == 0 ? (
                 <Pressable
                   onPress={() => {
-                    navigation.navigate("GoalDetail");
+                    navigation.navigate("GoalDetail", {
+                      data: item,
+                    });
                   }}
                   style={({ pressed }) => [
                     {
