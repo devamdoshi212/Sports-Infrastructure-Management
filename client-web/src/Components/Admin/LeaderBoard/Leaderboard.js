@@ -23,9 +23,9 @@ const Leaderboard = () => {
     setSelectedOption(e.target.value); // Update the selected option state
   };
   return (
-    <div className="px-4">
+    <div className="px-4 m-5 bg-gray-50 py-3">
       <select
-        className="block appearance-none w-full bg-white border border-gray-300 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:border-blue-300 focus:ring focus:ring-blue-200"
+        className=" block appearance-none w-1/4 bg-white border border-gray-300 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:border-blue-300 focus:ring focus:ring-blue-200"
         onChange={handleOptionChange} // Add an onChange event handler
         value={selectedOption} // Set the value of the select element to the selectedOption state
       >
@@ -37,7 +37,7 @@ const Leaderboard = () => {
           </option>
         ))}
       </select>
-      <div></div>
+      
       <LeaderboardDataTable selectedOption={selectedOption} />
     </div>
   );
