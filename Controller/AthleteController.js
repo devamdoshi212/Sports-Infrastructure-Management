@@ -17,7 +17,7 @@ module.exports.addAthlete = async function (req, res) {
 
 module.exports.getAthlete = async function (req, res) {
   const data = await AthleteModel.find(req.query).populate("userId");
-  res.json({ data: data, data1: myarray, msg: "Athlete Retrived", rcode: 200 });
+  res.json({ data: data, msg: "Athlete Retrived", rcode: 200 });
 };
 module.exports.getAthletewithRating = async function (req, res) {
   const aid = req.query.id;
@@ -278,13 +278,11 @@ module.exports.achieveOfAthletes = async function (req, res) {
 
     await athlete.save(); // Save the updated document
 
-    return res
-      .status(200)
-      .json({
-        data: athlete,
-        msg: "Achieved status updated successfully",
-        rcode: 200,
-      });
+    return res.status(200).json({
+      data: athlete,
+      msg: "Achieved status updated successfully",
+      rcode: 200,
+    });
   } catch (error) {
     console.error(error);
     return res

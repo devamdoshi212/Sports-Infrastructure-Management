@@ -21,24 +21,30 @@ const Goals = () => {
   const ip = ipconfig.ip;
   const [refresh, setrefresh] = useState(false);
   const Userdata = useSelector((state) => state.user.User);
+  const { _id } = useSelector((state) => state.athelte.Athelte[0]);
 
   const [date, setDate] = useState(new Date());
   const [dateCal, setDateCal] = useState(new Date());
   const [achieved, setachived] = useState(0);
-  const [goals, setGoals] = useState([
-    {
-      title: "ABC",
-      description: "ABC 1",
-      targetdate: new Date().getDate(),
-      startdate: new Date(),
-    },
-  ]);
+  const [goals, setGoals] = useState([]);
 
   const refreshhandler = () => {
     setrefresh(!refresh);
   };
 
-  useEffect(() => {}, [refresh]);
+  useEffect(() => {
+    var requestOptions = {
+      method: "GET",
+      redirect: "follow",
+    };
+
+    fetch(`http://${ip}:9999/getAthletes?_id=${_id}`, requestOptions)
+      .then((response) => response.json())
+      .then((result) => {
+        setGoals(result.data[0].goals);
+      })
+      .catch((error) => console.log("error", error));
+  }, [refresh]);
   return (
     <>
       <View style={styles.container}>
@@ -56,98 +62,101 @@ const Goals = () => {
             <Text style={{ fontWeight: "bold", fontSize: 25 }}>Goals</Text>
           </View>
         </View>
-        <View style={styles.pickerContainer}>
-          <TouchableOpacity
-            onPress={() => {
-              navigation.navigate("AddGoals");
-            }}
-          >
-            <View style={styles.complaint}>
-              <Text style={styles.actionText}>Add Goals</Text>
-              {/* <AntDesign
+        <ScrollView contentContainerStyle={styles.scrollContainer}>
+          <View style={styles.pickerContainer}>
+            <TouchableOpacity
+              onPress={() => {
+                navigation.navigate("AddGoals");
+              }}
+            >
+              <View style={styles.complaint}>
+                <Text style={styles.actionText}>Add Goals</Text>
+                {/* <AntDesign
                   style={{ color: "black", marginLeft: "5%" }}
                   name="plus"
                   size={30}
                 /> */}
-              <Entypo
-                style={{ color: "#0054a8", marginLeft: "5%" }}
-                name="plus"
-                size={30}
-              />
+                <Entypo
+                  style={{ color: "#0054a8", marginLeft: "5%" }}
+                  name="plus"
+                  size={30}
+                />
+              </View>
+            </TouchableOpacity>
+            <Calendar
+              // Specify style for calendar container element. Default = {}
+              style={{
+                height: 350,
+                borderRadius: 15,
+                width: "95%",
+                alignSelf: "center",
+              }}
+              // Specify theme properties to override specific styles for calendar parts. Default = {}
+              theme={{
+                backgroundColor: "#ffffff",
+                calendarBackground: "#ffffff",
+                textSectionTitleColor: "#b6c1cd",
+                textSectionTitleDisabledColor: "#d9e1e8",
+                selectedDayBackgroundColor: "pink",
+                selectedDayTextColor: "#ffffff",
+                todayTextColor: "#00adf5",
+                dayTextColor: "#2d4150",
+                textDisabledColor: "#d9e1e8",
+                dotColor: "#00adf5",
+                selectedDotColor: "#ffffff",
+                arrowColor: "orange",
+                disabledArrowColor: "#d9e1e8",
+                monthTextColor: "#f2b69c",
+                indicatorColor: "#f2b69c",
+                textDayFontFamily: "monospace",
+                textMonthFontFamily: "monospace",
+                textDayHeaderFontFamily: "monospace",
+                textDayFontWeight: "300",
+                textMonthFontWeight: "bold",
+                textDayHeaderFontWeight: "300",
+                textDayFontSize: 16,
+                textMonthFontSize: 16,
+                textDayHeaderFontSize: 16,
+              }}
+              onDayPress={(day) => {
+                setDate(new Date(day.timestamp));
+                // console.log("selected date", day.dateString);
+                setDateCal(day.dateString);
+              }}
+              markedDates={{
+                [dateCal]: {
+                  selected: true,
+                  disableTouchEvent: true,
+                  selectedDotColor: "orange",
+                },
+              }}
+              enableSwipeMonths={true}
+            />
+            <View style={styles.twobutton}>
+              <TouchableOpacity
+                style={achieved == 0 ? styles.button : styles.onpressbutton}
+                onPress={() => {
+                  setachived(0);
+                }}
+              >
+                <Text style={styles.buttonText}>Pending</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={achieved == 1 ? styles.button : styles.onpressbutton}
+                onPress={() => {
+                  setachived(1);
+                }}
+              >
+                <Text style={styles.buttonText}>Completed</Text>
+              </TouchableOpacity>
             </View>
-          </TouchableOpacity>
-          <Calendar
-            // Specify style for calendar container element. Default = {}
-            style={{
-              height: 350,
-              borderRadius: 15,
-              width: "95%",
-              alignSelf: "center",
-            }}
-            // Specify theme properties to override specific styles for calendar parts. Default = {}
-            theme={{
-              backgroundColor: "#ffffff",
-              calendarBackground: "#ffffff",
-              textSectionTitleColor: "#b6c1cd",
-              textSectionTitleDisabledColor: "#d9e1e8",
-              selectedDayBackgroundColor: "pink",
-              selectedDayTextColor: "#ffffff",
-              todayTextColor: "#00adf5",
-              dayTextColor: "#2d4150",
-              textDisabledColor: "#d9e1e8",
-              dotColor: "#00adf5",
-              selectedDotColor: "#ffffff",
-              arrowColor: "orange",
-              disabledArrowColor: "#d9e1e8",
-              monthTextColor: "#f2b69c",
-              indicatorColor: "#f2b69c",
-              textDayFontFamily: "monospace",
-              textMonthFontFamily: "monospace",
-              textDayHeaderFontFamily: "monospace",
-              textDayFontWeight: "300",
-              textMonthFontWeight: "bold",
-              textDayHeaderFontWeight: "300",
-              textDayFontSize: 16,
-              textMonthFontSize: 16,
-              textDayHeaderFontSize: 16,
-            }}
-            onDayPress={(day) => {
-              setDate(new Date(day.timestamp));
-              // console.log("selected date", day.dateString);
-              setDateCal(day.dateString);
-            }}
-            markedDates={{
-              [dateCal]: {
-                selected: true,
-                disableTouchEvent: true,
-                selectedDotColor: "orange",
-              },
-            }}
-            enableSwipeMonths={true}
-          />
-          <View style={styles.twobutton}>
-            <TouchableOpacity
-              style={achieved == 0 ? styles.button : styles.onpressbutton}
-              onPress={() => {
-                setachived(0);
-              }}
-            >
-              <Text style={styles.buttonText}>Pending</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={achieved == 1 ? styles.button : styles.onpressbutton}
-              onPress={() => {
-                setachived(1);
-              }}
-            >
-              <Text style={styles.buttonText}>Completed</Text>
-            </TouchableOpacity>
           </View>
-        </View>
-        <ScrollView contentContainerStyle={styles.scrollContainer}>
           {goals.map((item, index) => (
             <View style={styles.card} key={index}>
               <Pressable
+                onPress={() => {
+                  navigation.navigate("GoalDetail");
+                }}
                 style={({ pressed }) => [
                   {
                     backgroundColor: pressed ? "#f8d7c9" : "#f2b69c",
@@ -285,12 +294,6 @@ const styles = StyleSheet.create({
     padding: "1%",
     marginTop: 10,
     marginBottom: 10,
-  },
-  buttonText1: {
-    textAlign: "center",
-    color: "#fff",
-    fontSize: 16,
-    fontWeight: "bold",
   },
   onpressbutton: {
     marginTop: 10,

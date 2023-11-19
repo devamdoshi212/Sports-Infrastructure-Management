@@ -6,6 +6,7 @@ import {
   TextInput,
   TouchableOpacity,
   View,
+  Alert,
 } from "react-native";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 import Icon from "react-native-vector-icons/FontAwesome";
@@ -60,7 +61,14 @@ const AddGoals = ({ navigation }) => {
     fetch(`http://${ip}:9999/goalOfAthlete?id=${_id}`, requestOptions)
       .then((response) => response.text())
       .then((result) => {
-        navigation.navigate("Goals");
+        Alert.alert("Goal Added", "Goal Added Successfully", [
+          // {
+          //     text: 'Cancel',
+          //     onPress: () => console.log('Cancel Pressed'),
+          //     style: 'cancel',
+          // },
+          { text: "OK", onPress: () => navigation.navigate("Goals") },
+        ]);
       })
       .catch((error) => console.log("error", error));
     console.log(data);
@@ -113,7 +121,7 @@ const AddGoals = ({ navigation }) => {
               style={styles.signupButton}
               onPress={submitHandler}
             >
-              <Text style={styles.buttonText}>Add Goal 🥱</Text>
+              <Text style={styles.buttonText}>Add Goal</Text>
             </TouchableOpacity>
           </View>
         </View>
