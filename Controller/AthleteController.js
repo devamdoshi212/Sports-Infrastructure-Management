@@ -293,6 +293,7 @@ module.exports.achieveOfAthletes = async function (req, res) {
     }
 
     goalToUpdate.achieved = updatedAchievedStatus;
+    goalToUpdate.actualdate = Date.now();
 
     await athlete.save(); // Save the updated document
 
