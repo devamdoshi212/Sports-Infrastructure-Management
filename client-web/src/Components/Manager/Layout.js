@@ -384,7 +384,7 @@ const Layout = () => {
           </nav>
         </header>
 
-        <div className="w-full overflow-x-hidden border-t flex flex-col">
+        <div className="w-full overflow-x-hidden border-t flex flex-col scrollbar">
           <Outlet />
         </div>
       </div>

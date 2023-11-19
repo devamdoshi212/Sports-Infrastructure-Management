@@ -325,13 +325,13 @@ export default function ComplexDataTable() {
             body={(rowdata) => {
               if (rowdata.active === "1") {
                 return (
-                  <h2 className=" bg-green-700 text-white rounded-md text-center">
+                  <h2 className=" bg-green-700 text-white rounded-md text-center p-2 font-semibold">
                     Active
                   </h2>
                 );
               } else {
                 return (
-                  <h2 className=" bg-red-400 text-white rounded-md text-center">
+                  <h2 className=" bg-red-400 text-white rounded-md text-center p-2 font-semibold">
                     Inactive
                   </h2>
                 );
@@ -342,7 +342,7 @@ export default function ComplexDataTable() {
           <Column
             header="Action"
             body={actionBodyTemplate}
-            style={{ maxWidth: "8rem" }}
+            style={{ maxWidth: "7rem" }}
           />
         </DataTable>
       </div>

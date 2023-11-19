@@ -26,9 +26,9 @@ const Layout = () => {
     });
   };
   return (
-    <div className="bg-gray-100 font-family-karla flex">
-      <aside className="relative  bg-[#13459c] h-screen w-64 hidden sm:block shadow-xl shadow-gray-900">
-        <div className="p-6 text-center">
+    <div className="bg-gray-100 font-family-karla flex ">
+      <aside className="relative  bg-[#13459c]  w-64 hidden sm:block shadow-xl shadow-gray-900 ">
+        <div className="p-6 text-center ">
           <img src={image} alt="symbol" className="opacity-60 w-2/3 m-auto" />
           <Link
             to={"/admin"}
@@ -373,7 +373,7 @@ const Layout = () => {
           </nav>
         </header>
 
-        <div className="w-full overflow-x-hidden border-t flex flex-col">
+        <div className="w-full overflow-x-hidden border-t flex flex-col scrollbar ">
           <Outlet />
         </div>
       </div>
