@@ -26,6 +26,22 @@ module.exports.getUpdates = function (req, res) {
       res.json({ data: err.msg, msg: "smw", rcode: 200 });
     });
 };
+module.exports.getUpdatesForAthlete = async function (req, res) {
+  let sportComplexId = req.query.sportComplexId;
+
+  let data = await UpdatesModel.find();
+  let updates = [];
+  for (let index = 0; index < data.length; index++) {
+    const element = data[index];
+    if (
+      element.level === 0 ||
+      (element.level === 2 && element.sportComplexId == sportComplexId)
+    ) {
+      updates.push(element);
+    }
+  }
+  res.json({ data: updates, msg: "Update Retrived", rcode: 200 });
+};
 
 module.exports.updateUpdates = async function (req, res) {
   try {
