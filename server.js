@@ -122,6 +122,7 @@ app.post(
   AthleteController.addAthlete
 );
 app.get("/getAthletes", AthleteController.getAthlete);
+app.get("/getAthleteWithGoals", AthleteController.getAthleteWithGoals);
 app.get("/getAthletesWithRating", AthleteController.getAthletewithRating);
 app.get(
   "/getAthletesWithAllRating",
@@ -138,8 +139,8 @@ app.get(
 );
 app.patch("/updateAthlete/:id", AthleteController.updateAthlete);
 
-app.patch("/goalOfAthlete",AthleteController.goalOfAthletes)
-app.patch("/updatedAchievedStatus",AthleteController.achieveOfAthletes)
+app.patch("/goalOfAthlete", AthleteController.goalOfAthletes);
+app.patch("/updatedAchievedStatus", AthleteController.achieveOfAthletes);
 
 //Instructor routes
 app.post("/addInstructor", InstructorController.addInstructor);
