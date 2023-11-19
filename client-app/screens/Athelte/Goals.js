@@ -13,7 +13,13 @@ import { useEffect, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import ipconfig from "../../ipconfig";
 import { useSelector } from "react-redux";
-
+const calculateRemainingDays = (targetDate) => {
+  const today = new Date();
+  const target = new Date(targetDate);
+  const diffTime = Math.abs(target - today);
+  const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+  return diffDays;
+};
 const Goals = () => {
   const navigation = useNavigation();
   const navigate = useNavigation();
@@ -38,13 +44,16 @@ const Goals = () => {
       redirect: "follow",
     };
 
-    fetch(`http://${ip}:9999/getAthletes?_id=${_id}`, requestOptions)
+    fetch(
+      `http://${ip}:9999/getAthleteWithGoals?_id=${_id}&achieved=${achieved}`,
+      requestOptions
+    )
       .then((response) => response.json())
       .then((result) => {
-        setGoals(result.data[0].goals);
+        setGoals(result.data);
       })
       .catch((error) => console.log("error", error));
-  }, [refresh]);
+  }, [refresh, achieved]);
   return (
     <>
       <View style={styles.container}>
@@ -153,35 +162,83 @@ const Goals = () => {
           </View>
           {goals.map((item, index) => (
             <View style={styles.card} key={index}>
-              <Pressable
-                onPress={() => {
-                  navigation.navigate("GoalDetail");
-                }}
-                style={({ pressed }) => [
-                  {
-                    backgroundColor: pressed ? "#f8d7c9" : "#f2b69c",
-                    padding: 20,
-                    borderRadius: 10,
-                  },
-                ]}
-              >
-                <View style={styles.row}>
-                  <View style={styles.column1}>
-                    <Text style={styles.titlelabel}>{item.title}</Text>
-                    <View style={styles.row}>
-                      <Text style={styles.label}>Target Date : </Text>
-                      <Text style={styles.label}>{item.targetdate}</Text>
+              {item.achieved == 0 ? (
+                <Pressable
+                  onPress={() => {
+                    navigation.navigate("GoalDetail");
+                  }}
+                  style={({ pressed }) => [
+                    {
+                      backgroundColor: pressed ? "#f8d7c9" : "#f2b69c",
+                      padding: 20,
+                      borderRadius: 10,
+                    },
+                  ]}
+                >
+                  <View style={styles.row}>
+                    <View style={styles.column1}>
+                      <Text style={styles.titlelabel}>{item.title}</Text>
+                      <View style={styles.row}>
+                        <Text style={styles.label}>Target Date : </Text>
+                        <Text style={styles.label}>
+                          {item.targetdate.split("T")[0]}
+                        </Text>
+                      </View>
+                      <View style={styles.row}>
+                        <Text style={styles.label}>Remaining Days : </Text>
+                        <Text style={styles.label}>
+                          {calculateRemainingDays(item.targetdate)}
+                        </Text>
+                      </View>
                     </View>
-                    <View style={styles.row}>
-                      <Text style={styles.label}>Remaining Days : </Text>
-                      <Text style={styles.label}>{item.targetdate}</Text>
+                    <View style={styles.column3}>
+                      <Entypo
+                        style={{ color: "#0054a8" }}
+                        name="eye"
+                        size={24}
+                      />
                     </View>
                   </View>
-                  <View style={styles.column3}>
-                    <Entypo style={{ color: "#0054a8" }} name="eye" size={24} />
+                </Pressable>
+              ) : (
+                <Pressable
+                  onPress={() => {
+                    navigation.navigate("GoalDetail");
+                  }}
+                  style={({ pressed }) => [
+                    {
+                      backgroundColor: pressed ? "#f8d7c9" : "#f2b69c",
+                      padding: 20,
+                      borderRadius: 10,
+                    },
+                  ]}
+                >
+                  <View style={styles.row}>
+                    <View style={styles.column1}>
+                      <Text style={styles.titlelabel}>{item.title}</Text>
+                      <View style={styles.row}>
+                        <Text style={styles.label}>Start Date : </Text>
+                        <Text style={styles.label}>
+                          {item.startdate.split("T")[0]}
+                        </Text>
+                      </View>
+                      <View style={styles.row}>
+                        <Text style={styles.label}>Goal Achieved at : </Text>
+                        <Text style={styles.label}>
+                          {item.actualdate.split("T")[0]}
+                        </Text>
+                      </View>
+                    </View>
+                    <View style={styles.column3}>
+                      <Entypo
+                        style={{ color: "#0054a8" }}
+                        name="eye"
+                        size={24}
+                      />
+                    </View>
                   </View>
-                </View>
-              </Pressable>
+                </Pressable>
+              )}
             </View>
           ))}
         </ScrollView>
