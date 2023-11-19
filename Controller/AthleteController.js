@@ -19,6 +19,24 @@ module.exports.getAthlete = async function (req, res) {
   const data = await AthleteModel.find(req.query).populate("userId");
   res.json({ data: data, msg: "Athlete Retrived", rcode: 200 });
 };
+module.exports.getAthleteWithGoals = async function (req, res) {
+  let _id = req.query._id;
+  let achieved = 0;
+  if (achieved !== undefined) {
+    achieved = req.query.achieved;
+  }
+  const data = await AthleteModel.find({ _id });
+  let goals = [];
+  if (data[0].goals) {
+    for (let index = 0; index < data[0].goals.length; index++) {
+      const element = data[0].goals[index];
+      if (element.achieved === achieved) {
+        goals.push(element);
+      }
+    }
+  }
+  res.json({ data: goals, msg: "Athlete Goals Retrived", rcode: 200 });
+};
 module.exports.getAthletewithRating = async function (req, res) {
   const aid = req.query.id;
   const data = await AthleteModel.find().populate("userId");
