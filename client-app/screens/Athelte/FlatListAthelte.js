@@ -110,21 +110,7 @@ function FlatListAthelte({
   const [cat, setCategory] = useState(category);
 
   const ip = ipconfig.ip;
-  //   useEffect(() => {
-  //     var requestOptions = {
-  //       method: "GET",
-  //       redirect: "follow",
-  //     };
-  //     fetch(
-  //       `http://${ip}:9999/${optionField}?q=${searchfield}&distance=${distance}&lat=${lat}&lon=${long}`,
-  //       requestOptions
-  //     )
-  //       .then((response) => response.json())
-  //       .then((result) => {
-  //         setComplex(result.data);
-  //       })
-  //       .catch((error) => console.log("error", error));
-  //   }, [ip, optionField, searchfield, distance, lat, long]);
+
   const handleRefresh = () => {
     setRefreshing(true);
     fetchData();
@@ -196,7 +182,7 @@ const styles = StyleSheet.create({
   gridItem: {
     flex: 1,
     margin: 16,
-    height: 150,
+    height: 300,
     borderRadius: 8,
     elevation: 4,
     backgroundColor: "white",
@@ -224,11 +210,12 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
   imageBackground: {
-    flex: 1,
     height: "100%",
+    flex: 1, // This will make the ImageBackground take up the full parent view
   },
   centeredContainer: {
     flex: 1,
+    width: "50%",
     justifyContent: "center",
     alignItems: "center",
   },
