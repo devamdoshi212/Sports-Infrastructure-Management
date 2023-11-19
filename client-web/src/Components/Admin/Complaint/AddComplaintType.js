@@ -61,7 +61,8 @@ const AddComplaintType = () => {
     });
   return (
     <>
-      <div className="flex bg-gray-200 mx-5">
+    <div className="bg-gray-200 m-5">
+      <div className="flex  mx-5">
         <Button
           className="items-end cta-btn font-semibold py-4 mt-5 rounded-br-lg rounded-bl-lg rounded-tr-lg shadow-lg hover:shadow-xl "
           onClick={() => {
@@ -71,17 +72,17 @@ const AddComplaintType = () => {
           Back
         </Button>
       </div>
-      <div className="flex items-center justify-center bg-cyan-50 min-h-screen">
+      <div className="flex items-center justify-center bg-gray-200 min-h-screen">
         <div className="w-full max-w-2xl">
-          <table className="min-w-full table-auto">
+          <table className="min-w-full table-auto shadow-md shadow-gray-500">
             <thead>
-              <tr className="bg-gray-200">
+              <tr className="bg-gray-300">
                 <th className="border border-gray-400 px-4 py-2">Index</th>
                 <th className="border border-gray-400 px-4 py-2">Type</th>
                 {/* <th className="border border-gray-400 px-4 py-2">Age</th> */}
               </tr>
             </thead>
-            <tbody>
+            <tbody className="bg-gray-100">
               {TableData.map((item, index) => (
                 <tr key={index}>
                   <td className="border border-gray-400 px-4 py-2">
@@ -95,7 +96,7 @@ const AddComplaintType = () => {
               ))}
             </tbody>
           </table>
-          <h2 className="text-center text-2xl uppercase font-semibold font-serif text-gray-800">
+          <h2 className="text-center text-2xl uppercase font-semibold font-serif text-gray-800  mt-9">
             Add New Complaint Type
           </h2>
           <form
@@ -133,6 +134,7 @@ const AddComplaintType = () => {
             </div>
           </form>
         </div>
+      </div>
       </div>
     </>
   );

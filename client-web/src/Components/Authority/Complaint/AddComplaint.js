@@ -68,7 +68,7 @@ const AddComplaint = () => {
     },
   });
   return (
-    <div className="flex items-center justify-center bg-cyan-50 min-h-screen">
+    <div className="flex items-center justify-center bg-gray-200 min-h-screen m-5">
       <div className="w-full max-w-2xl">
         <h2 className="text-center text-2xl uppercase font-semibold font-serif text-gray-800">
           Add New Complaint

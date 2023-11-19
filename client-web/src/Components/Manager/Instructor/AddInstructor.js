@@ -183,7 +183,8 @@ const AddInstructor = () => {
     });
   return (
     <>
-      <div className="flex bg-gray-200 mx-5">
+    <div className=" bg-gray-200 m-5 ">
+      <div className="flex  mx-5">
         <Button
           className="items-end cta-btn font-semibold py-4 mt-5 rounded-br-lg rounded-bl-lg rounded-tr-lg shadow-lg hover:shadow-xl "
           onClick={() => {
@@ -193,7 +194,7 @@ const AddInstructor = () => {
           Back
         </Button>
       </div>
-      <div className="flex items-center justify-center bg-gray-200 min-h-screen">
+      <div className="flex items-center justify-center ">
         <div className="w-full max-w-2xl">
           <h2 className="text-center text-2xl uppercase font-semibold font-serif text-gray-800">
             Add New Instructor
@@ -351,7 +352,7 @@ const AddInstructor = () => {
                       {data.fields.map((field, fieldIndex) => (
                         <div key={fieldIndex} className="flex gap-2">
                           <input
-                            className="shadow appearance-none rounded py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
+                            className="w-1/3 shadow appearance-none rounded py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
                             type="text"
                             placeholder="Start Time"
                             value={field.from}
@@ -367,7 +368,7 @@ const AddInstructor = () => {
                           />
                           <input
                             type="text"
-                            className="shadow appearance-none  rounded py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
+                            className="w-1/3 shadow appearance-none  rounded py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
                             placeholder="End Time"
                             value={field.to}
                             onChange={(e) =>
@@ -382,7 +383,7 @@ const AddInstructor = () => {
                           />
                           <button
                             type="button"
-                            className="text-blue-500 hover:text-blue-700 rounded-md py-2  h-10"
+                            className=" bg-red-700 text-white font-semibold hover:bg-red-500 rounded-md py-2 px-3 h-10"
                             onClick={() =>
                               handleRemoveField(checkboxIndex, fieldIndex)
                             }
@@ -394,7 +395,7 @@ const AddInstructor = () => {
                       <button
                         type="button"
                         onClick={() => handleAddField(checkboxIndex)}
-                        className="text-blue-500 hover:text-blue-700 rounded-md py-2 px-2 h-10"
+                        className="bg-blue-800 text-white font-semibold hover:bg-blue-600 rounded-md py-2 px-3 h-10"
                       >
                         Add Field
                       </button>
@@ -415,6 +416,7 @@ const AddInstructor = () => {
             </div>
           </form>
         </div>
+      </div>
       </div>
     </>
   );
