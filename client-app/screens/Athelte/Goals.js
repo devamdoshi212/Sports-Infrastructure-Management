@@ -163,6 +163,10 @@ const Goals = () => {
                       <Text style={styles.label}>Target Date : </Text>
                       <Text style={styles.label}>{item.targetdate}</Text>
                     </View>
+                    <View style={styles.row}>
+                      <Text style={styles.label}>Remaining Days : </Text>
+                      <Text style={styles.label}>{item.targetdate}</Text>
+                    </View>
                   </View>
                   <View style={styles.column3}>
                     <Entypo style={{ color: "#0054a8" }} name="eye" size={24} />
@@ -254,14 +258,9 @@ const styles = StyleSheet.create({
     marginLeft: "5%",
   },
   column1: {
-    width: "50%",
+    width: "60%",
   },
-  column2: {
-    width: "50%",
-  },
-  column3: {
-    // marginLeft: "10%",
-  },
+  column3: {},
   label: {
     fontWeight: "bold",
     fontSize: 17,
