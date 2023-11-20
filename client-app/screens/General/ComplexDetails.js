@@ -6,8 +6,13 @@ import {
   FlatList,
   Image,
   TouchableOpacity,
+  Pressable,
+  TextInput,
+  Button,
 } from "react-native";
 import ipconfig from "../../ipconfig";
+import { Feather } from "@expo/vector-icons";
+import FacilityOnClickModal from "./FacilityOnCilckModal";
 function renderCategoryItem(itemData, ip, navigation) {
   const itemDataWithoutSeparators = { ...itemData }; // Create a copy of itemData
   delete itemDataWithoutSeparators.separators;
@@ -46,29 +51,89 @@ function renderCategoryItem(itemData, ip, navigation) {
 
 function ComplexDetails({ route, navigation }) {
   const [complex, setComplex] = useState([]);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [filterModal, setFilterModal] = useState(false);
+  const [sportId, setSportId] = useState(null);
+
   const ip = ipconfig.ip;
   const data = route.params.data;
-  useEffect(() => {
-    var requestOptions = {
-      method: "GET",
-      redirect: "follow",
-    };
 
-    fetch(
-      `http://${ip}:9999/getComplexFromSport?sportId=${data.item._id}`,
-      requestOptions
-    )
-      .then((response) => response.json())
-      .then((result) => {
-        setComplex(result.data);
-      })
-      .catch((error) => console.log("error", error));
-  }, [ip]);
+  const { lat, long, distance, district } = route.params || {};
+
+  const [range, setRange] = useState("");
+  const [latitude, setLat] = useState("");
+  const [longitude, setLong] = useState("");
+
+  useEffect(() => {
+    if (data && data.item && data.item._id) {
+      setSportId(data.item._id);
+    }
+  }, [data]);
+
+  useEffect(() => {
+    if (lat) {
+      setLat(lat);
+      setLong(long);
+      setRange(distance);
+    }
+    if (district) {
+      setSearchQuery(district);
+    }
+  }, [lat, long, distance]);
+
+  useEffect(() => {
+    if (sportId) {
+      var requestOptions = {
+        method: "GET",
+        redirect: "follow",
+      };
+
+      fetch(
+        `http://${ip}:9999/getComplexFromSport?q=${searchQuery}&sportId=${sportId}&lat=${latitude}&long=${longitude}&distance=${range}`,
+        requestOptions
+      )
+        .then((response) => response.json())
+        .then((result) => {
+          console.log(result);
+          setComplex(result.data);
+        })
+        .catch((error) => console.log("error", error));
+    }
+  }, [ip, searchQuery, sportId, latitude, longitude, range]);
+
+  const clearHandler = () => {
+    setLat("");
+    setLong("");
+    setRange("");
+  };
 
   return (
     <View style={{ flex: 1, backgroundColor: "#fbe8e0" }}>
+      {filterModal && <FacilityOnClickModal show={filterModal} />}
+      <View style={styles.searchContainer}>
+        <TextInput
+          style={styles.input}
+          fontSize={15}
+          placeholder="Search..."
+          onChangeText={(text) => setSearchQuery(text)}
+          value={searchQuery}
+        />
+        <Pressable
+          onPress={() => {
+            setFilterModal(!filterModal);
+          }}
+        >
+          <Feather
+            // style={{ marginLeft: "70%" }}
+            color={"black"}
+            name="filter"
+            size={25}
+          />
+        </Pressable>
+      </View>
+      <Button title="Clear" onPress={clearHandler}></Button>
       <FlatList
-        style={{ marginTop: "20%" }}
+        // style={{ marginTop: "20%" }}
         data={complex}
         keyExtractor={(item) => item._id}
         renderItem={(itemData) => renderCategoryItem(itemData, ip, navigation)}
@@ -134,5 +199,19 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     // alignItems: "center",
+  },
+  input: {
+    width: "90%",
+  },
+  searchContainer: {
+    flexDirection: "row",
+    marginLeft: "7%",
+    marginTop: "10%",
+    alignItems: "center",
+    padding: 10,
+    width: "85%",
+    borderWidth: 1,
+    borderRadius: 10,
+    borderBottomWidth: 5,
   },
 });
