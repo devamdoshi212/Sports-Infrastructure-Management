@@ -226,13 +226,106 @@ module.exports.SearchComplex = async function (req, res) {
 };
 
 module.exports.sportsComplexOfSport = async function (req, res) {
-  //  let data=sportModel.find({_id:req.query.sportId})
   try {
-    let Complex = await SportsComplex.find({
-      "sports.sport": req.query.sportId,
-    });
-    res.json({
-      data: Complex,
+    // let Complex = await SportsComplex.find({
+    //   "sports.sport": req.query.sportId,
+    // });
+    // res.json({
+    //   data: Complex,
+    //   rcode: 200,
+    // });\
+
+    const query = req.query.q;
+    var data = [];
+    if (!query) {
+      let data1 = await SportsComplex.find({
+        "sports.sport": req.query.sportId,
+      }).populate("district");
+
+      if (req.query.distance) {
+        const { distance, lat, lon } = req.query;
+
+        const complex = data1.filter((element) => {
+          const distanceCheck = haversineDistance(
+            element.latitude,
+            element.longitude,
+            lat,
+            lon
+          );
+          return distanceCheck <= distance;
+        });
+
+        return res.json({
+          result: complex.length,
+          data: complex,
+          rcode: 200,
+        });
+      }
+
+      return res.status(200).json({
+        results: data1.length,
+        data: data1,
+        status: "Success",
+        // data: data,ś
+      });
+    }
+
+    data = await SportsComplex.aggregate([
+      {
+        $match: {
+          "sports.sport": new mongoose.Types.ObjectId(req.query.sportId),
+        },
+      },
+      {
+        $lookup: {
+          from: "districts", // Replace with the actual name of your "districts" collection
+          localField: "district",
+          foreignField: "_id",
+          as: "districtInfo",
+        },
+      },
+      // {
+      //   $lookup: {
+      //     from: "sports", // Replace with the actual name of your "Sports" collection
+      //     localField: "sports.sport",
+      //     foreignField: "_id",
+      //     as: "sportsInfo",
+      //   },
+      // },
+      {
+        $match: {
+          $or: [
+            { name: { $regex: `^${query}`, $options: "i" } },
+            { "districtInfo.District": { $regex: `^${query}`, $options: "i" } },
+            // { "sportsInfo.SportName": { $regex: `^${query}`, $options: "i" } },
+          ],
+        },
+      },
+    ]);
+
+    if (req.query.distance) {
+      const { distance, lat, lon } = req.query;
+
+      const complex = data.filter((element) => {
+        const distanceCheck = haversineDistance(
+          element.latitude,
+          element.longitude,
+          lat,
+          lon
+        );
+        return distanceCheck <= distance;
+      });
+
+      return res.json({
+        result: complex.length,
+        data: complex,
+        rcode: 200,
+      });
+    }
+
+    return res.json({
+      result: data.length,
+      data: data,
       rcode: 200,
     });
   } catch (err) {
