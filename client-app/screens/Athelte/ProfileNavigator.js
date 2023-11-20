@@ -17,6 +17,7 @@ import SatisfiedResponse from "./SatisfiedResponse";
 import Goals from "./Goals";
 import AddGoals from "./AddGoals";
 import GoalScreen from "./GoalDetails";
+import SportwiseLeaderBoard from "./SportswiseLeaderBoard";
 const ProfileNavigator = ({ navigation }) => {
   return (
     <Stack.Navigator>
@@ -74,6 +75,11 @@ const ProfileNavigator = ({ navigation }) => {
         <Stack.Screen
           name="LeaderBoard"
           component={LeaderBoard}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="SportwiseLeaderBoard"
+          component={SportwiseLeaderBoard}
           options={{ headerShown: false }}
         />
         <Stack.Screen
