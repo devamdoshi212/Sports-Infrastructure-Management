@@ -36,7 +36,7 @@ function renderCategoryItem(itemData, ip, navigation) {
             <Text style={styles.cardHeaderTextDescription}>
               {itemData.item.taluka}
             </Text>
-            <Text style={styles.cardHeaderTextCount}>48 Atheltes</Text>
+            {/* <Text style={styles.cardHeaderTextCount}>48 Atheltes</Text> */}
           </View>
         </View>
       </View>
