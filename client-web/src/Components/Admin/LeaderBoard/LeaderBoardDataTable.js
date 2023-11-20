@@ -147,25 +147,6 @@ export default function LeaderboardDataTable({ selectedOption }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedAthlete, setSelectedAthlete] = useState(null);
 
-  const handleChartClick = (rowData) => {
-    setSelectedAthlete(rowData);
-
-    // const { radarChartData, ...otherData } = rowData;
-
-    // setSelectedAthlete({
-    //   ...otherData,
-    //   chartData: {
-    //     categories: chartData.categories,
-    //     seriesData: radarChartData, // Adjust this based on your athlete data structure
-    //   },
-    // });
-
-    setIsModalOpen(true);
-  };
-
-  const handleCloseModal = () => {
-    setIsModalOpen(false);
-  };
   const chartData = {
     categories: [
       "Category 1",
@@ -175,6 +156,22 @@ export default function LeaderboardDataTable({ selectedOption }) {
       "Category 5",
     ],
     seriesData: [80, 50, 30, 40, 60],
+  };
+
+  const handleChartClick = (rowData) => {
+    const categories = Object.keys(rowData.parameter);
+    const seriesData = Object.values(rowData.parameter);
+    setSelectedAthlete({
+      chartData: {
+        categories,
+        seriesData,
+      },
+    });
+    setIsModalOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
   };
 
   return (
@@ -258,10 +255,13 @@ export default function LeaderboardDataTable({ selectedOption }) {
           style={{ minWidth: "12rem" }}
         />
         <Column
-          header="Radar Chart"
+          header="Analysis"
           body={(rowData) => (
-            <button onClick={() => handleChartClick(rowData)}>
-              View Radar Chart
+            <button
+              onClick={() => handleChartClick(rowData)}
+              className="text-blue-500 hover:text-blue-800"
+            >
+              View
             </button>
           )}
         />
@@ -269,7 +269,7 @@ export default function LeaderboardDataTable({ selectedOption }) {
       {isModalOpen && selectedAthlete && (
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
           <div className="bg-white p-6 rounded shadow-lg absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
-            <ChartConfig chartData={chartData} />
+            <ChartConfig chartData={selectedAthlete.chartData} />
             <button
               className="mt-4 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
               onClick={handleCloseModal}

@@ -82,7 +82,7 @@ function renderCategoryItem(itemData, ip, navigate) {
               <Text style={styles.cardHeaderTextDescription}>
                 {itemData.item.taluka},{itemData.item.district.District}
               </Text>
-              <Text style={styles.cardHeaderTextCount}>48 Atheltes</Text>
+              {/* <Text style={styles.cardHeaderTextCount}>48 Atheltes</Text> */}
             </View>
           </View>
         </View>
