@@ -11,6 +11,8 @@ const athleteSchema = new mongoose.Schema(
     bloodGroup: String,
     disability: Number,
     healthIssue: String,
+    weight: String, //in kg
+    height: String, //in feets
     isApproved: Number,
     isActive: Number,
     address: String,

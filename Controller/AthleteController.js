@@ -229,9 +229,11 @@ module.exports.updateAthlete = async function (req, res) {
   if (req.body.emergencyNumber !== undefined) {
     Athlete.emergencyNumber = req.body.emergencyNumber;
   }
-
-  if (req.body.Rating !== undefined) {
-    Athlete.Rating = req.body.Rating;
+  if (req.body.weight !== undefined) {
+    Athlete.weight = req.body.weight;
+  }
+  if (req.body.height !== undefined) {
+    Athlete.height = req.body.height;
   }
 
   try {
