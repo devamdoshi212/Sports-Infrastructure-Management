@@ -237,7 +237,9 @@ module.exports.updateAthlete = async function (req, res) {
   }
 
   try {
-    let response = await Athlete.save();
+    let response = [];
+    partialresponse = await Athlete.save();
+    response.push(partialresponse);
     res.json({ data: response, msg: "updated successfully", rcode: 200 });
   } catch (error) {
     console.error(error);
