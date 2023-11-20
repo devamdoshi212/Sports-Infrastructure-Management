@@ -252,6 +252,7 @@ const styles = StyleSheet.create({
   button: {
     flexDirection: "row",
     marginTop: 10,
+    marginBottom: 10,
     marginLeft: "3%",
     width: "94%",
     backgroundColor: "#f2b69c",
