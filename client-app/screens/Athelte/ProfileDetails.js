@@ -39,6 +39,20 @@ function calculateAge(dateOfBirth) {
 
   return age;
 }
+function convertToIST(utcTimeString) {
+  const utcTime = new Date(utcTimeString);
+
+  const istOffset = 5.5 * 60 * 60 * 1000; // 5 hours and 30 minutes in milliseconds
+
+  const istTime = new Date(utcTime.getTime() + istOffset);
+
+  const istTimeString = istTime
+    .toISOString()
+    .replace(/T/, " ")
+    .replace(/\..+/, "");
+
+  return istTimeString;
+}
 
 const ProfileDetails = ({ navigation }) => {
   const ip = ipconfig.ip;
@@ -93,30 +107,38 @@ const ProfileDetails = ({ navigation }) => {
               marginTop: "1%",
             }}
           >
-            Devam Doshi
+            {Userdata.Name}
           </Text>
         </View>
         <View>
           <View style={{ margin: "2%", flexDirection: "row" }}>
             <View style={styles.view}>
               <Text style={styles.profileinfo}>
-                {calculateAge(Userdata.DOB)}
+                {calculateAge(Userdata.DOB) + " y"}
               </Text>
               <Text>Age</Text>
             </View>
             <View style={styles.view}>
               <Text style={styles.profileinfo}>
-                {Atheltedata[0].height ? Atheltedata[0].height : "-"}
+                {Atheltedata[0].height ? Atheltedata[0].height + " ft" : "-"}
               </Text>
               <Text>Height</Text>
             </View>
             <View style={styles.view}>
               <Text style={styles.profileinfo}>
-                {Atheltedata[0].weight ? Atheltedata[0].weight : "-"}
+                {Atheltedata[0].weight ? Atheltedata[0].weight + " kg" : "-"}
               </Text>
               <Text>Weight</Text>
             </View>
           </View>
+        </View>
+        <View style={{ justifyContent: "flex-end" }}>
+          <Text>
+            Last Updated:{" "}
+            {Atheltedata[0].updatedAt
+              ? convertToIST(Atheltedata[0].updatedAt)
+              : "-"}
+          </Text>
         </View>
       </View>
 
@@ -139,9 +161,9 @@ const ProfileDetails = ({ navigation }) => {
                 </View>
                 <View>
                   <Feather
-                    style={{ marginTop: "10%" }}
+                    style={{ marginTop: "10%", marginLeft: 10 }}
                     name="edit-3"
-                    size={30}
+                    size={20}
                   />
                 </View>
               </View>
@@ -157,9 +179,9 @@ const ProfileDetails = ({ navigation }) => {
                 </View>
                 <View>
                   <Feather
-                    style={{ marginTop: "10%" }}
+                    style={{ marginTop: "10%", marginLeft: 10 }}
                     name="edit-3"
-                    size={30}
+                    size={20}
                   />
                 </View>
               </View>
@@ -177,9 +199,9 @@ const ProfileDetails = ({ navigation }) => {
                 </View>
                 <View>
                   <Feather
-                    style={{ marginTop: "10%" }}
+                    style={{ marginTop: "10%", marginLeft: 10 }}
                     name="edit-3"
-                    size={30}
+                    size={20}
                   />
                 </View>
               </View>
@@ -197,9 +219,9 @@ const ProfileDetails = ({ navigation }) => {
                 </View>
                 <View>
                   <Feather
-                    style={{ marginTop: "10%" }}
+                    style={{ marginTop: "10%", marginLeft: 10 }}
                     name="edit-3"
-                    size={30}
+                    size={20}
                   />
                 </View>
               </View>
@@ -217,9 +239,9 @@ const ProfileDetails = ({ navigation }) => {
                 </View>
                 <View>
                   <Feather
-                    style={{ marginTop: "10%" }}
+                    style={{ marginTop: "10%", marginLeft: 10 }}
                     name="edit-3"
-                    size={30}
+                    size={20}
                   />
                 </View>
               </View>
@@ -232,14 +254,16 @@ const ProfileDetails = ({ navigation }) => {
                 <View style={styles.rowText}>
                   <Text style={styles.actionText}>Height</Text>
                   <Text style={styles.actionTextInfo}>
-                    {Atheltedata[0].height ? Atheltedata[0].height : "-"}
+                    {Atheltedata[0].height
+                      ? Atheltedata[0].height + " ft"
+                      : "-"}
                   </Text>
                 </View>
                 <View>
                   <Feather
-                    style={{ marginTop: "10%" }}
+                    style={{ marginTop: "10%", marginLeft: 10 }}
                     name="edit-3"
-                    size={30}
+                    size={20}
                   />
                 </View>
               </View>
@@ -252,14 +276,16 @@ const ProfileDetails = ({ navigation }) => {
                 <View style={styles.rowText}>
                   <Text style={styles.actionText}>Weight</Text>
                   <Text style={styles.actionTextInfo}>
-                    {Atheltedata[0].weight ? Atheltedata[0].weight : "-"}
+                    {Atheltedata[0].weight
+                      ? Atheltedata[0].weight + " kg"
+                      : "-"}
                   </Text>
                 </View>
                 <View>
                   <Feather
-                    style={{ marginTop: "10%" }}
+                    style={{ marginTop: "10%", marginLeft: 10 }}
                     name="edit-3"
-                    size={30}
+                    size={20}
                   />
                 </View>
               </View>
