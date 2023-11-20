@@ -66,8 +66,9 @@ function ComplexDetails({ route, navigation }) {
   }, [ip]);
 
   return (
-    <View style={{ marginTop: "20%", backgroundColor: "#fbe8e0" }}>
+    <View style={{ flex: 1, backgroundColor: "#fbe8e0" }}>
       <FlatList
+        style={{ marginTop: "20%" }}
         data={complex}
         keyExtractor={(item) => item._id}
         renderItem={(itemData) => renderCategoryItem(itemData, ip, navigation)}
