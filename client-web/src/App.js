@@ -193,6 +193,11 @@ const routes = createBrowserRouter([
         element: <AddComplaint />,
         errorElement: <ErrorPage />,
       },
+      {
+        path: "leaderboard",
+        element: <Leaderboard />,
+        errorElement: <ErrorPage />,
+      },
     ],
   },
   {
@@ -265,6 +270,11 @@ const routes = createBrowserRouter([
       {
         path: "addcomplexevent",
         element: <AddComplexNews />,
+        errorElement: <ErrorPage />,
+      },
+      {
+        path: "leaderboard",
+        element: <Leaderboard />,
         errorElement: <ErrorPage />,
       },
     ],

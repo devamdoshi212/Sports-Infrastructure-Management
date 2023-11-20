@@ -8,6 +8,9 @@ import { Button } from "primereact/button";
 import { Calendar } from "primereact/calendar";
 import { Link } from "react-router-dom";
 import { LeaderboardServices } from "./LeaderboardServices";
+import ReactApexChart from "react-apexcharts";
+import ChartConfig from "./ChartConfig";
+
 export default function LeaderboardDataTable({ selectedOption }) {
   const [deleterefresh, setdeleterefresh] = useState(true);
   const [customers, setCustomers] = useState(null);
@@ -141,6 +144,38 @@ export default function LeaderboardDataTable({ selectedOption }) {
   const calculateIndex = (currentPage, rowIndex) => {
     return currentPage * 10 + rowIndex + 1;
   };
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedAthlete, setSelectedAthlete] = useState(null);
+
+  const handleChartClick = (rowData) => {
+    setSelectedAthlete(rowData);
+
+    // const { radarChartData, ...otherData } = rowData;
+
+    // setSelectedAthlete({
+    //   ...otherData,
+    //   chartData: {
+    //     categories: chartData.categories,
+    //     seriesData: radarChartData, // Adjust this based on your athlete data structure
+    //   },
+    // });
+
+    setIsModalOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+  };
+  const chartData = {
+    categories: [
+      "Category 1",
+      "Category 2",
+      "Category 3",
+      "Category 4",
+      "Category 5",
+    ],
+    seriesData: [80, 50, 30, 40, 60],
+  };
 
   return (
     <div className="card">
@@ -181,7 +216,7 @@ export default function LeaderboardDataTable({ selectedOption }) {
           style={{ minWidth: "12rem" }}
         />
         <Column
-          header="Photo"
+          header="Athelte Profile"
           field="image"
           filterField="image"
           body={(rowdata) => {
@@ -208,7 +243,7 @@ export default function LeaderboardDataTable({ selectedOption }) {
           style={{ minWidth: "12rem" }}
         />
         <Column
-          header="Athelte Rating"
+          header="Athelte DOB"
           field="dob"
           filterField="dob"
           body={(rowData) => {
@@ -222,7 +257,108 @@ export default function LeaderboardDataTable({ selectedOption }) {
           filterField="address"
           style={{ minWidth: "12rem" }}
         />
+        <Column
+          header="Radar Chart"
+          body={(rowData) => (
+            <button onClick={() => handleChartClick(rowData)}>
+              View Radar Chart
+            </button>
+          )}
+        />
       </DataTable>
+      {isModalOpen && selectedAthlete && (
+        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
+          <div className="bg-white p-6 rounded shadow-lg absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+            <ChartConfig chartData={chartData} />
+            <button
+              className="mt-4 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
+              onClick={handleCloseModal}
+            >
+              Close Modal
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
+
+/* <Column
+          header="Athelte Address"
+          field="address"
+          filterField="address"
+          body={(rawdata) => {
+            const chartData = {
+              series: [
+                {
+                  name: "Series 1",
+                  data: [80, 50, 30, 40, 60],
+                },
+              ],
+              options: {
+                chart: {
+                  type: "radar",
+                  height: "100%",
+                },
+                xaxis: {
+                  categories: [
+                    "Category 1",
+                    "Category 2",
+                    "Category 3",
+                    "Category 4",
+                    "Category 5",
+                  ],
+                },
+                plotOptions: {
+                  radar: {
+                    polygons: {
+                      strokeColors: [
+                        "#EDEDED",
+                        "#EDEDED",
+                        "#EDEDED",
+                        "#EDEDED",
+                        "#EDEDED",
+                      ],
+                      connectorColors: "#EDEDED",
+                    },
+                  },
+                },
+                fill: {
+                  opacity: 0.4,
+                },
+                markers: {
+                  size: 0,
+                },
+                legend: {
+                  position: "bottom",
+                  horizontalAlign: "center",
+                },
+                responsive: [
+                  {
+                    breakpoint: 480,
+                    options: {
+                      chart: {
+                        width: "100%",
+                      },
+                      legend: {
+                        position: "bottom",
+                      },
+                    },
+                  },
+                ],
+              },
+            };
+
+            return (
+              <div className="chart">
+                <ReactApexChart
+                  options={chartData.options}
+                  series={chartData.series}
+                  type="radar"
+                  height="350"
+                />
+              </div>
+            );
+          }}
+
+        /> */
