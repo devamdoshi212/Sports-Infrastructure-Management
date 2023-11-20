@@ -124,6 +124,14 @@ const AthelteSearch = ({ navigation, route }) => {
     );
   };
 
+  const clearHandler = () => {
+    setCategory("");
+    setDistance("");
+    setlong("");
+    setlat("");
+    setSearchQuery("");
+  };
+
   return (
     <View style={styles.container}>
       {/* {filterModal && <Modal show={filterModal} />} */}
@@ -198,6 +206,8 @@ const AthelteSearch = ({ navigation, route }) => {
               />
             </Pressable>
           </View>
+          <Button title="Clear" onPress={clearHandler}></Button>
+
           {/* //FlatListScreen */}
           <FlatListAthelte
             optionField={selectedOption}
