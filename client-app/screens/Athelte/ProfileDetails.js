@@ -151,6 +151,24 @@ const ProfileDetails = ({ navigation }) => {
             <TouchableOpacity>
               <View style={styles.row}>
                 <View style={{ borderRadius: 15, width: "15%" }}>
+                  <Entypo name="email" size={30} />
+                </View>
+                <View style={styles.rowText}>
+                  <Text style={styles.actionText}>Email</Text>
+                  <Text style={styles.actionTextInfo}>{Userdata.Email}</Text>
+                </View>
+                <View>
+                  {/* <Feather
+                    style={{ marginTop: "10%", marginLeft: 10 }}
+                    name="edit-3"
+                    size={20}
+                  /> */}
+                </View>
+              </View>
+            </TouchableOpacity>
+            <TouchableOpacity>
+              <View style={styles.row}>
+                <View style={{ borderRadius: 15, width: "15%" }}>
                   <FontAwesome name="phone" size={30} />
                 </View>
                 <View style={styles.rowText}>
@@ -161,6 +179,9 @@ const ProfileDetails = ({ navigation }) => {
                 </View>
                 <View>
                   <Feather
+                    onPress={() => {
+                      navigation.navigate("EditForm");
+                    }}
                     style={{ marginTop: "10%", marginLeft: 10 }}
                     name="edit-3"
                     size={20}
@@ -168,24 +189,7 @@ const ProfileDetails = ({ navigation }) => {
                 </View>
               </View>
             </TouchableOpacity>
-            <TouchableOpacity>
-              <View style={styles.row}>
-                <View style={{ borderRadius: 15, width: "15%" }}>
-                  <Entypo name="email" size={30} />
-                </View>
-                <View style={styles.rowText}>
-                  <Text style={styles.actionText}>Email</Text>
-                  <Text style={styles.actionTextInfo}>{Userdata.Email}</Text>
-                </View>
-                <View>
-                  <Feather
-                    style={{ marginTop: "10%", marginLeft: 10 }}
-                    name="edit-3"
-                    size={20}
-                  />
-                </View>
-              </View>
-            </TouchableOpacity>
+
             <TouchableOpacity>
               <View style={styles.row}>
                 <View style={{ borderRadius: 15, width: "15%" }}>
@@ -199,6 +203,9 @@ const ProfileDetails = ({ navigation }) => {
                 </View>
                 <View>
                   <Feather
+                    onPress={() => {
+                      navigation.navigate("EditForm");
+                    }}
                     style={{ marginTop: "10%", marginLeft: 10 }}
                     name="edit-3"
                     size={20}
@@ -219,6 +226,9 @@ const ProfileDetails = ({ navigation }) => {
                 </View>
                 <View>
                   <Feather
+                    onPress={() => {
+                      navigation.navigate("EditForm");
+                    }}
                     style={{ marginTop: "10%", marginLeft: 10 }}
                     name="edit-3"
                     size={20}
@@ -239,6 +249,9 @@ const ProfileDetails = ({ navigation }) => {
                 </View>
                 <View>
                   <Feather
+                    onPress={() => {
+                      navigation.navigate("EditForm");
+                    }}
                     style={{ marginTop: "10%", marginLeft: 10 }}
                     name="edit-3"
                     size={20}
@@ -261,6 +274,9 @@ const ProfileDetails = ({ navigation }) => {
                 </View>
                 <View>
                   <Feather
+                    onPress={() => {
+                      navigation.navigate("EditForm");
+                    }}
                     style={{ marginTop: "10%", marginLeft: 10 }}
                     name="edit-3"
                     size={20}
@@ -283,6 +299,9 @@ const ProfileDetails = ({ navigation }) => {
                 </View>
                 <View>
                   <Feather
+                    onPress={() => {
+                      navigation.navigate("EditForm");
+                    }}
                     style={{ marginTop: "10%", marginLeft: 10 }}
                     name="edit-3"
                     size={20}
