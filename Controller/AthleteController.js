@@ -1,5 +1,6 @@
 const AthleteModel = require("../Model/athleteModel");
 const athleteRatingModel = require("../Model/athleteRatingModel");
+const mongoose = require("mongoose");
 
 module.exports.addAthlete = async function (req, res) {
   //console.log(req.file);
@@ -40,6 +41,8 @@ module.exports.getAthleteWithGoals = async function (req, res) {
 module.exports.getAthletewithRating = async function (req, res) {
   const aid = req.query.id;
   const sportId = req.query.sportId;
+  let parameter = {};
+
   const data = await AthleteModel.find().populate("userId");
   let myarray = [];
   for (let index = 0; index < data.length; index++) {
@@ -47,6 +50,7 @@ module.exports.getAthletewithRating = async function (req, res) {
     let rating;
     if (sportId) {
       rating = await averageRating(element._id, sportId);
+      parameter = await getParameterSum(sportId, aid);
     } else {
       rating = await averageRating(element._id, null);
     }
@@ -54,7 +58,8 @@ module.exports.getAthletewithRating = async function (req, res) {
       athleteid: element._id.toString(),
       name: element.userId.Name,
       iconUrl: element.baseUrl,
-      score: rating ? rating.toFixed(2) : 0,
+      score: rating ? rating : 0,
+      parameter: parameter,
     });
   }
   let currentuser = myarray.filter((ele) => ele.athleteid == aid);
@@ -76,11 +81,11 @@ module.exports.getAthletesWithAllRating = async function (req, res) {
 
   const data = await AthleteModel.find().populate("userId");
   let myarray = [];
-
   for (let index = 0; index < data.length; index++) {
     const element = data[index];
     if (sportId) {
       let rating = await averageRating(element._id, sportId);
+      let parameter = await getParameterSum(sportId, element._id);
       myarray.push({
         athleteid: element._id.toString(),
         name: element.userId.Name,
@@ -90,6 +95,7 @@ module.exports.getAthletesWithAllRating = async function (req, res) {
         contact: element.userId.ContactNum,
         dob: element.userId.DOB,
         address: element.address,
+        parameter: parameter,
       });
     } else {
       let rating = await averageRating(element._id, null);
@@ -102,6 +108,7 @@ module.exports.getAthletesWithAllRating = async function (req, res) {
         contact: element.userId.ContactNum,
         dob: element.userId.DOB,
         address: element.address,
+        parameter: {},
       });
     }
   }
@@ -113,6 +120,27 @@ module.exports.getAthletesWithAllRating = async function (req, res) {
     rcode: 200,
   });
 };
+async function getParameterSum(sportId, athleteId) {
+  try {
+    let result = await athleteRatingModel.find({ sport: sportId, athleteId });
+    let myobj = {};
+    result.forEach((item) => {
+      item.parameters.forEach((ele) => {
+        if (myobj[ele.parameter]) {
+          myobj[ele.parameter] += ele.value;
+        } else {
+          myobj[ele.parameter] = ele.value;
+        }
+      });
+    });
+    // for (const key in myobj) {
+    //   console.log(key + " " + myobj[key]);
+    // }
+    return myobj;
+  } catch (e) {
+    console.log(e);
+  }
+}
 
 async function averageRating(userId, sportId) {
   let ratings = await athleteRatingModel.find({
@@ -125,7 +153,8 @@ async function averageRating(userId, sportId) {
   ratings.forEach((ele) => {
     total2 += ele.rating;
   });
-  return total2 / total;
+  return total2;
+  // return total2 / total;
 }
 module.exports.getAthletewithsupervisor = async function (req, res) {
   AthleteModel.find(req.query)

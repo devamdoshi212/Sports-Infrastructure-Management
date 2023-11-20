@@ -36,7 +36,7 @@ const SportwiseLeaderBoard = ({ navigation }) => {
   const [userdata, setuserdata] = useState([
     {
       name: "Adam Savage",
-      score: 5,
+      score: "-",
       iconUrl:
         "https://www.shareicon.net/data/128x128/2016/09/15/829473_man_512x512.png",
     },
