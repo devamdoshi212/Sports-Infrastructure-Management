@@ -99,6 +99,13 @@ const MyCarousel = ({ navigation, route }) => {
       </TouchableOpacity>
     );
   };
+  const clearHandler = () => {
+    setCategory("");
+    setDistance("");
+    setlong("");
+    setlat("");
+    setSearchQuery("");
+  };
 
   return (
     <View style={styles.container}>
@@ -174,6 +181,7 @@ const MyCarousel = ({ navigation, route }) => {
               />
             </Pressable>
           </View>
+          <Button title="Clear" onPress={clearHandler}></Button>
           {/* //FlatListScreen */}
           <FlatListScreen
             optionField={selectedOption}
