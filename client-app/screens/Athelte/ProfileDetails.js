@@ -178,14 +178,11 @@ const ProfileDetails = ({ navigation }) => {
                   </Text>
                 </View>
                 <View>
-                  <Feather
-                    onPress={() => {
-                      navigation.navigate("EditForm");
-                    }}
+                  {/* <Feather
                     style={{ marginTop: "10%", marginLeft: 10 }}
                     name="edit-3"
                     size={20}
-                  />
+                  /> */}
                 </View>
               </View>
             </TouchableOpacity>
