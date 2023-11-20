@@ -18,6 +18,7 @@ import Goals from "./Goals";
 import AddGoals from "./AddGoals";
 import GoalScreen from "./GoalDetails";
 import SportwiseLeaderBoard from "./SportswiseLeaderBoard";
+import EditProfileDetailsForm from "./EditProfileDetailsForm";
 const ProfileNavigator = ({ navigation }) => {
   return (
     <Stack.Navigator>
@@ -30,6 +31,11 @@ const ProfileNavigator = ({ navigation }) => {
         <Stack.Screen
           name="DetailProfile"
           component={ProfileDetails}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="EditForm"
+          component={EditProfileDetailsForm}
           options={{ headerShown: false }}
         />
         <Stack.Screen
