@@ -130,6 +130,11 @@ app.get(
   AthleteController.getAthletesWithAllRating
 );
 app.get(
+  "/getAthletewithSportsWiseRating",
+  AthleteController.getAthletewithSportsWiseRating
+);
+
+app.get(
   "/getAthleteswithsupervisor",
   AthleteController.getAthletewithsupervisor
 );
