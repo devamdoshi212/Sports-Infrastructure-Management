@@ -105,12 +105,22 @@ const FacilityOnClickModal = (props) => {
         location.coords.longitude
       ) {
         setLocation(location);
-        navigation.navigate("SportComplexName", {
-          lat: location.coords.latitude,
-          long: location.coords.longitude,
-          distance: distance,
-          district: selectedItems[0],
-        });
+        // alert(selectedItems[0]);
+        if (props.isAvilable === 0) {
+          navigation.navigate("SportComplex", {
+            lat: location.coords.latitude,
+            long: location.coords.longitude,
+            distance: distance,
+            district: selectedItems[0],
+          });
+        } else {
+          navigation.navigate("SportComplexName", {
+            lat: location.coords.latitude,
+            long: location.coords.longitude,
+            distance: distance,
+            district: selectedItems[0],
+          });
+        }
         setModalVisible(!modalVisible);
       } else {
         // Handle the case when location is not available
@@ -162,7 +172,7 @@ const FacilityOnClickModal = (props) => {
           >
             <Pressable
               onPress={() => {
-                alert("done successfully");
+                // alert("done successfully");
                 getLocationHandler();
                 setModalVisible(!modalVisible);
               }}

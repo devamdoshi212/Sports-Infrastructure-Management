@@ -79,7 +79,7 @@ function AthelteFlatListScreen({ route, navigation }) {
     if (district) {
       setSearchQuery(district);
     }
-  }, [lat, long, distance]);
+  }, [lat, long, distance, district]);
 
   useEffect(() => {
     if (sportId) {
@@ -94,7 +94,7 @@ function AthelteFlatListScreen({ route, navigation }) {
       )
         .then((response) => response.json())
         .then((result) => {
-          console.log(result);
+          // console.log(result);
           setComplex(result.data);
         })
         .catch((error) => console.log("error", error));
@@ -105,11 +105,14 @@ function AthelteFlatListScreen({ route, navigation }) {
     setLat("");
     setLong("");
     setRange("");
+    setSearchQuery("");
   };
 
   return (
     <View style={{ flex: 1, backgroundColor: "#fbe8e0" }}>
-      {filterModal && <FacilityOnClickModal show={filterModal} />}
+      {filterModal && (
+        <FacilityOnClickModal show={filterModal} isAvilable={0} />
+      )}
       <View style={styles.searchContainer}>
         <TextInput
           style={styles.input}
