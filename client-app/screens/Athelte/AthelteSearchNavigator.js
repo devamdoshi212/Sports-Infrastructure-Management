@@ -5,6 +5,7 @@ const Stack = createStackNavigator();
 import GeneralComplexDetailsScreen from "../General/GeneralComplexDetailsScreen";
 import AthelteSearch from "./AthelteSearch";
 import AthelteFlatListScreen from "./AthelteFlatScreen";
+import EventsinAthelte from "./EventsinAthelte";
 const AthelteSearchNavigator = ({ navigation }) => {
   return (
     <Stack.Navigator>
@@ -22,6 +23,11 @@ const AthelteSearchNavigator = ({ navigation }) => {
         <Stack.Screen
           name="SportComplex"
           component={AthelteFlatListScreen}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="EventsinAthelte"
+          component={EventsinAthelte}
           options={{ headerShown: false }}
         />
       </Stack.Group>

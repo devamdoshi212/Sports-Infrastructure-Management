@@ -103,18 +103,24 @@ const AthelteSearch = ({ navigation, route }) => {
     const updatedImage = item.image.replace("localhost", ip);
 
     return (
-      <View style={styles.item}>
-        <ParallaxImage
-          source={{ uri: updatedImage }}
-          containerStyle={styles.imageContainer}
-          style={styles.image}
-          parallaxFactor={0.4}
-          {...parallaxProps}
-        />
-        {/* <Text style={styles.title} numberOfLines={2}>
+      <TouchableOpacity
+        onPress={() => {
+          navigation.navigate("EventsinAthelte");
+        }}
+      >
+        <View style={styles.item}>
+          <ParallaxImage
+            source={{ uri: updatedImage }}
+            containerStyle={styles.imageContainer}
+            style={styles.image}
+            parallaxFactor={0.4}
+            {...parallaxProps}
+          />
+          {/* <Text style={styles.title} numberOfLines={2}>
                     {item.title}
                 </Text> */}
-      </View>
+        </View>
+      </TouchableOpacity>
     );
   };
 
