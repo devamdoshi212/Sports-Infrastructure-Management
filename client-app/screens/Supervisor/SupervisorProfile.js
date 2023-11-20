@@ -125,23 +125,14 @@ function SupervisorProfile({ navigation }) {
               <MaterialIcons name="navigate-next" size={24} />
             </View>
           </TouchableOpacity>
+
           <TouchableOpacity
             onPress={() => {
               navigation.navigate("ListComplaint");
             }}
           >
             <View style={styles.row}>
-              <Text style={styles.actionText}>View Complaint</Text>
-              <MaterialIcons name="navigate-next" size={24} />
-            </View>
-          </TouchableOpacity>
-          <TouchableOpacity
-            onPress={() => {
-              navigation.navigate("RaiseComplaint");
-            }}
-          >
-            <View style={styles.row}>
-              <Text style={styles.actionText}>Raise Complaint</Text>
+              <Text style={styles.actionText}>Complaint</Text>
               <MaterialIcons name="navigate-next" size={24} />
             </View>
           </TouchableOpacity>

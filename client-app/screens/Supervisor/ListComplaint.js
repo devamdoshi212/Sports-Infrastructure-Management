@@ -1,181 +1,214 @@
 import {
-    View,
-    Text,
-    Image,
-    StyleSheet,
-    Button,
-    TouchableOpacity,
-    ScrollView,
-    Pressable,
+  View,
+  Text,
+  Image,
+  StyleSheet,
+  Button,
+  TouchableOpacity,
+  ScrollView,
+  Pressable,
 } from "react-native";
-import { Ionicons } from "@expo/vector-icons";
+import { Entypo, Ionicons } from "@expo/vector-icons";
 import { Picker } from "@react-native-picker/picker";
 import { useEffect, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import ipconfig from "../../ipconfig";
 import { useSelector } from "react-redux";
 
-const ListComplaint = () => {
-    const [selectedstatus, setselectedstatus] = useState("0");
-    const [Complaint, setcomplain] = useState([]);
-    const ip = ipconfig.ip;
-    const Userdata = useSelector((state) => state.user.User);
-    const sid = Userdata.SportComplexId;
+const ListComplaint = ({ navigation }) => {
+  const [selectedstatus, setselectedstatus] = useState("0");
+  const [Complaint, setcomplain] = useState([]);
+  const ip = ipconfig.ip;
+  const Userdata = useSelector((state) => state.user.User);
+  const sid = Userdata.SportComplexId;
 
-    useEffect(() => {
-        var requestOptions = {
-            method: "GET",
-            redirect: "follow",
-        };
-        fetch(
-            `http://${ip}:9999/getAllComplaints?userId=${Userdata._id}&status=${selectedstatus}`,
-            requestOptions
-        )
-            .then((response) => response.json())
-            .then((result) => {
-                setcomplain(result.data);
-            })
-            .catch((error) => console.log("error", error));
-    }, [selectedstatus]);
-    const navigate = useNavigation();
-    return (
-        <>
-            <View style={styles.container}>
-                <View style={styles.header}>
-                    <Pressable
-                        onPress={() => {
-                            navigate.goBack();
-                        }}
-                    >
-                        <View style={styles.back}>
-                            <Ionicons name="arrow-back" size={24} />
-                        </View>
-                    </Pressable>
-                    <View style={styles.heading}>
-                        <Text style={{ fontWeight: "bold", fontSize: 25 }}>
-                            Complaint List
-                        </Text>
-                    </View>
-                </View>
-                <View style={styles.pickerContainer}>
-                    <Picker
-                        selectedValue={selectedstatus}
-                        onValueChange={(itemValue, itemIndex) => {
-                            setselectedstatus(itemValue);
-                            //   handleInput("bloodGroup", itemValue);
-                        }}
-                        style={styles.input}
-                        placeholder="Select Complaint Status"
-                    >
-                        <Picker.Item label="Pending" value="0" />
-                        <Picker.Item label="Solved" value="1" />
-                    </Picker>
-                </View>
-                <ScrollView contentContainerStyle={styles.scrollContainer}>
-                    {Complaint.map((item, index) => (
-                        <View style={styles.card} key={index}>
-                            <Pressable
-                                onPress={() => {
-                                    navigate.navigate("SupervisorViewComplaint", { data: item });
-                                }}
-                                style={({ pressed }) => [
-                                    {
-                                        backgroundColor: pressed ? "#f0f0f0" : "white",
-                                        padding: 20,
-                                        borderRadius: 10,
-                                    },
-                                ]}
-                            >
-                                <View style={styles.row}>
-                                    <View style={styles.column1}>
-                                        <Text style={styles.label}>{item.userId.Name}</Text>
-                                    </View>
-                                    <View style={styles.column2}>
-                                        <Text style={styles.input}>Type</Text>
-                                        <Text style={styles.input}>
-                                            {item.type == 0 && "Maintenance"}
-                                            {item.type == 1 && "Behaviour"}
-                                            {item.type == 2 && "Refund"}
-                                            {item.type == 3 && "Inquiry"}
-                                            {item.type == 4 && "Other"}
-                                        </Text>
-                                    </View>
-                                </View>
-                            </Pressable>
-                        </View>
-                    ))}
-                </ScrollView>
+  useEffect(() => {
+    var requestOptions = {
+      method: "GET",
+      redirect: "follow",
+    };
+    fetch(
+      `http://${ip}:9999/getAllComplaints?userId=${Userdata._id}&status=${selectedstatus}`,
+      requestOptions
+    )
+      .then((response) => response.json())
+      .then((result) => {
+        setcomplain(result.data);
+      })
+      .catch((error) => console.log("error", error));
+  }, [selectedstatus]);
+  const navigate = useNavigation();
+  return (
+    <>
+      <View style={styles.container}>
+        <View style={styles.header}>
+          <Pressable
+            onPress={() => {
+              navigate.goBack();
+            }}
+          >
+            <View style={styles.back}>
+              <Ionicons name="arrow-back" size={24} />
             </View>
-        </>
-    );
+          </Pressable>
+          <View style={styles.heading}>
+            <Text style={{ fontWeight: "bold", fontSize: 25 }}>
+              Complaint List
+            </Text>
+          </View>
+        </View>
+        <TouchableOpacity
+          onPress={() => {
+            navigation.navigate("RaiseComplaint");
+          }}
+        >
+          <View style={styles.complaint}>
+            <Text style={styles.actionText}>Raise Complaint</Text>
+
+            <Entypo
+              style={{ color: "#0054a8", marginLeft: "5%" }}
+              name="plus"
+              size={30}
+            />
+          </View>
+        </TouchableOpacity>
+        <View style={styles.pickerContainer}>
+          <Picker
+            selectedValue={selectedstatus}
+            onValueChange={(itemValue, itemIndex) => {
+              setselectedstatus(itemValue);
+              //   handleInput("bloodGroup", itemValue);
+            }}
+            style={styles.input}
+            placeholder="Select Complaint Status"
+          >
+            <Picker.Item label="Pending" value="0" />
+            <Picker.Item label="Solved" value="1" />
+          </Picker>
+        </View>
+        <ScrollView contentContainerStyle={styles.scrollContainer}>
+          {Complaint.map((item, index) => (
+            <View style={styles.card} key={index}>
+              <Pressable
+                onPress={() => {
+                  navigate.navigate("SupervisorViewComplaint", {
+                    data: item,
+                  });
+                }}
+                style={({ pressed }) => [
+                  {
+                    backgroundColor: pressed ? "#f0f0f0" : "white",
+                    padding: 20,
+                    borderRadius: 10,
+                  },
+                ]}
+              >
+                <View style={styles.row}>
+                  <View style={styles.column1}>
+                    <Text style={styles.label}>{item.userId.Name}</Text>
+                  </View>
+                  <View style={styles.column2}>
+                    <Text style={styles.input}>Type</Text>
+                    <Text style={styles.input}>
+                      {item.type == 0 && "Maintenance"}
+                      {item.type == 1 && "Behaviour"}
+                      {item.type == 2 && "Refund"}
+                      {item.type == 3 && "Inquiry"}
+                      {item.type == 4 && "Other"}
+                    </Text>
+                  </View>
+                </View>
+              </Pressable>
+            </View>
+          ))}
+        </ScrollView>
+      </View>
+    </>
+  );
 };
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: "#fbe8e0",
-        paddingTop: "7%",
-    },
-    header: {
-        flexDirection: "row",
-        alignItems: "center",
-        marginBottom: 10,
-        width: "90%",
-        paddingLeft: "5%",
-        height: 50,
-        backgroundColor: "#fbe8e0",
-    },
-    back: {
-        marginHorizontal: 4,
-        alignSelf: "center",
-    },
-    heading: {
-        justifyContent: "center",
-        alignItems: "center",
-        width: "90%",
-    },
-    pickerContainer: {
-        backgroundColor: "#f2b69c",
-        borderRadius: 5,
-        marginBottom: 15,
-        width: "90%",
-        marginLeft: "5%",
-        
-    },
-    input: {
-        marginLeft: 6,
-        textAlign: "center",
-    },
-    scrollContainer: {
-        flexGrow: 1,
-        padding: 10,
-    },
-    card: {
-        backgroundColor: "white",
-        borderRadius: 10,
-        shadowColor: "black",
-        shadowOffset: { width: 0, height: 2 },
-        shadowOpacity: 0.2,
-        shadowRadius: 4,
-        elevation: 5,
-        marginHorizontal: 15,
-        marginVertical: 5,
-    },
-    row: {
-        flexDirection: "row",
-        alignItems: "center",
-        marginBottom: 5,
-    },
-    column1: {
-        width: "60%",
-    },
-    column2: {
-        width: "45%",
-    },
-    label: {
-        fontWeight: "bold",
-        fontSize: 17,
-    },
+  container: {
+    flex: 1,
+    backgroundColor: "#fbe8e0",
+    paddingTop: "7%",
+  },
+  header: {
+    flexDirection: "row",
+    alignItems: "center",
+    marginBottom: 10,
+    width: "90%",
+    paddingLeft: "5%",
+    height: 50,
+    backgroundColor: "#fbe8e0",
+  },
+  back: {
+    marginHorizontal: 4,
+    alignSelf: "center",
+  },
+  heading: {
+    justifyContent: "center",
+    alignItems: "center",
+    width: "90%",
+  },
+  pickerContainer: {
+    backgroundColor: "#f2b69c",
+    borderRadius: 5,
+    marginBottom: 15,
+    width: "90%",
+    marginLeft: "5%",
+  },
+  input: {
+    marginLeft: 6,
+    textAlign: "center",
+  },
+  scrollContainer: {
+    flexGrow: 1,
+    padding: 10,
+  },
+  card: {
+    backgroundColor: "white",
+    borderRadius: 10,
+    shadowColor: "black",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.2,
+    shadowRadius: 4,
+    elevation: 5,
+    marginHorizontal: 15,
+    marginVertical: 5,
+  },
+  row: {
+    flexDirection: "row",
+    alignItems: "center",
+    marginBottom: 5,
+  },
+  column1: {
+    width: "60%",
+  },
+  column2: {
+    width: "45%",
+  },
+  label: {
+    fontWeight: "bold",
+    fontSize: 17,
+  },
+  complaint: {
+    flexDirection: "row",
+    justifyContent: "center",
+    width: "90%",
+    // height: 40,
+    borderRadius: 10,
+    backgroundColor: "#f2b69c",
+    marginLeft: "5%",
+    padding: "1%",
+    marginBottom: 10,
+  },
+  actionText: {
+    marginLeft: "5%",
+    fontWeight: "bold",
+    fontSize: 20,
+    color: "black",
+  },
 });
 
 export default ListComplaint;
