@@ -245,7 +245,7 @@ const FacilityOnClickModal = (props) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#f0f0f0",
+    backgroundColor: "#fbe8e0",
   },
   back: {
     marginLeft: "4%",
