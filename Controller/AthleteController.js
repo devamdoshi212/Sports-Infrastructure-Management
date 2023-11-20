@@ -65,6 +65,34 @@ module.exports.getAthletewithRating = async function (req, res) {
   });
 };
 
+module.exports.getAthletewithSportsWiseRating = async function (req, res) {
+  const aid = req.query.id;
+  const data = await AthleteModel.find().populate("userId");
+  let myarray = [];
+  for (let index = 0; index < data.length; index++) {
+    const element = data[index];
+    let rating = await averageRating(element._id, null);
+    myarray.push({
+      athleteid: element._id.toString(),
+      name: element.userId.Name,
+      iconUrl: element.baseUrl,
+      score: rating ? rating : 0,
+    });
+  }
+  let currentuser = myarray.filter((ele) => ele.athleteid == aid);
+
+  myarray.sort((a, b) => b.score - a.score);
+  let index = myarray.findIndex((ele) => ele.athleteid == aid);
+  currentuser = { ...currentuser, index: index };
+  res.json({
+    data: data,
+    data1: myarray,
+    currentuserdata: currentuser,
+    msg: "Athlete General Rating Retrived",
+    rcode: 200,
+  });
+};
+
 module.exports.getAthletesWithAllRating = async function (req, res) {
   let sportId = req.query.sportId;
 

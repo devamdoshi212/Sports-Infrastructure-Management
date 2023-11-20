@@ -105,6 +105,16 @@ function Profile({ navigation }) {
             </TouchableOpacity>
             <TouchableOpacity
               onPress={() => {
+                navigation.navigate("SportwiseLeaderBoard");
+              }}
+            >
+              <View style={styles.row}>
+                <Text style={styles.actionText}>Sportswise LeaderBoard</Text>
+                <MaterialIcons name="navigate-next" size={24} />
+              </View>
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => {
                 navigation.navigate("SportsComplexDetails");
               }}
             >
