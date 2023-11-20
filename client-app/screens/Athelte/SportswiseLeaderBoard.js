@@ -59,7 +59,7 @@ const SportwiseLeaderBoard = ({ navigation }) => {
       .catch((error) => console.log("error", error));
 
     fetch(
-      `http://${ip}:9999/getAthletesWithRating?id=${AthelteData[0]._id}`,
+      `http://${ip}:9999/getAthletesWithRating?id=${AthelteData[0]._id}&sportId=${selectedSportsOption}`,
       requestOptions
     )
       .then((response) => response.json())
@@ -72,7 +72,7 @@ const SportwiseLeaderBoard = ({ navigation }) => {
         setatheltedata(temp);
       })
       .catch((error) => console.log("error", error));
-  }, [image]);
+  }, [image, selectedSportsOption]);
 
   const leaderboardRef = useRef();
 
@@ -112,7 +112,7 @@ const SportwiseLeaderBoard = ({ navigation }) => {
         </View>
         <View style={styles.card}>
           <Text style={styles.label}>
-            {userdata.index + 1 ? userdata.index + 1 : 1}
+            {userdata.index + 1 ? userdata.index + 1 : "-"}
             {userdata.index
               ? getOrdinalSuffix(parseInt(userdata.index) + 1)
               : "st"}
@@ -130,7 +130,7 @@ const SportwiseLeaderBoard = ({ navigation }) => {
             />
           </View>
           <Text style={styles.label}>
-            {userdata[0].score ? userdata[0].score.toFixed(2) : "5"}
+            {userdata[0].score ? userdata[0].score : "-"}
           </Text>
           <View>
             <TouchableOpacity onPress={handleCapture}>
@@ -151,7 +151,7 @@ const SportwiseLeaderBoard = ({ navigation }) => {
             style={styles.input}
             placeholder="Select Sports"
           >
-            <Picker.Item label="Select Sports" value="" />
+            {/* <Picker.Item label="Select Sports" value="" /> */}
 
             {sports.map((item, index) => (
               <Picker.Item
