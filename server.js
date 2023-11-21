@@ -252,7 +252,10 @@ app.get("/paymentHistoryAthlete", PaymentController.getAthletePayments);
 
 //utilizationRoutes
 app.get("/timeSlotUtilization", UtilizationController.timeSlotUtilization);
-app.get("/sportUtilization", UtilizationController.sportUtilization);
+app.get(
+  "/sportCapacityUtilization",
+  UtilizationController.sportCapacityUtilization
+);
 
 app.post("/remarkRatingByAthlete", async (req, res) => {
   let {

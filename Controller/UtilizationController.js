@@ -85,7 +85,7 @@ module.exports.timeSlotUtilization = async function (req, res) {
   }
 };
 
-module.exports.sportUtilization = async function (req, res) {
+module.exports.sportCapacityUtilization = async function (req, res) {
   try {
     const sportComplex = await SportsComplex.findOne({
       _id: req.query.sportsComplexId,
@@ -100,14 +100,63 @@ module.exports.sportUtilization = async function (req, res) {
       };
     });
 
+    mappedSports.sort((a, b) => {
+      const sportA = a.sport.toUpperCase();
+      const sportB = b.sport.toUpperCase();
+      return sportA.localeCompare(sportB);
+    });
+
     const counts = await paymentModel.aggregate([
       {
-        $match: {},
+        $match: {
+          sportsComplexId: new mongoose.Types.ObjectId(
+            req.query.sportsComplexId
+          ),
+        },
+      },
+      {
+        $group: {
+          _id: "$sports",
+          totalAthelete: { $sum: 1 }, // You can use other aggregation operators based on your requirements
+        },
+      },
+      {
+        $lookup: {
+          from: "sports", // Replace with the actual name of your sports collection
+          localField: "_id",
+          foreignField: "_id",
+          as: "sportDetails",
+        },
+      },
+      {
+        $unwind: "$sportDetails",
+      },
+      {
+        $project: {
+          sport: "$sportDetails.SportName",
+          totalAthelete: 1,
+        },
       },
     ]);
 
+    counts.sort((a, b) => {
+      const sportA = a.sport.toUpperCase(); // Convert to uppercase for case-insensitive sorting
+      const sportB = b.sport.toUpperCase();
+      return sportA.localeCompare(sportB);
+    });
+
+    let data = [];
+    for (let i = 0; i < counts.length; i++) {
+      //   const element = [i];
+      data.push({
+        capacity: mappedSports[i].capacity,
+        sport: counts[i].sport,
+        totalAthelete: counts[i].totalAthelete,
+      });
+    }
+
     res.json({
-      sportComplex: mappedSports,
+      data: data,
     });
   } catch (err) {
     console.log(err);
