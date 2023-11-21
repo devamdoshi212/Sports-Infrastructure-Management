@@ -268,6 +268,10 @@ app.get(
   UtilizationController.sportCapacityUtilization
 );
 app.get("/ComplaintsAnalysis", UtilizationController.ComplaintsAnalysis);
+app.get("/monthWiseEnroll", UtilizationController.monthWiseEnroll);
+
+
+
 app.post("/remarkRatingByAthlete", async (req, res) => {
   let {
     sportId,
