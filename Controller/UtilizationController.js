@@ -1,5 +1,7 @@
 const sessionModel = require("../Model/SessionModel");
 const mongoose = require("mongoose");
+const paymentModel = require("../Model/PaymentModel");
+const SportsComplex = require("../Model/SportsComplexModel");
 
 function countEntriesInTimeSlot(result, startHour, endHour) {
   let count = 0;
@@ -42,17 +44,27 @@ function countEntriesInTimeSlot(result, startHour, endHour) {
 
 module.exports.timeSlotUtilization = async function (req, res) {
   try {
-    const data = await sessionModel.aggregate([
-      {
-        $match: {
-          sportscomplex: new mongoose.Types.ObjectId(req.query.sportsComplexId),
+    let data;
+    if (req.query.sportsComplexId) {
+      data = await sessionModel.aggregate([
+        {
+          $match: {
+            sportscomplex: new mongoose.Types.ObjectId(
+              req.query.sportsComplexId
+            ),
+          },
         },
-      },
-      {
-        $unwind: "$enrolls",
-      },
-    ]);
-
+        {
+          $unwind: "$enrolls",
+        },
+      ]);
+    } else {
+      data = await sessionModel.aggregate([
+        {
+          $unwind: "$enrolls",
+        },
+      ]);
+    }
     let slotCounts = [];
 
     slotCounts.push(countEntriesInTimeSlot(data, 7, 9));
@@ -73,5 +85,31 @@ module.exports.timeSlotUtilization = async function (req, res) {
   }
 };
 
+module.exports.sportUtilization = async function (req, res) {
+  try {
+    const sportComplex = await SportsComplex.findOne({
+      _id: req.query.sportsComplexId,
+    }).populate("sports.sport");
 
-module.exports.sportUtilization=async function (req,res){}
+    const mappedSports = sportComplex.sports.map((sportItem) => {
+      const { sport, images, rating, fees, capacity } = sportItem;
+      // You can perform additional mapping or processing here if needed
+      return {
+        sport: sport.SportName,
+        capacity: capacity,
+      };
+    });
+
+    const counts = await paymentModel.aggregate([
+      {
+        $match: {},
+      },
+    ]);
+
+    res.json({
+      sportComplex: mappedSports,
+    });
+  } catch (err) {
+    console.log(err);
+  }
+};
