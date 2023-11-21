@@ -2,6 +2,7 @@ import React from "react";
 import AllBlogs from "../Components/Admin/DataTable";
 import { useEffect } from "react";
 import { useState } from "react";
+import { Link } from "react-router-dom";
 
 const AdminDashboard = () => {
   const [data, setdata] = useState({});
@@ -48,12 +49,13 @@ const AdminDashboard = () => {
   };
   return (
     <div className="m-5">
-      {/* <AllBlogs /> */}
       <div className="grid grid-cols-1 gap-4 lg:grid-cols-3 lg:gap-8">
-        <div className=" text-center rounded-lg bg-gray-300 ">
-          <div className=" font-bold p-5 text-3xl">Total Complexes</div>
-          <AnimatedCount finalCount={visible && data.totalComplex} />
-        </div>
+        <Link to={"districtWiseSportsComplex"}>
+          <div className=" text-center rounded-lg bg-gray-300 ">
+            <div className=" font-bold p-5 text-3xl">Total Complexes</div>
+            <AnimatedCount finalCount={visible && data.totalComplex} />
+          </div>
+        </Link>
         <div className=" text-center rounded-lg bg-gray-300 ">
           <div className=" font-bold p-5 text-3xl">Total Sports</div>
           <AnimatedCount finalCount={visible && data.totalSports} />

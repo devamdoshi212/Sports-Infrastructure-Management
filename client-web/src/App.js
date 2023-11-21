@@ -60,6 +60,7 @@ import ComplexNews from "./Components/Manager/News/ComplexNews";
 import AddComplexNews from "./Components/Manager/News/AddComplexNews";
 import Leaderboard from "./Components/Admin/LeaderBoard/Leaderboard";
 import AthletePerformance from "./Pages/AthletePerformance";
+import DistrictWiseSportsComplex from "./Components/Admin/DataTable";
 
 const routes = createBrowserRouter([
   {
@@ -143,6 +144,11 @@ const routes = createBrowserRouter([
       {
         path: "leaderboard",
         element: <Leaderboard />,
+        errorElement: <ErrorPage />,
+      },
+      {
+        path: "districtWiseSportsComplex",
+        element: <DistrictWiseSportsComplex />,
         errorElement: <ErrorPage />,
       },
     ],
