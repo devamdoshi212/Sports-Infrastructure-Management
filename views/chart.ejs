@@ -8,7 +8,7 @@
 			border: 1px solid #ccc;
 			padding: 10px;
 			margin: 10px;
-			background-color: #fff;
+			background-color: #f2b69c;
 		}
 	</style>
 </head>
@@ -19,7 +19,9 @@
 </script>
 <style>
 	* {
-		font-size: 30px !important
+		font-size: 30px !important;
+		background-color: #f2b69c;
+
 	}
 
 
@@ -51,7 +53,8 @@
 				chart: {
 					type: 'radar',
 					height: "100%",
-					width: "100%"
+					width: "100%",
+					background:"#f2b69c"
 				},
 				dataLabels: {
 					enabled: false, // change
@@ -80,7 +83,11 @@
 				},
 				xaxis: {
 					categories: temp2,
-
+					labels: {
+          style: {
+            colors: '#000' // set label color to black
+          }
+        }
 				},
 				yaxis: {
 					// max: 100,
