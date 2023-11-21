@@ -4,6 +4,7 @@ const paymentModel = require("../Model/PaymentModel");
 const SportsComplex = require("../Model/SportsComplexModel");
 const ComplaintModel = require("./../Model/ComplaintModel");
 const ComplaintTypeModel = require("./../Model/ComplaintTypeModel");
+const DistrictsModel = require("./../Model/DistrictsModel");
 
 function countEntriesInTimeSlot(result, startHour, endHour) {
   let count = 0;
@@ -295,4 +296,18 @@ module.exports.monthWiseEnroll = async function (req, res) {
       rcode: -9,
     });
   }
+};
+
+module.exports.DistrictWiseSportsComplex = async function (req, res) {
+  let District = await DistrictsModel.find();
+  let data = [];
+  for (let index = 0; index < District.length; index++) {
+    const element = District[index];
+    let SportsComplexes = await SportsComplex.find({ district: element._id });
+    data.push({
+      district: element.District,
+      sportComplex: SportsComplexes.length,
+    });
+  }
+  res.json({ data: data, rcode: 200 });
 };

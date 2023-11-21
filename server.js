@@ -269,8 +269,10 @@ app.get(
 );
 app.get("/ComplaintsAnalysis", UtilizationController.ComplaintsAnalysis);
 app.get("/monthWiseEnroll", UtilizationController.monthWiseEnroll);
-
-
+app.get(
+  "/DistrictWiseSportsComplex",
+  UtilizationController.DistrictWiseSportsComplex
+);
 
 app.post("/remarkRatingByAthlete", async (req, res) => {
   let {
