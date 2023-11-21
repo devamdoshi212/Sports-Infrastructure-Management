@@ -4,6 +4,7 @@ import DistrictWiseChart from "./DistrictWiseChart";
 import SportsComplexWiseUser from "./SportComplesWiseUser";
 import TimewiseAnalysis from "./TimeSlotAnalysis";
 import CapacityAnalysis from "./CapacityAnalysis";
+import ComplaintAnalysis from "./ComplaintAnalysis";
 
 const Analysis = () => {
   const [data, setData] = useState([]);
@@ -67,6 +68,7 @@ const Analysis = () => {
       </div>
       <TimewiseAnalysis selectedOption={selectedOption} />
       <CapacityAnalysis selectedOption={selectedOption} />
+      <ComplaintAnalysis selectedOption={selectedOption} />
       {/* <GeneralAnalysis selectedOption={selectedOption} /> */}
       {/* <hr className="h-px bg-gray-700 "/>
       <div className="w-1/5 relative m-5">
