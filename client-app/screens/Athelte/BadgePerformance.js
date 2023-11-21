@@ -25,6 +25,22 @@ import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { WebView } from "react-native-webview";
 import { useNavigation } from "@react-navigation/native";
+import bronze from "./../../assets/badges/bronze.png";
+import silver from "./../../assets/badges/silver.png";
+import gold from "./../../assets/badges/gold.png";
+import platinum from "./../../assets/badges/platinum.png";
+import diamond from "./../../assets/badges/diamond.png";
+import crown from "./../../assets/badges/crown.png";
+
+const badge = (points) => {
+  if (points < 250) return bronze;
+  if (points >= 250 && points < 500) return silver;
+  if (points >= 500 && points < 750) return gold;
+  if (points >= 750 && points < 1000) return platinum;
+  if (points >= 1000 && points < 1250) return diamond;
+  else return crown;
+};
+
 const BadgePerformance = () => {
   const navigation = useNavigation();
   const ip = ipconfig.ip;
@@ -142,32 +158,33 @@ const BadgePerformance = () => {
       </View>
       <View style={styles.card}>
         <View style={styles.topLeft}>
-          <Text style={styles.lable}>Height</Text>
-          <Text style={styles.input}>
-            {userData.weight ? userData.weight : "-"}
-          </Text>
+          <Text style={styles.lable}>Age</Text>
+          <Text style={styles.input}>{calculateAge(Userdata.DOB) + " y"}</Text>
         </View>
 
         <View style={styles.topRight}>
-          <Text style={styles.lable}>Weight</Text>
-          <Text style={styles.input}>
-            {userData.height ? userData.height : "-"}
-          </Text>
-        </View>
-
-        <View style={styles.bottomLeft}>
-          <Text style={styles.lable}>Age</Text>
-          <Text style={styles.input}>{calculateAge(Userdata.DOB)}</Text>
-        </View>
-
-        <View style={styles.bottomRight}>
           <Text style={styles.lable}>Points</Text>
           <Text style={styles.input}>{sportpoints}</Text>
         </View>
 
+        <View style={styles.bottomLeft}>
+          <Text style={styles.lable}>Height</Text>
+          <Text style={styles.input}>
+            {userData.weight ? userData.weight + " ft" : "-"}
+          </Text>
+        </View>
+
+        <View style={styles.bottomRight}>
+          <Text style={styles.lable}>Weight</Text>
+          <Text style={styles.input}>
+            {userData.height ? userData.height + " kg" : "-"}
+          </Text>
+        </View>
+
         <View style={styles.middleContainer}>
           <Image
-            source={{ uri: `http://${ip}:9999/${userData.baseUrl.slice(1)}` }}
+            source={badge(sportpoints)}
+            // source={{ uri: `http://${ip}:9999/${userData.baseUrl.slice(1)}` }}
             style={styles.middleImage}
             resizeMode="cover"
           />
