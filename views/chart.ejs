@@ -1,0 +1,99 @@
+<html>
+
+<head>
+	<title>Chart</title>
+
+	<style>
+		.chart-container {
+			border: 1px solid #ccc;
+			padding: 10px;
+			margin: 10px;
+			background-color: #fff;
+		}
+	</style>
+</head>
+<script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+<script>
+	let analysis = JSON.parse(`<%- JSON.stringify(analysis) %>`)
+	console.log(analysis)
+</script>
+<style>
+	* {
+		font-size: 30px !important
+	}
+
+
+	.col-6 {
+		margin: 0;
+	}
+</style>
+
+<body>
+
+	<!-- <div class="chart-container"> -->
+		<!-- <h1 style="font-size: 50px !important;text-align:center;margin-top: 200px;">MODULE WISE PERFORMANCE</h1> -->
+		<div id="marks"></div>
+	
+
+	<script>
+		function marks() {
+            let temp1 = [];
+            let temp2 = [];
+            for (const key in analysis) {
+                temp1.push(analysis[key]);
+                temp2.push(key);
+            }
+			var options = {
+				series: [{
+					name: 'PERFORMANCE',
+					data: temp1,
+				}],
+				chart: {
+					type: 'radar',
+					height:"100%",
+					width:"100%"
+				},
+				dataLabels: {
+					enabled: true,
+					background: {
+						enabled: true,
+						borderRadius: 2,
+					}
+				},
+				plotOptions: {
+					radar: {
+						polygons: {
+							strokeColors: '#fff',
+							fill: {
+								colors: ['#000']
+							}
+						}
+					}
+				},
+				colors: ['#FF4560'],
+				markers: {
+					size: 6,
+					colors: ['#fff'],
+					strokeColor: '#FF4560',
+					strokeWidth: 2,
+				},
+				xaxis: {
+					categories: temp2,
+
+				},
+				yaxis: {
+					// max: 100,
+					// min: 0,
+					show:false
+				}
+
+			};
+
+			var chart = new ApexCharts(document.querySelector("#marks"), options);
+			chart.render();
+		}
+		marks();
+	</script>
+</body>
+
+</html>

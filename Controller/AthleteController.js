@@ -170,6 +170,28 @@ async function getParameterSum(sportId, athleteId) {
   }
 }
 
+module.exports.getParameterSum = async function (sportId, athleteId) {
+  try {
+    let result = await athleteRatingModel.find({ sport: sportId, athleteId });
+    let myobj = {};
+    result.forEach((item) => {
+      item.parameters.forEach((ele) => {
+        if (myobj[ele.parameter]) {
+          myobj[ele.parameter] += ele.value;
+        } else {
+          myobj[ele.parameter] = ele.value;
+        }
+      });
+    });
+    // for (const key in myobj) {
+    //   console.log(key + " " + myobj[key]);
+    // }
+    return myobj;
+  } catch (e) {
+    console.log(e);
+  }
+};
+
 async function averageRating(userId, sportId) {
   let ratings = await athleteRatingModel.find({
     athleteId: userId,
@@ -184,6 +206,21 @@ async function averageRating(userId, sportId) {
   return total2;
   // return total2 / total;
 }
+
+module.exports.averageRating = async function (userId, sportId) {
+  let ratings = await athleteRatingModel.find({
+    athleteId: userId,
+    sport: sportId == null ? { $exists: true } : sportId,
+    isEvaluated: 1,
+  });
+  let total = ratings.length;
+  let total2 = 0;
+  ratings.forEach((ele) => {
+    total2 += ele.rating;
+  });
+  return total2;
+  // return total2 / total;
+};
 module.exports.getAthletewithsupervisor = async function (req, res) {
   AthleteModel.find(req.query)
     .populate("createdBy")

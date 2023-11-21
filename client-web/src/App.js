@@ -69,12 +69,6 @@ const routes = createBrowserRouter([
     errorElement: <ErrorPage />,
   },
   {
-    path: "/athelteperformance/:athleteid/:userid",
-    element: <AthletePerformance />,
-    // loader: () => {},
-    errorElement: <ErrorPage />,
-  },
-  {
     path: "/admin",
     element: <AdminLayout />,
     loader: () => {
