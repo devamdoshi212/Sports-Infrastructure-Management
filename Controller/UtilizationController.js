@@ -4,6 +4,7 @@ const paymentModel = require("../Model/PaymentModel");
 const SportsComplex = require("../Model/SportsComplexModel");
 const ComplaintModel = require("./../Model/ComplaintModel");
 const ComplaintTypeModel = require("./../Model/ComplaintTypeModel");
+const DistrictsModel = require("./../Model/DistrictsModel");
 
 function countEntriesInTimeSlot(result, startHour, endHour) {
   let count = 0;
@@ -159,9 +160,14 @@ module.exports.sportCapacityUtilization = async function (req, res) {
 
     res.json({
       data: data,
+      rcode: 200,
     });
   } catch (err) {
     console.log(err);
+    res.json({
+      data: err,
+      rcode: -9,
+    });
   }
 };
 
@@ -242,4 +248,66 @@ module.exports.ComplaintsAnalysis = async function (req, res) {
     }
     res.json({ data: data, rcode: 200 });
   }
+};
+
+module.exports.monthWiseEnroll = async function (req, res) {
+  try {
+    const result = await paymentModel.aggregate([
+      // Other stages can be added before the $match stage if needed
+
+      // Conditionally include the $match stage
+      ...(req.query.sportsComplexId
+        ? [
+            {
+              $match: {
+                sportsComplexId: new mongoose.Types.ObjectId(
+                  req.query.sportsComplexId
+                ),
+              },
+            },
+          ]
+        : []),
+      {
+        $group: {
+          _id: {
+            month: { $month: "$from" },
+            year: { $year: "$from" },
+          },
+          totalAthelete: { $sum: 1 }, // You can     use other aggregation operators based on your requirements
+        },
+      },
+      {
+        $sort: {
+          "_id.year": 1,
+          "_id.month": 1,
+        },
+      },
+    ]);
+
+    // console.log(result);
+    res.json({
+      data: result,
+      rcode: 200,
+    });
+  } catch (err) {
+    console.error(err);
+    res.json({
+      err: err.msg,
+      rcode: -9,
+    });
+  }
+};
+
+module.exports.DistrictWiseSportsComplex = async function (req, res) {
+  let District = await DistrictsModel.find();
+  let data = [];
+  for (let index = 0; index < District.length; index++) {
+    const element = District[index];
+    let SportsComplexes = await SportsComplex.find({ district: element._id });
+    data.push({
+      district: element.District,
+      sportComplex: SportsComplexes.length,
+    });
+  }
+  res.json({ data: data, rcode: 200 });
 };
