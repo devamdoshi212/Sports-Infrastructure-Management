@@ -189,7 +189,6 @@ const styles = StyleSheet.create({
     sportname: {
         fontSize: 16,
         marginTop: "2%",
-        
     }
 });
 
