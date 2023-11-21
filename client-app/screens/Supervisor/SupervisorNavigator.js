@@ -17,6 +17,7 @@ import AthleteListComplaint from "./AthleteListComplaint";
 import Response from "./Response";
 import AddAthlete from "./AddAthelte";
 import EventPage from "./EventPage";
+import SportwiseLeaderBoard from "./SportswiseLeaderBoard";
 const SupervisorNavigator = ({ navigation }) => {
   return (
     <Stack.Navigator>
@@ -82,8 +83,8 @@ const SupervisorNavigator = ({ navigation }) => {
           options={{ headerShown: false }}
         />
         <Stack.Screen
-          name="Response"
-          component={Response}
+          name="SportwiseLeaderBoard"
+          component={SportwiseLeaderBoard}
           options={{ headerShown: false }}
         />
       </Stack.Group>
