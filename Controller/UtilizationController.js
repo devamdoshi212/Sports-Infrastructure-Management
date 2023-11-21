@@ -91,7 +91,7 @@ module.exports.timeSlotUtilization = async function (req, res) {
 module.exports.sportCapacityUtilization = async function (req, res) {
   try {
     const sportComplex = await SportsComplex.findOne({
-      _id: req.query.sportsComplexId,
+      _id: new mongoose.Types.ObjectId(req.query.sportsComplexId),
     }).populate("sports.sport");
 
     const mappedSports = sportComplex.sports.map((sportItem) => {
