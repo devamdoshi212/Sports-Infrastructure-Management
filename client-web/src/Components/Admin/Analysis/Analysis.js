@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import GeneralAnalysis from "./GeneralAnalysis";
 import DistrictWiseChart from "./DistrictWiseChart";
 import SportsComplexWiseUser from "./SportComplesWiseUser";
+import TimewiseAnalysis from "./TimeSlotAnalysis";
+import CapacityAnalysis from "./CapacityAnalysis";
 
 const Analysis = () => {
   const [data, setData] = useState([]);
@@ -43,7 +45,9 @@ const Analysis = () => {
           onChange={handleOptionChange} // Add an onChange event handler
           value={selectedOption} // Set the value of the select element to the selectedOption state
         >
-          <option value="">select Any One</option>
+          <option value="" selected={true}>
+            ALL
+          </option>
 
           {data.map((item) => (
             <option key={item._id} value={item._id}>
@@ -61,9 +65,10 @@ const Analysis = () => {
           </svg>
         </div>
       </div>
-  
-      <GeneralAnalysis selectedOption={selectedOption} />
-      <hr className="h-px bg-gray-700 "/>
+      <TimewiseAnalysis selectedOption={selectedOption} />
+      <CapacityAnalysis selectedOption={selectedOption} />
+      {/* <GeneralAnalysis selectedOption={selectedOption} /> */}
+      {/* <hr className="h-px bg-gray-700 "/>
       <div className="w-1/5 relative m-5">
         <select
           className="block appearance-none w-full bg-white border border-gray-300 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:border-blue-300 focus:ring focus:ring-blue-200"
@@ -88,7 +93,7 @@ const Analysis = () => {
       </div>
       <DistrictWiseChart selectedata={selectedDistrict} />
       <hr className="h-px bg-gray-700 "/>
-      <SportsComplexWiseUser />
+      <SportsComplexWiseUser /> */}
       {/* Pass selectedOption as a prop */}
     </div>
   );
