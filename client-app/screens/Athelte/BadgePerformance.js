@@ -8,6 +8,7 @@ import {
   Pressable,
   ScrollView,
   Dimensions,
+  ActivityIndicator,
 } from "react-native";
 import ipconfig from "../../ipconfig";
 import {
@@ -30,9 +31,13 @@ const BadgePerformance = () => {
   const Userdata = useSelector((state) => state.user.User);
   const Atheltedata = useSelector((state) => state.athelte.Athelte);
   const [data, setdata] = useState([]);
+  const [userData, setUserData] = useState({});
   const [sportid, setsportid] = useState();
+  const [loading, setLoading] = useState(true);
+  const [sportpoints, setsportponits] = useState();
   const OnclickHandler = (e) => {
     console.log(e);
+    setsportponits(e.rating);
     setsportid(e);
   };
 
@@ -48,10 +53,41 @@ const BadgePerformance = () => {
     )
       .then((response) => response.json())
       .then((result) => {
+        // console.log(result);
+        setUserData(result.atheltedata);
         setdata(result.data);
+        setsportponits(result.points);
       })
-      .catch((error) => console.log("error", error));
+      .catch((error) => console.log("error", error))
+      .finally(() => {
+        setLoading(false);
+      });
   }, []);
+
+  if (loading) {
+    return (
+      <View style={styles.centeredContainer}>
+        <ActivityIndicator size="large" color="blue" />
+      </View>
+    );
+  }
+  function calculateAge(dateOfBirth) {
+    const today = new Date();
+    const birthDate = new Date(dateOfBirth);
+
+    let age = today.getFullYear() - birthDate.getFullYear();
+    const monthDiff = today.getMonth() - birthDate.getMonth();
+
+    // If the birthdate for the current year hasn't occurred yet, subtract one year
+    if (
+      monthDiff < 0 ||
+      (monthDiff === 0 && today.getDate() < birthDate.getDate())
+    ) {
+      age--;
+    }
+
+    return age;
+  }
   return (
     <View style={styles.container}>
       <View style={styles.header}>
@@ -105,25 +141,36 @@ const BadgePerformance = () => {
         </ScrollView>
       </View>
       <View style={styles.card}>
-        <View style={styles.row}>
-          <View style={styles.column1}>
-            <Text style={styles.lable}>Age</Text>
-            <Text style={styles.input}>25</Text>
-          </View>
-          <View style={styles.column2}>
-            <Text style={styles.lable}>Age</Text>
-            <Text style={styles.input}>25</Text>
-          </View>
+        <View style={styles.topLeft}>
+          <Text style={styles.lable}>Height</Text>
+          <Text style={styles.input}>
+            {userData.weight ? userData.weight : "-"}
+          </Text>
         </View>
-        <View style={styles.row}>
-          <View style={styles.column1}>
-            <Text style={styles.lable}>Age</Text>
-            <Text style={styles.input}>25</Text>
-          </View>
-          <View style={styles.column2}>
-            <Text style={styles.lable}>Age</Text>
-            <Text style={styles.input}>25</Text>
-          </View>
+
+        <View style={styles.topRight}>
+          <Text style={styles.lable}>Weight</Text>
+          <Text style={styles.input}>
+            {userData.height ? userData.height : "-"}
+          </Text>
+        </View>
+
+        <View style={styles.bottomLeft}>
+          <Text style={styles.lable}>Age</Text>
+          <Text style={styles.input}>{calculateAge(Userdata.DOB)}</Text>
+        </View>
+
+        <View style={styles.bottomRight}>
+          <Text style={styles.lable}>Points</Text>
+          <Text style={styles.input}>{sportpoints}</Text>
+        </View>
+
+        <View style={styles.middleContainer}>
+          <Image
+            source={{ uri: `http://${ip}:9999/${userData.baseUrl.slice(1)}` }}
+            style={styles.middleImage}
+            resizeMode="cover"
+          />
         </View>
       </View>
       {sportid && (
@@ -155,6 +202,11 @@ const BadgePerformance = () => {
 
 export default BadgePerformance;
 const styles = StyleSheet.create({
+  centeredContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+  },
   container: {
     flex: 1,
     backgroundColor: "#fbe8e8",
@@ -221,7 +273,39 @@ const styles = StyleSheet.create({
     paddingBottom: "5%",
     backgroundColor: "#f2b69c",
     justifyContent: "space-evenly",
-    // marginTop:"-50%",
+    position: "relative",
+  },
+  topLeft: {
+    position: "absolute",
+    top: 5,
+    left: 5,
+  },
+  topRight: {
+    position: "absolute",
+    top: 5,
+    right: 5,
+  },
+  bottomLeft: {
+    position: "absolute",
+    bottom: 5,
+    left: 5,
+  },
+  bottomRight: {
+    position: "absolute",
+    bottom: 5,
+    right: 5,
+  },
+  middleContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    width: "100%", // Adjust this width according to your layout
+    height: "100%", // Adjust this height according to your layout
+  },
+  middleImage: {
+    width: 100,
+    height: 100,
+    borderRadius: 50,
   },
   card2: {
     flexDirection: "column",
