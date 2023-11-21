@@ -107,6 +107,16 @@ function SupervisorProfile({ navigation }) {
           </TouchableOpacity>
           <TouchableOpacity
             onPress={() => {
+              navigation.navigate("SportwiseLeaderBoard");
+            }}
+          >
+            <View style={styles.row}>
+              <Text style={styles.actionText}>Leaderboard</Text>
+              <MaterialIcons name="navigate-next" size={24} />
+            </View>
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => {
               navigation.navigate("EventPage");
             }}
           >
