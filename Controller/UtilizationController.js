@@ -352,8 +352,17 @@ function countSports(data) {
 
 module.exports.agewiseSportCount = async function (req, res) {
   try {
+    let query = {};
+
+    // Check if req.query.sportsComplexId exists
+    if (req.query.sportsComplexId) {
+      query.sportsComplexId = new mongoose.Types.ObjectId(
+        req.query.sportsComplexId
+      );
+    }
+
     let data = await paymentModel
-      .find()
+      .find(query)
       .populate({
         path: "athleteId",
         populate: {
