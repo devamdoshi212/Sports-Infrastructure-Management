@@ -311,3 +311,85 @@ module.exports.DistrictWiseSportsComplex = async function (req, res) {
   }
   res.json({ data: data, rcode: 200 });
 };
+
+function calculateAge(dob) {
+  const today = new Date();
+  const birthDate = new Date(dob); // Convert the DOB string to a Date object
+
+  let age = today.getFullYear() - birthDate.getFullYear();
+  const monthDiff = today.getMonth() - birthDate.getMonth();
+
+  if (
+    monthDiff < 0 ||
+    (monthDiff === 0 && today.getDate() < birthDate.getDate())
+  ) {
+    age--;
+  }
+
+  return age;
+}
+
+function countSports(data) {
+  // Create an object to store the count for each SportName
+  const sportCount = {};
+
+  // Iterate through the data array
+  data.forEach((item) => {
+    const sportName = item.sports.SportName;
+
+    // Check if the SportName is already in the count object
+    if (sportCount[sportName]) {
+      // If yes, increment the count
+      sportCount[sportName]++;
+    } else {
+      // If not, initialize the count to 1
+      sportCount[sportName] = 1;
+    }
+  });
+
+  return sportCount;
+}
+
+module.exports.agewiseSportCount = async function (req, res) {
+  try {
+    let data = await paymentModel
+      .find()
+      .populate({
+        path: "athleteId",
+        populate: {
+          path: "userId",
+          model: "users", // Replace with the actual model name for users
+        },
+      })
+      .populate("sports");
+    // console.log(data[0].athleteId.userId.DOB);
+    let maxage = req.query.maxage;
+    let minage = req.query.minage;
+
+    data = data.filter((ele) => {
+      return (
+        calculateAge(ele.athleteId.userId.DOB) < maxage &&
+        calculateAge(ele.athleteId.userId.DOB) >= minage
+      );
+    });
+
+    let count = countSports(data);
+
+    const ct = Object.keys(count);
+    const value = Object.values(count);
+    res.json({
+      result: data.length,
+      //   data: data,
+      name: ct,
+      value: value,
+      count: count,
+      rcode: 200,
+    });
+  } catch (err) {
+    console.log(err);
+    res.json({
+      err: err.msg,
+      rcode: -9,
+    });
+  }
+};
