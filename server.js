@@ -219,6 +219,7 @@ app.get("/getSportsCount", AuthorityController.getSportsCount);
 app.get("/AdminViewDetails", AdminController.AdminViewDetails);
 app.get("/sportDetailOfComplex", AdminController.sportDetailOfComplex);
 app.get("/atheleteInSportsComplex", AdminController.atheleteInSportsComplex);
+app.get("/utilization",AdminController.utilization)
 
 //session routes
 
