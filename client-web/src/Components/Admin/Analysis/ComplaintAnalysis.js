@@ -61,7 +61,7 @@ const ComplaintAnalysis = (props) => {
       },
       yaxis: {
         title: {
-          text: "Number of Sport Complexes",
+          text: "Number of Complaint",
           style: {
             fontSize: "12px",
             // fontWeight: "bold",

@@ -1,6 +1,6 @@
 export const Service = {
   getData() {
-    return fetch("http://localhost:9999/getDistrict")
+    return fetch("http://localhost:9999/DistrictWiseSportsComplex")
       .then((res) => res.json())
       .then((res) => {
         return res.data;
