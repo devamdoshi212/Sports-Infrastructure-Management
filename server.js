@@ -1,6 +1,8 @@
 const express = require("express");
 const cors = require("cors");
 const multer = require("multer");
+const ejs = require("ejs");
+
 require("./config/dbconfig").getDbConnetion();
 const UserRoute = require("./Routes/UserRoutes");
 const SportController = require("./Controller/SportController");
@@ -43,6 +45,15 @@ app.use(express.static("public"));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(cors());
+
+app.set("view engine", "ejs");
+app.get("/athelteperformance/:athleteid/:sportid", async (req, res) => {
+  let athelteid = req.params.athleteid;
+  let sportid = req.params.sportid;
+  let analysis = await AthleteController.getParameterSum(sportid, athelteid);
+
+  res.render("chart", { analysis });
+});
 
 //UserRoutes
 app.use("/", UserRoute);
