@@ -49,7 +49,6 @@ const BadgePerformance = () => {
       .then((response) => response.json())
       .then((result) => {
         setdata(result.data);
-        console.log(result);
       })
       .catch((error) => console.log("error", error));
   }, []);

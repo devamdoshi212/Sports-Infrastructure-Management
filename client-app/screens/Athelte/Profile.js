@@ -30,21 +30,17 @@ function Profile({ navigation }) {
   const [image, setimage] = useState("./../../assets/icon.png");
 
   const ProfileDetailHandler = () => {
-    // console.log("hello");
     navigation.navigate("DetailProfile");
   };
 
   useEffect(() => {
-    // console.log(Atheltedata[0].baseUrl);
-    const i = Atheltedata[0].baseUrl.slice(1);
-    console.log(i);
+    let i;
+    if (Atheltedata) i = Atheltedata[0].baseUrl.slice(1);
     setimage(i);
-  }, [image]);
-  // console.log(Userdata.base)
+  }, [image, Atheltedata]);
   const handleLogout = () => {
     dispatch(UserActions.getuserRole({ Role: "" }));
     removeItem();
-    // Implement your logout logic here
   };
   return (
     <ScrollView

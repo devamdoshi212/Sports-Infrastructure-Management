@@ -129,6 +129,7 @@ module.exports.getAthletesWithAllSportsRating = async function (req, res) {
   let userdata = await UsersModel.findOne({ _id: userid });
   let sports = await SportModel.find();
   let sportwisedata = [];
+  let points = await averageRating(athelteid);
   for (let index = 0; index < sports.length; index++) {
     const element = sports[index];
 
@@ -144,6 +145,7 @@ module.exports.getAthletesWithAllSportsRating = async function (req, res) {
     userdata: userdata || {},
     atheltedata: atheltedata || {},
     data: sportwisedata,
+    points: points,
     msg: "Done",
     rcode: 200,
   });
