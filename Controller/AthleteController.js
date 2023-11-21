@@ -1,7 +1,8 @@
 const AthleteModel = require("../Model/athleteModel");
 const athleteRatingModel = require("../Model/athleteRatingModel");
 const mongoose = require("mongoose");
-
+const UsersModel = require("./../Model/UsersModel");
+const SportModel = require("./../Model/SportModel");
 module.exports.addAthlete = async function (req, res) {
   //console.log(req.file);
   const BaseUrl = `http://localhost:9999/Athletes/${req.file.originalname}`;
@@ -117,6 +118,33 @@ module.exports.getAthletesWithAllRating = async function (req, res) {
   res.json({
     data: myarray,
     msg: "Athlete All Rating Retrived",
+    rcode: 200,
+  });
+};
+
+module.exports.getAthletesWithAllSportsRating = async function (req, res) {
+  const athelteid = req.query.athleteid;
+  const userid = req.query.userid;
+  let atheltedata = await AthleteModel.findOne({ _id: athelteid });
+  let userdata = await UsersModel.findOne({ _id: userid });
+  let sports = await SportModel.find();
+  let sportwisedata = [];
+  for (let index = 0; index < sports.length; index++) {
+    const element = sports[index];
+
+    let rating = await averageRating(athelteid, element._id);
+    let parameter = await getParameterSum(element._id, athelteid);
+    sportwisedata.push({
+      sports: element,
+      rating: rating,
+      parameter: parameter,
+    });
+  }
+  res.json({
+    userdata: userdata || {},
+    atheltedata: atheltedata || {},
+    data: sportwisedata,
+    msg: "Done",
     rcode: 200,
   });
 };

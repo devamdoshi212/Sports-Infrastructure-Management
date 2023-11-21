@@ -59,12 +59,19 @@ import AddNews from "./Components/Admin/News/AddNews";
 import ComplexNews from "./Components/Manager/News/ComplexNews";
 import AddComplexNews from "./Components/Manager/News/AddComplexNews";
 import Leaderboard from "./Components/Admin/LeaderBoard/Leaderboard";
+import AthletePerformance from "./Pages/AthletePerformance";
 
 const routes = createBrowserRouter([
   {
     path: "/",
     element: <Login />,
     loader: LoginVerify,
+    errorElement: <ErrorPage />,
+  },
+  {
+    path: "/athelteperformance/:athleteid/:userid",
+    element: <AthletePerformance />,
+    // loader: () => {},
     errorElement: <ErrorPage />,
   },
   {

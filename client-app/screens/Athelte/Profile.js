@@ -115,6 +115,16 @@ function Profile({ navigation }) {
             </TouchableOpacity>
             <TouchableOpacity
               onPress={() => {
+                navigation.navigate("Performance");
+              }}
+            >
+              <View style={styles.row}>
+                <Text style={styles.actionText}>Performance/Badge</Text>
+                <MaterialIcons name="navigate-next" size={24} />
+              </View>
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => {
                 navigation.navigate("SportsComplexDetails");
               }}
             >
