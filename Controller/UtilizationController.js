@@ -2,6 +2,8 @@ const sessionModel = require("../Model/SessionModel");
 const mongoose = require("mongoose");
 const paymentModel = require("../Model/PaymentModel");
 const SportsComplex = require("../Model/SportsComplexModel");
+const ComplaintModel = require("./../Model/ComplaintModel");
+const ComplaintTypeModel = require("./../Model/ComplaintTypeModel");
 
 function countEntriesInTimeSlot(result, startHour, endHour) {
   let count = 0;
@@ -160,5 +162,84 @@ module.exports.sportCapacityUtilization = async function (req, res) {
     });
   } catch (err) {
     console.log(err);
+  }
+};
+
+module.exports.ComplaintsAnalysis = async function (req, res) {
+  let complainttype = await ComplaintTypeModel.find();
+  let data = [];
+  if (req.query.sportsComplexId) {
+    for (let index = 0; index < complainttype.length; index++) {
+      let solved = 0;
+      let solvedsatisfied = 0;
+      let solvednotsatisfied = 0;
+      let unsolved = 0;
+
+      const element = complainttype[index];
+      let temp = await ComplaintModel.find({
+        sportsComplex: req.query.sportsComplexId,
+        type: element._id,
+      });
+      for (let index = 0; index < temp.length; index++) {
+        const element = temp[index];
+        if (element.status === 1) {
+          solved++;
+        }
+        if (element.status === 0) {
+          unsolved++;
+        }
+        if (element.status === 1 && element.satisfied === 1) {
+          solvedsatisfied++;
+        }
+        if (element.status === 1 && element.satisfied === 0) {
+          solvednotsatisfied++;
+        }
+      }
+
+      data.push({
+        type: element.Type,
+        solved: solved,
+        unsolved: unsolved,
+        solvedsatisfied: solvedsatisfied,
+        solvednotsatisfied: solvednotsatisfied,
+      });
+    }
+    res.json({ data: data, rcode: 200 });
+  } else {
+    for (let index = 0; index < complainttype.length; index++) {
+      let solved = 0;
+      let solvedsatisfied = 0;
+      let solvednotsatisfied = 0;
+      let unsolved = 0;
+
+      const element = complainttype[index];
+      let temp = await ComplaintModel.find({
+        type: element._id,
+      });
+      for (let index = 0; index < temp.length; index++) {
+        const element = temp[index];
+        if (element.status === 1) {
+          solved++;
+        }
+        if (element.status === 0) {
+          unsolved++;
+        }
+        if (element.status === 1 && element.satisfied === 1) {
+          solvedsatisfied++;
+        }
+        if (element.status === 1 && element.satisfied === 0) {
+          solvednotsatisfied++;
+        }
+      }
+
+      data.push({
+        type: element.Type,
+        solved: solved,
+        unsolved: unsolved,
+        solvedsatisfied: solvedsatisfied,
+        solvednotsatisfied: solvednotsatisfied,
+      });
+    }
+    res.json({ data: data, rcode: 200 });
   }
 };

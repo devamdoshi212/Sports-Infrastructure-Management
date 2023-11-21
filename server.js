@@ -267,7 +267,7 @@ app.get(
   "/sportCapacityUtilization",
   UtilizationController.sportCapacityUtilization
 );
-
+app.get("/ComplaintsAnalysis", UtilizationController.ComplaintsAnalysis);
 app.post("/remarkRatingByAthlete", async (req, res) => {
   let {
     sportId,
