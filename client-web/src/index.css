@@ -24,6 +24,32 @@
    background-color:#F5F5F5;
 }
 
+html {
+  overflow: scroll;
+  overflow-x: hidden;
+}
+::-webkit-scrollbar {
+  width: 0;  /* Remove scrollbar space */
+  background: transparent;  /* Optional: just make scrollbar invisible */
+}
+/* Optional: show position indicator in red */
+::-webkit-scrollbar-track {
+  background: #E8E9EB;
+  
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #888;
+
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+
 .scrollbar::-webkit-scrollbar {
     width: 5px;
 }
@@ -44,4 +70,5 @@
 .scrollbar::-webkit-scrollbar-thumb:hover {
     background: #555;
 }
+
 
