@@ -308,11 +308,6 @@ const ProfileDetails = ({ navigation }) => {
               </View>
             </TouchableOpacity>
           </View>
-          <View style={styles.colomn}>
-            <View>
-              <Text style={styles.cardHeaderText}>Performance</Text>
-            </View>
-          </View>
         </ScrollView>
       </View>
     </View>

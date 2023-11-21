@@ -5,6 +5,8 @@ import SportsComplexWiseUser from "./SportComplesWiseUser";
 import TimewiseAnalysis from "./TimeSlotAnalysis";
 import CapacityAnalysis from "./CapacityAnalysis";
 import ComplaintAnalysis from "./ComplaintAnalysis";
+import EnrollAnalysis from "./EnrollAnalysis";
+import EnrollLineAnalysis from "./EnrollLineAnalysis";
 
 const Analysis = () => {
   const [data, setData] = useState([]);
@@ -69,6 +71,8 @@ const Analysis = () => {
       <TimewiseAnalysis selectedOption={selectedOption} />
       <CapacityAnalysis selectedOption={selectedOption} />
       <ComplaintAnalysis selectedOption={selectedOption} />
+      <EnrollAnalysis selectedOption={selectedOption} />
+      <EnrollLineAnalysis selectedOption={selectedOption} />
       {/* <GeneralAnalysis selectedOption={selectedOption} /> */}
       {/* <hr className="h-px bg-gray-700 "/>
       <div className="w-1/5 relative m-5">
