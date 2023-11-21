@@ -19,6 +19,7 @@ import AddGoals from "./AddGoals";
 import GoalScreen from "./GoalDetails";
 import SportwiseLeaderBoard from "./SportswiseLeaderBoard";
 import EditProfileDetailsForm from "./EditProfileDetailsForm";
+import BadgePerformance from "./BadgePerformance";
 const ProfileNavigator = ({ navigation }) => {
   return (
     <Stack.Navigator>
@@ -101,6 +102,11 @@ const ProfileNavigator = ({ navigation }) => {
         <Stack.Screen
           name="GoalDetail"
           component={GoalScreen}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="Performance"
+          component={BadgePerformance}
           options={{ headerShown: false }}
         />
       </Stack.Group>
