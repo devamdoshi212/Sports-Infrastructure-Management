@@ -72,7 +72,7 @@ const ComplaintAnalysis = (props) => {
       },
       colors: ["#66FF33", "#FF3366", "#33FFCC", "#FFCC33"],
       title: {
-        text: "District wise Facilities to Specific Sport Complex",
+        text: "Complaint Analysis",
         align: "center",
         margin: 50,
         offsetX: 0,
