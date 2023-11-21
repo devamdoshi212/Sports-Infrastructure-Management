@@ -71,42 +71,44 @@ const CapacityAnalysis = (props) => {
   });
 
   useEffect(() => {
-    var requestOptions = {
-      method: "GET",
-      redirect: "follow",
-    };
+    if (props.selectedOption !== "") {
+      var requestOptions = {
+        method: "GET",
+        redirect: "follow",
+      };
 
-    fetch(
-      `http://localhost:9999/sportCapacityUtilization?sportsComplexId=${props.selectedOption}`,
-      requestOptions
-    )
-      .then((response) => response.json())
-      .then((result) => {
-        // console.log(result);
-        const data = result.data;
-        const categories = data.map((s) => parseInt(s.capacity, 10));
-        const seriesData = data.map((s) => s.sport);
-        const totalAthelet = data.map((s) => s.totalAthelete);
-        setChartData({
-          ...chartData,
-          series: [
-            {
-              data: categories,
+      fetch(
+        `http://localhost:9999/sportCapacityUtilization?sportsComplexId=${props.selectedOption}`,
+        requestOptions
+      )
+        .then((response) => response.json())
+        .then((result) => {
+          // console.log(result);
+          const data = result.data;
+          const categories = data.map((s) => parseInt(s.capacity, 10));
+          const seriesData = data.map((s) => s.sport);
+          const totalAthelet = data.map((s) => s.totalAthelete);
+          setChartData({
+            ...chartData,
+            series: [
+              {
+                data: categories,
+              },
+              {
+                data: totalAthelet,
+              },
+            ],
+            options: {
+              ...chartData.options,
+              xaxis: {
+                ...chartData.options.xaxis,
+                categories: seriesData,
+              },
             },
-            {
-              data: totalAthelet,
-            },
-          ],
-          options: {
-            ...chartData.options,
-            xaxis: {
-              ...chartData.options.xaxis,
-              categories: seriesData,
-            },
-          },
-        });
-      })
-      .catch((error) => console.log("error", error));
+          });
+        })
+        .catch((error) => console.log("error", error));
+    }
   }, [props.selectedOption]);
 
   return (
