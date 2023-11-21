@@ -25,6 +25,8 @@ const SportComplexeImageController = require("./Controller/SportComplexImageCont
 const SupervisorDashboardController = require("./Controller/SupervisorDashboardController");
 const UpdatesController = require("./Controller/UpdatesController");
 const UpdatesImageController = require("./Controller/UpdatesImageController");
+const UtilizationController = require("./Controller/UtilizationController");
+
 const {
   filtersportsforcomplex,
 } = require("./Controller/FilterSportsForComplex");
@@ -222,7 +224,6 @@ app.get("/getSportsCount", AuthorityController.getSportsCount);
 app.get("/AdminViewDetails", AdminController.AdminViewDetails);
 app.get("/sportDetailOfComplex", AdminController.sportDetailOfComplex);
 app.get("/atheleteInSportsComplex", AdminController.atheleteInSportsComplex);
-app.get("/utilization",AdminController.utilization)
 
 //session routes
 
@@ -248,6 +249,9 @@ app.get("/paymentHistoryAthlete", PaymentController.getAthletePayments);
 //   "/supervisorDashboard",
 //   SupervisorDashboardController.SportsComplexDetail
 // );
+
+//utilizationRoutes
+app.get("/timeSlotUtilization", UtilizationController.timeSlotUtilization);
 
 app.post("/remarkRatingByAthlete", async (req, res) => {
   let {
