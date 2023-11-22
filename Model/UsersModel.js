@@ -42,7 +42,7 @@ const UserSchema = new mongoose.Schema(
       type: Number,
       default: 1,
     },
-
+    notificationtoken: String,
     DistrictId: { type: mongoose.SchemaTypes.ObjectId, ref: "districts" },
     SportComplexId: {
       type: mongoose.SchemaTypes.ObjectId,

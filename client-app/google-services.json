@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "843573664167",
+    "project_id": "sportsinfrastructuremanagement",
+    "storage_bucket": "sportsinfrastructuremanagement.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:843573664167:android:6f7eb0e8c6617a9aeb7e82",
+        "android_client_info": {
+          "package_name": "sports.infrastructure"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDpvT5GJ-D0ygxP8bCntlmJHagRngQCqyg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
