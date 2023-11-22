@@ -60,7 +60,7 @@ const EventsinAthelte = ({ navigation }) => {
           </Pressable>
           <View style={styles.heading}>
             <Text style={{ fontWeight: "bold", fontSize: 25 }}>
-              Event Details
+              Updates/News
             </Text>
           </View>
         </View>

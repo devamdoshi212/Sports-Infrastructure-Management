@@ -1,16 +1,12 @@
 import React, { useEffect, useState } from "react";
 import ReactApexChart from "react-apexcharts";
 
-const CapacityAnalysis = (props) => {
+const AgeGroupAnalysis = (props) => {
   const [chartData, setChartData] = useState({
     series: [
       {
-        name: "Capacity",
-        data: [30, 40, 35, 50],
-      },
-      {
-        name: "Enroll Athelte",
-        data: [49, 60, 10, 12],
+        name: "Athelte",
+        data: [30, 40, 35, 50, 49, 60, 10, 12],
       },
     ],
     options: {
@@ -35,7 +31,16 @@ const CapacityAnalysis = (props) => {
         },
       },
       xaxis: {
-        categories: ["Cricket", "Basket Ball", "Volly Ball", "Tennis"],
+        categories: [
+          "7 to 9 AM",
+          "9 to 11 AM",
+          "11 to 1 PM",
+          "1 to 3 PM ",
+          "3 to 5 PM",
+          "5 to 7 PM",
+          "7 to 12 PM",
+          "12 to 7 AM",
+        ],
       },
       yaxis: {
         title: {
@@ -48,9 +53,9 @@ const CapacityAnalysis = (props) => {
           }, // Your Y-axis title
         },
       },
-      colors: ["#66FF33", "#FF3366"],
+      colors: ["#FFCC33"],
       title: {
-        text: "Capacity wise Enroll Athelte in Sport",
+        text: "Age Group wise Athelte in Sport Complex",
         align: "center",
         margin: 50,
         offsetX: 0,
@@ -70,45 +75,35 @@ const CapacityAnalysis = (props) => {
   });
 
   useEffect(() => {
-    if (props.selectedOption !== "") {
-      var requestOptions = {
-        method: "GET",
-        redirect: "follow",
-      };
+    var requestOptions = {
+      method: "GET",
+      redirect: "follow",
+    };
 
-      fetch(
-        `http://localhost:9999/sportCapacityUtilization?sportsComplexId=${props.selectedOption}`,
-        requestOptions
-      )
-        .then((response) => response.json())
-        .then((result) => {
-          // console.log(result);
-          const data = result.data;
-          const categories = data.map((s) => parseInt(s.capacity, 10));
-          const seriesData = data.map((s) => s.sport);
-          const totalAthelet = data.map((s) => s.totalAthelete);
-          setChartData({
-            ...chartData,
-            series: [
-              {
-                data: categories,
-              },
-              {
-                data: totalAthelet,
-              },
-            ],
-            options: {
-              ...chartData.options,
-              xaxis: {
-                ...chartData.options.xaxis,
-                categories: seriesData,
-              },
+    fetch(
+      `http://localhost:9999/agewiseSportCount?minage=${props.minAge}&maxage=${props.maxAge}&sportsComplexId=${props.selectedOption}`,
+      requestOptions
+    )
+      .then((response) => response.json())
+      .then((result) => {
+        setChartData({
+          ...chartData,
+          series: [
+            {
+              data: result.value,
             },
-          });
-        })
-        .catch((error) => console.log("error", error));
-    }
-  }, [props.selectedOption]);
+          ],
+          options: {
+            ...chartData.options,
+            xaxis: {
+              ...chartData.options.xaxis,
+              categories: result.name,
+            },
+          },
+        });
+      })
+      .catch((error) => console.log("error", error));
+  }, [props.selectedOption, props.minAge, props.maxAge]);
 
   return (
     <div className="chart m-8">
@@ -122,4 +117,4 @@ const CapacityAnalysis = (props) => {
   );
 };
 
-export default CapacityAnalysis;
+export default AgeGroupAnalysis;

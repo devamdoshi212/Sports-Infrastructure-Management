@@ -1,116 +1,75 @@
 import React, { useEffect, useState } from "react";
-import ReactApexChart from "react-apexcharts";
+import TimewiseAnalysis from "../../Admin/Analysis/TimeSlotAnalysis";
+import CapacityAnalysis from "../../Admin/Analysis/CapacityAnalysis";
+import ComplaintAnalysis from "../../Admin/Analysis/ComplaintAnalysis";
+import EnrollAnalysis from "../../Admin/Analysis/EnrollAnalysis";
+import EnrollLineAnalysis from "../../Admin/Analysis/EnrollLineAnalysis";
+import AgeGroupAnalysis from "../../Admin/Analysis/AgeGroupAnalysis";
+import { useSelector } from "react-redux";
 
-const Utilization = (props) => {
-  const [chartData, setChartData] = useState({
-    series: [
-      {
-        name: "Student",
-        data: [30, 20, 10, 21],
-      },
-    ],
-    options: {
-      chart: {
-        type: "bar",
-        height: 350,
-      },
-      plotOptions: {
-        bar: {
-          horizontal: false,
-          columnWidth: "55%",
-          endingShape: "rounded",
-        },
-      },
-      dataLabels: {
-        enabled: true, // Enable data labels
-        offsetY: -10, // Adjust the vertical position of labels
-        style: {
-          fontSize: "12px",
-          fontWeight: "bold",
-          colors: ["#000"], // Text color
-        },
-      },
-      // dataLabels: {
-      //   enabled: false,
-      // },
-      xaxis: {
-        categories: ["Cricket", "VollyBall", "BasketBall", "BadMinton"],
-      },
-      yaxis: {
-        title: {
-          text: "Number of Athelets",
-          style: {
-            fontSize: "12px",
-            // fontWeight: "bold",
-            fontFamily: undefined,
-            color: "#263238",
-          }, // Your Y-axis title
-        },
-      },
-      colors: ["#FF5733"],
-      title: {
-        text: "Utilization in Sports",
-        align: "center",
-        margin: 50,
-        offsetX: 0,
-        offsetY: 0,
-        floating: false,
-        style: {
-          fontSize: "26px",
-          fontWeight: "bold",
-          fontFamily: undefined,
-          color: "#263238",
-        },
-      },
-      fill: {
-        opacity: 1,
-      },
-    },
-  });
+const ManagerAnalysis = () => {
+  // const [data, setData] = useState([]);
+  // const [district, setDistrict] = useState([]);
+  const { SportComplexId } = useSelector((state) => state.user.user);
+  const [selectedOption, setSelectedOption] = useState("");
+  const [timeslot, setTimeslot] = useState("");
+  const [min, setminAge] = useState(0);
+  const [max, setmaxAge] = useState(100);
 
-  //   useEffect(() => {
-  //     var requestOptions = {
-  //       method: "GET",
-  //       redirect: "follow",
-  //     };
+  // const handleOptionChange = (e) => {
+  //   setSelectedOption(e.target.value);
+  // };
+  useEffect(() => {
+    setSelectedOption(SportComplexId);
+  }, [SportComplexId]);
 
-  //     fetch(`http://localhost:9999/atheleteInSportsComplex`, requestOptions)
-  //       .then((response) => response.json())
-  //       .then((result) => {
-  //         const data = result.data;
-  //         console.log(data);
-  //         const categories = data.map((s) => s.sportsComplexId);
-  //         const seriesData = data.map((s) => s.userCount);
-
-  //         setChartData({
-  //           ...chartData,
-  //           series: [
-  //             {
-  //               data: seriesData,
-  //             },
-  //           ],
-  //           options: {
-  //             ...chartData.options,
-  //             xaxis: {
-  //               ...chartData.options.xaxis,
-  //               categories: categories,
-  //             },
-  //           },
-  //         });
-  //       })
-  //       .catch((error) => console.log("error", error));
-  //   }, []);
+  const handleTimeslotChange = (e) => {
+    setTimeslot(e.target.value);
+    setminAge(e.target.value.split("-")[0]);
+    setmaxAge(e.target.value.split("-")[1]);
+  };
 
   return (
-    <div className="chart m-8">
-      <ReactApexChart
-        options={chartData.options}
-        series={chartData.series}
-        type="bar"
-        height={chartData.options.chart.height}
+    <div>
+      <TimewiseAnalysis selectedOption={selectedOption} />
+      <CapacityAnalysis selectedOption={selectedOption} />
+      <ComplaintAnalysis selectedOption={selectedOption} />
+      <EnrollAnalysis selectedOption={selectedOption} />
+      <EnrollLineAnalysis selectedOption={selectedOption} />
+
+      <div className="w-1/5 relative m-5">
+        <select
+          className="block appearance-none w-full bg-white border border-gray-300 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:border-blue-300 focus:ring focus:ring-blue-200"
+          onChange={handleTimeslotChange}
+          value={timeslot}
+        >
+          <option value="0-100" selected>
+            Total
+          </option>
+          <option value="10-20">10 to 20</option>
+          <option value="20-25">20 to 25</option>
+          <option value="25-30">25 to 30</option>
+          <option value="30-40">30 to 40</option>
+          <option value="40-50">40 to 50</option>
+          <option value="50-100">More than 50</option>
+        </select>
+        <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+          <svg
+            className="fill-current h-4 w-4"
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 20 20"
+          >
+            <path d="M9.293 14.293a1 1 0 0 0 1.414 0l5-5a1 1 0 1 0-1.414-1.414L10 12.586 5.707 8.293a1 1 0 1 0-1.414 1.414l5 5z" />
+          </svg>
+        </div>
+      </div>
+      <AgeGroupAnalysis
+        minAge={min}
+        maxAge={max}
+        selectedOption={selectedOption}
       />
     </div>
   );
 };
 
-export default Utilization;
+export default ManagerAnalysis;
