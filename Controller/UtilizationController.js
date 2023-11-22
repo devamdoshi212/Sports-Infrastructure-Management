@@ -542,17 +542,44 @@ more then 50
 
 
 module.exports.rating=async function(req,res){
- 
+ try{
   let query={}
-let data=await RatingModel.find(query).populate({
-  path: "sportComplex",
-  populate: {
-    path: "district",
-    model: "districts",
-  },
-})
+let data=await SportsComplex.find(query)
 
+// .populate("sports.sport")
+if(req.query.district){
+  data=data.filter((ele)=>{
+    return req.query.district==ele.district
+  })
+}
+data=data.map(ele => {
+  const sportsCount = ele.sports.length;
+    const totalRating = ele.sports.reduce((sum, sport) => sum + (sport.rating || 0), 0);
+    const averageRating = sportsCount > 0 ? totalRating / sportsCount : null;
+  // console.log( averageRating)
+  return {...ele.toObject(),averageRating:averageRating}
+});
 
+data.sort((a, b) => {
+  // Ensure that null values (where averageRating is not calculated) come last
+  if (a.averageRating === null) return 1;
+  if (b.averageRating === null) return -1;
+  // Sort in descending order
+  return b.averageRating - a.averageRating;
+});
 
+data = data.slice(0, 3);
 
+res.json({
+  results:data.length,
+  data:data,
+  rcode: 200,
+});
+}catch(err){
+  console.log(err)
+  res.json({
+    err: err.msg,
+    rcode: -9,
+  });
+}
 }
