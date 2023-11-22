@@ -128,6 +128,74 @@ const EnrollAnalysis = (props) => {
       .catch((error) => console.log("error", error));
   }, [props.selectedOption]);
 
+  // useEffect(() => {
+  //   var requestOptions = {
+  //     method: "GET",
+  //     redirect: "follow",
+  //   };
+
+  //   fetch(
+  //     `http://localhost:9999/monthWiseEnroll?sportsComplexId=${props.selectedOption}`,
+  //     requestOptions
+  //   )
+  //     .then((response) => response.json())
+  //     .then((result) => {
+  //       // Calculate the total number of athletes for all months
+  //       const totalAthletes = result.data.reduce(
+  //         (total, entry) => total + entry.totalAthelete,
+  //         0
+  //       );
+
+  //       // Create a mapping for each month with default percentage value as 0
+  //       const monthMapping = {};
+  //       for (let i = 1; i <= 12; i++) {
+  //         monthMapping[i] = 0;
+  //       }
+
+  //       // Populate percentage values from the result data into the monthMapping
+  //       result.data.forEach((entry) => {
+  //         const monthNumber = entry._id.month;
+  //         const percentage = (entry.totalAthelete / totalAthletes) * 100;
+  //         monthMapping[monthNumber] = percentage;
+  //       });
+
+  //       // Map the month names and percentage values from the monthMapping
+  //       const monthNames = Object.keys(monthMapping).map((monthNumber) => {
+  //         const monthName = new Intl.DateTimeFormat("en-US", {
+  //           month: "long",
+  //         }).format(new Date(2023, monthNumber - 1, 1));
+  //         return monthName;
+  //       });
+
+  //       const mappedData = Object.values(monthMapping);
+
+  //       setChartData({
+  //         ...chartData,
+  //         series: [
+  //           {
+  //             name: "Athlete",
+  //             data: mappedData,
+  //           },
+  //         ],
+  //         options: {
+  //           ...chartData.options,
+  //           xaxis: {
+  //             ...chartData.options.xaxis,
+  //             categories: monthNames,
+  //           },
+  //           yaxis: {
+  //             ...chartData.options.yaxis,
+  //             title: {
+  //               ...chartData.options.yaxis.title,
+  //               text: "Percentage of Athletes in Sport Complexes",
+  //             },
+  //           },
+  //         },
+  //       });
+  //     })
+  //     .catch((error) => console.log("error", error));
+  // }, [props.selectedOption]);
+
   return (
     <div className="chart m-8">
       <ReactApexChart
