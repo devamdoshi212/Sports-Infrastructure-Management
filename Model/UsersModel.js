@@ -1,5 +1,4 @@
 const mongoose = require("mongoose");
-const validator = require("validator");
 
 const UserSchema = new mongoose.Schema(
   {
@@ -18,8 +17,6 @@ const UserSchema = new mongoose.Schema(
 
     Password: {
       type: String,
-      // require: true,
-      minlength: 8,
       trim: true,
     },
 

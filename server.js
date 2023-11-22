@@ -38,6 +38,7 @@ const athleteRatingModel = require("./Model/athleteRatingModel");
 const {
   getAuthorityComplaint,
 } = require("./Controller/AuthorityComplaintController");
+const { sendPushNotification } = require("./PushNotification");
 const app = express();
 
 //middleware
@@ -295,8 +296,7 @@ app.get(
 );
 app.get("/agewiseSportCount", UtilizationController.agewiseSportCount);
 app.get("/agegrpCount", UtilizationController.agegrpCount);
-app.get("/rating",UtilizationController.rating)
-
+app.get("/rating", UtilizationController.rating);
 
 app.post("/remarkRatingByAthlete", async (req, res) => {
   let {
@@ -346,6 +346,13 @@ app.get("/ratingForInstructor", async (req, res) => {
     })
     .populate("sport")
     .sort({ rating: -1 });
+  if (ratings.athleteId.userId.notificationtoken) {
+    sendPushNotification(
+      ratings.athleteId.userId.notificationtoken,
+      "Your Daily Response Noted",
+      "Instructor..."
+    );
+  }
   res.json({ rcode: 200, ratings });
 });
 app.get("/ratingForAll", async (req, res) => {
