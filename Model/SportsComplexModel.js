@@ -14,7 +14,7 @@ const SportsComplexSchema = new mongoose.Schema(
       {
         sport: { type: mongoose.SchemaTypes.ObjectId, ref: "sports" },
         images: [String],
-        rating: Number,
+        rating: {type:Number,default:null},
         fees: String,
         capacity: String,
       },

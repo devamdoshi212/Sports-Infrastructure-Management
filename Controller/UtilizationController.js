@@ -5,6 +5,7 @@ const SportsComplex = require("../Model/SportsComplexModel");
 const ComplaintModel = require("./../Model/ComplaintModel");
 const ComplaintTypeModel = require("./../Model/ComplaintTypeModel");
 const DistrictsModel = require("./../Model/DistrictsModel");
+const RatingModel=require("../Model/RatingModel")
 
 function countEntriesInTimeSlot(result, startHour, endHour) {
   let count = 0;
@@ -357,6 +358,29 @@ function countSports(data) {
   return sportCount;
 }
 
+function countSports(data) {
+  // Create an object to store the count for each SportName
+  const sportCount = {};
+
+  // Iterate through the data array
+  data.forEach((item) => {
+    const sportName = item.sports.SportName;
+
+    // Check if the SportName is already in the count object
+    if (sportCount[sportName]) {
+      // If yes, increment the count
+      sportCount[sportName]++;
+    } else {
+      // If not, initialize the count to 1
+      sportCount[sportName] = 1;
+    }
+  });
+
+  return sportCount;
+}
+
+
+
 module.exports.agewiseSportCount = async function (req, res) {
   try {
     let query = {};
@@ -442,8 +466,8 @@ module.exports.agegrpCount=async function(req,res){
     if(req.query.year)
     {
         data=data.filter((ele)=>{
-          console.log(ele.from.getFullYear())
-          console.log(req.query.year)
+          // console.log(ele.from.getFullYear())
+          // console.log(req.query.year)
           return  (ele.from.getFullYear()==req.query.year)
         })
     }
@@ -514,4 +538,21 @@ more then 50
       rcode: -9,
     });
   }
+}
+
+
+module.exports.rating=async function(req,res){
+ 
+  let query={}
+let data=await RatingModel.find(query).populate({
+  path: "sportComplex",
+  populate: {
+    path: "district",
+    model: "districts",
+  },
+})
+
+
+
+
 }
