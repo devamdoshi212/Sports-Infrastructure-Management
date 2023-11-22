@@ -54,7 +54,7 @@ const AthleteDetails = () => {
           </Pressable>
           <View style={styles.heading}>
             <Text style={{ fontWeight: "bold", fontSize: 25 }}>
-              Athlete Detail
+              Athlete Details
             </Text>
           </View>
         </View>
@@ -130,7 +130,7 @@ const styles = StyleSheet.create({
   heading: {
     justifyContent: "center",
     alignItems: "center",
-    width: "80%",
+    width: "85%",
   },
   info: {
     paddingRight: 50,
