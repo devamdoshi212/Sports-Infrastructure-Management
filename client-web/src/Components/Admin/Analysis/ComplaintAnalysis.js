@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import ReactApexChart from "react-apexcharts";
 
 const ComplaintAnalysis = (props) => {
-  console.log("in", props.formdata);
   const [chartData, setChartData] = useState({
     series: [
       {
@@ -103,7 +102,6 @@ const ComplaintAnalysis = (props) => {
     )
       .then((response) => response.json())
       .then((result) => {
-        console.log(result);
         const data = result.data;
         // console.log(data);
         const categories = data.map((s) => s.type);
