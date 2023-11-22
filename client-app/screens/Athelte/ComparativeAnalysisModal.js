@@ -25,7 +25,7 @@ const ComparativeAnalysisModal = (props) => {
         setModalVisible(!modalVisible);
       }}
     >
-      <View style={styles.container}>
+      <View style={styles.container} onTouchStart={props.modalclosehandler}>
         <WebView
           onError={(syntheticEvent) => {
             const { nativeEvent } = syntheticEvent;
@@ -35,8 +35,9 @@ const ComparativeAnalysisModal = (props) => {
           scalesPageToFit={true}
           showsHorizontalScrollIndicator={false}
           style={{
-            width: Dimensions.get("screen").width - 35,
-            marginTop: 10,
+            width: Dimensions.get("screen").width - 40,
+            marginVertical: 80,
+            marginLeft: 20,
           }}
           source={{
             uri: true
@@ -53,11 +54,9 @@ const ComparativeAnalysisModal = (props) => {
 
 const styles = StyleSheet.create({
   container: {
-    marginHorizontal: 30,
-    marginVertical: 80,
     flex: 1,
-    // backgroundColor: "rgba(0,0,0,0.5)",
-    justifyContent: "center",
+    backgroundColor: "rgba(0,0,0,0.5)",
+    // justifyContent: "center",
   },
   card: {
     backgroundColor: "white",
