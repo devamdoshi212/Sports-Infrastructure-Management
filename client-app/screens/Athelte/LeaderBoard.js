@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
   ScrollView,
   Pressable,
+  ActivityIndicator,
 } from "react-native";
 import ipconfig from "../../ipconfig";
 import { captureRef } from "react-native-view-shot";
@@ -32,7 +33,7 @@ const LeaderBoard = ({ navigation }) => {
   const ip = ipconfig.ip;
   const AthelteData = useSelector((s) => s.athelte.Athelte);
   const [image, setimage] = useState("../../assets/icon.png");
-
+  const [loading, setLoading] = useState(true);
   const [userdata, setuserdata] = useState([
     {
       name: "Adam Savage",
@@ -63,6 +64,7 @@ const LeaderBoard = ({ navigation }) => {
           return { ...item, iconUrl: `http://${ip}:9999/${iconUrl}` };
         });
         setatheltedata(temp);
+        setLoading(false);
       })
       .catch((error) => console.log("error", error));
   }, [image]);
@@ -86,67 +88,73 @@ const LeaderBoard = ({ navigation }) => {
 
   return (
     <>
-      <View style={styles.container} ref={leaderboardRef}>
-        <View style={styles.header}>
-          <Pressable
-            onPress={() => {
-              navigation.goBack();
-            }}
-          >
-            <View style={styles.back}>
-              <Ionicons name="arrow-back" size={24} />
-            </View>
-          </Pressable>
-          <View style={styles.heading}>
-            <Text style={{ fontWeight: "bold", fontSize: 25 }}>
-              LeaderBoard
-            </Text>
-          </View>
+      {loading ? (
+        <View style={styles.loadingContainer}>
+          <ActivityIndicator size="large" color="#0000ff" />
         </View>
-        <View style={styles.card}>
-          <Text style={styles.label}>
-            {userdata.index + 1 ? userdata.index + 1 : "-"}
-            {userdata.index
-              ? getOrdinalSuffix(parseInt(userdata.index) + 1)
-              : "st"}
-          </Text>
-          <View style={styles.profileImage}>
-            <Image
-              style={{
-                width: 125,
-                height: 125,
-                borderRadius: 62.5,
-                borderColor: "#fbe8e0",
-                borderWidth: 5,
+      ) : (
+        <View style={styles.container} ref={leaderboardRef}>
+          <View style={styles.header}>
+            <Pressable
+              onPress={() => {
+                navigation.goBack();
               }}
-              source={{ uri: `http://${ip}:9999/${image}` }}
-            />
+            >
+              <View style={styles.back}>
+                <Ionicons name="arrow-back" size={24} />
+              </View>
+            </Pressable>
+            <View style={styles.heading}>
+              <Text style={{ fontWeight: "bold", fontSize: 25 }}>
+                LeaderBoard
+              </Text>
+            </View>
           </View>
-          <Text style={styles.label}>
-            {userdata[0].score ? userdata[0].score : "-"}
-          </Text>
-          <View>
-            <TouchableOpacity onPress={handleCapture}>
-              <MaterialIcons
-                style={{ marginRight: "2%", marginTop: "20%" }}
-                name="share"
-                size={24}
+          <View style={styles.card}>
+            <Text style={styles.label}>
+              {userdata.index + 1 ? userdata.index + 1 : "-"}
+              {userdata.index
+                ? getOrdinalSuffix(parseInt(userdata.index) + 1)
+                : "st"}
+            </Text>
+            <View style={styles.profileImage}>
+              <Image
+                style={{
+                  width: 125,
+                  height: 125,
+                  borderRadius: 62.5,
+                  borderColor: "#fbe8e0",
+                  borderWidth: 5,
+                }}
+                source={{ uri: `http://${ip}:9999/${image}` }}
               />
-            </TouchableOpacity>
+            </View>
+            <Text style={styles.label}>
+              {userdata[0].score ? userdata[0].score : "-"}
+            </Text>
+            <View>
+              <TouchableOpacity onPress={handleCapture}>
+                <MaterialIcons
+                  style={{ marginRight: "2%", marginTop: "20%" }}
+                  name="share"
+                  size={24}
+                />
+              </TouchableOpacity>
+            </View>
           </View>
+          <Leaderboard
+            labelBy="name"
+            sortBy="score"
+            icon="iconUrl"
+            data={atheltedata}
+            onRowPress={(item, index) => {
+              alert(item.athleteid + " clicked");
+            }}
+            evenRowColor="#edfcf9"
+            oddRowColor="#ffffff"
+          />
         </View>
-        <Leaderboard
-          labelBy="name"
-          sortBy="score"
-          icon="iconUrl"
-          data={atheltedata}
-          onRowPress={(item, index) => {
-            alert(item.athleteid + " clicked");
-          }}
-          evenRowColor="#edfcf9"
-          oddRowColor="#ffffff"
-        />
-      </View>
+      )}
     </>
   );
 };
@@ -156,6 +164,11 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#fbe8e0",
     paddingTop: "7%",
+  },
+  loadingContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
   },
   pickerContainer: {
     backgroundColor: "#f2b69c",

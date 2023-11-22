@@ -263,7 +263,7 @@ const Form = ({ navigation }) => {
                   Blood Group: {athleteDetail.bloodGroup}
                 </Text>
                 <Text style={styles.userInfoText}>
-                  Date of Birth: {userDetail.DOB}
+                  Date of Birth: {userDetail.DOB.split("T")[0]}
                 </Text>
                 <Text style={styles.userInfoText}>
                   Disability: {athleteDetail.disability}
