@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import ReactApexChart from "react-apexcharts";
 
-const TimewiseAnalysis = (props) => {
+const AgeGroupwiseCount = (props) => {
   const [chartData, setChartData] = useState({
     series: [
       {
@@ -53,9 +53,9 @@ const TimewiseAnalysis = (props) => {
           }, // Your Y-axis title
         },
       },
-      colors: ["#3366FF"],
+      colors: ["#FFCC33"],
       title: {
-        text: "Time slot wise Athelte in Sport Complex",
+        text: "Age Group wise Athelte in Sport Complex",
         align: "center",
         margin: 50,
         offsetX: 0,
@@ -81,7 +81,7 @@ const TimewiseAnalysis = (props) => {
     };
 
     fetch(
-      `http://localhost:9999/timeSlotUtilization?sportsComplexId=${props.selectedOption}`,
+      `http://localhost:9999/agegrpCount?year=${props.year}&sports=${props.sport}&sportsComplexId=${props.selectedOption}`,
       requestOptions
     )
       .then((response) => response.json())
@@ -90,19 +90,20 @@ const TimewiseAnalysis = (props) => {
           ...chartData,
           series: [
             {
-              data: result.slotcount,
+              data: result.value,
             },
           ],
           options: {
             ...chartData.options,
             xaxis: {
               ...chartData.options.xaxis,
+              categories: result.name,
             },
           },
         });
       })
       .catch((error) => console.log("error", error));
-  }, [props.selectedOption]);
+  }, [props.selectedOption, props.year, props.sport]);
 
   return (
     <div className="chart m-8">
@@ -113,7 +114,7 @@ const TimewiseAnalysis = (props) => {
         height={chartData.options.chart.height}
       />
     </div>
-      );
+  );
 };
 
-export default TimewiseAnalysis;
+export default AgeGroupwiseCount;

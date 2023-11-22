@@ -51,6 +51,8 @@ module.exports.addRating = async function (req, res) {
 
 module.exports.getAllRatings = async function (req, res) {
   RatingModel.find(req.query)
+    .populate("sport")
+    .populate({ path: "athleteId", populate: { path: "userId" } })
     .then((data) => {
       res.json({ data: data, msg: "Rating Retrived", rcode: 200 });
     })
