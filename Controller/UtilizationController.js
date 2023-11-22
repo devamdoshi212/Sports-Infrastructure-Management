@@ -560,15 +560,14 @@ data=data.map(ele => {
   return {...ele.toObject(),averageRating:averageRating}
 });
 
-data.sort((a, b) => {
+data =  data.sort((a, b) => {
   // Ensure that null values (where averageRating is not calculated) come last
   if (a.averageRating === null) return 1;
   if (b.averageRating === null) return -1;
   // Sort in descending order
   return b.averageRating - a.averageRating;
-});
+}).slice(0, 3);;
 
-data = data.slice(0, 3);
 
 res.json({
   results:data.length,
