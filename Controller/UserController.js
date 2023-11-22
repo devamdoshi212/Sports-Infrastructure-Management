@@ -94,7 +94,6 @@ module.exports.login = async function (req, res) {
     User.save();
   }
   if (User && User.Password == Password) {
-    sendPushNotification(notificationtoken, "Login Successfully", "Hello");
     const accesstoken = jwt.sign(
       { Email: User.Email, Password: User.Password },
       ACCESS_TOKEN_SECRET,
