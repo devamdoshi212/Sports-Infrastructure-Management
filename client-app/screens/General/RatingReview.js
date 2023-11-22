@@ -48,13 +48,13 @@ const RatingReview = ({ complexId }) => {
   return (
     <ScrollView style={styles.container}>
       <Text style={styles.title}>Ratings and Reviews</Text>
-      <Text style={styles.subtitle}>
+      {/* <Text style={styles.subtitle}>
         Ratings and reviews are verified and from people who are athletes who
         train at this complex.
-      </Text>
+      </Text> */}
       <View style={styles.reviewsContainer}>
-        {data.map((review) => (
-          <View style={styles.review} key={review.author}>
+        {data.map((review, index) => (
+          <View style={styles.review} key={index}>
             <View style={{ flexDirection: "row" }}>
               <Image
                 style={{
@@ -72,18 +72,16 @@ const RatingReview = ({ complexId }) => {
               <Text style={styles.author}>{review.athleteId.userId.Name}</Text>
             </View>
             <View style={styles.ratingRow}>
+              <Text style={styles.sport}>Sport: {review.sport.SportName}</Text>
               <View
                 style={{
                   backgroundColor: "#fff",
                   padding: 5,
                   borderRadius: 10,
-                  marginLeft: "-2%",
+                  marginLeft: "2%",
                   flexDirection: "row",
                 }}
               >
-                <Text style={styles.sport}>
-                  Sport: {review.sport.SportName}
-                </Text>
                 <Rating
                   type="star"
                   ratingCount={5}
@@ -150,7 +148,6 @@ const styles = StyleSheet.create({
   },
   sport: {
     alignSelf: "center",
-    marginLeft: "3%",
     fontSize: 16,
   },
   reviewText: {
