@@ -22,12 +22,14 @@ import { useEffect, useState } from "react";
 import ipconfig from "../../ipconfig";
 import { useRef } from "react";
 import Carousel, { ParallaxImage } from "react-native-snap-carousel";
+import RatingReview from "./RatingReview";
 const { width: screenWidth, height: screenHeight } = Dimensions.get("window");
 
 const GeneralComplexDetailsScreen = ({ navigation, route }) => {
   const [heart, setHeart] = useState(false);
 
   const { data } = route.params;
+
   const [details, setDetails] = useState({});
   const [loading, setLoading] = useState(true);
   const carouselRef = useRef(null);
@@ -230,6 +232,7 @@ const GeneralComplexDetailsScreen = ({ navigation, route }) => {
                 </View>
               </ScrollView>
             </View>
+            <RatingReview complexId={data.item._id} />
           </ScrollView>
         </View>
         <TouchableOpacity

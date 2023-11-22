@@ -2,46 +2,49 @@
 
 <head>
 	<title>Chart</title>
-
-	<style>
-		.chart-container {
-			border: 1px solid #ccc;
-			padding: 10px;
-			margin: 10px;
-			background-color: #f2b69c;
-		}
-	</style>
-</head>
-<script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
-<script>
-	let analysis = JSON.parse(`<%- JSON.stringify(analysis) %>`)
-    // let atheltedata = analysis[0].currentathelte;
-    // let opponentdata = analysis[1];
-	console.log(analysis[0].currentathelte)
-	console.log(analysis[1].opponentdata)
-</script>
-<style>
-	* {
-		font-size: 30px !important;
-		background-color: #f2b69c;
-
-	}
-
-
-	.col-6 {
-		margin: 0;
-	}
-</style>
-
-<body>
-
-	<!-- <div class="chart-container"> -->
-	<!-- <h1 style="font-size: 50px !important;text-align:center;margin-top: 200px;">MODULE WISE PERFORMANCE</h1> -->
-	<div id="marks"></div>
-	<div id="marks1"></div>
+	<link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+	<script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
 
 	<script>
-        function marks1() {
+		let analysis = JSON.parse(`<%- JSON.stringify(analysis) %>`)
+		// let atheltedata = analysis[0].currentathelte;
+		// let opponentdata = analysis[1];
+		console.log(analysis[0].currentathelte)
+		console.log(analysis[1].opponentdata)
+	</script>
+	<style>
+		* {
+			font-size: 30px !important;
+			background-color: white;
+
+		}
+
+
+		.col-6 {
+			margin: 0;
+		}
+	</style>
+
+</head>
+
+<body class="bg-white">
+
+	<!-- <div class="chart-container"> -->
+	<div class="container mx-auto my-8 text-center">
+
+		<h1 class="text-4xl font-bold my-4">Your Analysis</h1>
+
+		<div id="marks" class="chart-container mx-auto border border-black rounded-sm shadow-sm shadow-black ">
+		</div>
+
+		<h1 class="text-4xl font-bold my-4">Opponent Analysis</h1>
+
+		<div id="marks1" class="chart-container mx-auto border border-black rounded-sm shadow-sm shadow-black ">
+		</div>
+
+	</div>
+	<script>
+		function marks1() {
 			let temp1 = [];
 			let temp2 = [];
 			for (const key in analysis[1].opponentdata) {
@@ -55,9 +58,9 @@
 				}],
 				chart: {
 					type: 'radar',
-					height: "100%",
+					height: "30%",
 					width: "100%",
-					background:"#f2b69c"
+					// background:"#f2b69c"
 				},
 				dataLabels: {
 					enabled: false, // change
@@ -87,10 +90,10 @@
 				xaxis: {
 					categories: temp2,
 					labels: {
-          style: {
-            colors: '#000' // set label color to black
-          }
-        }
+						style: {
+							colors: '#000' // set label color to black
+						}
+					}
 				},
 				yaxis: {
 					// max: 100,
@@ -118,9 +121,9 @@
 				}],
 				chart: {
 					type: 'radar',
-					height: "100%",
+					height: "20%",
 					width: "100%",
-					background:"#f2b69c"
+					background: "#f2b69c"
 				},
 				dataLabels: {
 					enabled: false, // change
@@ -150,10 +153,10 @@
 				xaxis: {
 					categories: temp2,
 					labels: {
-          style: {
-            colors: '#000' // set label color to black
-          }
-        }
+						style: {
+							colors: '#000' // set label color to black
+						}
+					}
 				},
 				yaxis: {
 					// max: 100,
@@ -171,3 +174,107 @@
 </body>
 
 </html>
+
+<!-- <html>
+
+<head>
+    <title>Chart</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+
+    <script>
+        let analysis = JSON.parse(`<%- JSON.stringify(analysis) %>`);
+        console.log(analysis[0].currentathelte);
+        console.log(analysis[1].opponentdata);
+    </script>
+    <style>
+        * {
+            font-size: 30px !important;
+            background-color: white;
+        }
+
+        .col-6 {
+            margin: 0;
+        }
+    </style>
+
+</head>
+
+<body class="bg-white">
+
+    <div class="container mx-auto my-8 text-center">
+
+        <h1 class="text-4xl font-bold my-4">Combined Analysis</h1>
+
+        <div id="combinedMarks" class="chart-container mx-auto border border-black rounded-sm shadow-sm shadow-black ">
+        </div>
+
+    </div>
+    <script>
+        function combinedMarks() {
+            let athleteData = [];
+            let opponentData = [];
+
+            for (const key in analysis[0].currentathelte) {
+                athleteData.push(analysis[0].currentathelte[key]);
+            }
+
+            for (const key in analysis[1].opponentdata) {
+                opponentData.push(analysis[1].opponentdata[key]);
+            }
+
+            var options = {
+                series: [{
+                    name: 'Your Athlete',
+                    data: athleteData,
+                }, {
+                    name: 'Opponent',
+                    data: opponentData,
+                }],
+                chart: {
+                    type: 'radar',
+                    height: "60%",
+                    width: "100%",
+                },
+                dataLabels: {
+                    enabled: false,
+                },
+                plotOptions: {
+                    radar: {
+                        polygontype: 'smooth',
+                        polygons: {
+                            strokeColors: '#fff',
+                            fill: {
+                                colors: ['#000', '#FF4560'],
+                            }
+                        }
+                    }
+                },
+                colors: ['orange', 'white'],
+                markers: {
+                    size: 6,
+                    colors: ['#fff'],
+                    strokeColor: ['#fff', '#FF4560'],
+                    strokeWidth: 2,
+                },
+                xaxis: {
+                    categories: Object.keys(analysis[0].currentathelte),
+                    labels: {
+                        style: {
+                            colors: '#000',
+                        }
+                    }
+                },
+                yaxis: {
+                    show: false
+                }
+            };
+
+            var chart = new ApexCharts(document.querySelector("#combinedMarks"), options);
+            chart.render();
+        }
+        combinedMarks();
+    </script>
+</body>
+
+</html> -->
