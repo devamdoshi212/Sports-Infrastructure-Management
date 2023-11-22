@@ -274,6 +274,8 @@ app.get(
   UtilizationController.DistrictWiseSportsComplex
 );
 app.get("/agewiseSportCount", UtilizationController.agewiseSportCount);
+app.get("/agegrpCount",UtilizationController.agegrpCount)
+
 
 app.post("/remarkRatingByAthlete", async (req, res) => {
   let {

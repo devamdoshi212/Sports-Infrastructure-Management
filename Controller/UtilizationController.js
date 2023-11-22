@@ -382,6 +382,7 @@ module.exports.agewiseSportCount = async function (req, res) {
     let maxage = req.query.maxage;
     let minage = req.query.minage;
 
+
     data = data.filter((ele) => {
       return (
         calculateAge(ele.athleteId.userId.DOB) < maxage &&
@@ -409,3 +410,108 @@ module.exports.agewiseSportCount = async function (req, res) {
     });
   }
 };
+
+
+module.exports.agegrpCount=async function(req,res){
+  try {
+
+    let query={}
+    if(req.query.sportsComplexId)
+    {
+      query.sportsComplexId=new mongoose.Types.ObjectId(req.query.sportsComplexId)
+    }
+    if(req.query.sports){
+      query.sports=new mongoose.Types.ObjectId(req.query.sports)
+    }
+    let data=await paymentModel.find(query).populate({
+      path: "athleteId",
+      populate: {
+        path: "userId",
+        model: "users", // Replace with the actual model name for users
+      },
+    })
+
+    data=data.map((ele)=>{
+      let dob=ele.athleteId.userId.DOB
+      const age=calculateAge(dob)
+      return {...ele.toObject(),age:age}
+    }
+    )
+    // return { ...ele.toObject(), age }; 
+    
+    if(req.query.year)
+    {
+        data=data.filter((ele)=>{
+          console.log(ele.from.getFullYear())
+          console.log(req.query.year)
+          return  (ele.from.getFullYear()==req.query.year)
+        })
+    }
+/*
+lessthan 10
+10-20
+20-25
+25-30
+30-40
+40-50
+more then 50
+*/
+    // let agegrp=Array(7).fill(0)
+    let agegrp={
+      "0-10":0,
+      "10-20":0,
+      "20-25":0,
+      "25-30":0,
+      "30-40":0,
+      "40-50":0,
+      "More than 50":0
+    }
+    // console.log(agegrp)
+    data.forEach(ele => {
+      if(ele.age<10)
+      {
+        agegrp["0-10"]++
+      }
+      else if(ele.age>=10&&ele.age<20)
+      {
+        agegrp["10-20"]++
+      }
+      else if(ele.age>=10&&ele.age<20)
+      {
+        agegrp["20-25"]++
+      }
+      else if(ele.age>=20&&ele.age<25)
+      {
+        agegrp["25-30"]++
+      }
+      else if(ele.age>=25&&ele.age<30)
+      {
+        agegrp["30-40"]++
+      }
+      else if(ele.age>=30&&ele.age<40)
+      {
+        agegrp["40-50"]++
+      }
+      else{
+        agegrp["More than 50"]++
+      }
+    });
+
+    const name=Object.keys(agegrp)
+    const value=Object.values(agegrp)
+    res.json({
+      results:data.length,
+      // data:data,
+      name:name,
+      value:value,
+      count:agegrp,
+      rcode: 200,
+    });
+  } catch (err) {
+    console.log(err)
+    res.json({
+      err: err.msg,
+      rcode: -9,
+    });
+  }
+}
