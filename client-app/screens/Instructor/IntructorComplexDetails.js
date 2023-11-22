@@ -24,6 +24,8 @@ import { useRef } from "react";
 import Carousel, { ParallaxImage } from "react-native-snap-carousel";
 import { useNavigation } from "@react-navigation/native";
 import { useSelector } from "react-redux";
+import RatingReview from "../General/RatingReview";
+
 const { width: screenWidth, height: screenHeight } = Dimensions.get("window");
 
 const InstructorComplexDetails = () => {
@@ -246,6 +248,7 @@ const InstructorComplexDetails = () => {
                     </View>
                   </View>
                 </ScrollView>
+                <RatingReview complexId={complexId} />
               </View>
             </ScrollView>
           </View>
