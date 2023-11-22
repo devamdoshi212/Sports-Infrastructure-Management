@@ -113,7 +113,7 @@ const TimewiseAnalysis = (props) => {
         height={chartData.options.chart.height}
       />
     </div>
-  );
+      );
 };
 
 export default TimewiseAnalysis;

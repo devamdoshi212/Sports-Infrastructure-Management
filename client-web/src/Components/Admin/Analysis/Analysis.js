@@ -73,10 +73,15 @@ const Analysis = () => {
         </div>
       </div>
       <TimewiseAnalysis selectedOption={selectedOption} />
+      <hr className="h-px bg-gray-700 "/>
       <CapacityAnalysis selectedOption={selectedOption} />
+      <hr className="h-px bg-gray-700 "/>
       <ComplaintAnalysis selectedOption={selectedOption} />
+      <hr className="h-px bg-gray-700 "/>
       <EnrollAnalysis selectedOption={selectedOption} />
+      <hr className="h-px bg-gray-700 "/>
       <EnrollLineAnalysis selectedOption={selectedOption} />
+      <hr className="h-px bg-gray-700 "/>
 
       <div className="w-1/5 relative m-5">
         <select
