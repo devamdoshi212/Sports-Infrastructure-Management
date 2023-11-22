@@ -346,13 +346,6 @@ app.get("/ratingForInstructor", async (req, res) => {
     })
     .populate("sport")
     .sort({ rating: -1 });
-  if (ratings.athleteId.userId.notificationtoken) {
-    sendPushNotification(
-      ratings.athleteId.userId.notificationtoken,
-      "Your Daily Response Noted",
-      "Instructor..."
-    );
-  }
   res.json({ rcode: 200, ratings });
 });
 app.get("/ratingForAll", async (req, res) => {
@@ -369,10 +362,22 @@ app.get("/ratingForAll", async (req, res) => {
 });
 app.post("/ratingByInstructor", async (req, res) => {
   let { ratingId, rating } = req.body;
-  let ratings = await athleteRatingModel.findOne({ _id: ratingId });
+  let ratings = await athleteRatingModel.findOne({ _id: ratingId }).populate({
+    path: "athleteId",
+    populate: {
+      path: "userId",
+    },
+  });
   ratings.isEvaluated = 1;
   ratings.rating = rating;
   await ratings.save();
+  if (ratings.athleteId.userId.notificationtoken) {
+    sendPushNotification(
+      ratings.athleteId.userId.notificationtoken,
+      "Your Daily Response Noted",
+      `Instructor...+${rating}`
+    );
+  }
   res.json({ rcode: 200 });
 });
 app.get("/averageUserRating", async (req, res) => {
