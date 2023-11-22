@@ -54,7 +54,27 @@ app.get("/athelteperformance/:athleteid/:sportid", async (req, res) => {
 
   res.render("chart", { analysis });
 });
+app.get(
+  "/comparativeathelteperformance/:athleteid/:opponentathelteid/:sportid",
+  async (req, res) => {
+    let athelteid = req.params.athleteid;
+    let opponentathelteid = req.params.opponentathelteid;
+    let sportid = req.params.sportid;
+    let analysis = [];
+    let atheltedata = await AthleteController.getParameterSum(
+      sportid,
+      athelteid
+    );
+    analysis.push({ currentathelte: atheltedata });
 
+    let opponentdata = await AthleteController.getParameterSum(
+      sportid,
+      opponentathelteid
+    );
+    analysis.push({ opponentdata: opponentdata });
+    res.render("comparativechart", { analysis });
+  }
+);
 //UserRoutes
 app.use("/", UserRoute);
 app.post("/verify", decodedToken.decodedToken);
@@ -274,8 +294,7 @@ app.get(
   UtilizationController.DistrictWiseSportsComplex
 );
 app.get("/agewiseSportCount", UtilizationController.agewiseSportCount);
-app.get("/agegrpCount",UtilizationController.agegrpCount)
-
+app.get("/agegrpCount", UtilizationController.agegrpCount);
 
 app.post("/remarkRatingByAthlete", async (req, res) => {
   let {
