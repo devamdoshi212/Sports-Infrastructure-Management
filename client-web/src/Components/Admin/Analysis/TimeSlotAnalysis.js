@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import ReactApexChart from "react-apexcharts";
 
 const TimewiseAnalysis = (props) => {
-  console.log("in", props.formdata);
   const [chartData, setChartData] = useState({
     series: [
       {
@@ -87,8 +86,6 @@ const TimewiseAnalysis = (props) => {
     )
       .then((response) => response.json())
       .then((result) => {
-        console.log(result);
-
         setChartData({
           ...chartData,
           series: [

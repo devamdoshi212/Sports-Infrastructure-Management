@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import ReactApexChart from "react-apexcharts";
 
 const EnrollAnalysis = (props) => {
-  console.log("in", props.formdata);
   const [chartData, setChartData] = useState({
     series: [
       {
