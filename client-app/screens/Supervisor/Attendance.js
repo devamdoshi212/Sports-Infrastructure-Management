@@ -77,6 +77,8 @@ const Attendance = ({ navigation }) => {
                         borderRadius: 15,
                         width: "95%",
                         alignSelf: "center",
+                        borderWidth: 1,
+                        borderBottomWidth:4,
                     }}
                     // Specify theme properties to override specific styles for calendar parts. Default = {}
                     theme={{
@@ -144,7 +146,7 @@ const Attendance = ({ navigation }) => {
           <Button onPress={showDatepicker} title="Date" />
         </View> */}
                 <ScrollView contentContainerStyle={styles.scrollContainer}>
-                    <View style={styles.card}>
+                    <View style={[styles.card, { borderWidth: 1, borderBottomWidth: 4, backgroundColor:"#f8d7c9"}]}>
                         <View style={styles.row}>
                             <View style={styles.column1}>
                                 <Text style={styles.label}>Name</Text>
@@ -221,13 +223,15 @@ const styles = StyleSheet.create({
     card: {
         backgroundColor: "white",
         borderRadius: 10,
+        borderWidth:1,
         shadowColor: "black",
         shadowOffset: { width: 0, height: 2 },
         shadowOpacity: 0.2,
         shadowRadius: 4,
         elevation: 5,
         marginVertical: "1%",
-        width:"100%",
+        width: "100%",
+        backgroundColor: "#f8d7c9",
     },
     inline: {
         flexDirection: "row",
