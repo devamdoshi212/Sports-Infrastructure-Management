@@ -121,7 +121,7 @@ function SupervisorProfile({ navigation }) {
             }}
           >
             <View style={styles.row}>
-              <Text style={styles.actionText}>Events in Complex</Text>
+              <Text style={styles.actionText}>Updates</Text>
               <MaterialIcons name="navigate-next" size={24} />
             </View>
           </TouchableOpacity>
@@ -131,7 +131,7 @@ function SupervisorProfile({ navigation }) {
             }}
           >
             <View style={styles.row}>
-              <Text style={styles.actionText}>Athelte Coming Complaint</Text>
+              <Text style={styles.actionText}>Atheltes Complaint</Text>
               <MaterialIcons name="navigate-next" size={24} />
             </View>
           </TouchableOpacity>

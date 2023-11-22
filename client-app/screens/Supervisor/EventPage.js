@@ -62,28 +62,25 @@ const EventPage = ({ navigation }) => {
           </Pressable>
           <View style={styles.heading}>
             <Text style={{ fontWeight: "bold", fontSize: 25 }}>
-              Event Details
+              Updates/News
             </Text>
           </View>
         </View>
-        {/* {show && <Modal} */}
         <ScrollView contentContainerStyle={styles.scrollContainer}>
           {data.map((item, index) => (
             <View style={styles.card} key={index}>
-              {/* {console.log(item.image.replace("localhost", ip))} */}
               <Image
                 style={styles.eventImage}
                 source={{
                   uri: item.image.replace("localhost", ip),
                 }}
               />
-              {/* </View> */}
               <View style={styles.row}>
                 <Text style={styles.label}>Title :</Text>
                 <Text style={styles.input}>{item.title}</Text>
               </View>
               <View style={styles.row}>
-                <Text style={styles.label}>Descreption:</Text>
+                <Text style={styles.label}>Description:</Text>
                 <Text style={styles.input}>{item.description}</Text>
               </View>
             </View>
