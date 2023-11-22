@@ -5,7 +5,7 @@ const SportsComplex = require("../Model/SportsComplexModel");
 const ComplaintModel = require("./../Model/ComplaintModel");
 const ComplaintTypeModel = require("./../Model/ComplaintTypeModel");
 const DistrictsModel = require("./../Model/DistrictsModel");
-const RatingModel=require("../Model/RatingModel")
+const RatingModel = require("../Model/RatingModel");
 
 function countEntriesInTimeSlot(result, startHour, endHour) {
   let count = 0;
@@ -379,8 +379,6 @@ function countSports(data) {
   return sportCount;
 }
 
-
-
 module.exports.agewiseSportCount = async function (req, res) {
   try {
     let query = {};
@@ -405,7 +403,6 @@ module.exports.agewiseSportCount = async function (req, res) {
     // console.log(data[0].athleteId.userId.DOB);
     let maxage = req.query.maxage;
     let minage = req.query.minage;
-
 
     data = data.filter((ele) => {
       return (
@@ -435,43 +432,40 @@ module.exports.agewiseSportCount = async function (req, res) {
   }
 };
 
-
-module.exports.agegrpCount=async function(req,res){
+module.exports.agegrpCount = async function (req, res) {
   try {
-
-    let query={}
-    if(req.query.sportsComplexId)
-    {
-      query.sportsComplexId=new mongoose.Types.ObjectId(req.query.sportsComplexId)
+    let query = {};
+    if (req.query.sportsComplexId) {
+      query.sportsComplexId = new mongoose.Types.ObjectId(
+        req.query.sportsComplexId
+      );
     }
-    if(req.query.sports){
-      query.sports=new mongoose.Types.ObjectId(req.query.sports)
+    if (req.query.sports) {
+      query.sports = new mongoose.Types.ObjectId(req.query.sports);
     }
-    let data=await paymentModel.find(query).populate({
+    let data = await paymentModel.find(query).populate({
       path: "athleteId",
       populate: {
         path: "userId",
         model: "users", // Replace with the actual model name for users
       },
-    })
+    });
 
-    data=data.map((ele)=>{
-      let dob=ele.athleteId.userId.DOB
-      const age=calculateAge(dob)
-      return {...ele.toObject(),age:age}
+    data = data.map((ele) => {
+      let dob = ele.athleteId.userId.DOB;
+      const age = calculateAge(dob);
+      return { ...ele.toObject(), age: age };
+    });
+    // return { ...ele.toObject(), age };
+
+    if (req.query.year) {
+      data = data.filter((ele) => {
+        // console.log(ele.from.getFullYear())
+        // console.log(req.query.year)
+        return ele.from.getFullYear() == req.query.year;
+      });
     }
-    )
-    // return { ...ele.toObject(), age }; 
-    
-    if(req.query.year)
-    {
-        data=data.filter((ele)=>{
-          // console.log(ele.from.getFullYear())
-          // console.log(req.query.year)
-          return  (ele.from.getFullYear()==req.query.year)
-        })
-    }
-/*
+    /*
 lessthan 10
 10-20
 20-25
@@ -481,104 +475,95 @@ lessthan 10
 more then 50
 */
     // let agegrp=Array(7).fill(0)
-    let agegrp={
-      "0-10":0,
-      "10-20":0,
-      "20-25":0,
-      "25-30":0,
-      "30-40":0,
-      "40-50":0,
-      "More than 50":0
-    }
+    let agegrp = {
+      "0-10": 0,
+      "10-20": 0,
+      "20-25": 0,
+      "25-30": 0,
+      "30-40": 0,
+      "40-50": 0,
+      "More than 50": 0,
+    };
     // console.log(agegrp)
-    data.forEach(ele => {
-      if(ele.age<10)
-      {
-        agegrp["0-10"]++
-      }
-      else if(ele.age>=10&&ele.age<20)
-      {
-        agegrp["10-20"]++
-      }
-      else if(ele.age>=10&&ele.age<20)
-      {
-        agegrp["20-25"]++
-      }
-      else if(ele.age>=20&&ele.age<25)
-      {
-        agegrp["25-30"]++
-      }
-      else if(ele.age>=25&&ele.age<30)
-      {
-        agegrp["30-40"]++
-      }
-      else if(ele.age>=30&&ele.age<40)
-      {
-        agegrp["40-50"]++
-      }
-      else{
-        agegrp["More than 50"]++
+    data.forEach((ele) => {
+      if (ele.age < 10) {
+        agegrp["0-10"]++;
+      } else if (ele.age >= 10 && ele.age < 20) {
+        agegrp["10-20"]++;
+      } else if (ele.age >= 10 && ele.age < 20) {
+        agegrp["20-25"]++;
+      } else if (ele.age >= 20 && ele.age < 25) {
+        agegrp["25-30"]++;
+      } else if (ele.age >= 25 && ele.age < 30) {
+        agegrp["30-40"]++;
+      } else if (ele.age >= 30 && ele.age < 40) {
+        agegrp["40-50"]++;
+      } else {
+        agegrp["More than 50"]++;
       }
     });
 
-    const name=Object.keys(agegrp)
-    const value=Object.values(agegrp)
+    const name = Object.keys(agegrp);
+    const value = Object.values(agegrp);
     res.json({
-      results:data.length,
+      results: data.length,
       // data:data,
-      name:name,
-      value:value,
-      count:agegrp,
+      name: name,
+      value: value,
+      count: agegrp,
       rcode: 200,
     });
   } catch (err) {
-    console.log(err)
+    console.log(err);
     res.json({
       err: err.msg,
       rcode: -9,
     });
   }
-}
+};
 
+module.exports.rating = async function (req, res) {
+  try {
+    let query = {};
+    let data = await SportsComplex.find(query);
 
-module.exports.rating=async function(req,res){
- try{
-  let query={}
-let data=await SportsComplex.find(query)
+    // .populate("sports.sport")
+    if (req.query.district) {
+      data = data.filter((ele) => {
+        return req.query.district == ele.district;
+      });
+    }
+    data = data.map((ele) => {
+      const sportsCount = ele.sports.length;
+      const totalRating = ele.sports.reduce(
+        (sum, sport) => sum + (sport.rating || 0),
+        0
+      );
+      const averageRating = sportsCount > 0 ? totalRating / sportsCount : null;
+      // console.log( averageRating)
+      return { ...ele.toObject(), averageRating: averageRating };
+    });
 
-// .populate("sports.sport")
-if(req.query.district){
-  data=data.filter((ele)=>{
-    return req.query.district==ele.district
-  })
-}
-data=data.map(ele => {
-  const sportsCount = ele.sports.length;
-    const totalRating = ele.sports.reduce((sum, sport) => sum + (sport.rating || 0), 0);
-    const averageRating = sportsCount > 0 ? totalRating / sportsCount : null;
-  // console.log( averageRating)
-  return {...ele.toObject(),averageRating:averageRating}
-});
+    data = data
+      .sort((a, b) => {
+        // Ensure that null values (where averageRating is not calculated) come last
+        if (a.averageRating === null) return 1;
+        if (b.averageRating === null) return -1;
+        // Sort in descending order
+        return b.averageRating - a.averageRating;
+      })
+      .slice(0, 5);
 
-data =  data.sort((a, b) => {
-  // Ensure that null values (where averageRating is not calculated) come last
-  if (a.averageRating === null) return 1;
-  if (b.averageRating === null) return -1;
-  // Sort in descending order
-  return b.averageRating - a.averageRating;
-}).slice(0, 3);;
-
-
-res.json({
-  results:data.length,
-  data:data,
-  rcode: 200,
-});
-}catch(err){
-  console.log(err)
-  res.json({
-    err: err.msg,
-    rcode: -9,
-  });
-}
-}
+    res.json({
+      results: data.length,
+      data: data,
+      rcode: 200,
+    });
+  } catch (err) {
+    console.log(err);
+    res.json({
+      err: err.msg,
+      rcode: -9,
+    });
+  }
+};
