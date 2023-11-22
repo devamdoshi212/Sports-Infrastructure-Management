@@ -66,7 +66,7 @@ const AthleteListComplaint = () => {
                                 }}
                                 style={({ pressed }) => [
                                     {
-                                        backgroundColor: pressed ? "#f0f0f0" : "white",
+                                        backgroundColor: pressed ? "#f0f0f0" : "#f8d7c9",
                                         padding: 20,
                                         borderRadius: 10,
                                     },
@@ -82,7 +82,7 @@ const AthleteListComplaint = () => {
                                         <Text style={styles.input}>Type</Text>
                                         <Text style={styles.input}>{item.type.Type}</Text>
                                     </View>
-                                    <View style={styles.column3}>
+                                    <View>
                                         <Entypo style={{ color: "#0054a8" }} name="eye" size={24} />
                                     </View>
                                 </View>
@@ -119,12 +119,6 @@ const styles = StyleSheet.create({
         alignItems: "center",
         width: "90%",
     },
-    pickerContainer: {
-        borderWidth: 1,
-        borderColor: "#ccc",
-        borderRadius: 5,
-        marginBottom: 15,
-    },
     scrollContainer: {
         flexGrow: 1,
         padding: 10,
@@ -139,10 +133,6 @@ const styles = StyleSheet.create({
         elevation: 5,
         marginHorizontal: 15,
         marginVertical: 5,
-    },
-    inline: {
-        flexDirection: "row",
-        alignItems: "center",
     },
     row: {
         flexDirection: "row",

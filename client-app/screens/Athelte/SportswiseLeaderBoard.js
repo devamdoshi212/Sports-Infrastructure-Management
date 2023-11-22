@@ -17,6 +17,7 @@ import { MaterialIcons } from "@expo/vector-icons"; // Import Ionicons from @exp
 import Leaderboard from "react-native-leaderboard";
 import { useSelector } from "react-redux";
 import * as Sharing from "expo-sharing";
+import ComparativeAnalysisModal from "./ComparativeAnalysisModal";
 
 const getOrdinalSuffix = (number) => {
   if (10 <= number / 100 && number / 100 <= 20) {
@@ -29,10 +30,13 @@ const getOrdinalSuffix = (number) => {
 
 const SportwiseLeaderBoard = ({ navigation }) => {
   const ip = ipconfig.ip;
+  const [rateModal, setRateModal] = useState(false);
+  const [opponentathelteid, setOpponentathelteid] = useState();
   const AthelteData = useSelector((s) => s.athelte.Athelte);
   const [image, setimage] = useState("../../assets/icon.png");
   const [sports, setSports] = useState([]);
   const [selectedSportsOption, setSelectedSportsOption] = useState("");
+  const [atheltedata, setatheltedata] = useState([]);
   const [userdata, setuserdata] = useState([
     {
       name: "Adam Savage",
@@ -41,7 +45,6 @@ const SportwiseLeaderBoard = ({ navigation }) => {
         "https://www.shareicon.net/data/128x128/2016/09/15/829473_man_512x512.png",
     },
   ]);
-  const [atheltedata, setatheltedata] = useState([]);
 
   useEffect(() => {
     const i = AthelteData[0].baseUrl.slice(1);
@@ -91,6 +94,10 @@ const SportwiseLeaderBoard = ({ navigation }) => {
     }
   };
 
+  const modalclosehandler = () => {
+    setRateModal(!rateModal);
+  };
+
   return (
     <>
       <View style={styles.container} ref={leaderboardRef}>
@@ -100,6 +107,16 @@ const SportwiseLeaderBoard = ({ navigation }) => {
               navigation.goBack();
             }}
           >
+            {rateModal && opponentathelteid && (
+              <ComparativeAnalysisModal
+                sportid={selectedSportsOption}
+                modalclosehandler={modalclosehandler}
+                currentathelteid={AthelteData[0]._id}
+                opponentathelteid={opponentathelteid}
+                rateModal={rateModal}
+              />
+            )}
+
             <View style={styles.back}>
               <Ionicons name="arrow-back" size={24} />
             </View>
@@ -151,8 +168,6 @@ const SportwiseLeaderBoard = ({ navigation }) => {
             style={styles.input}
             placeholder="Select Sports"
           >
-            {/* <Picker.Item label="Select Sports" value="" /> */}
-
             {sports.map((item, index) => (
               <Picker.Item
                 label={item.SportName}
@@ -168,7 +183,8 @@ const SportwiseLeaderBoard = ({ navigation }) => {
           icon="iconUrl"
           data={atheltedata}
           onRowPress={(item, index) => {
-            alert(item.name + " clicked");
+            setRateModal(true);
+            setOpponentathelteid(item.athleteid);
           }}
           evenRowColor="#edfcf9"
           oddRowColor="#ffffff"

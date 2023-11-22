@@ -157,7 +157,16 @@ const Complaint = ({ navigation }) => {
                         ></TextInput>
                     </ScrollView>
                 </View>
-                {photo && <Image source={{ uri: photo }} style={styles.photo} />}
+                <View
+                    style={{
+                        marginVertical: "5%",
+                        width: "50%",
+                        alignItems: "center",
+                        marginHorizontal: "25%",
+                    }}
+                >
+                    {photo && <Image source={{ uri: photo }} style={styles.photo} />}
+                </View>
                 <TouchableOpacity style={styles.uploadButton} onPress={pickImage}>
                     <Text style={styles.buttonText}>Upload Photo</Text>
                 </TouchableOpacity>
@@ -210,13 +219,12 @@ const styles = StyleSheet.create({
     uploadButton: {
         width: "40%",
         alignSelf: "center",
-        backgroundColor: "#3498db",
+        backgroundColor: "#f2b69c",
         padding: "2%",
         borderRadius: 5,
         alignItems: "center",
         marginTop: "2%",
     },
-
     buttonText: {
         color: "white",
         fontSize: 18,

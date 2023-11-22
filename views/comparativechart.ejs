@@ -1,0 +1,173 @@
+<html>
+
+<head>
+	<title>Chart</title>
+
+	<style>
+		.chart-container {
+			border: 1px solid #ccc;
+			padding: 10px;
+			margin: 10px;
+			background-color: #f2b69c;
+		}
+	</style>
+</head>
+<script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+<script>
+	let analysis = JSON.parse(`<%- JSON.stringify(analysis) %>`)
+    // let atheltedata = analysis[0].currentathelte;
+    // let opponentdata = analysis[1];
+	console.log(analysis[0].currentathelte)
+	console.log(analysis[1].opponentdata)
+</script>
+<style>
+	* {
+		font-size: 30px !important;
+		background-color: #f2b69c;
+
+	}
+
+
+	.col-6 {
+		margin: 0;
+	}
+</style>
+
+<body>
+
+	<!-- <div class="chart-container"> -->
+	<!-- <h1 style="font-size: 50px !important;text-align:center;margin-top: 200px;">MODULE WISE PERFORMANCE</h1> -->
+	<div id="marks"></div>
+	<div id="marks1"></div>
+
+	<script>
+        function marks1() {
+			let temp1 = [];
+			let temp2 = [];
+			for (const key in analysis[1].opponentdata) {
+				temp1.push(analysis[1].opponentdata[key]);
+				temp2.push(key + ' (' + analysis[1].opponentdata[key] + ')'); // change
+			}
+			var options = {
+				series: [{
+					name: 'PERFORMANCE',
+					data: temp1,
+				}],
+				chart: {
+					type: 'radar',
+					height: "100%",
+					width: "100%",
+					background:"#f2b69c"
+				},
+				dataLabels: {
+					enabled: false, // change
+					background: {
+						enabled: true,
+						borderRadius: 2,
+					}
+				},
+				plotOptions: {
+					radar: {
+						polygons: {
+							strokeColors: '#fff',
+							fill: {
+								colors: ['#000']
+							}
+						}
+					}
+				},
+				colors: ['#FF4560'],
+				// colors: ['#FF3366'],
+				markers: {
+					size: 6,
+					colors: ['#fff'],
+					strokeColor: '#FF4560',
+					strokeWidth: 2,
+				},
+				xaxis: {
+					categories: temp2,
+					labels: {
+          style: {
+            colors: '#000' // set label color to black
+          }
+        }
+				},
+				yaxis: {
+					// max: 100,
+					// min: 0,
+					show: false
+				}
+
+			};
+
+			var chart = new ApexCharts(document.querySelector("#marks1"), options);
+			chart.render();
+		}
+		marks1();
+		function marks() {
+			let temp1 = [];
+			let temp2 = [];
+			for (const key in analysis[0].currentathelte) {
+				temp1.push(analysis[0].currentathelte[key]);
+				temp2.push(key + ' (' + analysis[0].currentathelte[key] + ')'); // change
+			}
+			var options = {
+				series: [{
+					name: 'PERFORMANCE',
+					data: temp1,
+				}],
+				chart: {
+					type: 'radar',
+					height: "100%",
+					width: "100%",
+					background:"#f2b69c"
+				},
+				dataLabels: {
+					enabled: false, // change
+					background: {
+						enabled: true,
+						borderRadius: 2,
+					}
+				},
+				plotOptions: {
+					radar: {
+						polygons: {
+							strokeColors: '#fff',
+							fill: {
+								colors: ['#000']
+							}
+						}
+					}
+				},
+				colors: ['#FF4560'],
+				// colors: ['#FF3366'],
+				markers: {
+					size: 6,
+					colors: ['#fff'],
+					strokeColor: '#FF4560',
+					strokeWidth: 2,
+				},
+				xaxis: {
+					categories: temp2,
+					labels: {
+          style: {
+            colors: '#000' // set label color to black
+          }
+        }
+				},
+				yaxis: {
+					// max: 100,
+					// min: 0,
+					show: false
+				}
+
+			};
+
+			var chart = new ApexCharts(document.querySelector("#marks"), options);
+			chart.render();
+		}
+		marks();
+	</script>
+</body>
+
+</html>
