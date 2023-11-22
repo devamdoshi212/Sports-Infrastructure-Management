@@ -307,16 +307,47 @@ module.exports.monthWiseEnroll = async function (req, res) {
 };
 
 module.exports.DistrictWiseSportsComplex = async function (req, res) {
-  let District = await DistrictsModel.find();
-  let data = [];
-  for (let index = 0; index < District.length; index++) {
-    const element = District[index];
-    let SportsComplexes = await SportsComplex.find({ district: element._id });
-    data.push({
-      district: element.District,
-      sportComplex: SportsComplexes.length,
-    });
-  }
+  // let District = await DistrictsModel.find();
+  // let data = [];
+  // for (let index = 0; index < District.length; index++) {
+  //   const element = District[index];
+  //   let SportsComplexes = await SportsComplex.find({ district: element._id });
+  //   data.push({
+  //     district: element.District,
+  //     sportComplex: SportsComplexes.length,
+  //   });
+  // }
+  const data = await SportsComplex.aggregate([
+    {
+      $group: {
+        _id: "$district",
+        sportComplex: { $sum: 1 },
+      },
+    },
+    {
+      $lookup: {
+        from: "districts", // replace with the actual name of your districts collection
+        localField: "_id",
+        foreignField: "_id",
+        as: "district",
+      },
+    },
+    {
+      $unwind: "$district",
+    },
+    {
+      $sort: { "district.District": 1 }, // Sort by the count in descending order
+    },
+    {
+      $project: {
+        district: "$district.District", // replace with the actual field in your districts collection
+        sportComplex: 1,
+      },
+    },
+    
+  ]);
+
+
   res.json({ data: data, rcode: 200 });
 };
 
