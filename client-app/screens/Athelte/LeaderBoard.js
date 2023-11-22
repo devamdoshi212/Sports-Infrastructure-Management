@@ -17,6 +17,7 @@ import { MaterialIcons } from "@expo/vector-icons"; // Import Ionicons from @exp
 import Leaderboard from "react-native-leaderboard";
 import { useSelector } from "react-redux";
 import * as Sharing from "expo-sharing";
+import ComparativeAnalysisModal from "./ComparativeAnalysisModal";
 
 const getOrdinalSuffix = (number) => {
   if (10 <= number / 100 && number / 100 <= 20) {
@@ -31,6 +32,7 @@ const LeaderBoard = ({ navigation }) => {
   const ip = ipconfig.ip;
   const AthelteData = useSelector((s) => s.athelte.Athelte);
   const [image, setimage] = useState("../../assets/icon.png");
+
   const [userdata, setuserdata] = useState([
     {
       name: "Adam Savage",
@@ -139,7 +141,7 @@ const LeaderBoard = ({ navigation }) => {
           icon="iconUrl"
           data={atheltedata}
           onRowPress={(item, index) => {
-            alert(item.name + " clicked");
+            alert(item.athleteid + " clicked");
           }}
           evenRowColor="#edfcf9"
           oddRowColor="#ffffff"
