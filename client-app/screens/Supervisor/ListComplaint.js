@@ -96,7 +96,7 @@ const ListComplaint = ({ navigation }) => {
                                 }}
                                 style={({ pressed }) => [
                                     {
-                                        backgroundColor: pressed ? "#f0f0f0" : "white",
+                                        backgroundColor: pressed ? "#f0f0f0" : "#f2b69c",
                                         padding: 20,
                                         borderRadius: 10,
                                     },
