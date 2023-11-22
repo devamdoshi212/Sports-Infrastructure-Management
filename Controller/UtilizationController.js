@@ -553,7 +553,7 @@ more then 50
   }
 };
 
-module.exports.rating = async function (req, res) {
+module.exports.ratingWiseTop5 = async function (req, res) {
   try {
     let query = {};
     let data = await SportsComplex.find(query);
@@ -598,3 +598,52 @@ module.exports.rating = async function (req, res) {
     });
   }
 };
+
+
+module.exports.sportRatingWiseTop5=async function(req,res){
+  try {
+
+    let data=await SportsComplex.aggregate([
+      {
+        $unwind:"$sports"
+      },
+      // {
+      //   $lookup: {
+      //     from: "sports", // replace with the actual name of your districts collection
+      //     localField: "sports.sport",
+      //     foreignField: "_id",
+      //     as: "sports.sport",
+      //   },
+      // },
+      // {
+      //   $unwind:"$sports.sport"
+      // }
+    ])
+
+    data=data.filter((ele)=>{
+      return req.query.sportId==ele.sports.sport
+    })
+
+    if (req.query.district) {
+      data = data.filter((ele) => {
+        return req.query.district == ele.district;
+      });
+    }
+    
+    data= data.sort((a, b) => b.sports.rating - a.sports.rating).slice(0,5);
+
+
+
+    res.json({
+      results: data.length,
+      data: data,
+      rcode: 200,
+    });
+  } catch (err) {
+    console.log(err)
+    res.json({
+      err: err.msg,
+      rcode: -9,
+    });
+  }
+}
