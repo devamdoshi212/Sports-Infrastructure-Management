@@ -7,28 +7,44 @@ import {
   TouchableOpacity,
   Pressable,
   ScrollView,
+  ActivityIndicator,
 } from "react-native";
 import { useEffect, useState } from "react";
-import Supervisor from "../assets/icon.png";
+// import Supervisor from "../assets/icon.png";
 import { Rating } from "react-native-ratings";
-const RatingReview = () => {
-  const [reviews, setReviews] = useState([
-    {
-      author: "Digvijay Patil",
-      stars: 5,
-      review:
-        "Hello!! Overall, Instagram has been a very good social media platform for me. It's recommendations are relative and viewing experience is great. I'd just...",
-      helpful: 123,
-    },
-    {
-      author: "Digvijay Patil",
-      stars: 3,
-      review:
-        "Hello!! Overall, Instagram has been a very good social media platform for me. It's recommendations are relative and viewing experience is great. I'd just...",
-      helpful: 123,
-    },
-  ]);
+import ipconfig from "../../ipconfig";
+const RatingReview = ({ complexId }) => {
+  const [loading, setLoading] = useState(true);
 
+  const [data, setData] = useState([]);
+
+  const ip = ipconfig.ip;
+
+  useEffect(() => {
+    var requestOptions = {
+      method: "GET",
+      redirect: "follow",
+    };
+
+    fetch(
+      `http://${ip}:9999/getAllRatings?sportComplex=${complexId}`,
+      requestOptions
+    )
+      .then((response) => response.json())
+      .then((result) => setData(result.data))
+      .catch((error) => console.log("error", error))
+      .finally(() => {
+        setLoading(false);
+      });
+  }, [ip]);
+
+  if (loading) {
+    return (
+      <View style={styles.centeredContainer}>
+        <ActivityIndicator size="large" color="#fbe8e0" />
+      </View>
+    );
+  }
   return (
     <ScrollView style={styles.container}>
       <Text style={styles.title}>Ratings and Reviews</Text>
@@ -37,7 +53,7 @@ const RatingReview = () => {
         train at this complex.
       </Text>
       <View style={styles.reviewsContainer}>
-        {reviews.map((review) => (
+        {data.map((review) => (
           <View style={styles.review} key={review.author}>
             <View style={{ flexDirection: "row" }}>
               <Image
@@ -49,9 +65,11 @@ const RatingReview = () => {
                   borderWidth: 1,
                   // backgroundColor: "white",
                 }}
-                source={Supervisor}
+                source={{
+                  uri: `http://${ip}:9999/${review.athleteId.baseUrl.slice(1)}`,
+                }}
               />
-              <Text style={styles.author}>{review.author}</Text>
+              <Text style={styles.author}>{review.athleteId.userId.Name}</Text>
             </View>
             <View style={styles.ratingRow}>
               <View
@@ -63,20 +81,22 @@ const RatingReview = () => {
                   flexDirection: "row",
                 }}
               >
-                <Text style={styles.sport}>Sport: Cricket</Text>
+                <Text style={styles.sport}>
+                  Sport: {review.sport.SportName}
+                </Text>
                 <Rating
                   type="star"
                   ratingCount={5}
                   imageSize={20}
                   showRating={false}
-                  startingValue={review.stars}
+                  startingValue={review.rating}
                   minValue={1}
                   disabled
                   style={styles.starContainer}
                 />
               </View>
             </View>
-            <Text style={styles.reviewText}>{review.review}</Text>
+            <Text style={styles.reviewText}>{review.remarks}</Text>
             <TouchableOpacity style={styles.helpfulButton}>
               <Text style={styles.helpfulText}>Was this review helpful?</Text>
             </TouchableOpacity>
