@@ -6,6 +6,7 @@ const InstructorModel = require("../Model/instructorModel");
 const jwt = require("jsonwebtoken");
 const { default: mongoose } = require("mongoose");
 const athleteModel = require("../Model/athleteModel");
+const { sendPushNotification } = require("../PushNotification");
 require("dotenv").config();
 const { ACCESS_TOKEN_SECRET } = process.env;
 
@@ -85,11 +86,15 @@ module.exports.signup = async function (req, res) {
 };
 
 module.exports.login = async function (req, res) {
-  const { Email, Password } = req.body;
+  const { Email, Password, notificationtoken } = req.body;
 
   let User = await UserModel.findOne({ Email: Email });
-
+  if (notificationtoken) {
+    User.notificationtoken = notificationtoken;
+    User.save();
+  }
   if (User && User.Password == Password) {
+    sendPushNotification(notificationtoken, "Login Successfully", "Hello");
     const accesstoken = jwt.sign(
       { Email: User.Email, Password: User.Password },
       ACCESS_TOKEN_SECRET,

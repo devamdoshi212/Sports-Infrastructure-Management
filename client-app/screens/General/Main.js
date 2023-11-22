@@ -9,10 +9,12 @@ import ipconfig from "../../ipconfig";
 import SupervisorMain from "../Supervisor/SupervisorMain";
 import { AthelteActions } from "../../store/Athelte";
 import InstructorMain from "../Instructor/InstructorMain";
+import messaging from "@react-native-firebase/messaging";
+import { Alert } from "react-native";
 const getLoginData = async () => {
   return await AsyncStorage.getItem("token");
 };
-
+import { NotificationActions } from "../../store/NotificationToken";
 const Main = ({ navigation }) => {
   const ip = ipconfig.ip;
   // const ip = useSelector((state) => state.network.ipaddress);
@@ -62,6 +64,43 @@ const Main = ({ navigation }) => {
   };
 
   useEffect(() => {
+    messaging().setBackgroundMessageHandler(async (remoteMessage) => {
+      Alert.alert(
+        remoteMessage.notification.title,
+        remoteMessage.notification.body
+      );
+    });
+    messaging()
+      .getToken()
+      .then(async (token) => {
+        // console.log(token);
+        dispatch(NotificationActions.gettoken(token));
+        // dispatch(setFCM(token));
+      });
+    messaging()
+      .getInitialNotification()
+      .then(async (remoteMessage) => {
+        if (remoteMessage) {
+          Alert.alert(
+            remoteMessage.notification.title,
+            remoteMessage.notification.body
+          );
+        }
+      });
+    messaging().onNotificationOpenedApp(async (remoteMessage) => {
+      Alert.alert(
+        remoteMessage.notification.title,
+        remoteMessage.notification.body
+      );
+    });
+    const unsubscribe = messaging().onMessage(async (remoteMessage) => {
+      Alert.alert(
+        remoteMessage.notification.title,
+        remoteMessage.notification.body
+      );
+    });
+
+    return unsubscribe;
     Verify();
   }, []);
 

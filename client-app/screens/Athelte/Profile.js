@@ -14,6 +14,7 @@ import {
   Alert,
 } from "react-native";
 import ipconfig from "../../ipconfig";
+import { NotificationActions } from "../../store/NotificationToken";
 const { width: screenWidth, height: screenHeight } = Dimensions.get("window");
 async function removeItem() {
   try {
@@ -40,6 +41,7 @@ function Profile({ navigation }) {
   }, [image, Atheltedata]);
   const handleLogout = () => {
     dispatch(UserActions.getuserRole({ Role: "" }));
+    dispatch(NotificationActions.gettoken(""));
     removeItem();
   };
   return (

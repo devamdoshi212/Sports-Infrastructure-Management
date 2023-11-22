@@ -1,37 +1,59 @@
 {
-    "expo": {
-        "name": "client-app",
-        "slug": "client-app",
-        "version": "1.0.0",
-        "orientation": "portrait",
-        "icon": "./assets/Logo.png",
-        "userInterfaceStyle": "light",
-
-        "splash": {
-            "image": "./assets/sports.png",
-            "resizeMode": "contain",
-            "backgroundColor": "#fbe8e8"
-        },
-        "plugins": [
-            [
-                "expo-image-picker",
-                {
-                    "photosPermission": "The app accesses your photos to let you share them with your friends."
-                }
-            ]
-        ],
-        "assetBundlePatterns": ["**/*"],
-        "ios": {
-            "supportsTablet": true
-        },
-        "android": {
-            "adaptiveIcon": {
-                "foregroundImage": "./assets/Logo.png",
-                "backgroundColor": "#fbe8e8"
-            }
-        },
-        "web": {
-            "favicon": "./assets/favicon.png"
+  "expo": {
+    "name": "client-app",
+    "slug": "client-app",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/Logo.png",
+    "userInterfaceStyle": "light",
+    "splash": {
+      "image": "./assets/sports.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#fbe8e8"
+    },
+    "plugins": [
+      [
+        "expo-image-picker",
+        {
+          "photosPermission": "The app accesses your photos to let you share them with your friends."
         }
-    }
+      ],
+      [
+        "expo-build-properties",
+        {
+          "android": {
+            "usesCleartextTraffic": true
+          }
+        }
+      ],
+      "@react-native-firebase/app"
+    ],
+    "assetBundlePatterns": ["**/*"],
+    "ios": {
+      "supportsTablet": true
+    },
+    "android": {
+      "package": "sports.infrastructure",
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/Logo.png",
+        "backgroundColor": "#fbe8e8"
+      },
+      "googleServicesFile": "./google-services.json",
+      "permissions": [
+        "android.permission.CAMERA",
+        "android.permission.RECORD_AUDIO",
+        "android.permission.INTERNET",
+        "android.permission.POST_NOTIFICATIONS"
+      ]
+    },
+    "web": {
+      "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "7bcfce19-afb3-4e1a-9fc1-c71b4988a7f7"
+      }
+    },
+    "owner": "devamdoshi4"
+  }
 }
