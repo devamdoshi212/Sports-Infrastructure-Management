@@ -2,9 +2,6 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import React from "react";
 import "react-native-gesture-handler";
 const Tab = createBottomTabNavigator();
-import AddAthelte from "./AddAthelte";
-import ComplexDetails from "./ComplexDetails";
-import SupervisorProfile from "./SupervisorProfile";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import SupervisorNavigator from "./SupervisorNavigator";
 import QR from "./QR";
@@ -18,7 +15,6 @@ const SupervisorMain = ({ navigation }) => {
         tabBarIcon: ({ color, size }) => {
           let iconName;
 
-          // Set icon names based on route names (customize as needed)
           if (route.name === "AddAthelte") {
             iconName = "person-add-outline";
           } else if (route.name === "Home") {
@@ -33,12 +29,10 @@ const SupervisorMain = ({ navigation }) => {
           return <Ionicons name={iconName} size={32} color="black" />;
         },
         tabBarActiveTintColor: "blue", // Color of the active tab icon
-        tabBarInactiveTintColor: "gray", // Color of the inactive tab icon
-        tabBarStyle: { backgroundColor: "white" }, // Background color of the tab bar
-        // showLabel: false,
+        tabBarInactiveTintColor: "black", // Color of the inactive tab icon
+        tabBarStyle: { backgroundColor: "#d7a592" }, // Background color of the tab bar
       })}
     >
-      {/* <Tab.Screen name="AddAthelte" component={AddAthelte} /> */}
       <Tab.Screen name="SupervisorQR" component={QR} />
       <Tab.Screen name="Home" component={Home} />
       <Tab.Screen name="SupervisorProfile" component={SupervisorNavigator} />
