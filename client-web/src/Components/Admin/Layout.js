@@ -62,7 +62,7 @@ const Layout = () => {
           </div>
           <div className=" hover:shadow-gray-400 hover:shadow-md">
             <Link
-              to={"allanalysis"}
+              to={"analysis"}
               className="flex items-center active-nav-link text-white py-4 pl-6 nav-item gap-2 focus:outline-none focus:shadow-md focus:shadow-gray-500"
             >
               <svg
