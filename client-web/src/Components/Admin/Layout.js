@@ -27,7 +27,6 @@ const Layout = () => {
   };
   return (
     <div className="bg-gray-100 font-family-karla flex ">
-    
       <aside className="relative  bg-[#13459c] w-64   hidden sm:block shadow-xl shadow-gray-900 h-screen overflow-y-hidden ">
         <div className=" top-0 left-0 p-6 text-center">
           <img src={image} alt="symbol" className="opacity-60 w-2/3 m-auto  " />
@@ -241,6 +240,28 @@ const Layout = () => {
               LeaderBoard
             </Link>
           </div>
+          <div className=" hover:shadow-gray-400 hover:shadow-md">
+            <Link
+              to={"topsportcomplex"}
+              className="flex items-center active-nav-link text-white py-4 pl-6 nav-item gap-2 focus:outline-none focus:shadow-md focus:shadow-gray-500"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth="1.5"
+                stroke="currentColor"
+                className="w-6 h-6"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M3.75 21h16.5M4.5 3h15M5.25 3v18m13.5-18v18M9 6.75h1.5m-1.5 3h1.5m-1.5 3h1.5m3-6H15m-1.5 3H15m-1.5 3H15M9 21v-3.375c0-.621.504-1.125 1.125-1.125h3.75c.621 0 1.125.504 1.125 1.125V21"
+                />
+              </svg>
+              Top Complexes
+            </Link>
+          </div>
           <div className="p-6">
             {/* <NavLink to={"addsportscomplex"}>
               <button className="w-full bg-white cta-btn font-semibold py-2 mt-5 rounded-br-lg rounded-bl-lg rounded-tr-lg shadow-lg hover:shadow-xl hover:bg-gray-300 flex items-center justify-center">
@@ -255,7 +276,6 @@ const Layout = () => {
           </div>
         </nav>
       </aside>
-      
 
       <div className="w-full flex flex-col h-screen overflow-y-hidden ">
         <header className="w-full items-center  bg-[#196bde] shadow-gray-900 shadow-md  py-2 px-6 hidden sm:flex">
