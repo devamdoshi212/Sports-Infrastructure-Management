@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import BarChartAnalysis from "./BarChartAnalysis";
+import LineChartAnalysis from "./LineChartAnalysis";
 
 const Analysis = () => {
   const [chart, setChart] = useState("1");
@@ -19,7 +20,7 @@ const Analysis = () => {
           <option value="1" defaultValue="1">
             Bar chart
           </option>
-          <option value="2">Pie chart</option>
+          <option value="2">Line chart</option>
         </select>
         <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
           <svg
@@ -32,6 +33,7 @@ const Analysis = () => {
         </div>
       </div>
       {chart === "1" ? <BarChartAnalysis /> : ""}
+      {chart === "2" ? <LineChartAnalysis /> : ""}
     </div>
   );
 };
