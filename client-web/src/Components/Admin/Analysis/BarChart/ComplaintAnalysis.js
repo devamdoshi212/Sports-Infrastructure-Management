@@ -5,6 +5,10 @@ const ComplaintAnalysis = (props) => {
   const [chartData, setChartData] = useState({
     series: [
       {
+        name: "Total Complaint",
+        data: [30, 40, 35, 50, 49, 60, 70, 91, 125],
+      },
+      {
         name: "Sloved Complaint",
         data: [30, 40, 35, 50, 49, 60, 70, 91, 125],
       },
@@ -109,10 +113,15 @@ const ComplaintAnalysis = (props) => {
         const unsolved = data.map((s) => s.unsolved);
         const solvedsatisfied = data.map((s) => s.solvedsatisfied);
         const solvednotsatisfied = data.map((s) => s.solvednotsatisfied);
-
+        const totalComplaints = sloved.map(
+          (value, index) => value + unsolved[index]
+        );
         setChartData({
           ...chartData,
           series: [
+            {
+              data: totalComplaints,
+            },
             {
               data: sloved,
             },
