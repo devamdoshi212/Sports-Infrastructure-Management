@@ -14,6 +14,7 @@ const sessionSchema = new mongoose.Schema(
     enrolls: [
       {
         userId: { type: mongoose.SchemaTypes.ObjectId, ref: "users" },
+        sport: [{ type: mongoose.SchemaTypes.ObjectId, ref: "sports" }],
         entry: Date,
         exit: Date,
       },
