@@ -696,3 +696,50 @@ try {
   });
 }
 }
+
+
+module.exports.monthWiseComplainCount=async function(req,res){
+  try {
+      let data=await ComplaintModel.aggregate([
+        ...(req.query.sportsComplex
+          ? [
+              {
+                $match: {
+                  sportsComplex: new mongoose.Types.ObjectId(
+                    req.query.sportsComplex
+                  ),
+                },
+              },
+            ]
+          : []),
+          {
+            $group: {
+              _id: {
+                month: { $month: "$createdAt" },
+                year: { $year: "$createdAt" },
+              },
+              totalComplaint: { $sum: 1 }, // You can     use other aggregation operators based on your requirements
+            },
+          },
+          {
+            $sort: {
+              "_id.year": 1,
+              "_id.month": 1,
+            },
+          },
+      ])
+      
+     
+    res.json({
+      results: data.length,
+      data: data,
+      rcode: 200,
+    });
+  } catch (err) {
+    console.log(err)
+    res.json({
+      err: err.msg,
+      rcode: -9,
+    });
+  }
+}

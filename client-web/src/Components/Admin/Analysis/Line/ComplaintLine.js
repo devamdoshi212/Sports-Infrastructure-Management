@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
 import ReactApexChart from "react-apexcharts";
 
-const EnrollLineAnalysis = (props) => {
+const ComplaintLineAnalysis = (props) => {
   const [chartData, setChartData] = useState({
     series: [
       {
-        name: "Athlete",
+        name: "Events",
         data: [30, 40, 35, 50, 49, 60, 10, 12],
       },
     ],
@@ -15,7 +15,11 @@ const EnrollLineAnalysis = (props) => {
         height: 350,
       },
       plotOptions: {
-        line: {},
+        bar: {
+          horizontal: false,
+          columnWidth: "55%",
+          endingShape: "rounded",
+        },
       },
       dataLabels: {
         enabled: true,
@@ -40,7 +44,7 @@ const EnrollLineAnalysis = (props) => {
       },
       yaxis: {
         title: {
-          text: "Number of Athlete in Sport Complexes",
+          text: "Number of complaint in Sport Complexes",
           style: {
             fontSize: "12px",
             fontFamily: undefined,
@@ -53,7 +57,7 @@ const EnrollLineAnalysis = (props) => {
         curve: "smooth",
       },
       title: {
-        text: "Month wise Enroll Athelte in Sport Complex",
+        text: "Complait in Sport Complexes",
         align: "center",
         margin: 50,
         offsetX: 0,
@@ -79,44 +83,54 @@ const EnrollLineAnalysis = (props) => {
     };
 
     fetch(
-      `http://localhost:9999/monthWiseEnroll?sportsComplexId=${props.selectedOption}`,
+      `http://localhost:9999/monthWiseComplainCount?sportsComplex=${props.selectedOption}`,
       requestOptions
     )
       .then((response) => response.json())
       .then((result) => {
-        const monthMapping = {};
-        for (let i = 1; i <= 12; i++) {
-          monthMapping[i] = 0;
-        }
-
-        result.data.forEach((entry) => {
-          const monthNumber = entry._id.month;
-          monthMapping[monthNumber] = entry.totalAthelete;
+        const data = result.data;
+        console.log(data);
+        const monthNames = [
+          "January",
+          "February",
+          "March",
+          "April",
+          "May",
+          "June",
+          "July",
+          "August",
+          "September",
+          "October",
+          "November",
+          "December",
+        ];
+        const categories = data.map((item) => monthNames[item._id.month - 1]);
+        const complaint = data.map((item) => item.totalComplaint);
+        const colors = complaint.map((value) => {
+          // You can customize the color range based on your requirements
+          if (value < 30) {
+            return "#3366FF"; // Blue
+          } else if (value < 50) {
+            return "#FFD700"; // Gold
+          } else {
+            return "#FF6347"; // Tomato
+          }
         });
-
-        const monthNames = Object.keys(monthMapping).map((monthNumber) => {
-          const monthName = new Intl.DateTimeFormat("en-US", {
-            month: "long",
-          }).format(new Date(2023, monthNumber - 1, 1));
-          return monthName;
-        });
-
-        const mappedData = Object.values(monthMapping);
-
         setChartData({
           ...chartData,
           series: [
             {
-              name: "Athlete",
-              data: mappedData,
+              name: "Complaint",
+              data: complaint,
             },
           ],
           options: {
             ...chartData.options,
             xaxis: {
               ...chartData.options.xaxis,
-              categories: monthNames,
+              categories: categories,
             },
+            colors: colors,
           },
         });
       })
@@ -128,11 +142,11 @@ const EnrollLineAnalysis = (props) => {
       <ReactApexChart
         options={chartData.options}
         series={chartData.series}
-        type="line" // Make sure the type is set to line here as well
+        type="line"
         height={chartData.options.chart.height}
       />
     </div>
   );
 };
 
-export default EnrollLineAnalysis;
+export default ComplaintLineAnalysis;
