@@ -6,8 +6,6 @@ import EnrollAnalysis from "./BarChart/EnrollAnalysis";
 import EnrollLineAnalysis from "./Line/EnrollLineAnalysis";
 import AgeGroupAnalysis from "./BarChart/AgeGroupAnalysis";
 import AgeGroupwiseCount from "./BarChart/AgeGroupCount";
-import SportComplexTable from "./TopSportComplexTable";
-import TopSportwiseComplex from "./TopSportwiseComplex";
 
 const BarChartAnalysis = () => {
   const [data, setData] = useState([]);
@@ -20,6 +18,7 @@ const BarChartAnalysis = () => {
   const [year, setYear] = useState("");
   const [district, setDistrict] = useState([]);
   const [districtId, setdistrictId] = useState("");
+
   useEffect(() => {
     var requestOptions = {
       method: "GET",
@@ -241,13 +240,6 @@ const BarChartAnalysis = () => {
           </div>
         </div>
       </div>
-      <SportComplexTable districtId={districtId} />
-
-      {sportId === "" ? (
-        ""
-      ) : (
-        <TopSportwiseComplex districtId={districtId} sportId={sportId} />
-      )}
     </div>
   );
 };
