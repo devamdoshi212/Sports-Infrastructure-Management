@@ -111,7 +111,7 @@ export default function QR({ navigation }) {
         2
       )} kilometers.`
     );
-    if (userDistance < 0.31) {
+    if (userDistance < 15) {
       var myHeaders = new Headers();
       myHeaders.append("Content-Type", "application/json");
 
