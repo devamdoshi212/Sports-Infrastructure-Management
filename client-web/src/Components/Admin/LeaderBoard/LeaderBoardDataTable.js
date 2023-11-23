@@ -8,8 +8,8 @@ import { Button } from "primereact/button";
 import { Calendar } from "primereact/calendar";
 import { Link } from "react-router-dom";
 import { LeaderboardServices } from "./LeaderboardServices";
-import ReactApexChart from "react-apexcharts";
 import ChartConfig from "./ChartConfig";
+import BarChartConfig from "./BarChartConfig";
 
 export default function LeaderboardDataTable({ selectedOption }) {
   const [deleterefresh, setdeleterefresh] = useState(true);
@@ -20,7 +20,7 @@ export default function LeaderboardDataTable({ selectedOption }) {
     SportName: "",
     Category: "",
   });
-
+  console.log(selectedOption);
   useEffect(() => {
     LeaderboardServices.getCustomersXLarge(selectedOption).then((data) => {
       setCustomers(getCustomers(data));
@@ -159,14 +159,34 @@ export default function LeaderboardDataTable({ selectedOption }) {
   };
 
   const handleChartClick = (rowData) => {
-    const categories = Object.keys(rowData.parameter);
-    const seriesData = Object.values(rowData.parameter);
-    setSelectedAthlete({
-      chartData: {
-        categories,
-        seriesData,
-      },
-    });
+    if (selectedOption !== "") {
+      const categories = Object.keys(rowData.parameter);
+      const seriesData = Object.values(rowData.parameter);
+      setSelectedAthlete({
+        chartData: {
+          categories,
+          seriesData,
+        },
+      });
+    } else {
+      // console.log(rowData);
+      const categories = rowData.complaint.map((s) => s.type);
+      const sloved = rowData.complaint.map((s) => s.solved);
+      const unsolved = rowData.complaint.map((s) => s.unsolved);
+      const solvedsatisfied = rowData.complaint.map((s) => s.solvedsatisfied);
+      const solvednotsatisfied = rowData.complaint.map(
+        (s) => s.solvednotsatisfied
+      );
+      setSelectedAthlete({
+        chartData: {
+          categories,
+          sloved,
+          unsolved,
+          solvedsatisfied,
+          solvednotsatisfied,
+        },
+      });
+    }
     setIsModalOpen(true);
   };
 
@@ -268,8 +288,15 @@ export default function LeaderboardDataTable({ selectedOption }) {
       </DataTable>
       {isModalOpen && selectedAthlete && (
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
-          <div className="bg-white p-6 rounded shadow-lg absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
-            <ChartConfig chartData={selectedAthlete.chartData} />
+          <div className="bg-white p-6 rounded shadow-lg absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-96">
+            {selectedOption === "" ? (
+              <BarChartConfig
+                chartType="bar"
+                chartData={selectedAthlete.chartData}
+              />
+            ) : (
+              <ChartConfig chartData={selectedAthlete.chartData} />
+            )}
             <button
               className="mt-4 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
               onClick={handleCloseModal}
