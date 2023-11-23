@@ -14,6 +14,9 @@ import {
   Alert,
 } from "react-native";
 import ipconfig from "../../ipconfig";
+import messaging from "@react-native-firebase/messaging";
+import { useNavigation } from "@react-navigation/native";
+
 import { NotificationActions } from "../../store/NotificationToken";
 const { width: screenWidth, height: screenHeight } = Dimensions.get("window");
 async function removeItem() {
@@ -43,13 +46,26 @@ function Profile({ navigation }) {
   };
 
   useEffect(() => {
+    messaging().onNotificationOpenedApp(async (remoteMessage) => {
+      if (
+        remoteMessage.notification.title === "You are Added in Sports Complex"
+      ) {
+        navigation.navigate("SportEnroll");
+      } else if (remoteMessage.notification.title === "Your Complaint Solved") {
+        navigation.navigate("ComplaintList");
+      }
+      // Alert.alert(
+      //   remoteMessage.notification.title,
+      //   remoteMessage.notification.body
+      // );
+    });
     let i;
     if (Atheltedata) i = Atheltedata[0].baseUrl.slice(1);
     setimage(i);
   }, [image, Atheltedata]);
   const handleLogout = () => {
     dispatch(UserActions.getuserRole({ Role: "" }));
-    dispatch(NotificationActions.gettoken(""));
+    dispatch(NotificationActions.gettoken());
     removeItem();
   };
   return (
