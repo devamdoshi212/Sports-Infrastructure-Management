@@ -39,9 +39,11 @@ const Layout = () => {
   FetchComplaintType();
 
   return (
-    <div className="bg-gray-100 font-family-karla flex">
-      <aside className="relative bg-[#13459c]   w-64 hidden sm:block shadow-xl shadow-gray-900 h-screen overflow-y-scroll">
-        <div className="p-6 text-center">
+    <div className="relative bg-gray-100 font-family-karla flex">
+      
+      <aside className=" bg-[#13459c]    w-64 hidden sm:block shadow-xl shadow-gray-900  h-screen overflow-hidden ">
+      
+        <div className="sticky top-0 p-6 text-center">
           <img src={image} alt="symbol" className="opacity-60 w-2/3 m-auto" />
           <a
             href="index.html"
@@ -50,7 +52,9 @@ const Layout = () => {
             Manager
           </a>
         </div>
-        <nav className=" text-base font-semibold pt-3 ">
+        
+        <nav className=" text-base font-semibold pt-3 overflow-y-scroll h-4/6">
+        
           <div className=" hover:shadow-gray-400 hover:shadow-md">
             <Link
               to={"profile"}
@@ -287,8 +291,11 @@ const Layout = () => {
               </button>
             </NavLink> */}
           </div>
+          
         </nav>
+        
       </aside>
+    
 
       <div className="w-full flex flex-col h-screen overflow-y-hidden">
         <header className="w-full items-center bg-[#196bde] shadow-gray-900 shadow-md py-2 px-6 hidden sm:flex">

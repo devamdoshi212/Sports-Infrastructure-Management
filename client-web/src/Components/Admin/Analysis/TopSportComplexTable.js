@@ -18,9 +18,10 @@ const SportComplexTable = ({ districtId }) => {
   }, [districtId]);
 
   return (
-    <table className="min-w-full bg-white border border-gray-300">
-      <thead>
-        <tr>
+    
+    <table className="w-11/12 m-auto bg-white border border-gray-300 p-datatable ">
+      <thead >
+        <tr >
           <th className="py-2 px-4 border-b">Name</th>
           <th className="py-2 px-4 border-b">Location</th>
           <th className="py-2 px-4 border-b">Rating</th>
@@ -28,7 +29,7 @@ const SportComplexTable = ({ districtId }) => {
       </thead>
       <tbody>
         {sportComplexes.map((complex) => (
-          <tr key={complex.id}>
+          <tr key={complex.id} >
             <td className="py-2 px-4 border-b">{complex.name}</td>
             <td className="py-2 px-4 border-b">{complex.location}</td>
             <td className="py-2 px-4 border-b">
@@ -38,6 +39,7 @@ const SportComplexTable = ({ districtId }) => {
         ))}
       </tbody>
     </table>
+   
   );
 };
 
