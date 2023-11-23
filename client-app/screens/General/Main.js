@@ -64,10 +64,20 @@ const Main = ({ navigation }) => {
   };
 
   useEffect(() => {
+    Verify();
+
     messaging().setBackgroundMessageHandler(async (remoteMessage) => {
       Alert.alert(
         remoteMessage.notification.title,
-        remoteMessage.notification.body
+        remoteMessage.notification.body,
+        [
+          {
+            text: "Cancel",
+            onPress: () => console.log("Cancel Pressed"),
+            style: "cancel",
+          },
+          { text: "OK", onPress: () => console.log("Cancel Pressed 1") },
+        ]
       );
     });
     messaging()
@@ -83,25 +93,48 @@ const Main = ({ navigation }) => {
         if (remoteMessage) {
           Alert.alert(
             remoteMessage.notification.title,
-            remoteMessage.notification.body
+            remoteMessage.notification.body,
+            [
+              {
+                text: "Cancel",
+                onPress: () => console.log("Cancel Pressed"),
+                style: "cancel",
+              },
+              { text: "OK", onPress: () => console.log("Hello") },
+            ]
           );
         }
       });
-    messaging().onNotificationOpenedApp(async (remoteMessage) => {
-      Alert.alert(
-        remoteMessage.notification.title,
-        remoteMessage.notification.body
-      );
-    });
-    const unsubscribe = messaging().onMessage(async (remoteMessage) => {
-      Alert.alert(
-        remoteMessage.notification.title,
-        remoteMessage.notification.body
-      );
-    });
+    // messaging().onNotificationOpenedApp(async (remoteMessage) => {
+    //   Alert.alert(
+    //     remoteMessage.notification.title,
+    //     remoteMessage.notification.body,
+    //     [
+    //       {
+    //         text: "Cancel",
+    //         onPress: () => console.log("Cancel Pressed"),
+    //         style: "cancel",
+    //       },
+    //       // { text: "OK", onPress: () => navigation.navigate("Login") },
+    //     ]
+    //   );
+    // });
+    // const unsubscribe = messaging().onMessage(async (remoteMessage) => {
+    //   Alert.alert(
+    //     remoteMessage.notification.title,
+    //     remoteMessage.notification.body,
+    //     [
+    //       {
+    //         text: "Cancel",
+    //         onPress: () => console.log("Cancel Pressed"),
+    //         style: "cancel",
+    //       },
+    //       { text: "OK", onPress: () => navigation.navigate("Login") },
+    //     ]
+    //   );
+    // });
 
-    return unsubscribe;
-    Verify();
+    // return unsubscribe;
   }, []);
 
   if (UserData.Role === 0) {

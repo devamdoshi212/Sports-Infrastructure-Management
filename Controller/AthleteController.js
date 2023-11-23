@@ -3,6 +3,8 @@ const athleteRatingModel = require("../Model/athleteRatingModel");
 const mongoose = require("mongoose");
 const UsersModel = require("./../Model/UsersModel");
 const SportModel = require("./../Model/SportModel");
+const ComplaintTypeModel = require("../Model/ComplaintTypeModel");
+const ComplaintModel = require("../Model/ComplaintModel");
 module.exports.addAthlete = async function (req, res) {
   //console.log(req.file);
   const BaseUrl = `http://localhost:9999/Athletes/${req.file.originalname}`;
@@ -99,6 +101,7 @@ module.exports.getAthletesWithAllRating = async function (req, res) {
         parameter: parameter,
       });
     } else {
+      let complaint = await ComplaintCount(element.userId);
       let rating = await averageRating(element._id, null);
       myarray.push({
         athleteid: element._id.toString(),
@@ -110,6 +113,7 @@ module.exports.getAthletesWithAllRating = async function (req, res) {
         dob: element.userId.DOB,
         address: element.address,
         parameter: {},
+        complaint: complaint,
       });
     }
   }
@@ -121,6 +125,48 @@ module.exports.getAthletesWithAllRating = async function (req, res) {
     rcode: 200,
   });
 };
+
+async function ComplaintCount(userId) {
+  let complainttype = await ComplaintTypeModel.find();
+  let data = [];
+  for (let index = 0; index < complainttype.length; index++) {
+    let solved = 0;
+    let solvedsatisfied = 0;
+    let solvednotsatisfied = 0;
+    let unsolved = 0;
+
+    const element = complainttype[index];
+    let temp = await ComplaintModel.find({
+      userId: userId,
+      type: element._id,
+    });
+    for (let index = 0; index < temp.length; index++) {
+      const element = temp[index];
+      if (element.status === 1) {
+        solved++;
+      }
+      if (element.status === 0) {
+        unsolved++;
+      }
+      if (element.status === 1 && element.satisfied === 1) {
+        solvedsatisfied++;
+      }
+      if (element.status === 1 && element.satisfied === 0) {
+        solvednotsatisfied++;
+      }
+    }
+
+    data.push({
+      type: element.Type,
+      solved: solved,
+      unsolved: unsolved,
+      solvedsatisfied: solvedsatisfied,
+      solvednotsatisfied: solvednotsatisfied,
+    });
+  }
+  // res.json({ data: data, rcode: 200 });
+  return data;
+}
 
 module.exports.getAthletesWithAllSportsRating = async function (req, res) {
   const athelteid = req.query.athleteid;
