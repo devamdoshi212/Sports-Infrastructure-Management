@@ -130,7 +130,6 @@ export default function QR({ navigation }) {
       fetch(`http://${ip}:9999/addSession/${data}`, requestOptions)
         .then((response) => response.json())
         .then((result) => {
-          console.log(result);
           if (result.rcode == 200) {
             Alert.alert("Alert Title", "Entry Done", [
               // {
@@ -155,7 +154,13 @@ export default function QR({ navigation }) {
               {
                 text: "OK",
                 onPress: () => {
-                  navigation.navigate("ExitForm");
+                  navigation.navigate("ExitForm", {
+                    data: {
+                      enrollid: result.currentErollObjId,
+                      SportComplexId: data,
+                      userId: userdata._id,
+                    },
+                  });
                 },
               },
             ]);

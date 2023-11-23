@@ -44,6 +44,7 @@ module.exports.addSession = async function (req, res) {
       let data = await existingSession.save();
 
       res.json({
+        currentErollObjId: currentUserEnroll[currentUserEnroll.length - 1]._id,
         data: data,
         msg: "Exit Done",
         rcode: 205, //Exit code rcode :205
@@ -114,3 +115,6 @@ module.exports.getSession = async function (req, res) {
     });
   }
 };
+
+//create patch query to add sports in session enroll array
+module.exports.updateSportsInSession = function async(req, res) {};
