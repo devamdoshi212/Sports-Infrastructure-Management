@@ -30,6 +30,14 @@ function Profile({ navigation }) {
   const Atheltedata = useSelector((state) => state.athelte.Athelte);
   const [image, setimage] = useState("./../../assets/icon.png");
 
+  if (!Atheltedata || !Userdata) {
+    return (
+      <View style={styles.centeredContainer}>
+        <ActivityIndicator size="large" color="orange" />
+      </View>
+    );
+  }
+
   const ProfileDetailHandler = () => {
     navigation.navigate("DetailProfile");
   };
@@ -199,6 +207,11 @@ function Profile({ navigation }) {
 }
 
 const styles = StyleSheet.create({
+  centeredContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+  },
   container: {
     flex: 1,
     marginTop: 30,

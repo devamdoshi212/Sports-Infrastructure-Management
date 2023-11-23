@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
-import TimewiseAnalysis from "../../Admin/Analysis/TimeSlotAnalysis";
-import CapacityAnalysis from "../../Admin/Analysis/CapacityAnalysis";
-import ComplaintAnalysis from "../../Admin/Analysis/ComplaintAnalysis";
-import EnrollAnalysis from "../../Admin/Analysis/EnrollAnalysis";
-import EnrollLineAnalysis from "../../Admin/Analysis/EnrollLineAnalysis";
-import AgeGroupAnalysis from "../../Admin/Analysis/AgeGroupAnalysis";
+
 import { useSelector } from "react-redux";
+import TimewiseAnalysis from "../../Admin/Analysis/BarChart/TimeSlotAnalysis";
+import CapacityAnalysis from "../../Admin/Analysis/BarChart/CapacityAnalysis";
+import ComplaintAnalysis from "../../Admin/Analysis/BarChart/ComplaintAnalysis";
+import EnrollAnalysis from "../../Admin/Analysis/BarChart/EnrollAnalysis";
+import EnrollLineAnalysis from "../../Admin/Analysis/Line/EnrollLineAnalysis";
+import AgeGroupAnalysis from "../../Admin/Analysis/BarChart/AgeGroupAnalysis";
 
 const ManagerAnalysis = () => {
   // const [data, setData] = useState([]);
@@ -32,16 +33,16 @@ const ManagerAnalysis = () => {
   return (
     <div>
       <TimewiseAnalysis selectedOption={selectedOption} />
-      <hr className="h-px bg-gray-700 "/>
+      <hr className="h-px bg-gray-700 " />
       <CapacityAnalysis selectedOption={selectedOption} />
-      <hr className="h-px bg-gray-700 "/>
+      <hr className="h-px bg-gray-700 " />
       <ComplaintAnalysis selectedOption={selectedOption} />
-      <hr className="h-px bg-gray-700 "/>
+      <hr className="h-px bg-gray-700 " />
       <EnrollAnalysis selectedOption={selectedOption} />
-      <hr className="h-px bg-gray-700 "/>
+      <hr className="h-px bg-gray-700 " />
       <EnrollLineAnalysis selectedOption={selectedOption} />
-      <hr className="h-px bg-gray-700 "/>
-      
+      <hr className="h-px bg-gray-700 " />
+
       <div className="w-1/5 relative m-5">
         <select
           className="block appearance-none w-full bg-white border border-gray-300 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:border-blue-300 focus:ring focus:ring-blue-200"
