@@ -27,7 +27,8 @@ const Layout = () => {
   };
   return (
     <div className="bg-gray-100 font-family-karla flex ">
-      <aside className="relative  bg-[#13459c]  w-64 hidden sm:block shadow-xl shadow-gray-900 ">
+    
+      <aside className="relative  bg-[#13459c] w-64   hidden sm:block shadow-xl shadow-gray-900  h-screen overflow-y-scroll ">
         <div className="p-6 text-center ">
           <img src={image} alt="symbol" className="opacity-60 w-2/3 m-auto" />
           <Link
@@ -37,7 +38,7 @@ const Layout = () => {
             Admin
           </Link>
         </div>
-        <nav className=" text-base font-semibold pt-3">
+        <nav className=" text-base font-semibold pt-3 ">
           <div className=" hover:shadow-gray-400 hover:shadow-md">
             <Link
               to={"/admin"}
@@ -254,8 +255,9 @@ const Layout = () => {
           </div>
         </nav>
       </aside>
+      
 
-      <div className="w-full flex flex-col h-screen overflow-y-hidden">
+      <div className="w-full flex flex-col h-screen overflow-y-hidden ">
         <header className="w-full items-center  bg-[#196bde] shadow-gray-900 shadow-md  py-2 px-6 hidden sm:flex">
           <div className="w-1/2"></div>
           <div

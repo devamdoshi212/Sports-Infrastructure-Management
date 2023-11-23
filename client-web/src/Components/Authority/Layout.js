@@ -38,7 +38,7 @@ const Layout = () => {
   FetchComplaintType();
   return (
     <div className="bg-gray-100 font-family-karla flex">
-      <aside className="relative bg-[#13459c]  w-64 hidden sm:block shadow-xl shadow-gray-900">
+      <aside className="relative bg-[#13459c]  w-64 hidden sm:block shadow-xl shadow-gray-900 h-screen overflow-y-scroll">
         <div className="p-6 text-center">
           <img src={image} alt="symbol" className="opacity-60 w-2/3 m-auto" />
           <a
