@@ -7,6 +7,7 @@ import AthleteDetails from "./AthelteDetails";
 import AthelteProfile from "./AthelteProfile";
 import AthelteDailyResponse from "./AthelteDailyResponse";
 import InstructorComplexDetails from "./IntructorComplexDetails";
+import SportwiseLeaderBoard from "./../Supervisor/SportswiseLeaderBoard";
 const Stack = createStackNavigator();
 const ProfileNavigator = ({ navigation }) => {
   return (
@@ -40,6 +41,12 @@ const ProfileNavigator = ({ navigation }) => {
         <Stack.Screen
           name="AthelteDailyResponse"
           component={AthelteDailyResponse}
+          options={{ headerShown: false }}
+        />
+
+        <Stack.Screen
+          name="SportwiseLeaderBoard"
+          component={SportwiseLeaderBoard}
           options={{ headerShown: false }}
         />
       </Stack.Group>

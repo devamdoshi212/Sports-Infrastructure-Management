@@ -13,8 +13,11 @@ import {
   ScrollView,
   Alert,
 } from "react-native";
+import messaging from "@react-native-firebase/messaging";
+
 import { Ionicons, MaterialIcons } from "@expo/vector-icons";
 import ipconfig from "../../ipconfig";
+import { NotificationActions } from "../../store/NotificationToken";
 async function removeItem() {
   try {
     await AsyncStorage.removeItem("token");
@@ -28,9 +31,22 @@ function SupervisorProfile({ navigation }) {
   const Userdata = useSelector((state) => state.user.User);
   const [image, setimage] = useState("./../../assets/Supervisor.png");
   console.log(Userdata);
-  useEffect(() => {}, [image]);
+  useEffect(() => {
+    messaging().onNotificationOpenedApp(async (remoteMessage) => {
+      if (remoteMessage.notification.title === "Athlete Raised Complaint") {
+        navigation.navigate("ListComplaint");
+      }
+
+      // Alert.alert(
+      //   remoteMessage.notification.title,
+      //   remoteMessage.notification.body
+      // );
+    });
+  }, [image]);
   const handleLogout = () => {
     dispatch(UserActions.getuserRole({ Role: "" }));
+    dispatch(NotificationActions.gettoken());
+
     removeItem();
   };
   return (
