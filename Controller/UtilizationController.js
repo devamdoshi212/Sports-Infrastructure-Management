@@ -6,6 +6,7 @@ const ComplaintModel = require("./../Model/ComplaintModel");
 const ComplaintTypeModel = require("./../Model/ComplaintTypeModel");
 const DistrictsModel = require("./../Model/DistrictsModel");
 const RatingModel = require("../Model/RatingModel");
+const UpdatesModel=require("../Model/UpdatesModel")
 
 function countEntriesInTimeSlot(result, startHour, endHour) {
   let count = 0;
@@ -646,4 +647,52 @@ module.exports.sportRatingWiseTop5=async function(req,res){
       rcode: -9,
     });
   }
+}
+
+
+module.exports.monthWiseEventCount=async function(req,res){
+try {
+
+  
+  const data=await UpdatesModel.aggregate([
+    ...(req.query.sportComplexId
+      ? [
+          {
+            $match: {
+              sportComplexId: new mongoose.Types.ObjectId(
+                req.query.sportComplexId
+              ),
+            },
+          },
+        ]
+      : []),
+  {
+    $group: {
+      _id: {
+        month: { $month: "$createdAt" },
+        year: { $year: "$createdAt" },
+      },
+      totalAthelete: { $sum: 1 }, // You can     use other aggregation operators based on your requirements
+    },
+  },
+  {
+    $sort: {
+      "_id.year": 1,
+      "_id.month": 1,
+    },
+  },
+  ])
+
+  res.json({
+    results: data.length,
+    data: data,
+    rcode: 200,
+  });
+} catch (err) {
+  console.log(err)
+  res.json({
+    err: err.msg,
+    rcode: -9,
+  });
+}
 }
