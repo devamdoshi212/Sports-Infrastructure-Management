@@ -34,16 +34,23 @@ function ViewComplaint({ route, navigation }) {
     return "";
   };
 
-  const RemarkBy = (rowData, status) => {
-    if (status === 1) return `Complaint Solved`;
-    else if (rowData.level === 0)
-      return `Complaint Forwarded to Manager (${rowData.userId.Name})`;
-    else if (rowData.level === 1)
-      return `Complaint Forwarded to Authority (${rowData.userId.Name})`;
-    else if (rowData.level === 2) return `Complaint Forwarded to Admin`;
-    else if (rowData.level === 3) return `Complaint Solved`;
-    else {
-      return "";
+  const RemarkBy = (rowData, status, currentlevel) => {
+    if (rowData.level < currentlevel) {
+      if (rowData.level === 0) {
+        return `Complaint Forwarded to Manager (${rowData.userId.Name})`;
+      } else if (rowData.level === 1)
+        return `Complaint Forwarded to Authority (${rowData.userId.Name})`;
+      else if (rowData.level === 2) return `Complaint Forwarded to Admin`;
+    } else {
+      if (status === 0) {
+        if (rowData.level === 0) {
+          return `Complaint Forwarded to Manager (${rowData.userId.Name})`;
+        } else if (rowData.level === 1)
+          return `Complaint Forwarded to Authority (${rowData.userId.Name})`;
+        else if (rowData.level === 2) return `Complaint Forwarded to Admin`;
+      } else {
+        return "Complaint Solved";
+      }
     }
   };
   return (
@@ -109,7 +116,7 @@ function ViewComplaint({ route, navigation }) {
                     {dateBodyTemplate(item.date)}
                   </Text>
                   <Text style={styles.column2}>
-                    {RemarkBy(item, data.status)}
+                    {RemarkBy(item, data.status, data.level)}
                   </Text>
                 </View>
               ))}
