@@ -10,15 +10,14 @@ import {
 import { Ionicons } from "@expo/vector-icons";
 import * as Sharing from "expo-sharing";
 import * as Print from "expo-print";
+// import * as Print from "expo";
 import * as FileSystem from "expo-file-system";
 import image from "./../../assets/Logo.png";
 import { useNavigation } from "@react-navigation/native";
-const ModalView = (props) => {
-    const handlePrintPDF = async () => {
-        try {
-            const { data } = props;
-            const htmlContent = `
-        <!DOCTYPE html>
+import { Asset } from 'expo-asset';
+
+const getHtmlContent = (imageBase64) => `
+ <!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -33,6 +32,7 @@ const ModalView = (props) => {
       .container {
         background-color: #f0f0f0;
         width: 100%;
+        height: 100vh;
       }
       .logo img {
         display: block;
@@ -95,17 +95,16 @@ const ModalView = (props) => {
     <div class="container">
       <div class="logo">
         <img
-        src=${image}
-          alt="Logo"
+        src="data:image/png;base64,${imageBase64}"
+        alt="Logo"
         />
       </div>
-      <div class="title">Sports Authority of Gujrat</div>
+      <div class="title">Sports Authority of Gujarat</div>
       <div class="subtitle">E-receipt</div>
 
       <div class="details">
         <div class="detaildiv">
           <div class="bold"><b>Sport</b></div>
-          <div class="content">${props.data.sportName}</div>
         </div>
         <hr />
         <div class="detaildiv">
@@ -116,7 +115,6 @@ const ModalView = (props) => {
 
         <div class="detaildiv">
           <div class="bold"><b>Athlete Name</b></div>
-          <div class="content">${props.data.athleteName}</Text>
             </View>}</div>
         </div>
         <hr />
@@ -145,17 +143,14 @@ const ModalView = (props) => {
         <hr />
         <div class="detaildiv">
           <div class="bold"><b>Sports Complex Name</b></div>
-          <div class="content">${props.data.sportComplexName}</div>
         </div>
         <hr />
         <div class="detaildiv">
           <div class="bold"><b>Fees Paid</b></div>
-          <div class="content">${props.data.amount}</div>
         </div>
         <hr />
         <div class="detaildiv">
           <div class="bold"><b>Total Amount</b></div>
-          <div class="content">${props.data.amount}</div>
         </div>
         <hr />
       </div>
@@ -166,13 +161,31 @@ const ModalView = (props) => {
     </div>
   </body>
 </html>
+`;
 
-      `;
+const getImageBase64 = async () => {
+    try {
+        // const imageUri = FileSystem.documentDirectory + './client-app/assets/Logo.png';
+        const image = Asset.fromModule(require('./../../assets/Logo.png'));
+        await image.downloadAsync(); 
+        const imageUri = image.localUri;
+        console.log(imageUri);
+        const base64 = await FileSystem.readAsStringAsync(imageUri, { encoding: FileSystem.EncodingType.Base64 });
+        return base64;
+    } catch (error) {
+        console.error("Error reading image:", error);
+        return "";
+    }
+};
 
+const ModalView = (props) => {
+    const handlePrintPDF = async () => {
+        try {
+            const imageBase64 = await getImageBase64();
+            const htmlContent = getHtmlContent(imageBase64);
             const { uri } = await Print.printToFileAsync({ html: htmlContent });
             const pdfName = "receipt.pdf";
             const pdfPath = FileSystem.cacheDirectory + pdfName;
-
             await FileSystem.moveAsync({
                 from: uri,
                 to: pdfPath,
@@ -202,38 +215,38 @@ const ModalView = (props) => {
         >
             <View style={styles.container}>
                 <View style={styles.card}>
-                        <View style={styles.row}>
-                            <Text style={styles.label}>Name :</Text>
-                            <Text style={styles.input}>{props.data.athleteName}</Text>
-                        </View>
-                        <View style={styles.row}>
-                            <Text style={styles.label}>Amount :</Text>
-                            <Text style={styles.input}>{props.data.amount}</Text>
-                        </View>
-                        <View style={styles.row}>
-                            <Text style={styles.label}>Sport :</Text>
-                            <Text style={styles.input}>{props.data.sportName}</Text>
-                        </View>
-                        <View style={styles.row}>
-                            <Text style={styles.label}>Complex_Name :</Text>
-                            <Text style={styles.input}>{props.data.sportComplexName}</Text>
-                        </View>
-                        <View style={styles.row}>
-                            <Text style={styles.label}>From :</Text>
-                            <Text style={styles.input}>{props.data.from}</Text>
-                        </View>
-                        <View style={styles.row}>
-                            <Text style={styles.label}>To :</Text>
-                            <Text style={styles.input}>{props.data.to}</Text>
-                        </View>
-                        <TouchableOpacity
-                            style={styles.loginButton}
-                            onPress={handlePrintPDF}
-                        >
-                            <Text style={styles.buttonText}>Print</Text>
-                        </TouchableOpacity>
+                    <View style={styles.row}>
+                        <Text style={styles.label}>Name :</Text>
+                        <Text style={styles.input}>{props.data.athleteName}</Text>
                     </View>
+                    <View style={styles.row}>
+                        <Text style={styles.label}>Amount :</Text>
+                        <Text style={styles.input}>{props.data.amount}</Text>
+                    </View>
+                    <View style={styles.row}>
+                        <Text style={styles.label}>Sport :</Text>
+                        <Text style={styles.input}>{props.data.sportName}</Text>
+                    </View>
+                    <View style={styles.row}>
+                        <Text style={styles.label}>Complex_Name :</Text>
+                        <Text style={styles.input}>{props.data.sportComplexName}</Text>
+                    </View>
+                    <View style={styles.row}>
+                        <Text style={styles.label}>From :</Text>
+                        <Text style={styles.input}>{props.data.from}</Text>
+                    </View>
+                    <View style={styles.row}>
+                        <Text style={styles.label}>To :</Text>
+                        <Text style={styles.input}>{props.data.to}</Text>
+                    </View>
+                    <TouchableOpacity
+                        style={styles.loginButton}
+                        onPress={handlePrintPDF}
+                    >
+                        <Text style={styles.buttonText}>Print</Text>
+                    </TouchableOpacity>
                 </View>
+            </View>
         </Modal>
     );
 };
