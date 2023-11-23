@@ -299,7 +299,7 @@ app.get("/agegrpCount", UtilizationController.agegrpCount);
 app.get("/rating",UtilizationController.ratingWiseTop5)
 app.get("/sportRatingWiseTop5",UtilizationController.sportRatingWiseTop5)
 app.get("/monthWiseEventCount",UtilizationController.monthWiseEventCount)
-
+app.get("/monthWiseComplainCount",UtilizationController.monthWiseComplainCount)
 
 app.post("/remarkRatingByAthlete", async (req, res) => {
   let {
