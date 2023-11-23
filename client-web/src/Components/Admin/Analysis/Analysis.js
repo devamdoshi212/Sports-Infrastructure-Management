@@ -134,6 +134,9 @@ const Analysis = () => {
         maxAge={max}
         selectedOption={selectedOption}
       />
+      <hr className="h-px bg-gray-700 " />
+
+      <div className="flex">
       <div className="w-1/5 relative m-5">
         <select
           className="block appearance-none w-full bg-white border border-gray-300 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:border-blue-300 focus:ring focus:ring-blue-200"
@@ -181,12 +184,15 @@ const Analysis = () => {
           </svg>
         </div>
       </div>
+      </div>
       <AgeGroupwiseCount
         selectedOption={selectedOption}
         year={year}
         sport={sportId}
       />
-
+      <hr className="h-px bg-gray-700 " />
+     
+     <div className="flex">
       <div className="w-1/5 relative m-5">
         <select
           className="block appearance-none w-full bg-white border border-gray-300 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:border-blue-300 focus:ring focus:ring-blue-200"
@@ -236,6 +242,7 @@ const Analysis = () => {
             <path d="M9.293 14.293a1 1 0 0 0 1.414 0l5-5a1 1 0 1 0-1.414-1.414L10 12.586 5.707 8.293a1 1 0 1 0-1.414 1.414l5 5z" />
           </svg>
         </div>
+      </div>
       </div>
       <SportComplexTable districtId={districtId} />
 

@@ -21,7 +21,7 @@ const TopSportwiseComplex = ({ districtId, sportId }) => {
   }, [districtId, sportId]);
 
   return (
-    <table className="min-w-full bg-white border border-gray-300">
+    <table className="w-11/12 m-auto bg-white border border-gray-300 my-4 p-datatable">
       <thead>
         <tr>
           <th className="py-2 px-4 border-b">Name</th>

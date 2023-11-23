@@ -38,7 +38,7 @@ const Layout = () => {
   FetchComplaintType();
   return (
     <div className="bg-gray-100 font-family-karla flex">
-      <aside className="relative bg-[#13459c]  w-64 hidden sm:block shadow-xl shadow-gray-900 h-screen overflow-y-scroll">
+      <aside className="relative bg-[#13459c]  w-64 hidden sm:block shadow-xl shadow-gray-900 h-screen overflow-y-hidden">
         <div className="p-6 text-center">
           <img src={image} alt="symbol" className="opacity-60 w-2/3 m-auto" />
           <a
@@ -48,7 +48,7 @@ const Layout = () => {
             Authority
           </a>
         </div>
-        <nav className=" text-base font-semibold pt-3">
+        <nav className=" text-base font-semibold pt-3 overflow-y-scroll h-4/6">
           <div className=" hover:shadow-gray-400 hover:shadow-md ">
             <Link
               to={"profile"}
