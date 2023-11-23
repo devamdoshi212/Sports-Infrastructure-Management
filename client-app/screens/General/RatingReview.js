@@ -95,9 +95,25 @@ const RatingReview = ({ complexId }) => {
               </View>
             </View>
             <Text style={styles.reviewText}>{review.remarks}</Text>
-            <TouchableOpacity style={styles.helpfulButton}>
-              <Text style={styles.helpfulText}>Was this review helpful?</Text>
-            </TouchableOpacity>
+            <View style={{ flexDirection: "row" }}>
+              <TouchableOpacity style={styles.helpfulButton}>
+                <Text style={styles.helpfulText}>Was this review helpful?</Text>
+              </TouchableOpacity>
+              <View
+                style={{
+                  marginLeft: "25%",
+                  flexDirection: "row",
+                  gap: 15,
+                }}
+              >
+                <TouchableOpacity style={styles.helpfulButton1}>
+                  <Text style={styles.helpfulText}>Yes</Text>
+                </TouchableOpacity>
+                <TouchableOpacity style={styles.helpfulButton1}>
+                  <Text style={styles.helpfulText}>No</Text>
+                </TouchableOpacity>
+              </View>
+            </View>
           </View>
         ))}
       </View>
@@ -163,6 +179,15 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: "bold",
     // color: "#666",
+  },
+  helpfulButton1: {
+    flexDirection: "row",
+    alignItems: "center",
+    marginTop: 10,
+    borderWidth: 1,
+    borderRadius: 5,
+    padding: 4,
+    width: "25%",
   },
 
   // helpfulCount: {
