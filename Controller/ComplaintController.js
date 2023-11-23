@@ -1,4 +1,6 @@
 const ComplaintModel = require("../Model/ComplaintModel");
+const athleteModel = require("../Model/athleteModel");
+const { sendPushNotification } = require("../PushNotification");
 
 module.exports.addComplaint = async function (req, res) {
   // console.log("file detail => " + req.file);
@@ -26,7 +28,16 @@ module.exports.addComplaintApp = async function (req, res) {
   let Complaint = new ComplaintModel(req.body);
 
   let data = await Complaint.save();
-
+  let Supervisor = await athleteModel
+    .findOne({ userId: req.body.userId })
+    .populate("createdBy");
+  if (Supervisor.createdBy.notificationtoken) {
+    sendPushNotification(
+      Supervisor.createdBy.notificationtoken,
+      "Athlete Raised Complaint",
+      "Click to View.."
+    );
+  }
   console.log(data);
 
   res.json({ data: data, msg: "Complaint Generated", rcode: 200 });
@@ -75,16 +86,32 @@ module.exports.getAllComplaintsAdmin = async function (req, res) {
 
 module.exports.updateComplaint = async function (req, res) {
   const id = req.params.id;
-  let Complaint = await ComplaintModel.findOne({ _id: id });
+  let Complaint = await ComplaintModel.findOne({ _id: id }).populate("userId");
   let remark = req.body.remark;
   let userId = req.body.userId;
   let currentLevel = Complaint.level;
   if (req.body.status !== undefined) {
     Complaint.status = req.body.status;
+    if (req.body.status === 1) {
+      if (Complaint.userId.notificationtoken) {
+        sendPushNotification(
+          Complaint.userId.notificationtoken,
+          "Your Complaint Solved",
+          "Let us know about are you satisfied or not!"
+        );
+      }
+    }
   }
 
   if (req.body.level !== undefined) {
     Complaint.level = req.body.level;
+    if (Complaint.userId.notificationtoken) {
+      sendPushNotification(
+        Complaint.userId.notificationtoken,
+        "Your Complaint Forwarded",
+        "Click here..."
+      );
+    }
   }
   try {
     Complaint.remarks.push({

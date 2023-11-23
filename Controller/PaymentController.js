@@ -1,17 +1,26 @@
 const PaymentModel = require("../Model/PaymentModel");
+const { sendPushNotification } = require("../PushNotification");
 const athleteModel = require("./../Model/athleteModel");
 const mongoose = require("mongoose");
 module.exports.addPayment = async function (req, res) {
   let Payment = new PaymentModel(req.body);
 
   let data = await Payment.save();
-  let athlete = await athleteModel.findOne({ _id: data.athleteId });
+  let athlete = await athleteModel
+    .findOne({ _id: data.athleteId })
+    .populate("userId");
   // console.log(athlete);
   athlete.createdBy = req.body.supervisorId;
   athlete.payments.push(data._id);
   let data1 = await athlete.save();
   // console.log(data1);
-
+  if (athlete.userId.notificationtoken) {
+    sendPushNotification(
+      athlete.userId.notificationtoken,
+      "You are Added in Sports Complex",
+      "Congratulations!!!"
+    );
+  }
   res.json({
     data: data,
     data1: data1,
