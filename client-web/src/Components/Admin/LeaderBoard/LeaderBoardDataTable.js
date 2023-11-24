@@ -10,6 +10,7 @@ import { Link } from "react-router-dom";
 import { LeaderboardServices } from "./LeaderboardServices";
 import ChartConfig from "./ChartConfig";
 import BarChartConfig from "./BarChartConfig";
+import * as XLSX from "xlsx";
 
 export default function LeaderboardDataTable({ selectedOption }) {
   const [deleterefresh, setdeleterefresh] = useState(true);
@@ -66,6 +67,17 @@ export default function LeaderboardDataTable({ selectedOption }) {
       Email: "",
     });
   };
+  const exportToExcel = () => {
+    const modifiedCustomers = customers.map((customer) => {
+      const { athleteid, image, parameter, complaint, date, ...newCustomer } =
+        customer;
+      return newCustomer;
+    });
+    const worksheet = XLSX.utils.json_to_sheet(modifiedCustomers);
+    const workbook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(workbook, worksheet, "Sheet 1");
+    XLSX.writeFile(workbook, "leaderboard.xlsx");
+  };
 
   const renderHeader = () => {
     return (
@@ -77,14 +89,24 @@ export default function LeaderboardDataTable({ selectedOption }) {
           className="px-4 py-2 rounded-lg text-blue-800 ring-0 border-2 border-blue-700 hover:bg-gray-200"
           onClick={clearFilter}
         />
-        <span className="p-input-icon-left">
-          <InputText
-            value={globalFilterValues.Name}
-            onChange={onGlobalFilterChange}
-            placeholder="Keyword Search"
-            className="p-2 ring-1 ring-opacity-50 ring-black focus:ring-blue-600 focus:ring-2 focus:ring-opacity-70 hover:ring-opacity-100 hover:ring-blue-400"
-          />
-        </span>
+        <div className="flex gap-4">
+          <div className="text-center p-2 border border-green-500 rounded-md bg-green-400">
+            <button
+              className="p-button p-button-success"
+              onClick={exportToExcel}
+            >
+              Export to Excel
+            </button>
+          </div>
+          <span className="p-input-icon-left">
+            <InputText
+              value={globalFilterValues.Name}
+              onChange={onGlobalFilterChange}
+              placeholder="Keyword Search"
+              className="p-2 ring-1 ring-opacity-50 ring-black focus:ring-blue-600 focus:ring-2 focus:ring-opacity-70 hover:ring-opacity-100 hover:ring-blue-400"
+            />
+          </span>
+        </div>
       </div>
     );
   };
@@ -210,7 +232,7 @@ export default function LeaderboardDataTable({ selectedOption }) {
         loading={loading}
         dataKey="_id"
         filters={filters}
-        globalFilterFields={["SportName", "Category"]}
+        globalFilterFields={["name", "rating", "email", "address", "contact"]}
         header={header}
         emptyMessage="No Data found."
       >
