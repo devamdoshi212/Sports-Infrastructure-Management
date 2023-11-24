@@ -1,20 +1,17 @@
+import * as Print from "expo-print";
+import * as Sharing from "expo-sharing";
 import React, { useState } from "react";
 import {
-    Alert,
     Modal,
     StyleSheet,
     Text,
-    View,
     TouchableOpacity,
+    View
 } from "react-native";
-import { Ionicons } from "@expo/vector-icons";
-import * as Sharing from "expo-sharing";
-import * as Print from "expo-print";
 // import * as Print from "expo";
-import * as FileSystem from "expo-file-system";
-import image from "./../../assets/Logo.png";
 import { useNavigation } from "@react-navigation/native";
 import { Asset } from 'expo-asset';
+import * as FileSystem from "expo-file-system";
 
 const getHtmlContent = (imageBase64) => `
  <!DOCTYPE html>
@@ -110,12 +107,12 @@ const getHtmlContent = (imageBase64) => `
         <div class="detaildiv">
           <div class="bold"><b>Date & Time</b></div>
           <div class="content">Hello</div>
-        </div>
-        <hr />
-
-        <div class="detaildiv">
+          </div>
+          <hr />
+          
+          <div class="detaildiv">
           <div class="bold"><b>Athlete Name</b></div>
-            </View>}</div>
+          <div class="content">Hello</div>
         </div>
         <hr />
 
@@ -167,7 +164,7 @@ const getImageBase64 = async () => {
     try {
         // const imageUri = FileSystem.documentDirectory + './client-app/assets/Logo.png';
         const image = Asset.fromModule(require('./../../assets/Logo.png'));
-        await image.downloadAsync(); 
+        await image.downloadAsync();
         const imageUri = image.localUri;
         console.log(imageUri);
         const base64 = await FileSystem.readAsStringAsync(imageUri, { encoding: FileSystem.EncodingType.Base64 });
