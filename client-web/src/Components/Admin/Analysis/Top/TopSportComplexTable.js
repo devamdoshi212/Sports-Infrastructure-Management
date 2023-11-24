@@ -19,7 +19,7 @@ const SportComplexTable = ({ districtId }) => {
 
   return (
     <>
-      <h2 className="text-center text-2xl">Top 5 Sport Complex</h2>
+      <h2 className="text-center text-2xl m-2 font-bold">Top 5 Sport Complex</h2>
       <table className="w-11/12 m-auto bg-white border border-gray-300 p-datatable ">
         <thead>
           <tr>
@@ -40,6 +40,7 @@ const SportComplexTable = ({ districtId }) => {
           ))}
         </tbody>
       </table>
+      
     </>
   );
 };
