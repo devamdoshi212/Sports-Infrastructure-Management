@@ -311,6 +311,7 @@ app.get(
   "/monthWiseComplainCount",
   UtilizationController.monthWiseComplainCount
 );
+app.get("/getAtheleteIdFromPayment",UtilizationController.getAtheleteIdFromPayment)
 
 app.post("/remarkRatingByAthlete", async (req, res) => {
   let {
