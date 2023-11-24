@@ -8,6 +8,7 @@ import AthelteProfile from "./AthelteProfile";
 import AthelteDailyResponse from "./AthelteDailyResponse";
 import InstructorComplexDetails from "./IntructorComplexDetails";
 import SportwiseLeaderBoard from "./../Supervisor/SportswiseLeaderBoard";
+import CustomNotification from "./CustomNotification";
 const Stack = createStackNavigator();
 const ProfileNavigator = ({ navigation }) => {
   return (
@@ -47,6 +48,11 @@ const ProfileNavigator = ({ navigation }) => {
         <Stack.Screen
           name="SportwiseLeaderBoard"
           component={SportwiseLeaderBoard}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="CustomNotification"
+          component={CustomNotification}
           options={{ headerShown: false }}
         />
       </Stack.Group>
