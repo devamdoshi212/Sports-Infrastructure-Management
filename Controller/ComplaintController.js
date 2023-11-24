@@ -173,6 +173,11 @@ module.exports.getComplaintsAdmin = async function (req, res) {
       populate: {
         path: "userId",
       },
+    }).populate({
+      path: "sportsComplex",
+      populate: {
+        path: "district",
+      },
     })
 
     res.json({ 
