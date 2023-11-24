@@ -3,14 +3,11 @@ import {
   Text,
   Image,
   StyleSheet,
-  TextInput,
   Button,
   TouchableOpacity,
   ScrollView,
   Pressable,
 } from "react-native";
-import { Picker } from "@react-native-picker/picker";
-
 import { Ionicons } from "@expo/vector-icons";
 import { Feather } from "@expo/vector-icons";
 import { useEffect, useState } from "react";
@@ -18,14 +15,10 @@ import { useNavigation } from "@react-navigation/native";
 import ipconfig from "../../ipconfig";
 import { useSelector } from "react-redux";
 const AthleteDetails = () => {
-  const Userdata = useSelector((state) => state.user.User);
-  const navigate = useNavigation();
-  const [selectedOptionFacility, setSelectedOptionFacility] = useState("");
-  const [TimeSlot, setTimeSlot] = useState([]);
-  const [selectedOptionTimeSlot, setSelectedOptionTimeSlot] = useState("");
   const [show, setShow] = useState(false);
-  const [instructorData, setInstructorData] = useState([]);
+  const navigate = useNavigation();
   const [athelteList, setAthelteList] = useState([]);
+  const Userdata = useSelector((state) => state.user.User);
   const sid = Userdata.SportComplexId;
 
   const ip = ipconfig.ip;
@@ -36,16 +29,6 @@ const AthleteDetails = () => {
     };
 
     fetch(
-      `http://${ip}:9999/getInstructorswithsport?userId=${Userdata._id}`,
-      requestOptions
-    )
-      .then((response) => response.json())
-      .then((result) => {
-        setInstructorData(result.data[0].sports);
-      })
-      .catch((error) => console.log("error", error));
-
-    fetch(
       `http://${ip}:9999/countOfPayment?sportsComplexId=${sid}`,
       requestOptions
     )
@@ -54,7 +37,7 @@ const AthleteDetails = () => {
         setAthelteList(result.data);
       })
       .catch((error) => console.log("error", error));
-  }, [selectedOptionFacility]);
+  }, []);
 
   return (
     <>
@@ -71,52 +54,8 @@ const AthleteDetails = () => {
           </Pressable>
           <View style={styles.heading}>
             <Text style={{ fontWeight: "bold", fontSize: 25 }}>
-              Athlete Detail
+              Athlete Details
             </Text>
-          </View>
-        </View>
-        <View style={styles.container1}>
-          <View style={styles.header1}>
-            <Picker
-              style={styles.dropdownPicker}
-              selectedValue={selectedOptionFacility}
-              onValueChange={(e) => {
-                if (e) {
-                  instructorData
-                    .filter((item) => {
-                      return item.sport._id === e;
-                    })
-                    .then((r) => {
-                      setTimeSlot(r.timeSlot);
-                    });
-                  setSelectedOptionFacility(e);
-                }
-              }}
-            >
-              <Picker.Item label="Select Facility" value="" />
-              {instructorData.map((item, index) => (
-                <Picker.Item
-                  label={item.sport.SportName}
-                  value={item.sport._id}
-                  key={index}
-                />
-              ))}
-            </Picker>
-            <Picker
-              style={styles.dropdownPicker}
-              selectedValue={selectedOptionTimeSlot}
-              onValueChange={(e) => {}}
-            >
-              <Picker.Item label="Select Time Slot" value="" />
-              {TimeSlot.map((item, index) => (
-                <Picker.Item
-                  // label={item.from + "-" + item.to}
-                  label="sd"
-                  // value={item.from + "-" + item.to}
-                  key={index}
-                />
-              ))}
-            </Picker>
           </View>
         </View>
         <ScrollView contentContainerStyle={styles.scrollContainer}>
@@ -125,7 +64,7 @@ const AthleteDetails = () => {
               <Pressable
                 style={({ pressed }) => [
                   {
-                    backgroundColor: pressed ? "#f0f0f0" : "white",
+                    backgroundColor: pressed ? "#f0f0f0" : "#f8d7c9",
                     padding: 20,
                     borderRadius: 10,
                   },
@@ -179,7 +118,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     marginBottom: 10,
-    width: "80%",
+    width: "90%",
     paddingLeft: "5%",
     height: 50,
     backgroundColor: "#fbe8e0",
@@ -191,46 +130,20 @@ const styles = StyleSheet.create({
   heading: {
     justifyContent: "center",
     alignItems: "center",
-    width: "90%",
+    width: "85%",
   },
   info: {
     paddingRight: 50,
     marginHorizontal: 30,
     alignSelf: "center",
   },
-  container1: {
-    flex: 1,
-    alignItems: "center",
-    borderWidth: 1,
-    borderRadius: 5,
-    borderBottomWidth: 3,
-    width: "90%",
-    marginLeft: "5%",
-  },
-  header1: {
-    flexDirection: "row",
-    width: "100%",
-  },
-  dropdownPicker: {
-    flex: 1,
-    borderColor: "lightgrey",
-    borderWidth: 1,
-    borderBottomWidth: 3,
-  },
   scrollContainer: {
     flexGrow: 1,
     padding: 10,
   },
   card: {
-    // backgroundColor: "white",
-    // borderRadius: 10,
-    // shadowColor: "black",
-    // shadowOffset: { width: 0, height: 2 },
-    // shadowOpacity: 0.2,
-    // shadowRadius: 4,
-    // elevation: 5,
-    // marginHorizontal: 15,
-    // marginVertical: 10,
+    borderWidth: 1,
+    borderBottomWidth: 4,
     borderRadius: 10,
     shadowColor: "black",
     shadowOffset: { width: 0, height: 2 },
@@ -255,10 +168,8 @@ const styles = StyleSheet.create({
     marginLeft: 6,
   },
   name: {
-    fontSize: 16,
-    color: "black",
+    fontSize: 18,
     fontWeight: "bold",
-    marginTop: 15,
     marginBottom: "1%",
   },
   sportname: {

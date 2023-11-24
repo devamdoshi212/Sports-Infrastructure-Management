@@ -87,7 +87,7 @@ function Profile({ navigation }) {
           </TouchableOpacity>
           <TouchableOpacity
             onPress={() => {
-              //   navigation.navigate("AthelteDetails");
+              navigation.navigate("CustomNotification");
             }}
           >
             <View style={styles.row}>
