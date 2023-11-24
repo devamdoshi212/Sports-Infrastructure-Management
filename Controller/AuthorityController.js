@@ -5,6 +5,7 @@ const paymentModel = require("../Model/PaymentModel");
 // const SportsComplexModel = require("../Model/SportsComplexModel");
 const instructerModel = require("../Model/instructorModel");
 const complaintModel = require("../Model/ComplaintModel");
+const userModel=require("../Model/UsersModel")
 
 module.exports.getDetails = async function (req, res) {
   const sportcomplex = await SportsComplex.find({
@@ -70,6 +71,7 @@ module.exports.getDetails = async function (req, res) {
     complaintCount.sort((a, b) => a._id - b._id);
     console.log(complaintCount);
     if (complaintCount.length > 1) {
+
       sportComlexComplaint.push({
         sportComplex: sportcomplex[i].name,
         activeComlaintCount: complaintCount.length,
@@ -97,7 +99,37 @@ module.exports.getDetails = async function (req, res) {
     }
   }
 
-  res.json({
+ 
+  let instructor=await instructerModel.find({}).populate( {path: 'SportComplexId',
+  match: { district: req.query.districtId }}).lean();
+  instructor =   instructor.filter(ele=>ele.SportComplexId!=null);
+
+let manager=await userModel.find({Role:3}).populate( {path: 'SportComplexId',
+match: { district: req.query.districtId }})
+manager =   manager.filter(ele=>ele.SportComplexId!=null);
+  
+
+let supervisor=await userModel.find({Role:1}).populate( {path: 'SportComplexId',
+match: { district: req.query.districtId }})
+supervisor =   supervisor.filter(ele=>ele.SportComplexId!=null);
+  
+
+let complaintsType=await complaintModel.find({status:1}).populate({path: 'sportsComplex',
+match: { district: req.query.districtId }})
+
+complaintsType=complaintsType.filter(ele=> ele.sportsComplex!=null)
+console.log(complaintsType.length)
+
+const happy=complaintsType.filter(ele=> ele.satisfied==1)
+const sad=complaintsType.filter(ele=>ele.satisfied==0)
+
+console.log(happy.length,sad.length)
+  res.json({  
+    happy:happy.length,
+    sad:sad.length,
+    supervisor:supervisor.length,
+    manager:manager.length, 
+    instructor:instructor.length ,
     sportComplexCount: sportcomplex.length,
     // sportcomplex: sportcomplex,
     athleteCount: sportComlexUser,
