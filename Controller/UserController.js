@@ -86,11 +86,11 @@ module.exports.signup = async function (req, res) {
 
 module.exports.login = async function (req, res) {
   const { Email, Password, notificationtoken } = req.body;
-
+  console.log(notificationtoken);
   let User = await UserModel.findOne({ Email: Email });
   if (notificationtoken) {
     User.notificationtoken = notificationtoken;
-    User.save();
+    await User.save();
   }
   if (User && User.Password == Password) {
     const accesstoken = jwt.sign(
