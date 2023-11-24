@@ -264,6 +264,7 @@ app.post("/addSession/:id", SessionController.addSession);
 app.get("/getSession", SessionController.getSession);
 app.get("/filtersport/:id", filtersportsforcomplex);
 app.patch("/updateSportsInSession",SessionController.updateSportsInSession)
+app.get("/attendanceSportWise",SessionController.attendanceSportWise)
 
 app.get(
   "/getInstructorForPayment",
