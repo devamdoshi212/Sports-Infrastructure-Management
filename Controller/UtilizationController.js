@@ -281,10 +281,21 @@ module.exports.monthWiseEnroll = async function (req, res) {
             },
           ]
         : []),
+        ...(req.query.sports
+          ? [
+              {
+                $match: {
+                  sports: new mongoose.Types.ObjectId(
+                    req.query.sports
+                  ),
+                },
+              },
+            ]
+          : []),
       {
         $group: {
           _id: {
-            // "$sports",
+            // sports: "$sports",
             month: { $month: "$from" },
             year: { $year: "$from" },
           },
@@ -301,6 +312,7 @@ module.exports.monthWiseEnroll = async function (req, res) {
 
     // console.log(result);
     res.json({
+      datas:result.length,
       data: result,
       rcode: 200,
     });
