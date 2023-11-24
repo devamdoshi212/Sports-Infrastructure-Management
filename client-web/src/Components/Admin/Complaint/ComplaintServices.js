@@ -1,7 +1,7 @@
 export const AdminComplaintService = {
-  getData(id) {
+  getData(id, fromdate, todate) {
     return fetch(
-      `http://localhost:9999/getAllComplaintsAdmin?level=3&status=${id}`
+      `http://localhost:9999/getComplaintsAdmin?status=${id}&from=${fromdate}&to=${todate}`
     )
       .then((res) => res.json())
       .then((res) => {
@@ -21,8 +21,8 @@ export const AdminComplaintService = {
     return Promise.resolve(this.getData(id).slice(0, 200));
   },
 
-  getCustomersXLarge(id) {
-    return Promise.resolve(this.getData(id));
+  getCustomersXLarge(id, fromdate, todate) {
+    return Promise.resolve(this.getData(id, fromdate, todate));
   },
 
   //   getCustomers(params) {

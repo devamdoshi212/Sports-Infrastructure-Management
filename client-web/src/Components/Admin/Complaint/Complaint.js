@@ -5,14 +5,43 @@ import { Button } from "@material-tailwind/react";
 
 const AdminComplaint = () => {
   const [Complaint, setComplaint] = useState("0");
+  const [fromdate, setFromDate] = useState("");
+  const [error, setError] = useState("");
+  const [ToDate, setTodate] = useState("");
 
   const ComplaintHandler = (e) => {
     setComplaint(e.target.value);
+  };
+  const handledatechange = (e) => {
+    setFromDate(e.target.value);
+  };
+
+  const handleToChange = (e) => {
+    const selectedToDate = e.target.value;
+    setTodate(selectedToDate);
+    if (fromdate && new Date(fromdate) > new Date(selectedToDate)) {
+      setError("End date must be equal or after the start date");
+      setTodate("");
+    } else {
+      setError("");
+      // Add any additional logic if needed
+    }
   };
 
   return (
     <div className="px-4">
       <div className="flex justify-end mb-4">
+        <div className="flex m-5">
+          <div className="flex m-5 space-x-3">
+            <h1 className="text-xl font-semibold">From :</h1>
+            <input type="date" value={fromdate} onChange={handledatechange} />
+          </div>
+          <div className="flex m-5 space-x-3">
+            <h1 className="text-xl font-semibold">To :</h1>
+            <input type="date" value={ToDate} onChange={handleToChange} />
+            {error && <p className="text-red-500">{error}</p>}
+          </div>
+        </div>
         <div className="w-1/5 relative m-5">
           <select
             className="block appearance-none w-full bg-white border border-gray-300 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:border-blue-300 focus:ring focus:ring-blue-200"
@@ -34,13 +63,18 @@ const AdminComplaint = () => {
             </svg>
           </div>
         </div>
+
         <NavLink to={"/admin/addcomplianttype"}>
           <Button className="items-end cta-btn font-semibold py-4 mt-5 rounded-br-lg rounded-bl-lg rounded-tr-lg shadow-lg hover:shadow-xl ">
             Add Complaint Type
           </Button>
         </NavLink>
       </div>
-      <AdminComplaintDataTable type={Complaint} />
+      <AdminComplaintDataTable
+        type={Complaint}
+        todate={ToDate}
+        fromdate={fromdate}
+      />
     </div>
   );
 };
