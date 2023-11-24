@@ -55,7 +55,7 @@ const AgeGroupAnalysis = (props) => {
       },
       colors: ["#FFCC33"],
       title: {
-        text: "Age Group wise Athelte in Sport Complex",
+        text: "Selected Age Group wise Athelte in Sport Complex",
         align: "center",
         margin: 50,
         offsetX: 0,
