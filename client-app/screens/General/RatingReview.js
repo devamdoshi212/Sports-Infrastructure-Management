@@ -101,9 +101,9 @@ const RatingReview = ({ complexId }) => {
               </TouchableOpacity>
               <View
                 style={{
-                  marginLeft: "25%",
+                  marginLeft: "15%",
                   flexDirection: "row",
-                  gap: 15,
+                  gap: 10,
                 }}
               >
                 <TouchableOpacity style={styles.helpfulButton1}>
@@ -182,7 +182,7 @@ const styles = StyleSheet.create({
   },
   helpfulButton1: {
     flexDirection: "row",
-    alignItems: "center",
+    // alignItems: "center",
     marginTop: 10,
     borderWidth: 1,
     borderRadius: 5,
