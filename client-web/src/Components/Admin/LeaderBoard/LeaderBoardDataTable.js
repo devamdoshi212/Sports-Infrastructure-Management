@@ -177,6 +177,9 @@ export default function LeaderboardDataTable({ selectedOption }) {
       const solvednotsatisfied = rowData.complaint.map(
         (s) => s.solvednotsatisfied
       );
+      const totalComplaints = sloved.map(
+        (value, index) => value + unsolved[index]
+      );
       setSelectedAthlete({
         chartData: {
           categories,
@@ -184,6 +187,7 @@ export default function LeaderboardDataTable({ selectedOption }) {
           unsolved,
           solvedsatisfied,
           solvednotsatisfied,
+          totalComplaints,
         },
       });
     }
@@ -288,7 +292,7 @@ export default function LeaderboardDataTable({ selectedOption }) {
       </DataTable>
       {isModalOpen && selectedAthlete && (
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
-          <div className="bg-white p-6 rounded shadow-lg absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-96">
+          <div className="bg-white p-6 rounded shadow-lg absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[45rem] h-[30rem]">
             {selectedOption === "" ? (
               <BarChartConfig
                 chartType="bar"

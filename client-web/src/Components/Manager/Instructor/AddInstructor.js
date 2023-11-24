@@ -183,7 +183,7 @@ const AddInstructor = () => {
     });
   return (
     <>
-    <div className=" bg-gray-200 m-5 ">
+    <div className=" bg-[#f8f9fa] m-5 h-screen scrollbar">
       <div className="flex  mx-5">
         <Button
           className="items-end cta-btn font-semibold py-4 mt-5 rounded-br-lg rounded-bl-lg rounded-tr-lg shadow-lg hover:shadow-xl "
@@ -201,7 +201,7 @@ const AddInstructor = () => {
           </h2>
           <form
             onSubmit={handleSubmit}
-            className="bg-white shadow-md rounded-md px-8 pt-6 pb-8 mb-4 mt-5"
+            className="bg-white shadow-md rounded-md px-8 pt-6 pb-8 mb-4 mt-5 shadow-gray-700"
           >
             <div className="mb-4">
               <label
