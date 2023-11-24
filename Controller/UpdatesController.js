@@ -28,8 +28,8 @@ module.exports.getUpdates = function (req, res) {
 };
 module.exports.getUpdatesForAthlete = async function (req, res) {
   let sportComplexId = req.query.sportComplexId;
-
-  let data = await UpdatesModel.find();
+  let active = req.query.active;
+  let data = await UpdatesModel.find({ active: active });
   let updates = [];
   for (let index = 0; index < data.length; index++) {
     const element = data[index];
