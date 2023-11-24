@@ -4,10 +4,7 @@ export const userSchemas = Yup.object().shape({
   name: Yup.string()
     .transform((value) => encodeURIComponent(value))
     .required("Please Enter Name"),
-  email: Yup.string()
-    .email()
-    .transform((value) => encodeURIComponent(value))
-    .required("Please Enter Valid Email"),
+  email: Yup.string().email().required("Please Enter Valid Email"),
   mobileNumber: Yup.number()
     .typeError("That doesn't look like a phone number")
     .positive("A phone number can't start with a minus")
@@ -27,10 +24,7 @@ export const ManagerSchemas = Yup.object().shape({
   name: Yup.string()
     .transform((value) => encodeURIComponent(value))
     .required("Please Enter Name"),
-  email: Yup.string()
-    .email()
-    .transform((value) => encodeURIComponent(value))
-    .required("Please Enter Valid Email"),
+  email: Yup.string().email().required("Please Enter Valid Email"),
   mobileNumber: Yup.number()
     .typeError("That doesn't look like a phone number")
     .positive("A phone number can't start with a minus")
@@ -49,10 +43,7 @@ export const SupervisorSchemas = Yup.object().shape({
   name: Yup.string()
     .transform((value) => encodeURIComponent(value))
     .required("Please Enter Name"),
-  email: Yup.string()
-    .email()
-    .transform((value) => encodeURIComponent(value))
-    .required("Please Enter Valid Email"),
+  email: Yup.string().email().required("Please Enter Valid Email"),
   mobileNumber: Yup.number()
     .typeError("That doesn't look like a phone number")
     .positive("A phone number can't start with a minus")
@@ -66,10 +57,7 @@ export const SupervisorSchemas = Yup.object().shape({
 });
 
 export const LoginSchemas = Yup.object().shape({
-  Email: Yup.string()
-    .email()
-    .transform((value) => encodeURIComponent(value))
-    .required(" Email is Required"),
+  Email: Yup.string().email().required(" Email is Required"),
   Password: Yup.string()
     .transform((value) => encodeURIComponent(value))
     .required("Password is Required"),
