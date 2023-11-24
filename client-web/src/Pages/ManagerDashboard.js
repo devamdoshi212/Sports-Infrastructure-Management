@@ -88,7 +88,7 @@ const ManagerDashboard = () => {
     <div className="m-5">
       <div className="grid grid-cols-1 gap-4 lg:grid-cols-3 lg:gap-8">
         <div className=" text-center rounded-lg bg-gray-300 ">
-          <div className=" font-bold p-5 text-2xl ">Total Facilities</div>
+          <div className=" font-bold p-5 text-3xl ">Total Facilities</div>
           <div className="p-3 text-2xl ">
             <AnimatedCount
               finalCount={visibale && Instructor.availableSports.length + 0}
@@ -96,7 +96,7 @@ const ManagerDashboard = () => {
           </div>
         </div>
         <div className=" text-center rounded-lg bg-gray-300">
-          <div className=" font-bold p-5 text-2xl ">Total Instructors</div>
+          <div className=" font-bold p-5 text-3xl ">Total Instructors</div>
           <div className="p-3 text-2xl">
             <AnimatedCount
               finalCount={visibale && Instructor.instructerData.length + 0}
@@ -104,7 +104,7 @@ const ManagerDashboard = () => {
           </div>
         </div>
         <div className=" text-center rounded-lg bg-gray-300 ">
-          <div className=" font-bold p-5 text-2xl">Total Atheltes</div>
+          <div className=" font-bold p-5 text-3xl">Total Atheltes</div>
           <div className="p-3 text-2xl">
             <AnimatedCount
               finalCount={visibale && Instructor.athleteCount + 0}
@@ -112,17 +112,17 @@ const ManagerDashboard = () => {
           </div>
         </div>
         <div className="text-center rounded-lg bg-gray-300 ">
-          <div className=" font-bold p-5 text-2xl">
+          <div className=" font-bold p-5 text-3xl">
             Total Unsloved Complaints
           </div>
           <AnimatedCount finalCount={visibale && complaint} />
         </div>
         <div className=" text-center rounded-lg bg-gray-300 ">
-          <div className=" font-bold p-5 text-2xl">Total Sloved Complaints</div>
+          <div className=" font-bold p-5 text-3xl">Total Sloved Complaints</div>
           <AnimatedCount finalCount={visibale && uncomplaint} />
         </div>
         <div className=" text-center rounded-lg bg-gray-300 ">
-          <div className=" font-bold p-5 text-2xl">Total Active Complaints</div>
+          <div className=" font-bold p-5 text-3xl">Total Active Complaints</div>
           <AnimatedCount finalCount={visibale && remain} />
         </div>
       </div>
