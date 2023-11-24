@@ -87,6 +87,11 @@ const CapacityAnalysis = (props) => {
           const categories = data.map((s) => parseInt(s.capacity, 10));
           const seriesData = data.map((s) => s.sport);
           const totalAthelet = data.map((s) => s.totalAthelete);
+          // const overutilized = totalAthelet.map(
+          //   (athletes, index) => athletes > categories[index]
+          // );
+          // console.log(overutilized)
+
           setChartData({
             ...chartData,
             series: [
