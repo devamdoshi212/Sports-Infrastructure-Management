@@ -43,9 +43,9 @@ const Topboard = () => {
   }, [district, sport]);
 
   return (
-    <div>
-      <div className="flex">
-        <div className="w-1/5 relative m-5">
+    <div className="h-screen scrollbar">
+      <div className="flex ">
+        <div className="w-1/5 relative m-5 ">
           <select
             className="block appearance-none w-full bg-white border border-gray-300 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:border-blue-300 focus:ring focus:ring-blue-200"
             onChange={handleDistrict}
@@ -95,7 +95,9 @@ const Topboard = () => {
       </div>
       <TopSportwiseComplex districtId={districtId} sportId={sportId} />
 
-      <div className="w-1/5 relative m-5">
+      <hr className="h-px bg-gray-900 m-2" />
+
+      <div className="w-1/5 relative m-5 mt-7">
         <select
           className="block appearance-none w-full bg-white border border-gray-300 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:border-blue-300 focus:ring focus:ring-blue-200"
           onChange={handledist}

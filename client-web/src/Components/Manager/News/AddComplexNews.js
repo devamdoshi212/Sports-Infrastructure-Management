@@ -71,7 +71,7 @@ const AddComplexNews = () => {
   });
   return (
     <>
-    <div className="bg-gray-200  m-5 ">
+    <div className="bg-[#f8f9fa] m-5 h-screen scrollbar">
       <div className="flex mx-5">
         <Button
           className="items-end cta-btn font-semibold py-4 mt-5 rounded-br-lg rounded-bl-lg rounded-tr-lg shadow-lg hover:shadow-xl "
@@ -82,14 +82,14 @@ const AddComplexNews = () => {
           Back
         </Button>
       </div>
-      <div className="flex items-center justify-center m-5">
+      <div className="flex items-center justify-center m-5 ">
         <div className="w-full max-w-2xl">
           <h2 className="text-center text-2xl uppercase font-semibold font-serif text-gray-800">
             Add New Events
           </h2>
           <form
             onSubmit={handleSubmit}
-            className="bg-white shadow-md rounded-md px-8 pt-6 pb-8 mb-4 mt-5"
+            className="bg-white shadow-md rounded-md px-8 pt-6 pb-8 mb-4 mt-5 shadow-gray-700"
           >
             <div className="mb-4">
               <label

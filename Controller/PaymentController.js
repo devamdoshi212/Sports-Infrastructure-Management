@@ -1,5 +1,5 @@
 const PaymentModel = require("../Model/PaymentModel");
-const { sendPushNotification } = require("../PushNotification");
+const { setReminder } = require("../SetReminder");
 const athleteModel = require("./../Model/athleteModel");
 const mongoose = require("mongoose");
 module.exports.addPayment = async function (req, res) {
@@ -14,11 +14,12 @@ module.exports.addPayment = async function (req, res) {
   athlete.payments.push(data._id);
   let data1 = await athlete.save();
   // console.log(data1);
-  if (athlete.userId.notificationtoken) {
-    sendPushNotification(
-      athlete.userId.notificationtoken,
+  if (athlete.userId) {
+    setReminder(
+      Date.now(),
+      "Congratulations!!!",
       "You are Added in Sports Complex",
-      "Congratulations!!!"
+      athlete.userId
     );
   }
   res.json({
