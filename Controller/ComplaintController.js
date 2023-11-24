@@ -150,47 +150,45 @@ module.exports.updateComplaintAthleteResponse = async function (req, res) {
   }
 };
 
-
 module.exports.getComplaintsAdmin = async function (req, res) {
   try {
+    let query = {};
+    query.status = req.query.status;
+    let from = new Date(req.query.from);
+    let to = new Date(req.query.to);
+    query.level = 3;
 
-    let query={}
-    query.status=req.query.status
-    let from=new Date(req.query.from)
-    let to=new Date(req.query.to)
-    to=new Date(to.getTime() + 86400000);
-    if(req.query.from && req.query.to)
-    {
-      query.createdAt={ $gte: from, $lt: to}
+    to = new Date(to.getTime() + 86400000);
+    if (req.query.from && req.query.to) {
+      query.createdAt = { $gte: from, $lt: to };
     }
-    console.log(from)
-    console.log(to)
+    console.log(from);
+    console.log(to);
 
-    let data=await ComplaintModel.find(query)
-    .populate("userId")
-    .populate("type")
-    .populate({
-      path: "remarks",
-      populate: {
-        path: "userId",
-      },
-    }).populate({
-      path: "sportsComplex",
-      populate: {
-        path: "district",
-      },
-    })
+    let data = await ComplaintModel.find(query)
+      .populate("userId")
+      .populate("type")
+      .populate({
+        path: "remarks",
+        populate: {
+          path: "userId",
+        },
+      })
+      .populate({
+        path: "sportsComplex",
+        populate: {
+          path: "district",
+        },
+      });
 
-    res.json({ 
-      result:data.length,
-      data: data, 
-      msg: "Complaint Retrived", 
-      rcode: 200 
-    })
+    res.json({
+      result: data.length,
+      data: data,
+      msg: "Complaint Retrived",
+      rcode: 200,
+    });
   } catch (err) {
-    console.log(err)
-    res.json(
-      { data: err.msg, msg: "smw", rcode: -9 });
+    console.log(err);
+    res.json({ data: err.msg, msg: "smw", rcode: -9 });
   }
-  
 };

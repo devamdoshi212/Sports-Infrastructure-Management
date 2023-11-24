@@ -12,8 +12,9 @@ import { useSelector } from "react-redux";
 
 import { AdminComplaintService } from "./ComplaintServices";
 import { useRef } from "react";
+import * as XLSX from "xlsx";
 
-export default function AdminComplaintDataTable({ type }) {
+export default function AdminComplaintDataTable({ type, fromdate, todate }) {
   const { _id } = useSelector((state) => state.user.user);
   const [deleterefresh, setdeleterefresh] = useState(true);
   const [customers, setCustomers] = useState([]);
@@ -25,12 +26,14 @@ export default function AdminComplaintDataTable({ type }) {
   });
   const [remark, setremarks] = useState("");
   useEffect(() => {
-    AdminComplaintService.getCustomersXLarge(type).then((data) => {
-      setCustomers(getCustomers(data));
-      setLoading(false);
-    });
+    AdminComplaintService.getCustomersXLarge(type, fromdate, todate).then(
+      (data) => {
+        setCustomers(getCustomers(data));
+        setLoading(false);
+      }
+    );
     initFilters();
-  }, [deleterefresh, type]);
+  }, [deleterefresh, type, fromdate, todate]);
 
   const getCustomers = (data) => {
     return [...(data || [])].map((d) => {
@@ -69,6 +72,23 @@ export default function AdminComplaintDataTable({ type }) {
       Email: "",
     });
   };
+  const exportToExcel = () => {
+    const modifiedCustomers = customers.map((customer) => {
+      const {
+        _id,
+        sportsComplex,
+        updatedAt,
+        createdAt,
+        userId,
+        ...newCustomer
+      } = customer;
+      return newCustomer;
+    });
+    const worksheet = XLSX.utils.json_to_sheet(modifiedCustomers);
+    const workbook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(workbook, worksheet, "Sheet 1");
+    XLSX.writeFile(workbook, "exported_data.xlsx");
+  };
 
   const renderHeader = () => {
     return (
@@ -80,14 +100,24 @@ export default function AdminComplaintDataTable({ type }) {
           className="px-4 py-2 rounded-lg text-blue-800 ring-0 border-2 border-blue-700 hover:bg-gray-200"
           onClick={clearFilter}
         />
-        <span className="p-input-icon-left">
-          <InputText
-            value={globalFilterValues.Name}
-            onChange={onGlobalFilterChange}
-            placeholder="Keyword Search"
-            className="p-2 ring-1 ring-opacity-50 ring-black focus:ring-blue-600 focus:ring-2 focus:ring-opacity-70 hover:ring-opacity-100 hover:ring-blue-400"
-          />
-        </span>
+        <div className="flex gap-4">
+          <div className="text-center p-2 border border-green-500 rounded-md bg-green-400">
+            <button
+              className="p-button p-button-success"
+              onClick={exportToExcel}
+            >
+              Export to Excel
+            </button>
+          </div>
+          <span className="p-input-icon-left">
+            <InputText
+              value={globalFilterValues.Name}
+              onChange={onGlobalFilterChange}
+              placeholder="Keyword Search"
+              className="p-2 ring-1 ring-opacity-50 ring-black focus:ring-blue-600 focus:ring-2 focus:ring-opacity-70 hover:ring-opacity-100 hover:ring-blue-400"
+            />
+          </span>
+        </div>
       </div>
     );
   };
