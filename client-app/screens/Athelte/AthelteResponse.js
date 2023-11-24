@@ -20,8 +20,6 @@ import ipconfig from "../../ipconfig";
 import { useNavigation } from "@react-navigation/native";
 import CheckBox from "react-native-check-box";
 const AthleteResponse = ({ route }) => {
-  const data = route.params.data;
-
   const navigation = useNavigation();
   const ip = ipconfig.ip;
   const [payments, setPayment] = useState([]);
@@ -87,7 +85,7 @@ const AthleteResponse = ({ route }) => {
   }, []);
 
   const submitHandler = () => {
-    let sportIdarray = [];
+    const { userId, SportComplexId, enrollid } = route.params.data;
 
     const formattedData = selectedSports.map((sportId) => {
       const parameters =
@@ -104,11 +102,30 @@ const AthleteResponse = ({ route }) => {
       };
     });
 
-    for (let index = 0; index < formattedData.length; index++) {
-      const element = formattedData[index];
-      sportId.push(element.sportId);
-    }
     //patch query of session table to add sports array
+    var myHeaders = new Headers();
+    myHeaders.append("Content-Type", "application/json");
+
+    var raw = JSON.stringify({
+      sport: selectedSports,
+    });
+
+    var requestOptions = {
+      method: "PATCH",
+      headers: myHeaders,
+      body: raw,
+      redirect: "follow",
+    };
+
+    fetch(
+      `http://${ip}:9999/updateSportsInSession?_id=${enrollid}&sportscomplex=${SportComplexId}`,
+      requestOptions
+    )
+      .then((response) => response.json())
+      .then((result) => {
+        console.log("done" + result);
+      })
+      .catch((error) => console.log("error", error));
 
     // console.log(formattedData);
     for (let index = 0; index < formattedData.length; index++) {

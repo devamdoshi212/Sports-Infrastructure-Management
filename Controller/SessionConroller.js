@@ -119,45 +119,44 @@ module.exports.getSession = async function (req, res) {
 
 //create patch query to add sports in session enroll array
 module.exports.updateSportsInSession = async function (req, res) {
+  try {
+    let sportscomplex = req.query.sportscomplex;
+    let date = new Date();
+    date.setHours(0, 0, 0, 0);
+    let night12 = new Date(date.getTime() + 86400000);
 
-try {
-  let sportscomplex = req.query.sportscomplex;
-  let date = new Date();
-  date.setHours(0, 0, 0, 0);
-  let night12 = new Date(date.getTime() + 86400000);
+    let data = await sessions.findOne({
+      sportscomplex: sportscomplex,
+      date: { $gte: date, $lt: night12 },
+    });
+    // data.enrolls.
 
-    let data=await sessions.findOne({sportscomplex:sportscomplex,
-    date:{ $gte: date, $lt: night12 }
-  })
-  // data.enrolls.
+    const enroll_id = req.query._id;
+    const indexToUpdate = data.enrolls.findIndex(
+      (enroll) => enroll._id == enroll_id
+    );
+    const sport = req.query.sport;
+    console.log(indexToUpdate);
 
-const enroll_id=req.query._id
-const indexToUpdate = data.enrolls.findIndex(enroll => enroll._id == enroll_id);
-const sport=req.query.sport
-console.log(indexToUpdate)
+    if (indexToUpdate !== -1) {
+      // Update the "sport" field in the specified "enrolls" entry
+      data.enrolls[indexToUpdate].sport = sport;
+    } else {
+      console.log("Enrolls entry not found with the specified _id.");
+    }
 
-if (indexToUpdate !== -1) {
-  // Update the "sport" field in the specified "enrolls" entry
-  data.enrolls[indexToUpdate].sport=sport;
+    await data.save();
 
-} else {
-  console.log("Enrolls entry not found with the specified _id.");
-}
-
-await data.save()
-
-
-  res.json({
-    datas:data.length,
-    data: data,
-    rcode: 200,
-  });
-} catch (err) {
-  console.log(err)
-  res.json({
-    error: err.msg,
-    rcode: -9,
-  });
-}
-
+    res.json({
+      datas: data.length,
+      data: data,
+      rcode: 200,
+    });
+  } catch (err) {
+    console.log(err);
+    res.json({
+      error: err.msg,
+      rcode: -9,
+    });
+  }
 };
