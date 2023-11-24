@@ -249,6 +249,9 @@ app.get("/getAllComplaintsAdmin", ComplaintController.getAllComplaintsAdmin);
 //Complaint Types
 app.post("/addComplaintType", ComplaintTypeController.addComplaintType);
 app.get("/getComplaintType", ComplaintTypeController.getComplainttype);
+app.get("/getComplaintsAdmin",ComplaintController.getComplaintsAdmin)
+
+
 
 //Authority details
 app.get("/AuthorityDetails", AuthorityController.getDetails);
