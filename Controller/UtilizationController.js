@@ -761,3 +761,32 @@ module.exports.monthWiseComplainCount=async function(req,res){
     });
   }
 }
+
+
+module.exports.getAtheleteIdFromPayment=async function (req,res){
+  try {
+
+      let data=await paymentModel.find({
+        sports:req.query.sports,
+        instructorId:req.query.instructorId,
+        "timeSlot.from":req.body.from,
+        "timeSlot.to":req.body.to
+      })
+
+    let atheleteId=[]
+    data.map(data=>atheleteId.push(data.athleteId))
+
+    res.json({
+      results: data.length,
+      atheleteId:atheleteId,
+      data: data,
+      rcode: 200,
+    });
+  } catch (err) {
+    console.log(err)
+    res.json({
+      err: err.msg,
+      rcode: -9,
+    });
+  }
+}
