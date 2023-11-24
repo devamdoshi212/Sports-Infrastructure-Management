@@ -6,7 +6,6 @@ const InstructorModel = require("../Model/instructorModel");
 const jwt = require("jsonwebtoken");
 const { default: mongoose } = require("mongoose");
 const athleteModel = require("../Model/athleteModel");
-const { sendPushNotification } = require("../PushNotification");
 require("dotenv").config();
 const { ACCESS_TOKEN_SECRET } = process.env;
 

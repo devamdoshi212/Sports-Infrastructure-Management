@@ -115,9 +115,12 @@ function ViewComplaint({ route, navigation }) {
                   <Text style={styles.column1}>
                     {dateBodyTemplate(item.date)}
                   </Text>
-                  <Text style={styles.column2}>
-                    {RemarkBy(item, data.status, data.level)}
-                  </Text>
+                  <View style={{ flexDirection: "column" }}>
+                    <Text style={styles.column23}>Remarks: {item.remark}</Text>
+                    <Text style={styles.column2}>
+                      {RemarkBy(item, data.status, data.level)}
+                    </Text>
+                  </View>
                 </View>
               ))}
           </ScrollView>
@@ -198,6 +201,11 @@ const styles = StyleSheet.create({
   column1: {
     width: "25%",
     borderRightWidth: 1,
+  },
+  column23: {
+    width: "70%",
+    marginLeft: "4%",
+    fontWeight: "bold",
   },
   column2: {
     width: "70%",

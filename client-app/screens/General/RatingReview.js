@@ -93,6 +93,9 @@ const RatingReview = ({ complexId }) => {
                   style={styles.starContainer}
                 />
               </View>
+              <Text style={styles.sport}>
+                {"    " + review.createdAt.split("T")[0]}
+              </Text>
             </View>
             <Text style={styles.reviewText}>{review.remarks}</Text>
             <View style={{ flexDirection: "row" }}>
@@ -178,12 +181,13 @@ const styles = StyleSheet.create({
   helpfulText: {
     fontSize: 16,
     fontWeight: "bold",
+    // alignItems: "center",
     // color: "#666",
   },
   helpfulButton1: {
     flexDirection: "row",
     // alignItems: "center",
-    marginTop: 10,
+    // marginTop: 10,
     borderWidth: 1,
     borderRadius: 5,
     padding: 4,
