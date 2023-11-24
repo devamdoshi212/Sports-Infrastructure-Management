@@ -118,6 +118,7 @@ const SportEnroll = () => {
                                         borderRadius: 10,
                                     },
                                 ]}
+                                onPress={ratingHandler.bind(this, item.sports._id)}
                             >
                                 <View style={styles.row}>
                                     <Text style={styles.label}>Sport Name:</Text>
@@ -160,12 +161,9 @@ const SportEnroll = () => {
                                     <Text style={styles.input}>{item.timeSlot.to}</Text>
                                 </View>
 
-                                {/* </View> */}
-                                <Pressable onPress={ratingHandler.bind(this, item.sports._id)}>
                                     <View style={{ alignSelf: "flex-end", padding: 10 }}>
                                         <Text style={{ color: "#0054a8" }}>Rate us</Text>
                                     </View>
-                                </Pressable>
                             </Pressable>
                         </View>
                     ))}
