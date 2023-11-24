@@ -41,6 +41,7 @@ const {
 } = require("./Controller/AuthorityComplaintController");
 const { sendPushNotification } = require("./PushNotification");
 const Reminder = require("./Model/Reminder");
+const { setReminder } = require("./SetReminder");
 const app = express();
 
 //middleware
@@ -249,9 +250,7 @@ app.get("/getAllComplaintsAdmin", ComplaintController.getAllComplaintsAdmin);
 //Complaint Types
 app.post("/addComplaintType", ComplaintTypeController.addComplaintType);
 app.get("/getComplaintType", ComplaintTypeController.getComplainttype);
-app.get("/getComplaintsAdmin",ComplaintController.getComplaintsAdmin)
-
-
+app.get("/getComplaintsAdmin", ComplaintController.getComplaintsAdmin);
 
 //Authority details
 app.get("/AuthorityDetails", AuthorityController.getDetails);
@@ -311,7 +310,10 @@ app.get(
   "/monthWiseComplainCount",
   UtilizationController.monthWiseComplainCount
 );
-app.get("/getAtheleteIdFromPayment",UtilizationController.getAtheleteIdFromPayment)
+app.post(
+  "/getAtheleteIdFromPayment",
+  UtilizationController.getAtheleteIdFromPayment
+);
 
 app.post("/remarkRatingByAthlete", async (req, res) => {
   let {
@@ -377,20 +379,18 @@ app.get("/ratingForAll", async (req, res) => {
 });
 app.post("/ratingByInstructor", async (req, res) => {
   let { ratingId, rating } = req.body;
-  let ratings = await athleteRatingModel.findOne({ _id: ratingId }).populate({
-    path: "athleteId",
-    populate: {
-      path: "userId",
-    },
-  });
+  let ratings = await athleteRatingModel
+    .findOne({ _id: ratingId })
+    .populate("athleteId");
   ratings.isEvaluated = 1;
   ratings.rating = rating;
   await ratings.save();
-  if (ratings.athleteId.userId.notificationtoken) {
-    sendPushNotification(
-      ratings.athleteId.userId.notificationtoken,
+  if (ratings.athleteId.userId) {
+    setReminder(
+      Date.now(),
+      "Check your leaderboard",
       "Your Daily Response Noted",
-      `Instructor...+${rating}`
+      [ratings.athleteId.userId]
     );
   }
   res.json({ rcode: 200 });

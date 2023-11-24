@@ -6,7 +6,8 @@ const ComplaintModel = require("./../Model/ComplaintModel");
 const ComplaintTypeModel = require("./../Model/ComplaintTypeModel");
 const DistrictsModel = require("./../Model/DistrictsModel");
 const RatingModel = require("../Model/RatingModel");
-const UpdatesModel=require("../Model/UpdatesModel")
+const UpdatesModel = require("../Model/UpdatesModel");
+const { setReminder } = require("../SetReminder");
 
 function countEntriesInTimeSlot(result, startHour, endHour) {
   let count = 0;
@@ -84,7 +85,6 @@ module.exports.timeSlotUtilization = async function (req, res) {
     slotCounts.push(countEntriesInTimeSlot(data, 16, 17));
     slotCounts.push(countEntriesInTimeSlot(data, 17, 18));
     slotCounts.push(countEntriesInTimeSlot(data, 18, 19));
-
 
     res.json({
       total: data.length,
@@ -281,17 +281,15 @@ module.exports.monthWiseEnroll = async function (req, res) {
             },
           ]
         : []),
-        ...(req.query.sports
-          ? [
-              {
-                $match: {
-                  sports: new mongoose.Types.ObjectId(
-                    req.query.sports
-                  ),
-                },
+      ...(req.query.sports
+        ? [
+            {
+              $match: {
+                sports: new mongoose.Types.ObjectId(req.query.sports),
               },
-            ]
-          : []),
+            },
+          ]
+        : []),
       {
         $group: {
           _id: {
@@ -312,7 +310,7 @@ module.exports.monthWiseEnroll = async function (req, res) {
 
     // console.log(result);
     res.json({
-      datas:result.length,
+      datas: result.length,
       data: result,
       rcode: 200,
     });
@@ -363,9 +361,7 @@ module.exports.DistrictWiseSportsComplex = async function (req, res) {
         sportComplex: 1,
       },
     },
-    
   ]);
-
 
   res.json({ data: data, rcode: 200 });
 };
@@ -618,13 +614,11 @@ module.exports.ratingWiseTop5 = async function (req, res) {
   }
 };
 
-
-module.exports.sportRatingWiseTop5=async function(req,res){
+module.exports.sportRatingWiseTop5 = async function (req, res) {
   try {
-
-    let data=await SportsComplex.aggregate([
+    let data = await SportsComplex.aggregate([
       {
-        $unwind:"$sports"
+        $unwind: "$sports",
       },
       // {
       //   $lookup: {
@@ -637,21 +631,19 @@ module.exports.sportRatingWiseTop5=async function(req,res){
       // {
       //   $unwind:"$sports.sport"
       // }
-    ])
+    ]);
 
-    data=data.filter((ele)=>{
-      return req.query.sportId==ele.sports.sport
-    })
+    data = data.filter((ele) => {
+      return req.query.sportId == ele.sports.sport;
+    });
 
     if (req.query.district) {
       data = data.filter((ele) => {
         return req.query.district == ele.district;
       });
     }
-    
-    data= data.sort((a, b) => b.sports.rating - a.sports.rating).slice(0,5);
 
-
+    data = data.sort((a, b) => b.sports.rating - a.sports.rating).slice(0, 5);
 
     res.json({
       results: data.length,
@@ -659,134 +651,130 @@ module.exports.sportRatingWiseTop5=async function(req,res){
       rcode: 200,
     });
   } catch (err) {
-    console.log(err)
+    console.log(err);
     res.json({
       err: err.msg,
       rcode: -9,
     });
   }
-}
+};
 
-
-module.exports.monthWiseEventCount=async function(req,res){
-try {
-
-  
-  const data=await UpdatesModel.aggregate([
-    ...(req.query.sportComplexId
-      ? [
-          {
-            $match: {
-              sportComplexId: new mongoose.Types.ObjectId(
-                req.query.sportComplexId
-              ),
+module.exports.monthWiseEventCount = async function (req, res) {
+  try {
+    const data = await UpdatesModel.aggregate([
+      ...(req.query.sportComplexId
+        ? [
+            {
+              $match: {
+                sportComplexId: new mongoose.Types.ObjectId(
+                  req.query.sportComplexId
+                ),
+              },
             },
+          ]
+        : []),
+      {
+        $group: {
+          _id: {
+            month: { $month: "$createdAt" },
+            year: { $year: "$createdAt" },
           },
-        ]
-      : []),
-  {
-    $group: {
-      _id: {
-        month: { $month: "$createdAt" },
-        year: { $year: "$createdAt" },
+          totalAthelete: { $sum: 1 }, // You can     use other aggregation operators based on your requirements
+        },
       },
-      totalAthelete: { $sum: 1 }, // You can     use other aggregation operators based on your requirements
-    },
-  },
-  {
-    $sort: {
-      "_id.year": 1,
-      "_id.month": 1,
-    },
-  },
-  ])
+      {
+        $sort: {
+          "_id.year": 1,
+          "_id.month": 1,
+        },
+      },
+    ]);
 
-  res.json({
-    results: data.length,
-    data: data,
-    rcode: 200,
-  });
-} catch (err) {
-  console.log(err)
-  res.json({
-    err: err.msg,
-    rcode: -9,
-  });
-}
-}
-
-
-module.exports.monthWiseComplainCount=async function(req,res){
-  try {
-      let data=await ComplaintModel.aggregate([
-        ...(req.query.sportsComplex
-          ? [
-              {
-                $match: {
-                  sportsComplex: new mongoose.Types.ObjectId(
-                    req.query.sportsComplex
-                  ),
-                },
-              },
-            ]
-          : []),
-          {
-            $group: {
-              _id: {
-                month: { $month: "$createdAt" },
-                year: { $year: "$createdAt" },
-              },
-              totalComplaint: { $sum: 1 }, // You can     use other aggregation operators based on your requirements
-            },
-          },
-          {
-            $sort: {
-              "_id.year": 1,
-              "_id.month": 1,
-            },
-          },
-      ])
-      
-     
     res.json({
       results: data.length,
       data: data,
       rcode: 200,
     });
   } catch (err) {
-    console.log(err)
+    console.log(err);
     res.json({
       err: err.msg,
       rcode: -9,
     });
   }
-}
+};
 
-
-module.exports.getAtheleteIdFromPayment=async function (req,res){
+module.exports.monthWiseComplainCount = async function (req, res) {
   try {
+    let data = await ComplaintModel.aggregate([
+      ...(req.query.sportsComplex
+        ? [
+            {
+              $match: {
+                sportsComplex: new mongoose.Types.ObjectId(
+                  req.query.sportsComplex
+                ),
+              },
+            },
+          ]
+        : []),
+      {
+        $group: {
+          _id: {
+            month: { $month: "$createdAt" },
+            year: { $year: "$createdAt" },
+          },
+          totalComplaint: { $sum: 1 }, // You can     use other aggregation operators based on your requirements
+        },
+      },
+      {
+        $sort: {
+          "_id.year": 1,
+          "_id.month": 1,
+        },
+      },
+    ]);
 
-      let data=await paymentModel.find({
-        sports:req.query.sports,
-        instructorId:req.query.instructorId,
-        "timeSlot.from":req.body.from,
-        "timeSlot.to":req.body.to
+    res.json({
+      results: data.length,
+      data: data,
+      rcode: 200,
+    });
+  } catch (err) {
+    console.log(err);
+    res.json({
+      err: err.msg,
+      rcode: -9,
+    });
+  }
+};
+
+module.exports.getAtheleteIdFromPayment = async function (req, res) {
+  try {
+    let message = req.body.message;
+    let data = await paymentModel
+      .find({
+        sports: req.query.sports,
+        instructorId: req.query.instructorId,
+        "timeSlot.from": req.body.from,
+        "timeSlot.to": req.body.to,
       })
+      .populate("athleteId");
 
-    let atheleteId=[]
-    data.map(data=>atheleteId.push(data.athleteId))
-
+    let userId = [];
+    data.map((data) => userId.push(data.athleteId.userId));
+    setReminder(Date.now(), message, "Message From Instructor", userId);
     res.json({
       results: data.length,
-      atheleteId:atheleteId,
+      userId: userId,
       data: data,
       rcode: 200,
     });
   } catch (err) {
-    console.log(err)
+    console.log(err);
     res.json({
       err: err.msg,
       rcode: -9,
     });
   }
-}
+};
