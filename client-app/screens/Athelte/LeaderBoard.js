@@ -8,6 +8,7 @@ import {
   ScrollView,
   Pressable,
   ActivityIndicator,
+  Alert,
 } from "react-native";
 import ipconfig from "../../ipconfig";
 import { captureRef } from "react-native-view-shot";
@@ -130,7 +131,7 @@ const LeaderBoard = ({ navigation }) => {
               />
             </View>
             <Text style={styles.label}>
-              {userdata[0].score ? userdata[0].score : "-"}
+              {userdata[0].score ? userdata[0].score + " Points" : "-"}
             </Text>
             <View>
               <TouchableOpacity onPress={handleCapture}>
@@ -148,7 +149,18 @@ const LeaderBoard = ({ navigation }) => {
             icon="iconUrl"
             data={atheltedata}
             onRowPress={(item, index) => {
-              alert(item.athleteid + " clicked");
+              Alert.alert(
+                "LeaderBoard",
+                item.name + " have " + item.score + " points ",
+                [
+                  // {
+                  //     text: 'Cancel',
+                  //     onPress: () => console.log('Cancel Pressed'),
+                  //     style: 'cancel',
+                  // },
+                  { text: "OK", onPress: () => {} },
+                ]
+              );
             }}
             evenRowColor="#edfcf9"
             oddRowColor="#ffffff"
@@ -216,6 +228,7 @@ const styles = StyleSheet.create({
     flex: 1,
     alignSelf: "center",
     textAlign: "center",
+    marginRight: -15,
   },
   profileImage: {
     flex: 1,
