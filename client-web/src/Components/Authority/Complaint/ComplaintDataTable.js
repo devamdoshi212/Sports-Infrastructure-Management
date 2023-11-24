@@ -353,7 +353,7 @@ export default function AthorityComplaintDataTable() {
           loading={loading}
           dataKey="_id"
           filters={filters}
-          globalFilterFields={["sport.SportName", "sport.Category", "fees"]}
+          globalFilterFields={["sportsComplex.name", "Description"]}
           header={header}
           emptyMessage="No Data found."
         >
