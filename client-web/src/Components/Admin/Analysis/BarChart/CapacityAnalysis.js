@@ -85,12 +85,15 @@ const CapacityAnalysis = (props) => {
           // console.log(result);
           const data = result.data;
           const categories = data.map((s) => parseInt(s.capacity, 10));
-          const seriesData = data.map((s) => s.sport);
+          // const seriesData = data.map((s) => s.sport);
+          const seriesData = data.map((s) => {
+            const utilizationStatus =
+              s.capacity < s.totalAthelete ? "Over Utilized" : "Under Utilized";
+            const color =
+              utilizationStatus === "Under Utilized" ? "#00FF00" : "#FF0000"; // Green for Over Utilized, Red for Under Utilized
+            return { label: `${s.sport} - ${utilizationStatus}`, color };
+          });
           const totalAthelet = data.map((s) => s.totalAthelete);
-          // const overutilized = totalAthelet.map(
-          //   (athletes, index) => athletes > categories[index]
-          // );
-          // console.log(overutilized)
 
           setChartData({
             ...chartData,
@@ -106,7 +109,14 @@ const CapacityAnalysis = (props) => {
               ...chartData.options,
               xaxis: {
                 ...chartData.options.xaxis,
-                categories: seriesData,
+                categories: seriesData.map((item) => item.label),
+                labels: {
+                  style: {
+                    fontSize: "16px",
+                    fontWeight: "bold",
+                    colors: seriesData.map((item) => item.color),
+                  },
+                },
               },
             },
           });

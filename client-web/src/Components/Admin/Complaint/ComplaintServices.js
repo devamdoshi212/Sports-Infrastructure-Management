@@ -1,6 +1,8 @@
 export const AdminComplaintService = {
   getData(id) {
-    return fetch(`http://localhost:9999/getAllComplaintsAdmin?level=3&status=0`)
+    return fetch(
+      `http://localhost:9999/getAllComplaintsAdmin?level=3&status=${id}`
+    )
       .then((res) => res.json())
       .then((res) => {
         return res.data;
