@@ -228,13 +228,13 @@ export default function LeaderboardDataTable({ selectedOption }) {
           header="Athelte Name"
           field="name"
           filterField="name"
-          style={{ minWidth: "12rem" }}
+          style={{ minWidth: "10rem" }}
         />
         <Column
-          header="Athelte Rating"
+          header="Athelte Points"
           field="rating"
           filterField="rating"
-          style={{ minWidth: "12rem" }}
+          style={{ minWidth: "5rem" }}
         />
         <Column
           header="Athelte Profile"
@@ -270,7 +270,7 @@ export default function LeaderboardDataTable({ selectedOption }) {
           body={(rowData) => {
             return <h2>{dateBodyTemplate(rowData)}</h2>;
           }}
-          style={{ minWidth: "12rem" }}
+          style={{ minWidth: "8rem" }}
         />
         <Column
           header="Athelte Address"

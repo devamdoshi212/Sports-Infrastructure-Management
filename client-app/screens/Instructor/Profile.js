@@ -56,7 +56,7 @@ function Profile({ navigation }) {
                   borderWidth: 5,
                   backgroundColor: "white",
                 }}
-                source={require("../../assets/Supervisor.png")}
+                source={require("../../assets/Instructor.jpg")}
               />
             </View>
             <View>
