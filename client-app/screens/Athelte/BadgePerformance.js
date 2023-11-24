@@ -43,6 +43,14 @@ const badge = (points) => {
   if (points >= 1000 && points < 1250) return diamond;
   else return crown;
 };
+const badgename = (points) => {
+  if (points < 250) return "Bronze";
+  if (points >= 250 && points < 500) return "Silver";
+  if (points >= 500 && points < 750) return "Gold";
+  if (points >= 750 && points < 1000) return "Platinum";
+  if (points >= 1000 && points < 1250) return "Diamond";
+  else return "Crown";
+};
 
 const BadgePerformance = () => {
   const navigation = useNavigation();
@@ -220,9 +228,10 @@ const BadgePerformance = () => {
             style={styles.middleImage}
             resizeMode="cover"
           />
+          <Text style={styles.input}>{badgename(sportpoints)}</Text>
         </View>
       </View>
-      {sportid && (
+      {sportid ? (
         <View style={styles.card2}>
           <WebView
             onError={(syntheticEvent) => {
@@ -243,6 +252,27 @@ const BadgePerformance = () => {
                   : "",
             }}
           />
+        </View>
+      ) : (
+        <View style={styles.card23}>
+          <View style={styles.bigCircle}>
+            <Text style={styles.bigCircleText}>Pending Goals</Text>
+            <Text style={styles.bigCircleTextNum}>
+              {
+                Atheltedata[0].goals.filter((item) => item.achieved !== "0")
+                  .length
+              }
+            </Text>
+          </View>
+          <View style={styles.bigCircle}>
+            <Text style={styles.bigCircleText}>Completed Goals</Text>
+            <Text style={styles.bigCircleTextNum}>
+              {
+                Atheltedata[0].goals.filter((item) => item.achieved === "0")
+                  .length
+              }
+            </Text>
+          </View>
         </View>
       )}
     </View>
@@ -375,6 +405,18 @@ const styles = StyleSheet.create({
     justifyContent: "space-evenly",
     // marginTop:"-50%",
   },
+  card23: {
+    flexDirection: "column",
+    alignItems: "center",
+    alignSelf: "center",
+    marginTop: "2%",
+    width: "94%",
+    height: "39%",
+    borderRadius: 10,
+    backgroundColor: "#fbe8e8",
+    paddingBottom: "5%",
+    justifyContent: "space-evenly",
+  },
   row: {
     justifyContent: "space-evenly",
     flexDirection: "row",
@@ -391,6 +433,27 @@ const styles = StyleSheet.create({
   },
   input: {
     fontSize: 16,
+    fontWeight: "bold",
+  },
+  bigCircle: {
+    backgroundColor: "#f2b69c",
+    borderRadius: 20,
+    justifyContent: "center",
+    alignItems: "center",
+    marginBottom: 20,
+    width: 120,
+    height: 120,
+    width: "75%",
+    marginTop: "15%",
+    borderWidth: 1,
+    borderBottomWidth: 5,
+  },
+  bigCircleText: {
+    fontSize: 18,
+    fontWeight: "bold",
+  },
+  bigCircleTextNum: {
+    fontSize: 36,
     fontWeight: "bold",
   },
   // teamContainer: {
