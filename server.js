@@ -263,6 +263,7 @@ app.get("/atheleteInSportsComplex", AdminController.atheleteInSportsComplex);
 app.post("/addSession/:id", SessionController.addSession);
 app.get("/getSession", SessionController.getSession);
 app.get("/filtersport/:id", filtersportsforcomplex);
+app.patch("/updateSportsInSession",SessionController.updateSportsInSession)
 
 app.get(
   "/getInstructorForPayment",
