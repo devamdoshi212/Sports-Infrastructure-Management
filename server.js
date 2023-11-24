@@ -2,6 +2,7 @@ const express = require("express");
 const cors = require("cors");
 const multer = require("multer");
 const ejs = require("ejs");
+const cron = require("node-cron");
 
 require("./config/dbconfig").getDbConnetion();
 const UserRoute = require("./Routes/UserRoutes");
@@ -39,6 +40,7 @@ const {
   getAuthorityComplaint,
 } = require("./Controller/AuthorityComplaintController");
 const { sendPushNotification } = require("./PushNotification");
+const Reminder = require("./Model/Reminder");
 const app = express();
 
 //middleware
@@ -263,8 +265,8 @@ app.get("/atheleteInSportsComplex", AdminController.atheleteInSportsComplex);
 app.post("/addSession/:id", SessionController.addSession);
 app.get("/getSession", SessionController.getSession);
 app.get("/filtersport/:id", filtersportsforcomplex);
-app.patch("/updateSportsInSession",SessionController.updateSportsInSession)
-app.get("/attendanceSportWise",SessionController.attendanceSportWise)
+app.patch("/updateSportsInSession", SessionController.updateSportsInSession);
+app.get("/attendanceSportWise", SessionController.attendanceSportWise);
 
 app.get(
   "/getInstructorForPayment",
@@ -298,10 +300,13 @@ app.get(
 );
 app.get("/agewiseSportCount", UtilizationController.agewiseSportCount);
 app.get("/agegrpCount", UtilizationController.agegrpCount);
-app.get("/rating",UtilizationController.ratingWiseTop5)
-app.get("/sportRatingWiseTop5",UtilizationController.sportRatingWiseTop5)
-app.get("/monthWiseEventCount",UtilizationController.monthWiseEventCount)
-app.get("/monthWiseComplainCount",UtilizationController.monthWiseComplainCount)
+app.get("/rating", UtilizationController.ratingWiseTop5);
+app.get("/sportRatingWiseTop5", UtilizationController.sportRatingWiseTop5);
+app.get("/monthWiseEventCount", UtilizationController.monthWiseEventCount);
+app.get(
+  "/monthWiseComplainCount",
+  UtilizationController.monthWiseComplainCount
+);
 
 app.post("/remarkRatingByAthlete", async (req, res) => {
   let {
@@ -402,5 +407,25 @@ async function averageRating(userId, sportId) {
   });
   return total2 / total;
 }
+
+cron.schedule("*/1 * * * *", async function () {
+  console.log("run");
+  let today = new Date();
+  let reminder = await Reminder.find({
+    issent: 0,
+    date: { $lt: today },
+  }).populate({ path: "userIds", select: { notificationtoken: 1 } });
+  for (let index = 0; index < reminder.length; index++) {
+    const element = reminder[index];
+    await sendPushNotification(
+      element.userIds.map((ele) => ele.notificationtoken),
+      element.title,
+      element.message
+    );
+    element.issent = 1;
+    element.save();
+  }
+});
+
 app.listen(9999);
 console.log("server started at 9999");

@@ -8,7 +8,7 @@ module.exports.sendPushNotification = async function (
   const fcmEndpoint = "https://fcm.googleapis.com/fcm/send";
 
   const notificationMessage = {
-    to: userToken,
+    registration_ids: userToken,
     notification: {
       title,
       body: message,
