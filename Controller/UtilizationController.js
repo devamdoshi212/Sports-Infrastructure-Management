@@ -72,14 +72,19 @@ module.exports.timeSlotUtilization = async function (req, res) {
     }
     let slotCounts = [];
 
-    slotCounts.push(countEntriesInTimeSlot(data, 7, 9));
-    slotCounts.push(countEntriesInTimeSlot(data, 9, 11));
-    slotCounts.push(countEntriesInTimeSlot(data, 11, 13));
-    slotCounts.push(countEntriesInTimeSlot(data, 13, 15));
-    slotCounts.push(countEntriesInTimeSlot(data, 15, 17));
-    slotCounts.push(countEntriesInTimeSlot(data, 17, 19));
-    slotCounts.push(countEntriesInTimeSlot(data, 19, 24));
-    slotCounts.push(countEntriesInTimeSlot(data, 0, 7));
+    slotCounts.push(countEntriesInTimeSlot(data, 7, 8));
+    slotCounts.push(countEntriesInTimeSlot(data, 8, 9));
+    slotCounts.push(countEntriesInTimeSlot(data, 9, 10));
+    slotCounts.push(countEntriesInTimeSlot(data, 10, 11));
+    slotCounts.push(countEntriesInTimeSlot(data, 11, 12));
+    slotCounts.push(countEntriesInTimeSlot(data, 12, 13));
+    slotCounts.push(countEntriesInTimeSlot(data, 13, 14));
+    slotCounts.push(countEntriesInTimeSlot(data, 14, 15));
+    slotCounts.push(countEntriesInTimeSlot(data, 15, 16));
+    slotCounts.push(countEntriesInTimeSlot(data, 16, 17));
+    slotCounts.push(countEntriesInTimeSlot(data, 17, 18));
+    slotCounts.push(countEntriesInTimeSlot(data, 18, 19));
+
 
     res.json({
       total: data.length,
@@ -279,6 +284,7 @@ module.exports.monthWiseEnroll = async function (req, res) {
       {
         $group: {
           _id: {
+            // "$sports",
             month: { $month: "$from" },
             year: { $year: "$from" },
           },
