@@ -13,7 +13,7 @@ import { useSelector } from "react-redux";
 import { AdminComplaintService } from "./ComplaintServices";
 import { useRef } from "react";
 
-export default function AdminComplaintDataTable() {
+export default function AdminComplaintDataTable({ type }) {
   const { _id } = useSelector((state) => state.user.user);
   const [deleterefresh, setdeleterefresh] = useState(true);
   const [customers, setCustomers] = useState([]);
@@ -25,12 +25,12 @@ export default function AdminComplaintDataTable() {
   });
   const [remark, setremarks] = useState("");
   useEffect(() => {
-    AdminComplaintService.getCustomersXLarge().then((data) => {
+    AdminComplaintService.getCustomersXLarge(type).then((data) => {
       setCustomers(getCustomers(data));
       setLoading(false);
     });
     initFilters();
-  }, [deleterefresh]);
+  }, [deleterefresh, type]);
 
   const getCustomers = (data) => {
     return [...(data || [])].map((d) => {

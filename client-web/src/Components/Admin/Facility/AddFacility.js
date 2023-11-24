@@ -164,23 +164,31 @@ const AddFacility = () => {
               ) : null}
             </div>
             <div>
+            <label
+                className="block text-gray-700 text-sm font-bold mb-2"
+                htmlFor="Image"
+              >
+                Matrix
+              </label>
               {inputFields.map((inputField, index) => (
-                <div key={index}>
+                
+                <div className="space-x-3 m-2"key={index}>
                   <input
                     type="text"
+                    className="shadow appearance-none w-1/2 border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                     placeholder="Enter a value"
                     value={inputField.value}
                     onChange={(event) => handleInputChange(index, event)}
                   />
                   <button
-                    type="button"
+                    type="button" className="text-white font-bold rounded-lg bg-red-700 hover:bg-red-500 hover:text-gray-200 p-2"
                     onClick={() => handleRemoveField(index)}
                   >
                     Remove
                   </button>
                 </div>
               ))}
-              <button type="button" onClick={handleAddField}>
+              <button type="button" className="text-white font-bold rounded-lg bg-blue-700 hover:bg-blue-500 hover:text-gray-200 p-2" onClick={handleAddField}>
                 Add Field
               </button>
             </div>

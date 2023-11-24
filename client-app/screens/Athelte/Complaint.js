@@ -172,10 +172,8 @@ const Complaint = ({ navigation }) => {
         <TouchableOpacity style={styles.uploadButton} onPress={pickImage}>
           <Text style={styles.buttonText}>Upload Photo</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.uploadButton}>
-          <Text style={styles.buttonText} onPress={handleSubmit}>
-            Submit
-          </Text>
+        <TouchableOpacity style={styles.uploadButton} onPress={handleSubmit}>
+          <Text style={styles.buttonText}>Submit</Text>
         </TouchableOpacity>
       </View>
     </>

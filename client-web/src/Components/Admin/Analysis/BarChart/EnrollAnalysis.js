@@ -81,7 +81,7 @@ const EnrollAnalysis = (props) => {
     };
 
     fetch(
-      `http://localhost:9999/monthWiseEnroll?sportsComplexId=${props.selectedOption}`,
+      `http://localhost:9999/monthWiseEnroll?sportsComplexId=${props.selectedOption}&sports=${props.sportId}`,
       requestOptions
     )
       .then((response) => response.json())
@@ -126,7 +126,7 @@ const EnrollAnalysis = (props) => {
         });
       })
       .catch((error) => console.log("error", error));
-  }, [props.selectedOption]);
+  }, [props.selectedOption, props.sportId]);
 
   // useEffect(() => {
   //   var requestOptions = {

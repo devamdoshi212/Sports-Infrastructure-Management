@@ -32,14 +32,18 @@ const TimewiseAnalysis = (props) => {
       },
       xaxis: {
         categories: [
-          "7 to 9 AM",
-          "9 to 11 AM",
-          "11 to 1 PM",
-          "1 to 3 PM ",
-          "3 to 5 PM",
-          "5 to 7 PM",
-          "7 to 12 PM",
-          "12 to 7 AM",
+          "7 to 8 AM",
+          "8 to 9 AM",
+          "9 to 10 PM",
+          "10 to 11 PM ",
+          "11 to 12 PM",
+          "12 to 1 PM",
+          "1 to 2 PM",
+          "2 to 3 AM",
+          "3 to 4 AM",
+          "4 to 5 AM",
+          "5 to 6 AM",
+          "6 to 7 AM",
         ],
       },
       yaxis: {
@@ -113,7 +117,7 @@ const TimewiseAnalysis = (props) => {
         height={chartData.options.chart.height}
       />
     </div>
-      );
+  );
 };
 
 export default TimewiseAnalysis;
