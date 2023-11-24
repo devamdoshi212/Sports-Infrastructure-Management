@@ -193,10 +193,16 @@ const BarChartAnalysis = () => {
 
       {/* <EventAnalysis selectedOption={selectedOption} /> */}
       {/* <ComplaintLineAnalysis selectedOption={selectedOption} /> */}
-      <h1 className="text-2xl">From</h1>
-      <input type="date" value={fromdate} onChange={handledatechange} />
-      <h1 className="text-2xl">To</h1>
-      <input type="date" value={ToDate} onChange={handleToChange} />
+      <div className="flex m-5">
+        <div className="flex m-5 space-x-3">
+          <h1 className="text-xl font-semibold">From :</h1>
+          <input type="date" value={fromdate} onChange={handledatechange} />
+        </div>
+        <div className="flex m-5 space-x-3">
+          <h1 className="text-xl font-semibold">To :</h1>
+          <input type="date" value={ToDate} onChange={handleToChange} />
+        </div>
+      </div>
       <AttendanceAnalysis
         selectedOption={selectedOption}
         fromdate={fromdate}

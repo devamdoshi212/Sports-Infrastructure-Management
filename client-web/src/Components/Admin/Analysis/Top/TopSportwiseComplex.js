@@ -22,7 +22,7 @@ const TopSportwiseComplex = ({ districtId, sportId }) => {
 
   return (
     <>
-      <h2 className="text-center text-2xl">
+      <h2 className="text-center text-2xl font-bold m-2">
         Top 5 Sport Complex in selected Sport{" "}
       </h2>
       <table className="w-11/12 m-auto bg-white border border-gray-300 my-4 p-datatable">
