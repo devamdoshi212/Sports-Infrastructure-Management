@@ -426,7 +426,7 @@ module.exports.goalOfAthletes = async function (req, res) {
     let first = new Date(goal.startdate);
 
     while (first.getTime() < new Date(goal.targetdate).getTime()) {
-      first.setTime(first.getTime() + 60000);
+      first.setTime(first.getTime() + 3600000);
 
       setReminder(
         new Date(first), // Ensure you pass a new Date object to setReminder
