@@ -3,7 +3,6 @@ import ReactApexChart from "react-apexcharts";
 import { useSelector } from "react-redux";
 
 const DistrictChart = (props) => {
-  console.log("in", props.formdata);
   const { DistrictId } = useSelector((state) => state.user.user);
 
   const [chartData, setChartData] = useState({

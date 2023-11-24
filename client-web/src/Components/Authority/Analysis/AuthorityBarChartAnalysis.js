@@ -1,12 +1,15 @@
 import React, { useEffect, useState } from "react";
-import TimewiseAnalysis from "./BarChart/TimeSlotAnalysis";
-import CapacityAnalysis from "./BarChart/CapacityAnalysis";
-import ComplaintAnalysis from "./BarChart/ComplaintAnalysis";
-import EnrollAnalysis from "./BarChart/EnrollAnalysis";
-import AgeGroupAnalysis from "./BarChart/AgeGroupAnalysis";
-import AgeGroupwiseCount from "./BarChart/AgeGroupCount";
+import { useSelector } from "react-redux";
+import TimewiseAnalysis from "../../Admin/Analysis/BarChart/TimeSlotAnalysis";
+import CapacityAnalysis from "../../Admin/Analysis/BarChart/CapacityAnalysis";
+import ComplaintAnalysis from "../../Admin/Analysis/BarChart/ComplaintAnalysis";
+import EnrollAnalysis from "../../Admin/Analysis/BarChart/EnrollAnalysis";
+import AgeGroupAnalysis from "../../Admin/Analysis/BarChart/AgeGroupAnalysis";
+import AgeGroupwiseCount from "../../Admin/Analysis/BarChart/AgeGroupCount";
+import DistrictChart from "./DistrictChart";
+import GeneralAnalyis from "./GeneralAnalysis";
 
-const BarChartAnalysis = () => {
+const AuthorityBarChartAnalysis = () => {
   const [data, setData] = useState([]);
   const [sport, setsports] = useState([]);
   const [selectedOption, setSelectedOption] = useState("");
@@ -16,13 +19,18 @@ const BarChartAnalysis = () => {
   const [sportId, setsportId] = useState("");
   const [year, setYear] = useState("");
 
+  const { DistrictId } = useSelector((state) => state.user.user);
+
   useEffect(() => {
     var requestOptions = {
       method: "GET",
       redirect: "follow",
     };
 
-    fetch("http://localhost:9999/getSportsComplex", requestOptions)
+    fetch(
+      `http://localhost:9999/getSportsComplex?district=${DistrictId}`,
+      requestOptions
+    )
       .then((response) => response.json())
       .then((result) => {
         setData(result.data);
@@ -33,7 +41,7 @@ const BarChartAnalysis = () => {
       .then((response) => response.json())
       .then((result) => setsports(result.data))
       .catch((error) => console.log("error", error));
-  }, []);
+  }, [DistrictId]);
 
   const handleOptionChange = (e) => {
     setSelectedOption(e.target.value);
@@ -177,11 +185,10 @@ const BarChartAnalysis = () => {
         sport={sportId}
       />
       <hr className="h-px bg-gray-700 " />
-
-      {/* <EventAnalysis selectedOption={selectedOption} /> */}
-      {/* <ComplaintLineAnalysis selectedOption={selectedOption} /> */}
+      <DistrictChart />
+      {/* <GeneralAnalyis selectedOption={selectedOption} /> */}
     </div>
   );
 };
 
-export default BarChartAnalysis;
+export default AuthorityBarChartAnalysis;

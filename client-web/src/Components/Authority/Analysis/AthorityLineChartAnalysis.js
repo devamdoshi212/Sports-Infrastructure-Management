@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from "react";
-import GeneralAnalysis from "./GeneralAnalysis";
-import DistrictChart from "./DistrictChart";
-import { useSelector } from "react-redux";
 
-const AuthorityAnalysis = () => {
+import { useSelector } from "react-redux";
+import EnrollLineAnalysis from "../../Admin/Analysis/Line/EnrollLineAnalysis";
+import EventAnalysis from "../../Admin/Analysis/Line/EventAnalysis";
+import ComplaintLineAnalysis from "../../Admin/Analysis/Line/ComplaintLine";
+
+const AuthorityLineChartAnalysis = () => {
+  const [selectedOption, setSelectedOption] = useState("");
   const [data, setData] = useState([]);
-  const [selectedOption, setSelectedOption] = useState(""); // Added state to track the selected option
   const { DistrictId } = useSelector((state) => state.user.user);
 
   useEffect(() => {
@@ -23,20 +25,38 @@ const AuthorityAnalysis = () => {
         setData(result.data);
       })
       .catch((error) => console.log("error", error));
+  }, [DistrictId]);
+  useEffect(() => {
+    var requestOptions = {
+      method: "GET",
+      redirect: "follow",
+    };
+
+    fetch(
+      `http://localhost:9999/getSportsComplex?district=${DistrictId}`,
+      requestOptions
+    )
+      .then((response) => response.json())
+      .then((result) => {
+        setData(result.data);
+      })
+      .catch((error) => console.log("error", error));
   }, []);
-
   const handleOptionChange = (e) => {
-    setSelectedOption(e.target.value); // Update the selected option state
+    setSelectedOption(e.target.value);
   };
-
   return (
     <div>
-      <div className="w-1/5 relative m-6">
+      <div className="w-1/5 relative m-5">
         <select
           className="block appearance-none w-full bg-white border border-gray-300 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:border-blue-300 focus:ring focus:ring-blue-200"
-          onChange={handleOptionChange} // Add an onChange event handler
-          value={selectedOption} // Set the value of the select element to the selectedOption state
+          onChange={handleOptionChange}
+          value={selectedOption}
         >
+          <option value="" selected={true}>
+            ALL
+          </option>
+
           {data.map((item) => (
             <option key={item._id} value={item._id}>
               {item.name}
@@ -53,11 +73,11 @@ const AuthorityAnalysis = () => {
           </svg>
         </div>
       </div>
-      <GeneralAnalysis selectedOption={selectedOption} />
-      <hr className="h-px bg-gray-700"/>
-      <DistrictChart />
+      <EnrollLineAnalysis selectedOption={selectedOption} />
+      <EventAnalysis selectedOption={selectedOption} />
+      <ComplaintLineAnalysis selectedOption={selectedOption} />
     </div>
   );
 };
 
-export default AuthorityAnalysis;
+export default AuthorityLineChartAnalysis;
