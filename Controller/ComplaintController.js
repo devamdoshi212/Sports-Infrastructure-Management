@@ -1,6 +1,7 @@
 const ComplaintModel = require("../Model/ComplaintModel");
 const athleteModel = require("../Model/athleteModel");
 const { sendPushNotification } = require("../PushNotification");
+const { setReminder } = require("../SetReminder");
 
 module.exports.addComplaint = async function (req, res) {
   // console.log("file detail => " + req.file);
@@ -28,15 +29,15 @@ module.exports.addComplaintApp = async function (req, res) {
   let Complaint = new ComplaintModel(req.body);
 
   let data = await Complaint.save();
-  let Supervisor = await athleteModel
-    .findOne({ userId: req.body.userId })
-    .populate("createdBy");
-  if (Supervisor.createdBy.notificationtoken) {
-    sendPushNotification(
-      Supervisor.createdBy.notificationtoken,
-      "Athlete Raised Complaint",
-      "Click to View.."
-    );
+  if (req.body.level === 0) {
+    let Supervisor = await athleteModel
+      .findOne({ userId: req.body.userId })
+      .populate("createdBy");
+    if (Supervisor.createdBy !== undefined) {
+      setReminder(Date.now(), "Click to View..", "Athlete Raised Complaint", [
+        Supervisor.createdBy,
+      ]);
+    }
   }
   console.log(data);
 
@@ -93,24 +94,22 @@ module.exports.updateComplaint = async function (req, res) {
   if (req.body.status !== undefined) {
     Complaint.status = req.body.status;
     if (req.body.status === 1) {
-      if (Complaint.userId.notificationtoken) {
-        sendPushNotification(
-          Complaint.userId.notificationtoken,
-          "Your Complaint Solved",
-          "Let us know about are you satisfied or not!"
-        );
-      }
+      setReminder(
+        Date.now(),
+        "Let us know about are you satisfied or not!",
+        "Your Complaint Solved",
+        [Complaint.userId]
+      );
     }
   }
 
   if (req.body.level !== undefined) {
     Complaint.level = req.body.level;
-    if (Complaint.userId.notificationtoken) {
-      sendPushNotification(
-        Complaint.userId.notificationtoken,
-        "Your Complaint Forwarded",
-        "Click here..."
-      );
+
+    if (req.body.level > 0 && Complaint.status === 0) {
+      setReminder(Date.now(), "Click here...", "Your Complaint Forwarded", [
+        Complaint.userId,
+      ]);
     }
   }
   try {

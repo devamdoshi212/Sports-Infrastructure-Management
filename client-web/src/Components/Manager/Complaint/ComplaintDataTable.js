@@ -312,9 +312,68 @@ export default function ComplaintDataTable() {
       return "";
     }
   };
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [modalImages, setModalImages] = useState("");
+  const [selectedRowData, setSelectedRowData] = useState(null);
+  const modalOverlayRef = useRef(null);
+
+  const openModal = (rowdata) => {
+    setModalImages(rowdata.photo);
+    setSelectedRowData(rowdata);
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setModalImages([]);
+    setSelectedRowData(null);
+    setIsModalOpen(false);
+  };
+  useEffect(() => {
+    const handleOutsideClick = (event) => {
+      if (
+        modalOverlayRef.current &&
+        !modalOverlayRef.current.contains(event.target)
+      ) {
+        closeModal();
+      }
+    };
+
+    if (isModalOpen) {
+      document.addEventListener("mousedown", handleOutsideClick);
+    } else {
+      document.removeEventListener("mousedown", handleOutsideClick);
+    }
+
+    return () => {
+      document.removeEventListener("mousedown", handleOutsideClick);
+    };
+  }, [isModalOpen]);
 
   return (
     <div>
+      {isModalOpen && (
+        <div
+          ref={modalOverlayRef}
+          className="fixed inset-0 z-50 flex items-center justify-center modal-overlay bg-gray-900 bg-opacity-80"
+        >
+          <div className="modal-above-screen bg-white rounded-lg p-4 relative">
+            <span
+              className="close absolute top-2 right-2 text-3xl cursor-pointer"
+              onClick={closeModal}
+            >
+              &times;
+            </span>
+            <div className="modal-body p-4 flex justify-center items-center">
+              <img
+                key=""
+                src={` http://localhost:9999/complaints/${modalImages}`}
+                alt="Sport Facility Pic"
+                className="w-60 h-60 object-cover mx-2"
+              />
+            </div>
+          </div>
+        </div>
+      )}
       <div className="card">
         <DataTable
           value={customers}
@@ -358,16 +417,15 @@ export default function ComplaintDataTable() {
             header="Image"
             field="photo"
             filterField="photo"
-            body={(rowdata) => {
-              return (
-                <img
-                  className="w-full h-96"
-                  src={`http://localhost:9999/complaints/${rowdata.photo}`}
-                  alt="Sport Facility Pic"
-                />
-              );
-            }}
-            style={{ minWidth: "12rem" }}
+            style={{ minWidth: "10rem" }}
+            body={(rowdata) => (
+              <button
+                onClick={() => openModal(rowdata)}
+                className="text-blue-900 hover:underline hover:decoration-black "
+              >
+                View Images
+              </button>
+            )}
           />
           <Column
             header="Complaint Type"

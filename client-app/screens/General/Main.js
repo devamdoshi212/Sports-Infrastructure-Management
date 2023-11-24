@@ -75,7 +75,7 @@ const Main = ({ navigation }) => {
     messaging()
       .getToken()
       .then(async (token) => {
-        console.log(token);
+        console.log("token = " + token);
         dispatch(NotificationActions.gettoken(token));
         // dispatch(setFCM(token));
       });

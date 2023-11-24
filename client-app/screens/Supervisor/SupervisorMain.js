@@ -33,8 +33,8 @@ const SupervisorMain = ({ navigation }) => {
         tabBarStyle: { backgroundColor: "#d7a592" }, // Background color of the tab bar
       })}
     >
-      <Tab.Screen name="SupervisorQR" component={QR} />
       <Tab.Screen name="Home" component={Home} />
+      <Tab.Screen name="SupervisorQR" component={QR} />
       <Tab.Screen name="SupervisorProfile" component={SupervisorNavigator} />
     </Tab.Navigator>
   );
