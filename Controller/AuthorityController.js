@@ -72,9 +72,9 @@ module.exports.getDetails = async function (req, res) {
     if (complaintCount.length > 1) {
       sportComlexComplaint.push({
         sportComplex: sportcomplex[i].name,
-        complaintCount: complaintCount.length,
+        activeComlaintCount: complaintCount.length,
         solvedComplaint: complaintCount[1].Complaintcount,
-        activeComplaint: complaintCount[0].Complaintcount,
+        unsolvedComplaint: complaintCount[0].Complaintcount,
       });
     } else {
       let active = 0,

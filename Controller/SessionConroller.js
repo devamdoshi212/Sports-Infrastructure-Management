@@ -163,3 +163,123 @@ module.exports.updateSportsInSession = async function (req, res) {
     });
   }
 };
+
+
+module.exports.attendanceSportWise=async function (req,res){
+  try {
+  
+    let sportscomplex = req.query.sportscomplex;
+    let date = new Date(req.query.from);
+    // console.log(date)
+    date.setHours(0, 0, 0, 0);
+    let night12 = new Date(date.getTime() + 86400000);
+    // console.log(night12)
+    let from=new Date(req.query.from)
+    let to=new Date(req.query.to)
+    to.setTime(to.getTime()+86400000)
+// console.log(to)
+// console.log(from)
+    let query={
+      sportscomplex:  new mongoose.Types.ObjectId(sportscomplex),
+    }
+
+    if (req.query.from)
+    {
+      query.date={ $gte: date, $lt: night12 }
+    }
+    if(req.query.from && req.query.to)
+    {
+      query.date={ $gte: from, $lte: to}
+    }
+
+    //   let data=await sessions.findOne({sportscomplex:sportscomplex,
+    //   date:{ $gte: date, $lt: night12 }
+    // })
+
+    let data=await sessions.aggregate([
+      {
+        $match:query
+    },
+    {
+      $unwind:"$enrolls"
+    },
+    {
+      $unwind:"$enrolls.sport",
+    },
+    {
+      $group:{
+        _id:"$enrolls.sport",
+      totalCount:{$sum:1}
+      }
+    },  
+    {
+      $lookup:{
+        from:"sports",
+        localField:"_id",
+        foreignField:"_id",
+        as:"_id"
+      }
+    },
+      {
+        $unwind:"$_id"
+      },
+    {
+      $project:{
+        sportName:"$_id.SportName",
+          totalCount:1,
+        _id:0 
+      }
+    },
+    {
+      $sort:{sportName:1}
+    }
+    ])
+
+    res.json({
+      datas:data.length,
+      data: data,
+      rcode: 200,
+    });    
+  } catch (err) {
+    console.log(err)
+  res.json({
+    error: err.msg,
+    rcode: -9,
+  });
+  }
+}
+
+// module.exports.updates=async function(req,res){
+//   try {
+
+//   let data=await sessions.find()
+// //   data.forEach(ele => {
+// //     ele.enrolls.forEach((ele)=>{
+// //       ele.sport=["654a743edf5e36e891e63626"]
+// //     })
+// //   });
+    
+// // await data.save()
+// for (const doc of data) {
+//   // Iterate through each enrolls in the document
+//   for (const enroll of doc.enrolls) {
+//     enroll.sport = ["654a743edf5e36e891e63626"];
+//   }
+
+//   // Save the changes to the document
+//   await doc.save();
+// }
+
+//     res.json({
+//       datas:data.length,
+//       data: data,
+//       rcode: 200,
+//     });  
+//   } catch (err) {
+//     console.log(err)
+//   res.json({
+//     error: err.msg,
+//     rcode: -9,
+//   });
+//   }
+// }

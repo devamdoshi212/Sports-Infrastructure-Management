@@ -5,6 +5,7 @@ import ComplaintAnalysis from "./BarChart/ComplaintAnalysis";
 import EnrollAnalysis from "./BarChart/EnrollAnalysis";
 import AgeGroupAnalysis from "./BarChart/AgeGroupAnalysis";
 import AgeGroupwiseCount from "./BarChart/AgeGroupCount";
+import AttendanceAnalysis from "./BarChart/Attendance";
 
 const BarChartAnalysis = () => {
   const [data, setData] = useState([]);
@@ -15,7 +16,11 @@ const BarChartAnalysis = () => {
   const [max, setmaxAge] = useState(100);
   const [sportId, setsportId] = useState("");
   const [year, setYear] = useState("");
+  const today = new Date();
+  const formattedToday = today.toISOString().substr(0, 10);
+  const [fromdate, setFromDate] = useState(formattedToday);
 
+  const [ToDate, setTodate] = useState("");
   useEffect(() => {
     var requestOptions = {
       method: "GET",
@@ -49,7 +54,15 @@ const BarChartAnalysis = () => {
   const handleYear = (e) => {
     setYear(e.target.value);
   };
+  const handledatechange = (e) => {
+    console.log(e.target.value);
+    setFromDate(e.target.value);
+  };
 
+  const handleToChange = (e) => {
+    console.log(e.target.value);
+    setTodate(e.target.value);
+  };
   return (
     <div>
       <div className="w-1/5 relative m-5">
@@ -180,6 +193,15 @@ const BarChartAnalysis = () => {
 
       {/* <EventAnalysis selectedOption={selectedOption} /> */}
       {/* <ComplaintLineAnalysis selectedOption={selectedOption} /> */}
+      <h1 className="text-2xl">From</h1>
+      <input type="date" value={fromdate} onChange={handledatechange} />
+      <h1 className="text-2xl">To</h1>
+      <input type="date" value={ToDate} onChange={handleToChange} />
+      <AttendanceAnalysis
+        selectedOption={selectedOption}
+        fromdate={fromdate}
+        todate={ToDate}
+      />
     </div>
   );
 };
