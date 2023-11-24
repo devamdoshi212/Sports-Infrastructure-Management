@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import Swal from "sweetalert2";
 import "primereact/resources/themes/lara-light-indigo/theme.css";
 import { FilterMatchMode } from "primereact/api";
@@ -10,6 +10,7 @@ import { Calendar } from "primereact/calendar";
 import { Link } from "react-router-dom";
 import { useCookies } from "react-cookie";
 import { FacilityService } from "./FacilityService";
+import * as XLSX from "xlsx";
 
 export default function FacilityTable() {
   const [deleterefresh, setdeleterefresh] = useState(true);
@@ -97,6 +98,17 @@ export default function FacilityTable() {
       Email: "",
     });
   };
+  const exportToExcel = () => {
+    const modifiedCustomers = customers.map((customer) => {
+      const { _id, parameters, updatedAt, createdAt, date, ...newCustomer } =
+        customer;
+      return newCustomer;
+    });
+    const worksheet = XLSX.utils.json_to_sheet(modifiedCustomers);
+    const workbook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(workbook, worksheet, "Sheet 1");
+    XLSX.writeFile(workbook, "exported_data.xlsx");
+  };
 
   const renderHeader = () => {
     return (
@@ -108,14 +120,24 @@ export default function FacilityTable() {
           className="px-4 py-2 rounded-lg text-blue-800 ring-0 border-2 border-blue-700 hover:bg-gray-200"
           onClick={clearFilter}
         />
-        <span className="p-input-icon-left">
-          <InputText
-            value={globalFilterValues.Name}
-            onChange={onGlobalFilterChange}
-            placeholder="Keyword Search"
-            className="p-2 ring-1 ring-opacity-50 ring-black focus:ring-blue-600 focus:ring-2 focus:ring-opacity-70 hover:ring-opacity-100 hover:ring-blue-400"
-          />
-        </span>
+        <div className="flex gap-4">
+          <div className="text-center p-2 border border-green-500 rounded-md bg-green-400">
+            <button
+              className="p-button p-button-success"
+              onClick={exportToExcel}
+            >
+              Export to Excel
+            </button>
+          </div>
+          <span className="p-input-icon-left">
+            <InputText
+              value={globalFilterValues.Name}
+              onChange={onGlobalFilterChange}
+              placeholder="Keyword Search"
+              className="p-2 ring-1 ring-opacity-50 ring-black focus:ring-blue-600 focus:ring-2 focus:ring-opacity-70 hover:ring-opacity-100 hover:ring-blue-400"
+            />
+          </span>
+        </div>
       </div>
     );
   };
@@ -168,6 +190,43 @@ export default function FacilityTable() {
       </div>
     );
   };
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [modalImages, setModalImages] = useState("");
+  const [selectedRowData, setSelectedRowData] = useState(null);
+  const modalOverlayRef = useRef(null);
+
+  const openModal = (rowdata) => {
+    setModalImages(rowdata.baseUrl);
+    setSelectedRowData(rowdata);
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setModalImages([]);
+    setSelectedRowData(null);
+    setIsModalOpen(false);
+  };
+
+  useEffect(() => {
+    const handleOutsideClick = (event) => {
+      if (
+        modalOverlayRef.current &&
+        !modalOverlayRef.current.contains(event.target)
+      ) {
+        closeModal();
+      }
+    };
+
+    if (isModalOpen) {
+      document.addEventListener("mousedown", handleOutsideClick);
+    } else {
+      document.removeEventListener("mousedown", handleOutsideClick);
+    }
+
+    return () => {
+      document.removeEventListener("mousedown", handleOutsideClick);
+    };
+  }, [isModalOpen]);
 
   const header = renderHeader();
   const [first, setFirst] = useState(0);
@@ -178,6 +237,29 @@ export default function FacilityTable() {
 
   return (
     <div className="card">
+      {isModalOpen && (
+        <div
+          ref={modalOverlayRef}
+          className="fixed inset-0 z-50 flex items-center justify-center modal-overlay bg-gray-900 bg-opacity-80"
+        >
+          <div className="modal-above-screen bg-white rounded-lg p-4 relative">
+            <span
+              className="close absolute top-2 right-2 text-3xl cursor-pointer"
+              onClick={closeModal}
+            >
+              &times;
+            </span>
+            <div className="modal-body p-4 flex justify-center items-center">
+              <img
+                key=""
+                src={`${modalImages}`}
+                alt="Sport Facility Pic"
+                className="w-60 h-60 object-cover mx-2"
+              />
+            </div>
+          </div>
+        </div>
+      )}
       <DataTable
         value={customers}
         paginator
@@ -216,12 +298,17 @@ export default function FacilityTable() {
         />
         <Column
           header="Image"
-          field="baseUrl"
-          filterField="baseUrl"
-          body={(rowdata) => {
-            return <img className="w-full h-96"src={rowdata.baseUrl} alt="Sport Facility Pic" />;
-          }}
-          style={{ minWidth: "12rem" }}
+          field="photo"
+          filterField="photo"
+          style={{ minWidth: "10rem" }}
+          body={(rowdata) => (
+            <button
+              onClick={() => openModal(rowdata)}
+              className="text-blue-900 hover:underline hover:decoration-black "
+            >
+              View Images
+            </button>
+          )}
         />
       </DataTable>
     </div>

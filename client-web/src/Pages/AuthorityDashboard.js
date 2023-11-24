@@ -20,17 +20,18 @@ const AuthorityDashboard = () => {
     )
       .then((response) => response.json())
       .then((result) => {
+        console.log(result);
         setData(result);
         setVisible(true);
       })
       .catch((error) => console.log("error", error));
-  }, []);
+  }, [DistrictId]);
 
   const AnimatedCount = ({ finalCount }) => {
     const [count, setCount] = useState(0);
 
     useEffect(() => {
-      const animationDuration = 500; // in milliseconds
+      const animationDuration = 500;
       const steps = finalCount;
       const stepDuration = animationDuration / steps;
 
@@ -71,6 +72,26 @@ const AuthorityDashboard = () => {
             <AnimatedCount finalCount={visibale && data.sportComplexCount} />
           </div>
         </Link>
+        <Link to={"allcomplaint"}>
+          <div className="h-48 p-3 text-center rounded-lg bg-gray-300 ">
+            <div className=" font-bold p-5 text-2xl">
+              Total Complaints in Sport Complexes
+            </div>
+            <AnimatedCount
+              finalCount={
+                visibale &&
+                data.complaintCount.reduce(
+                  (sum, entry) => sum + entry.unsolvedComplaint,
+                  0
+                ) +
+                  data.complaintCount.reduce(
+                    (sum, entry) => sum + entry.solvedComplaint,
+                    0
+                  )
+              }
+            />
+          </div>
+        </Link>
 
         <Link to={"allcomplaint"}>
           <div className="h-48 p-3 text-center rounded-lg bg-gray-300 ">
@@ -98,7 +119,7 @@ const AuthorityDashboard = () => {
               finalCount={
                 visibale &&
                 data.complaintCount.reduce(
-                  (sum, entry) => sum + entry.activeComplaint,
+                  (sum, entry) => sum + entry.activeComlaintCount,
                   0
                 )
               }
@@ -108,13 +129,13 @@ const AuthorityDashboard = () => {
         <Link to={"allcomplaint"}>
           <div className="h-48 p-3 text-center rounded-lg bg-gray-300 ">
             <div className=" font-bold p-5 text-2xl">
-              Total Complaints in Sport Complexes
+              Total Unsolved Complaints in Sport Complexes
             </div>
             <AnimatedCount
               finalCount={
                 visibale &&
                 data.complaintCount.reduce(
-                  (sum, entry) => sum + entry.complaintCount,
+                  (sum, entry) => sum + entry.unsolvedComplaint,
                   0
                 )
               }
