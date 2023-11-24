@@ -17,6 +17,7 @@ import {
     useForegroundPermissions,
     PermissionStatus,
 } from "expo-location";
+import { ScrollView } from "react-native-gesture-handler";
 const FilterModal = (props) => {
     const [modalVisible, setModalVisible] = useState(props.show);
     const [selectedItems, setSelectedItems] = useState([]);
@@ -191,6 +192,29 @@ const FilterModal = (props) => {
                         </View>
                     </View>
                     <View style={styles.card}>
+                        <View>
+                            <Text style={{ fontWeight: "bold", marginTop: "5%", marginBottom: "5%" }}>
+                                Max Distance of SportComplex from your location:
+                            </Text>
+                            <TextInput
+                                placeholder={"enter distance in kilometers"}
+                                keyboardType={"numeric"}
+                                onChangeText={(value) => {
+                                    onDistanceChanged(value);
+                                }}
+                                value={distance}
+                                style={{
+                                    // textAlign: "center",
+                                    width: "100%",
+                                    height: 40,
+                                    borderWidth: 1,
+                                    borderColor: "#ccc",
+                                    marginBottom: 15,
+                                    padding: 10,
+                                    borderRadius: 5,
+                                }}
+                            />
+                        </View>
                         <MultiSelect
                             maximumSelectionLength={5}
                             // hideTags
@@ -213,30 +237,8 @@ const FilterModal = (props) => {
                             submitButtonColor="#000000"
                             submitButtonText="Submit"
                             removeSelected
+                            fixedHeight={1}
                         />
-                        <View style={{ flexDirection: "row" }}>
-                            <Text style={{ fontWeight: "bold", marginTop: "5%" }}>
-                                Max Distance of SportComplex:
-                            </Text>
-                            <View
-                                style={{
-                                    marginLeft: "5%",
-                                    marginTop: "3.5%",
-                                    height: 30,
-                                    width: 30,
-                                    alignSelf: "center",
-                                }}
-                            >
-                                <TextInput
-                                    placeholder={"0"}
-                                    keyboardType={"numeric"}
-                                    onChangeText={(value) => {
-                                        onDistanceChanged(value);
-                                    }}
-                                    value={distance}
-                                />
-                            </View>
-                        </View>
                     </View>
                 </View>
             </Modal>
@@ -361,6 +363,7 @@ const styles = StyleSheet.create({
         elevation: 5,
         marginHorizontal: "1.5%",
         marginVertical: 20,
+        height: "90%",
     },
     label: {
         fontWeight: "bold",
