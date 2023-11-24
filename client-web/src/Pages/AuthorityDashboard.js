@@ -72,6 +72,18 @@ const AuthorityDashboard = () => {
             <AnimatedCount finalCount={visibale && data.sportComplexCount} />
           </div>
         </Link>
+        <div className=" h-48 p-3 text-center rounded-lg bg-gray-300 ">
+          <div className=" font-bold p-5 text-2xl">Total Manager</div>
+          <AnimatedCount finalCount={visibale && data.manager} />
+        </div>
+        <div className=" h-48 p-3 text-center rounded-lg bg-gray-300 ">
+          <div className=" font-bold p-5 text-2xl">Total Supervisor</div>
+          <AnimatedCount finalCount={visibale && data.supervisor} />
+        </div>
+        <div className=" h-48 p-3 text-center rounded-lg bg-gray-300 ">
+          <div className=" font-bold p-5 text-2xl">Total Instrucor</div>
+          <AnimatedCount finalCount={visibale && data.instructor} />
+        </div>
         <Link to={"allcomplaint"}>
           <div className="h-48 p-3 text-center rounded-lg bg-gray-300 ">
             <div className=" font-bold p-5 text-2xl">
@@ -140,6 +152,22 @@ const AuthorityDashboard = () => {
                 )
               }
             />
+          </div>
+        </Link>
+        <Link to={"allcomplaint"}>
+          <div className="h-48 p-3 text-center rounded-lg bg-gray-300 ">
+            <div className=" font-bold p-5 text-2xl">
+              Total Solved Complains with Satisfied Response
+            </div>
+            <AnimatedCount finalCount={visibale && data.happy} />
+          </div>
+        </Link>
+        <Link to={"allcomplaint"}>
+          <div className="h-48 p-3 text-center rounded-lg bg-gray-300 ">
+            <div className=" font-bold p-5 text-2xl">
+              Total Solved Complains with Unsatisfied Response
+            </div>
+            <AnimatedCount finalCount={visibale && data.sad} />
           </div>
         </Link>
       </div>

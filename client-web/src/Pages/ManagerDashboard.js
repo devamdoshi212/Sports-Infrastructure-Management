@@ -9,6 +9,8 @@ const ManagerDashboard = () => {
   const [uncomplaint, unsetcomplaint] = useState("");
   const { SportComplexId } = useSelector((state) => state.user.user);
   const [remain, setRemain] = useState("");
+  const [happy, setHappy] = useState("");
+  const [sad, setSad] = useState("");
   useEffect(() => {
     var requestOptions = {
       method: "GET",
@@ -40,6 +42,20 @@ const ManagerDashboard = () => {
     )
       .then((response) => response.json())
       .then((result) => unsetcomplaint(result.data.length))
+      .catch((error) => console.log("error", error));
+    fetch(
+      `http://localhost:9999/getAllComplaints?sportsComplex=${SportComplexId}&status=1&satisfied=1`,
+      requestOptions
+    )
+      .then((response) => response.json())
+      .then((result) => setHappy(result.data.length))
+      .catch((error) => console.log("error", error));
+    fetch(
+      `http://localhost:9999/getAllComplaints?sportsComplex=${SportComplexId}&status=1&satisfied=0`,
+      requestOptions
+    )
+      .then((response) => response.json())
+      .then((result) => setSad(result.data.length))
       .catch((error) => console.log("error", error));
     fetch(
       `http://localhost:9999/getAllComplaints?sportsComplex=${SportComplexId}&level=1&status=0`,
@@ -113,17 +129,29 @@ const ManagerDashboard = () => {
         </div>
         <div className="text-center rounded-lg bg-gray-300 ">
           <div className=" font-bold p-5 text-3xl">
-            Total Unsloved Complaints
+            Total Unsolved Complaints
           </div>
           <AnimatedCount finalCount={visibale && complaint} />
         </div>
         <div className=" text-center rounded-lg bg-gray-300 ">
-          <div className=" font-bold p-5 text-3xl">Total Sloved Complaints</div>
+          <div className=" font-bold p-5 text-3xl">Total Solved Complaints</div>
           <AnimatedCount finalCount={visibale && uncomplaint} />
         </div>
         <div className=" text-center rounded-lg bg-gray-300 ">
           <div className=" font-bold p-5 text-3xl">Total Active Complaints</div>
           <AnimatedCount finalCount={visibale && remain} />
+        </div>
+        <div className=" text-center rounded-lg bg-gray-300 ">
+          <div className=" font-bold p-5 text-3xl">
+            Total Solved Complaints with Satisfied Response
+          </div>
+          <AnimatedCount finalCount={visibale && happy} />
+        </div>
+        <div className=" text-center rounded-lg bg-gray-300 ">
+          <div className=" font-bold p-5 text-3xl">
+            Total Solved Complaints with Unsatisfied Response
+          </div>
+          <AnimatedCount finalCount={visibale && sad} />
         </div>
       </div>
     </div>
