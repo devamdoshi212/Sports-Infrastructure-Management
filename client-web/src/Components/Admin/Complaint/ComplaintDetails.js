@@ -347,7 +347,11 @@ export default function AdminComplaintDataTable({ type, fromdate, todate }) {
           loading={loading}
           dataKey="_id"
           filters={filters}
-          globalFilterFields={["sport.SportName", "sport.Category", "fees"]}
+          globalFilterFields={[
+            "sportsComplex.district.District",
+            "sportsComplex.name",
+            "type.Type",
+          ]}
           header={header}
           emptyMessage="No Data found."
         >
