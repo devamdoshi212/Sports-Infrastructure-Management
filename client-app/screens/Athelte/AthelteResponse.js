@@ -103,6 +103,7 @@ const AthleteResponse = ({ route }) => {
     });
 
     //patch query of session table to add sports array
+    console.log(selectedSports);
     var myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/json");
 
