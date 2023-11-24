@@ -1,5 +1,5 @@
 const sessions = require("../Model/SessionModel");
-
+const mongoose = require("mongoose");
 module.exports.addSession = async function (req, res) {
   let existingSession = await sessions.findOne(
     {
@@ -132,10 +132,13 @@ module.exports.updateSportsInSession = async function (req, res) {
     // data.enrolls.
 
     const enroll_id = req.query._id;
+    console.log(enroll_id);
     const indexToUpdate = data.enrolls.findIndex(
       (enroll) => enroll._id == enroll_id
     );
-    const sport = req.query.sport;
+
+    const sport = req.body.sport;
+    console.log(sport);
     console.log(indexToUpdate);
 
     if (indexToUpdate !== -1) {
