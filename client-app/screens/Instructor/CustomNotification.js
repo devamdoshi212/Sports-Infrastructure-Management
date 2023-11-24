@@ -30,6 +30,29 @@ const CustomNotification = ({ navigation }) => {
   const [Notification, Setnotification] = useState("");
   const sumbitHandler = () => {
     console.log(instructorid, selectedsport, selectedtimeSlot, Notification);
+    var myHeaders = new Headers();
+    myHeaders.append("Content-Type", "application/json");
+
+    var raw = JSON.stringify({
+      from: selectedtimeSlot.split("-")[0],
+      to: selectedtimeSlot.split("-")[1],
+      message: Notification,
+    });
+
+    var requestOptions = {
+      method: "POST",
+      headers: myHeaders,
+      body: raw,
+      redirect: "follow",
+    };
+
+    fetch(
+      `http://${ip}:9999/getAtheleteIdFromPayment?sports=${selectedsport}&instructorId=${instructorid}`,
+      requestOptions
+    )
+      .then((response) => response.json())
+      .then((result) => console.log(result.userId))
+      .catch((error) => console.log("error", error));
   };
   useEffect(() => {
     (() => {
