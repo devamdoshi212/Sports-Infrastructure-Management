@@ -25,7 +25,7 @@ const EventsinAthelte = ({ navigation }) => {
     };
 
     fetch(
-      `http://${ip}:9999/getUpdatesForAthlete?sportComplexId=${Athelte[0]?.createdBy?.SportComplexId}`,
+      `http://${ip}:9999/getUpdatesForAthlete?sportComplexId=${Athelte[0]?.createdBy?.SportComplexId}&active=1`,
       requestOptions
     )
       .then((response) => response.json())
@@ -82,7 +82,7 @@ const EventsinAthelte = ({ navigation }) => {
               </View>
               <View style={styles.row}>
                 <Text style={styles.label}>Description:</Text>
-                <Text style={styles.input}>{item.description}</Text>
+                <Text style={styles.input1}>{item.description}</Text>
               </View>
             </View>
           ))}
@@ -152,6 +152,11 @@ const styles = StyleSheet.create({
   },
   input: {
     marginLeft: 6,
+    width: "85%",
+  },
+  input1: {
+    marginLeft: 6,
+    width: "60%",
   },
   centeredContainer: {
     flex: 1,
