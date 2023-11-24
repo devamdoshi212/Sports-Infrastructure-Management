@@ -68,14 +68,14 @@ const ManagerAddComplaint = () => {
     },
   });
   return (
-    <div className="flex items-center justify-center bg-gray-200 m-5 min-h-screen">
+    <div className="flex items-center justify-center bg-[#f8f9fa] m-5 h-screen scrollbar">
       <div className="w-full max-w-2xl">
         <h2 className="text-center text-2xl uppercase font-semibold font-serif text-gray-800">
           Add New Complaint
         </h2>
         <form
           onSubmit={handleSubmit}
-          className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 mt-8"
+          className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 mt-8 shadow-gray-700"
         >
           <div className="mb-4">
             <label
