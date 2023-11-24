@@ -19,6 +19,7 @@ const BarChartAnalysis = () => {
   const today = new Date();
   const formattedToday = today.toISOString().substr(0, 10);
   const [fromdate, setFromDate] = useState(formattedToday);
+  const [error, setError] = useState("");
 
   const [ToDate, setTodate] = useState("");
   useEffect(() => {
@@ -55,13 +56,19 @@ const BarChartAnalysis = () => {
     setYear(e.target.value);
   };
   const handledatechange = (e) => {
-    console.log(e.target.value);
     setFromDate(e.target.value);
   };
 
   const handleToChange = (e) => {
-    console.log(e.target.value);
-    setTodate(e.target.value);
+    const selectedToDate = e.target.value;
+    setTodate(selectedToDate);
+    if (fromdate && new Date(fromdate) > new Date(selectedToDate)) {
+      setError("End date must be equal or after the start date");
+      setTodate("");
+    } else {
+      setError("");
+      // Add any additional logic if needed
+    }
   };
   return (
     <div>
@@ -201,6 +208,7 @@ const BarChartAnalysis = () => {
         <div className="flex m-5 space-x-3">
           <h1 className="text-xl font-semibold">To :</h1>
           <input type="date" value={ToDate} onChange={handleToChange} />
+          {error && <p className="text-red-500">{error}</p>}
         </div>
       </div>
       <AttendanceAnalysis
