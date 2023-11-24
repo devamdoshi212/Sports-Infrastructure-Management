@@ -2,7 +2,6 @@ import React from "react";
 import { useState } from "react";
 import { useEffect } from "react";
 import { useSelector } from "react-redux";
-import Utilization from "../Components/Manager/Analysis/Utilization";
 const ManagerDashboard = () => {
   const [visibale, setvisible] = useState(false);
   const [Instructor, setDetailsInstrutor] = useState({});
@@ -49,7 +48,7 @@ const ManagerDashboard = () => {
       .then((response) => response.json())
       .then((result) => setRemain(result.data.length))
       .catch((error) => console.log("error", error));
-  }, []);
+  }, [SportComplexId]);
 
   const AnimatedCount = ({ finalCount }) => {
     const [count, setCount] = useState(0);
@@ -127,7 +126,6 @@ const ManagerDashboard = () => {
           <AnimatedCount finalCount={visibale && remain} />
         </div>
       </div>
-      <Utilization />
     </div>
   );
 };

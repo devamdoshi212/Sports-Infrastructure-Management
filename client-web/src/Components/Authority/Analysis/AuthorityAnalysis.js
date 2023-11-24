@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import ManagerLineChartAnalysis from "./ManagerLineChartAnalysis";
-import ManagaerBarChartAnalysis from "./ManagerBarChartAnalysis";
+import AuthorityBarChartAnalysis from "./AuthorityBarChartAnalysis";
+import AuthorityLineChartAnalysis from "./AthorityLineChartAnalysis";
 
-const Utilization = () => {
+const AuthorityAnalysis = () => {
   const [chart, setChart] = useState("1");
 
   const handleChartType = (e) => {
@@ -32,10 +32,10 @@ const Utilization = () => {
           </svg>
         </div>
       </div>
-      {chart === "1" ? <ManagaerBarChartAnalysis /> : ""}
-      {chart === "2" ? <ManagerLineChartAnalysis /> : ""}
+      {chart === "1" ? <AuthorityBarChartAnalysis /> : ""}
+      {chart === "2" ? <AuthorityLineChartAnalysis /> : ""}
     </div>
   );
 };
 
-export default Utilization;
+export default AuthorityAnalysis;

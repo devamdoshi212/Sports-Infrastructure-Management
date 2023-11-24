@@ -50,7 +50,6 @@ import AuthorityComplaintDataTable from "./Components/Authority/Complaint/Compla
 import Athelte from "./Components/Manager/Athelte/Athelte";
 import AdminComplaint from "./Components/Admin/Complaint/Complaint";
 import Analysis from "./Components/Admin/Analysis/Analysis";
-import AuthorityAnalysis from "./Components/Authority/Analysis/Analysis";
 import AddComplaint from "./Components/Authority/Complaint/AddComplaint";
 import AddComplaintType from "./Components/Admin/Complaint/AddComplaintType";
 import ManagerAddComplaint from "./Components/Manager/Complaint/ManagerAddComplaint";
@@ -61,8 +60,9 @@ import AddComplexNews from "./Components/Manager/News/AddComplexNews";
 import Leaderboard from "./Components/Admin/LeaderBoard/Leaderboard";
 // import AthletePerformance from "./Pages/AthletePerformance";
 import DistrictWiseSportsComplex from "./Components/Admin/DataTable";
-import ManagerAnalysis from "./Components/Manager/Analysis/Utilization";
 import Topboard from "./Components/Admin/Analysis/Topboard";
+import Utilization from "./Components/Manager/Analysis/Utilization";
+import AuthorityAnalysis from "./Components/Authority/Analysis/AuthorityAnalysis";
 
 const routes = createBrowserRouter([
   {
@@ -233,7 +233,7 @@ const routes = createBrowserRouter([
       },
       {
         path: "analysis",
-        element: <ManagerAnalysis />,
+        element: <Utilization />,
         errorElement: <ErrorPage />,
       },
       {
