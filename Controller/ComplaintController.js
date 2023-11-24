@@ -158,6 +158,7 @@ module.exports.getComplaintsAdmin = async function (req, res) {
     query.status=req.query.status
     let from=new Date(req.query.from)
     let to=new Date(req.query.to)
+    to=new Date(to.getTime() + 86400000);
     if(req.query.from && req.query.to)
     {
       query.createdAt={ $gte: from, $lt: to}
