@@ -5,6 +5,8 @@ const UsersModel = require("./../Model/UsersModel");
 const SportModel = require("./../Model/SportModel");
 const ComplaintTypeModel = require("../Model/ComplaintTypeModel");
 const ComplaintModel = require("../Model/ComplaintModel");
+const Reminder = require("../Model/Reminder");
+const { setReminder } = require("../SetReminder");
 module.exports.addAthlete = async function (req, res) {
   //console.log(req.file);
   const BaseUrl = `http://localhost:9999/Athletes/${req.file.originalname}`;
@@ -411,7 +413,28 @@ module.exports.goalOfAthletes = async function (req, res) {
       { _id: req.query.id },
       { $set: { goals: Athlete.goals } }
     );
+    // let first = new Date(goal.startdate);
+    // while (first < new Date(goal.targetdate)) {
+    //   first += 86400000;
+    //   setReminder(
+    //     first,
+    //     `This is reminder to complete ${goal.title}`,
+    //     "Goal Reminder",
+    //     [Athlete.userId]
+    //   );
+    // }
+    let first = new Date(goal.startdate);
 
+    while (first.getTime() < new Date(goal.targetdate).getTime()) {
+      first.setTime(first.getTime() + 60000);
+
+      setReminder(
+        new Date(first), // Ensure you pass a new Date object to setReminder
+        `This is a reminder to complete ${goal.title}`,
+        "Goal Reminder",
+        [Athlete.userId]
+      );
+    }
     res.json({
       data: Athlete,
       msg: "Goals added to Athlete successfully",
