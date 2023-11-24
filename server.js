@@ -273,6 +273,7 @@ app.get(
   SupervisorController.getInstructorForPayment
 );
 app.get("/paymentHistoryAthlete", PaymentController.getAthletePayments);
+// app.patch("/updates",SessionController.updates)
 
 // app.get(
 //   "/atheleteCountbyInstructer",

@@ -248,3 +248,38 @@ module.exports.attendanceSportWise=async function (req,res){
   });
   }
 }
+
+// module.exports.updates=async function(req,res){
+//   try {
+
+//   let data=await sessions.find()
+// //   data.forEach(ele => {
+// //     ele.enrolls.forEach((ele)=>{
+// //       ele.sport=["654a743edf5e36e891e63626"]
+// //     })
+// //   });
+    
+// // await data.save()
+// for (const doc of data) {
+//   // Iterate through each enrolls in the document
+//   for (const enroll of doc.enrolls) {
+//     enroll.sport = ["654a743edf5e36e891e63626"];
+//   }
+
+//   // Save the changes to the document
+//   await doc.save();
+// }
+
+//     res.json({
+//       datas:data.length,
+//       data: data,
+//       rcode: 200,
+//     });  
+//   } catch (err) {
+//     console.log(err)
+//   res.json({
+//     error: err.msg,
+//     rcode: -9,
+//   });
+//   }
+// }
