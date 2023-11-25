@@ -29,7 +29,7 @@ const SupervisorDashboardController = require("./Controller/SupervisorDashboardC
 const UpdatesController = require("./Controller/UpdatesController");
 const UpdatesImageController = require("./Controller/UpdatesImageController");
 const UtilizationController = require("./Controller/UtilizationController");
-const GuestController = require("./Controller/GuestController")
+const GuestController = require("./Controller/GuestController");
 
 const {
   filtersportsforcomplex,
@@ -434,8 +434,8 @@ cron.schedule("*/1 * * * *", async function () {
 });
 
 //Guest route
-app.post('/addGuest',GuestController.addUser)
-app.get('/getGuest',GuestController.getAllUsers)
-
+app.post("/addGuest", GuestController.addUser);
+app.get("/getGuest", GuestController.getAllUsers);
+app.get("/gettimeslotforguest", GuestController.gettimeslotfrominstructor);
 app.listen(9999);
 console.log("server started at 9999");
