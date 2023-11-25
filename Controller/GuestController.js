@@ -1,4 +1,5 @@
 const Guest = require("../Model/GuestModel");
+const instructorModel = require("../Model/instructorModel");
 
 // Add data controller
 (module.exports.addUser = async function (req, res) {
@@ -19,3 +20,46 @@ const Guest = require("../Model/GuestModel");
       res.status(500).json({ error: error.message });
     }
   });
+
+module.exports.gettimeslotfrominstructor = async function (req, res) {
+  try {
+    let data = await instructorModel.find({
+      SportComplexId: req.query.SportComplexId,
+    });
+    let timeslot = [];
+
+    for (let index = 0; index < data.length; index++) {
+      const element = data[index];
+      for (let j = 0; j < element.sports.length; j++) {
+        const ele = element.sports[j];
+        if (ele.sport.equals(req.query.sportId)) {
+          timeslot = timeslot.concat(ele.timeSlot);
+        }
+      }
+    }
+
+    res.json({ data: timeslot, rcode: 200 });
+  } catch (error) {
+    console.error("Error:", error);
+    res.status(500).json({ error: "Internal Server Error", rcode: 500 });
+  }
+};
+
+// module.exports.gettimeslotfrominstructor = async function (req, res) {
+//   let data = await instructorModel.find({
+//     SportComplexId: req.query.SportComplexId,
+//   });
+//   let timeslot = [];
+
+//   for (let index = 0; index < data.length; index++) {
+//     const element = data[index];
+//     for (let index = 0; index < element.sports.length; index++) {
+//       const ele = element.sports[index];
+//       if (ele === req.query.sportId) {
+//         // timeslot = ele.timeSlot;
+//         timeslot.push(ele.timeSlot);
+//       }
+//     }
+//   }
+//   res.json({ data: timeslot, rcode: 200 });
+// };
