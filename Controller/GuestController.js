@@ -14,7 +14,7 @@ const instructorModel = require("../Model/instructorModel");
   // Get all data controller
   (module.exports.getAllUsers = async function (req, res) {
     try {
-      const Guests = await Guest.find(req.query);
+      const Guests = await Guest.find(req.query).populate('SportComplexId').populate('sport');
       res.status(200).json(Guests);
     } catch (error) {
       res.status(500).json({ error: error.message });
