@@ -342,7 +342,7 @@ export default function NewsDataTable() {
           <Column
             header="Action"
             body={actionBodyTemplate}
-            style={{ maxWidth: "10rem" }}
+            style={{ maxWidth: "12rem" }}
           />
         </DataTable>
       </div>
