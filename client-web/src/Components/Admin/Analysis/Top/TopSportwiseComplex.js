@@ -37,7 +37,11 @@ const TopSportwiseComplex = ({ districtId, sportId }) => {
           {sportComplexes.map((complex) => (
             <tr key={complex.id}>
               <td className="py-2 px-4 border-b">{complex.name}</td>
-              <td className="py-2 px-4 border-b">{complex.location}</td>
+              <td className="py-2 px-4 border-b text-blue-400">
+                <a href={complex.location} target="_blank" rel="noreferrer">
+                  Sport complex Location
+                </a>
+              </td>
               <td className="py-2 px-4 border-b">{complex.sports.rating}</td>
             </tr>
           ))}
