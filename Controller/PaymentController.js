@@ -200,6 +200,16 @@ module.exports.getPaymentTimeslotCount = async (req, res) => {
   // let sport = await SportsComplexModel.find({
   //   _id: "654a07e68d14ca1d77041c04",
   // });
+  //capacity
+  let capacity = await SportsComplexModel.findOne({_id:sportsComplex}).lean();
+  let mycap = 0;
+  capacity.sports.forEach(ele=>{
+    if(ele.sport.toString() == sports)
+    {
+      mycap = ele.capacity;
+    }
+  })
+  // my cap maa capacity chhe
   let paymentdata = [];
   payment.forEach((ele) => {
     let date = new Date(ele.from);
