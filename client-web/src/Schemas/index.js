@@ -10,7 +10,7 @@ export const userSchemas = Yup.object().shape({
     .positive("A phone number can't start with a minus")
     .integer("A phone number can't include a decimal point")
     .min(8)
-    .transform((value) => encodeURIComponent(value))
+    // .transform((value) => encodeURIComponent(value))
     .required("Please Enter Mobile Number"),
   district: Yup.string()
     .transform((value) => encodeURIComponent(value))
@@ -30,7 +30,7 @@ export const ManagerSchemas = Yup.object().shape({
     .positive("A phone number can't start with a minus")
     .integer("A phone number can't include a decimal point")
     .min(8)
-    .transform((value) => encodeURIComponent(value))
+    // .transform((value) => encodeURIComponent(value))
     .required("Please Enter Mobile Number"),
   dob: Yup.string()
     .transform((value) => encodeURIComponent(value))
@@ -49,7 +49,7 @@ export const SupervisorSchemas = Yup.object().shape({
     .positive("A phone number can't start with a minus")
     .integer("A phone number can't include a decimal point")
     .min(8)
-    .transform((value) => encodeURIComponent(value))
+    // .transform((value) => encodeURIComponent(value))
     .required("Please Enter Mobile Number"),
   dob: Yup.string()
     .transform((value) => encodeURIComponent(value))
