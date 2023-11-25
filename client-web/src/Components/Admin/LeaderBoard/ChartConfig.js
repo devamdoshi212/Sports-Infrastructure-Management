@@ -30,6 +30,9 @@ const generateChartConfig = (chartData) => {
       position: "bottom",
       horizontalAlign: "center",
     },
+    dataLabels: {
+      enabled: true,
+    },
   };
 
   const series = [

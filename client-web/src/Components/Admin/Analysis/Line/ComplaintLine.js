@@ -90,23 +90,31 @@ const ComplaintLineAnalysis = (props) => {
       .then((result) => {
         const data = result.data;
         console.log(data);
-        const monthNames = [
-          "January",
-          "February",
-          "March",
-          "April",
-          "May",
-          "June",
-          "July",
-          "August",
-          "September",
-          "October",
-          "November",
-          "December",
-        ];
-        const categories = data.map((item) => monthNames[item._id.month - 1]);
-        const complaint = data.map((item) => item.totalComplaint);
-        const colors = complaint.map((value) => {
+
+        // const categories = data.map((item) => monthNames[item._id.month - 1]);
+        const monthMapping = {};
+        for (let i = 1; i <= 12; i++) {
+          monthMapping[i] = 0;
+        }
+
+        // Populate totalAthelete values from the result data into the monthMapping
+        result.data.forEach((entry) => {
+          const monthNumber = entry._id.month;
+          monthMapping[monthNumber] = entry.totalComplaint;
+        });
+
+        // Map the month names and totalAthelete values from the monthMapping
+        const monthNames = Object.keys(monthMapping).map((monthNumber) => {
+          const monthName = new Intl.DateTimeFormat("en-US", {
+            month: "long",
+          }).format(new Date(2023, monthNumber - 1, 1));
+          return monthName;
+        });
+
+        const mappedData = Object.values(monthMapping);
+
+        // const complaint = data.map((item) => item.totalComplaint);
+        const colors = mappedData.map((value) => {
           // You can customize the color range based on your requirements
           if (value < 30) {
             return "#3366FF"; // Blue
@@ -121,14 +129,14 @@ const ComplaintLineAnalysis = (props) => {
           series: [
             {
               name: "Complaint",
-              data: complaint,
+              data: mappedData,
             },
           ],
           options: {
             ...chartData.options,
             xaxis: {
               ...chartData.options.xaxis,
-              categories: categories,
+              categories: monthNames,
             },
             colors: colors,
           },
