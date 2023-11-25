@@ -141,7 +141,7 @@ export const facilitySchema = Yup.object().shape({
     .required("Fees is Required"),
   capacity: Yup.number()
     .positive("Capacity not include minus")
-    .notOneOf([0], "Capacity cannot be 0")
+    // .notOneOf([0], "Capacity cannot be 0")
     .transform((value) => encodeURIComponent(value))
     .required("Capacity is Required"),
   Image: Yup.array()
