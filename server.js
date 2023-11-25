@@ -437,5 +437,7 @@ cron.schedule("*/1 * * * *", async function () {
 app.post("/addGuest", GuestController.addUser);
 app.get("/getGuest", GuestController.getAllUsers);
 app.get("/gettimeslotforguest", GuestController.gettimeslotfrominstructor);
+app.get("/getPaymentTimeslotCount", PaymentController.getPaymentTimeslotCount);
+
 app.listen(9999);
 console.log("server started at 9999");
