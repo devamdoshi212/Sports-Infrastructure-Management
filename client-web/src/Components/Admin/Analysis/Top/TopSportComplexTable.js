@@ -19,7 +19,9 @@ const SportComplexTable = ({ districtId }) => {
 
   return (
     <>
-      <h2 className="text-center text-2xl m-2 font-bold">Top 5 Sport Complex</h2>
+      <h2 className="text-center text-2xl m-2 font-bold">
+        Top 5 Sport Complex
+      </h2>
       <table className="w-11/12 m-auto bg-white border border-gray-300 p-datatable ">
         <thead>
           <tr>
@@ -32,7 +34,11 @@ const SportComplexTable = ({ districtId }) => {
           {sportComplexes.map((complex) => (
             <tr key={complex.id}>
               <td className="py-2 px-4 border-b">{complex.name}</td>
-              <td className="py-2 px-4 border-b">{complex.location}</td>
+              <td className="py-2 px-4 border-b text-blue-400">
+                <a href={complex.location} target="_blank" rel="noreferrer">
+                  Sport complex Location
+                </a>
+              </td>
               <td className="py-2 px-4 border-b">
                 {complex.averageRating ? complex.averageRating.toFixed(2) : ""}
               </td>
@@ -40,7 +46,6 @@ const SportComplexTable = ({ districtId }) => {
           ))}
         </tbody>
       </table>
-      
     </>
   );
 };
