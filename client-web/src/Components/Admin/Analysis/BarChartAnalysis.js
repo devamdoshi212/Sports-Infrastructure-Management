@@ -182,8 +182,8 @@ const BarChartAnalysis = () => {
             <option value="" selected>
               select a Year
             </option>
-            <option value="2022">2022-2023</option>
-            <option value="2023">2023-2024</option>
+            <option value="2022">2022</option>
+            <option value="2023">2023</option>
           </select>
           <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
             <svg
