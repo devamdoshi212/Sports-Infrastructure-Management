@@ -204,7 +204,6 @@ const FilterModal = (props) => {
                                 }}
                                 value={distance}
                                 style={{
-                                    // textAlign: "center",
                                     width: "100%",
                                     height: 40,
                                     borderWidth: 1,
@@ -237,7 +236,7 @@ const FilterModal = (props) => {
                             submitButtonColor="#000000"
                             submitButtonText="Submit"
                             removeSelected
-                            fixedHeight={1}
+                            fixedHeight={true}
                         />
                     </View>
                 </View>
