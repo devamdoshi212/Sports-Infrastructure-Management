@@ -137,12 +137,12 @@ export const sportComplexSchema = Yup.object().shape({
 export const facilitySchema = Yup.object().shape({
   Fees: Yup.number()
     .positive("fees not include minus")
-    .transform((value) => encodeURIComponent(value))
+    // .transform((value) => encodeURIComponent(value))
     .required("Fees is Required"),
   capacity: Yup.number()
     .positive("Capacity not include minus")
     // .notOneOf([0], "Capacity cannot be 0")
-    .transform((value) => encodeURIComponent(value))
+    // .transform((value) => encodeURIComponent(value))
     .required("Capacity is Required"),
   Image: Yup.array()
     .min(1, "Select at least one file")
