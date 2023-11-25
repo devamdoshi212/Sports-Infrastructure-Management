@@ -1,6 +1,8 @@
 const PaymentModel = require("../Model/PaymentModel");
 const { setReminder } = require("../SetReminder");
 const athleteModel = require("./../Model/athleteModel");
+const SportsComplexModel = require("./../Model/SportsComplexModel");
+const SportComplex = require("./../Model/SportsComplexModel");
 const mongoose = require("mongoose");
 module.exports.addPayment = async function (req, res) {
   let Payment = new PaymentModel(req.body);
@@ -184,6 +186,55 @@ module.exports.CountOFAllPaymentswithsportwithinstructor = async function (
       rcode: -9,
     });
   }
+};
+
+module.exports.getPaymentTimeslotCount = async (req, res) => {
+  let sports = req.query.sports;
+  let sportsComplex = req.query.sports;
+  let timeSlotFrom = req.query.sports;
+  let timeSlotTo = req.query.To;
+  let payment = await PaymentModel.find({
+    sportsComplexId: "654a07e68d14ca1d77041c04",
+    sports: "654a743edf5e36e891e63626",
+  });
+  // let sport = await SportsComplexModel.find({
+  //   _id: "654a07e68d14ca1d77041c04",
+  // });
+  //capacity
+  let capacity = await SportsComplexModel.findOne({_id:sportsComplex}).lean();
+  let mycap = 0;
+  capacity.sports.forEach(ele=>{
+    if(ele.sport.toString() == sports)
+    {
+      mycap = ele.capacity;
+    }
+  })
+  // my cap maa capacity chhe
+  let paymentdata = [];
+  payment.forEach((ele) => {
+    let date = new Date(ele.from);
+    let day = date.getDate();
+    console.log("====================================");
+    console.log(date);
+    console.log("====================================");
+    let now = new Date();
+    let nday = now.getDate();
+    let nmonth = now.getMonth();
+    let nyear = now.getFullYear();
+    let duration = 30 * ele.duration;
+
+    if (
+      ele.timeSlot.from == "10:00 AM" &&
+      ele.timeSlot.to == "3:00 PM" &&
+      (date - now) / 86400000 + duration > 0
+    ) {
+      paymentdata.push(ele);
+    }
+  });
+  console.log("====================================");
+  console.log(paymentdata);
+  console.log("====================================");
+  console.log(paymentdata.length);
 };
 
 module.exports.getAthletePayments = async (req, res) => {
