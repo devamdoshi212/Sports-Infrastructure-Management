@@ -255,7 +255,7 @@ const Layout = () => {
                   clip-rule="evenodd"
                 />
               </svg>
-              Events
+              Updates
             </Link>
           </div>
 
