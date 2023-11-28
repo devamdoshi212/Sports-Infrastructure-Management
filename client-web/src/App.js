@@ -63,6 +63,8 @@ import DistrictWiseSportsComplex from "./Components/Admin/DataTable";
 import Topboard from "./Components/Admin/Analysis/Topboard";
 import Utilization from "./Components/Manager/Analysis/Utilization";
 import AuthorityAnalysis from "./Components/Authority/Analysis/AuthorityAnalysis";
+import SlotDataTable from "./Components/Manager/SlotDataTable";
+import Slot from "./Components/Manager/Slot";
 
 const routes = createBrowserRouter([
   {
@@ -294,6 +296,11 @@ const routes = createBrowserRouter([
       {
         path: "leaderboard",
         element: <Leaderboard />,
+        errorElement: <ErrorPage />,
+      },
+      {
+        path: "slottable",
+        element: <Slot />,
         errorElement: <ErrorPage />,
       },
     ],

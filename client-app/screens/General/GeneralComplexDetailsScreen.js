@@ -226,6 +226,21 @@ const GeneralComplexDetailsScreen = ({ navigation, route }) => {
                           marginTop="-19%"
                           marginBottom="3%"
                         />
+                        <View style={styles.loginContainer}>
+                          <TouchableOpacity
+                            onPress={() => {
+                              // alert("booked");
+                              navigation.navigate("bookslot", {
+                                data: item,
+                                complexId: data.item._id,
+                              });
+                            }}
+                          >
+                            <Text style={styles.loginLink}>
+                              Book Your Slot in {details.availableSports[index]}
+                            </Text>
+                          </TouchableOpacity>
+                        </View>
                       </View>
                     ))}
                   </View>
@@ -269,6 +284,22 @@ const styles = StyleSheet.create({
   },
   heart: {
     fontSize: 28,
+  },
+  loginContainer: {
+    marginTop: 15,
+    padding: 10,
+    flexDirection: "row",
+    justifyContent: "center",
+    backgroundColor: "black",
+  },
+  loginText: {
+    fontSize: 16,
+    marginRight: 5,
+  },
+  loginLink: {
+    fontSize: 16,
+    fontWeight: "bold",
+    color: "white",
   },
   cardHeader: {
     flexDirection: "column",
