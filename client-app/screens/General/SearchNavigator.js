@@ -9,6 +9,8 @@ import FlatListScreen from "./FlatListScreen";
 import ComplexDetails from "./ComplexDetails";
 import MyCarousel from "./GeneralSearch";
 import Events from "./Events";
+import BookSlot from "./BookSlot";
+import Bookslotdetails from "./BookSlotDetails";
 const SearchNavigator = ({ navigation }) => {
   return (
     <Stack.Navigator>
@@ -36,6 +38,16 @@ const SearchNavigator = ({ navigation }) => {
         <Stack.Screen
           name="Events"
           component={Events}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="bookslot"
+          component={BookSlot}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="bookslotdetails"
+          component={Bookslotdetails}
           options={{ headerShown: false }}
         />
       </Stack.Group>
