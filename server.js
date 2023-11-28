@@ -30,6 +30,7 @@ const UpdatesController = require("./Controller/UpdatesController");
 const UpdatesImageController = require("./Controller/UpdatesImageController");
 const UtilizationController = require("./Controller/UtilizationController");
 const GuestController = require("./Controller/GuestController");
+const OnlinePaymentRouter = require("./Routes/OnlinePaymentRoute");
 
 const {
   filtersportsforcomplex,
@@ -439,5 +440,6 @@ app.get("/getGuest", GuestController.getAllUsers);
 app.get("/gettimeslotforguest", GuestController.gettimeslotfrominstructor);
 app.get("/getPaymentTimeslotCount", PaymentController.getPaymentTimeslotCount);
 
+app.use("/onlinepayment", OnlinePaymentRouter);
 app.listen(9999);
 console.log("server started at 9999");

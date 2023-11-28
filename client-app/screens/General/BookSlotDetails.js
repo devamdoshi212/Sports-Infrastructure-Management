@@ -19,6 +19,10 @@ import * as ImagePicker from "expo-image-picker";
 import mime from "mime";
 import ipconfig from "../../ipconfig";
 import Icon from "react-native-vector-icons/FontAwesome";
+import {
+  initPaymentSheet,
+  presentPaymentSheet,
+} from "@stripe/stripe-react-native";
 
 const Bookslotdetails = ({ navigation, route }) => {
   const ip = ipconfig.ip;
@@ -158,6 +162,54 @@ const Bookslotdetails = ({ navigation, route }) => {
   //   }
   // };
 
+  const paymentHandler = async () => {
+    var myHeaders = new Headers();
+    myHeaders.append("Content-Type", "application/json");
+
+    var raw = JSON.stringify({
+      amount: 10,
+    });
+
+    var requestOptions = {
+      method: "POST",
+      headers: myHeaders,
+      body: raw,
+      redirect: "follow",
+    };
+
+    const data = await fetch(
+      `http://${ip}:9999/onlinepayment/intent`,
+      requestOptions
+    );
+    const response = await data.json();
+    if (response.error) {
+      Alert.alert("Something went wrong", response.error);
+      return;
+    }
+    console.log(response);
+
+    const { error: paymentSheetError } = await initPaymentSheet({
+      merchantDisplayName: "Example, Inc.",
+      paymentIntentClientSecret: response.paymentIntent,
+      defaultBillingDetails: {
+        name: "Devam Doshi",
+      },
+    });
+    if (paymentSheetError) {
+      Alert.alert("Something went wrong", paymentSheetError.message);
+      return;
+    }
+
+    const { error: paymentError } = await presentPaymentSheet();
+
+    if (paymentError) {
+      Alert.alert(`Error code: ${paymentError.code}`, paymentError.message);
+      return;
+    }
+
+    handleSignUp();
+  };
+
   return (
     <SafeAreaProvider>
       <ScrollView contentContainerStyle={styles.scrollContainer}>
@@ -218,7 +270,7 @@ const Bookslotdetails = ({ navigation, route }) => {
             />
 
             {errormsg && <Text style={styles.errorText}>{errormsg}</Text>}
-            <TouchableOpacity style={styles.button} onPress={handleSignUp}>
+            <TouchableOpacity style={styles.button} onPress={paymentHandler}>
               <Text style={styles.buttonText}>Confirm Your Slot</Text>
             </TouchableOpacity>
           </View>
