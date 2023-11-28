@@ -190,23 +190,27 @@ module.exports.CountOFAllPaymentswithsportwithinstructor = async function (
 
 module.exports.getPaymentTimeslotCount = async (req, res) => {
   let sports = req.query.sports;
-  let sportsComplex = req.query.sports;
-  let timeSlotFrom = req.query.sports;
-  let timeSlotTo = req.query.To;
+  let sportsComplex = req.query.sportsComplex;
+  let timeSlotFrom = req.query.timeSlotFrom;
+  let timeSlotTo = req.query.timeSlotTo;
   let payment = await PaymentModel.find({
-    sportsComplexId: "654a07e68d14ca1d77041c04",
-    sports: "654a743edf5e36e891e63626",
+    sportsComplexId: sportsComplex,
+    sports: sports,
   });
-  // let sport = await SportsComplexModel.find({
-  //   _id: "654a07e68d14ca1d77041c04",
-  // });
+  let capacity = await SportsComplexModel.findOne({
+    _id: sportsComplex,
+  }).lean();
+  let mycap = 0;
+  capacity.sports.forEach((ele) => {
+    if (ele.sport.toString() == sports) {
+      mycap = ele.capacity;
+    }
+  });
+  // my cap maa capacity chhe
   let paymentdata = [];
   payment.forEach((ele) => {
     let date = new Date(ele.from);
     let day = date.getDate();
-    console.log("====================================");
-    console.log(date);
-    console.log("====================================");
     let now = new Date();
     let nday = now.getDate();
     let nmonth = now.getMonth();
@@ -214,17 +218,16 @@ module.exports.getPaymentTimeslotCount = async (req, res) => {
     let duration = 30 * ele.duration;
 
     if (
-      ele.timeSlot.from == "10:00 AM" &&
-      ele.timeSlot.to == "3:00 PM" &&
+      ele.timeSlot.from == timeSlotFrom &&
+      ele.timeSlot.to == timeSlotTo &&
       (date - now) / 86400000 + duration > 0
     ) {
       paymentdata.push(ele);
     }
   });
-  console.log("====================================");
-  console.log(paymentdata);
-  console.log("====================================");
   console.log(paymentdata.length);
+
+  res.json({ data: mycap - paymentdata.length, rcode: 200 });
 };
 
 module.exports.getAthletePayments = async (req, res) => {

@@ -38,6 +38,14 @@ const GuestSchema = new mongoose.Schema(
       type: mongoose.SchemaTypes.ObjectId,
       ref: "sportscomplexes",
     },
+    Startdate: {
+      type: String,
+      
+    },
+    Enddate: {
+      type: String,
+      
+    },
   },
   { timestamps: true }
 );
