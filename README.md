@@ -180,5 +180,5 @@ This system's mission is two-fold: to empower athletes by providing unprecedente
 
 - [_Devam Doshi_](https://github.com/devamdoshi212)
 - [_Uday Gohel_](https://github.com/UdayGohel)
-- [_Dhruv Shah_](https://github.com/dhruvsharma1999)
+- [_Dhruv Shah_](https://github.com/Dhruv9544)
 - [_Ritesh Mandaviya_](https://github.com/Ritesh0604)
